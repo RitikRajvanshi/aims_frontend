@@ -1,0 +1,2883 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  SupplierEvaluationComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-supplier-evaluation</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./supplier-evaluation.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./supplier-evaluation.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#activatedRoute" >activatedRoute</a>
+                            </li>
+                            <li>
+                                <a href="#BackgroundColor" >BackgroundColor</a>
+                            </li>
+                            <li>
+                                <a href="#bgColor" >bgColor</a>
+                            </li>
+                            <li>
+                                <a href="#checkadminapproval" >checkadminapproval</a>
+                            </li>
+                            <li>
+                                <a href="#commitmentGrading" >commitmentGrading</a>
+                            </li>
+                            <li>
+                                <a href="#communicationGrading" >communicationGrading</a>
+                            </li>
+                            <li>
+                                <a href="#deliveryGrading" >deliveryGrading</a>
+                            </li>
+                            <li>
+                                <a href="#display" >display</a>
+                            </li>
+                            <li>
+                                <a href="#evaluationData" >evaluationData</a>
+                            </li>
+                            <li>
+                                <a href="#evaluationGradingValuesArray" >evaluationGradingValuesArray</a>
+                            </li>
+                            <li>
+                                <a href="#hideEvaluation" >hideEvaluation</a>
+                            </li>
+                            <li>
+                                <a href="#makeEvaluationbasisreadOnly" >makeEvaluationbasisreadOnly</a>
+                            </li>
+                            <li>
+                                <a href="#priceGrading" >priceGrading</a>
+                            </li>
+                            <li>
+                                <a href="#purchaseId" >purchaseId</a>
+                            </li>
+                            <li>
+                                <a href="#purchaseIdFromparams" >purchaseIdFromparams</a>
+                            </li>
+                            <li>
+                                <a href="#qualityGrading" >qualityGrading</a>
+                            </li>
+                            <li>
+                                <a href="#supplierData" >supplierData</a>
+                            </li>
+                            <li>
+                                <a href="#supplierevaluationForm" >supplierevaluationForm</a>
+                            </li>
+                            <li>
+                                <a href="#textColor" >textColor</a>
+                            </li>
+                            <li>
+                                <a href="#TextColor" >TextColor</a>
+                            </li>
+                            <li>
+                                <a href="#TotalGrading" >TotalGrading</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#add" >add</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#addsupplierEvaluation" >addsupplierEvaluation</a>
+                            </li>
+                            <li>
+                                <a href="#getcolor" >getcolor</a>
+                            </li>
+                            <li>
+                                <a href="#getPurchaseJoinDatabyPid" >getPurchaseJoinDatabyPid</a>
+                            </li>
+                            <li>
+                                <a href="#getsupplierdata" >getsupplierdata</a>
+                            </li>
+                            <li>
+                                <a href="#gradingValue" >gradingValue</a>
+                            </li>
+                            <li>
+                                <a href="#instructions" >instructions</a>
+                            </li>
+                            <li>
+                                <a href="#navigateBack" >navigateBack</a>
+                            </li>
+                            <li>
+                                <a href="#navigateBackWithParams" >navigateBackWithParams</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#Selectcommitmentgrading" >Selectcommitmentgrading</a>
+                            </li>
+                            <li>
+                                <a href="#Selectcommunicationgrading" >Selectcommunicationgrading</a>
+                            </li>
+                            <li>
+                                <a href="#Selectdeliverygrading" >Selectdeliverygrading</a>
+                            </li>
+                            <li>
+                                <a href="#Selectpricegrading" >Selectpricegrading</a>
+                            </li>
+                            <li>
+                                <a href="#Selectqualitygrading" >Selectqualitygrading</a>
+                            </li>
+                            <li>
+                                <a href="#validation" >validation</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(activatedRoute: ActivatedRoute, router: Router, sharedService: <a href="../injectables/SharedService.html" target="_self">SharedService</a>, adminService: <a href="../injectables/AdminService.html" target="_self">AdminService</a>, checkService: <a href="../injectables/CheckService.html" target="_self">CheckService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>activatedRoute</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>sharedService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SharedService.html" target="_self" >SharedService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>adminService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AdminService.html" target="_self" >AdminService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>checkService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CheckService.html" target="_self" >CheckService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="add"></a>
+                    <span class="name">
+                        <span ><b>add</b></span>
+                        <a href="#add"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>add(accumulator: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, a: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="317"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:317</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>accumulator</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>a</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addsupplierEvaluation"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>addsupplierEvaluation</b></span>
+                        <a href="#addsupplierEvaluation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addsupplierEvaluation()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="418"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:418</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getcolor"></a>
+                    <span class="name">
+                        <span ><b>getcolor</b></span>
+                        <a href="#getcolor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getcolor()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="522"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:522</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>&quot;red&quot; | &quot;green&quot; | &quot;white&quot;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPurchaseJoinDatabyPid"></a>
+                    <span class="name">
+                        <span ><b>getPurchaseJoinDatabyPid</b></span>
+                        <a href="#getPurchaseJoinDatabyPid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getPurchaseJoinDatabyPid()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="358"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:358</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getsupplierdata"></a>
+                    <span class="name">
+                        <span ><b>getsupplierdata</b></span>
+                        <a href="#getsupplierdata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getsupplierdata(pid: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:194</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>pid</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gradingValue"></a>
+                    <span class="name">
+                        <span ><b>gradingValue</b></span>
+                        <a href="#gradingValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>gradingValue()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="321"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:321</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="instructions"></a>
+                    <span class="name">
+                        <span ><b>instructions</b></span>
+                        <a href="#instructions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>instructions()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="534"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:534</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigateBack"></a>
+                    <span class="name">
+                        <span ><b>navigateBack</b></span>
+                        <a href="#navigateBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigateBack()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="554"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:554</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigateBackWithParams"></a>
+                    <span class="name">
+                        <span ><b>navigateBackWithParams</b></span>
+                        <a href="#navigateBackWithParams"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigateBackWithParams()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="560"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:560</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Selectcommitmentgrading"></a>
+                    <span class="name">
+                        <span ><b>Selectcommitmentgrading</b></span>
+                        <a href="#Selectcommitmentgrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>Selectcommitmentgrading(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="336"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:336</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Selectcommunicationgrading"></a>
+                    <span class="name">
+                        <span ><b>Selectcommunicationgrading</b></span>
+                        <a href="#Selectcommunicationgrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>Selectcommunicationgrading(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:273</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Selectdeliverygrading"></a>
+                    <span class="name">
+                        <span ><b>Selectdeliverygrading</b></span>
+                        <a href="#Selectdeliverygrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>Selectdeliverygrading(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="297"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:297</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Selectpricegrading"></a>
+                    <span class="name">
+                        <span ><b>Selectpricegrading</b></span>
+                        <a href="#Selectpricegrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>Selectpricegrading(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="251"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:251</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="Selectqualitygrading"></a>
+                    <span class="name">
+                        <span ><b>Selectqualitygrading</b></span>
+                        <a href="#Selectqualitygrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>Selectqualitygrading(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validation"></a>
+                    <span class="name">
+                        <span ><b>validation</b></span>
+                        <a href="#validation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validation()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="573"
+                                    class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:573</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activatedRoute"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>activatedRoute</b></span>
+                        <a href="#activatedRoute"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ActivatedRoute</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="BackgroundColor"></a>
+                    <span class="name">
+                        <span ><b>BackgroundColor</b></span>
+                        <a href="#BackgroundColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bgColor"></a>
+                    <span class="name">
+                        <span ><b>bgColor</b></span>
+                        <a href="#bgColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;white&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkadminapproval"></a>
+                    <span class="name">
+                        <span ><b>checkadminapproval</b></span>
+                        <a href="#checkadminapproval"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    admin1: 0,
+    admin2: 0
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="commitmentGrading"></a>
+                    <span class="name">
+                        <span ><b>commitmentGrading</b></span>
+                        <a href="#commitmentGrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="communicationGrading"></a>
+                    <span class="name">
+                        <span ><b>communicationGrading</b></span>
+                        <a href="#communicationGrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deliveryGrading"></a>
+                    <span class="name">
+                        <span ><b>deliveryGrading</b></span>
+                        <a href="#deliveryGrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="display"></a>
+                    <span class="name">
+                        <span ><b>display</b></span>
+                        <a href="#display"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="evaluationData"></a>
+                    <span class="name">
+                        <span ><b>evaluationData</b></span>
+                        <a href="#evaluationData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    purchase_id: &#x27;&#x27;,
+    evaluation_basis: &#x27;&#x27;,
+    vendor_status: &#x27;&#x27;,
+    qualitybasis_grading: &#x27;&#x27;,
+    pricebasis_grading: &#x27;&#x27;,
+    communicationbasis_grading: &#x27;&#x27;,
+    deliverybasis_grading: &#x27;&#x27;,
+    commitmentbasis_grading: &#x27;&#x27;,
+    flag: &#x27;true&#x27;,
+    evaluation_done_by: localStorage.getItem(&#x27;login_id&#x27;)
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="evaluationGradingValuesArray"></a>
+                    <span class="name">
+                        <span ><b>evaluationGradingValuesArray</b></span>
+                        <a href="#evaluationGradingValuesArray"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hideEvaluation"></a>
+                    <span class="name">
+                        <span ><b>hideEvaluation</b></span>
+                        <a href="#hideEvaluation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="makeEvaluationbasisreadOnly"></a>
+                    <span class="name">
+                        <span ><b>makeEvaluationbasisreadOnly</b></span>
+                        <a href="#makeEvaluationbasisreadOnly"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="priceGrading"></a>
+                    <span class="name">
+                        <span ><b>priceGrading</b></span>
+                        <a href="#priceGrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="purchaseId"></a>
+                    <span class="name">
+                        <span ><b>purchaseId</b></span>
+                        <a href="#purchaseId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    purchase_id: &#x27;&#x27;
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="purchaseIdFromparams"></a>
+                    <span class="name">
+                        <span ><b>purchaseIdFromparams</b></span>
+                        <a href="#purchaseIdFromparams"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="qualityGrading"></a>
+                    <span class="name">
+                        <span ><b>qualityGrading</b></span>
+                        <a href="#qualityGrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supplierData"></a>
+                    <span class="name">
+                        <span ><b>supplierData</b></span>
+                        <a href="#supplierData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    purchase_id: &#x27;&#x27;,
+    supplier_name: &#x27;&#x27;,
+    address: &#x27;&#x27;,
+    phone: &#x27;&#x27;,
+    mobile: &#x27;&#x27;,
+    email: &#x27;&#x27;,
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supplierevaluationForm"></a>
+                    <span class="name">
+                        <span ><b>supplierevaluationForm</b></span>
+                        <a href="#supplierevaluationForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="textColor"></a>
+                    <span class="name">
+                        <span ><b>textColor</b></span>
+                        <a href="#textColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;black&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TextColor"></a>
+                    <span class="name">
+                        <span ><b>TextColor</b></span>
+                        <a href="#TextColor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TotalGrading"></a>
+                    <span class="name">
+                        <span ><b>TotalGrading</b></span>
+                        <a href="#TotalGrading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/user/user-component/supplier-evaluation/supplier-evaluation.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { SharedService } from &#x27;src/app/services/shared.service&#x27;;
+import { AdminService } from &#x27;src/app/services/admin.service&#x27;;
+import { CheckService } from &#x27;src/app/services/check.service&#x27;;
+import { FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
+import Swal from &#x27;sweetalert2&#x27;;
+import { firstValueFrom } from &#x27;rxjs&#x27;;
+import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+
+@Component({
+  selector: &#x27;app-supplier-evaluation&#x27;,
+  templateUrl: &#x27;./supplier-evaluation.component.html&#x27;,
+  styleUrls: [&#x27;./supplier-evaluation.component.scss&#x27;]
+})
+export class SupplierEvaluationComponent {
+  supplierData &#x3D; {
+    purchase_id: &#x27;&#x27;,
+    supplier_name: &#x27;&#x27;,
+    address: &#x27;&#x27;,
+    phone: &#x27;&#x27;,
+    mobile: &#x27;&#x27;,
+    email: &#x27;&#x27;,
+  }
+
+  evaluationData &#x3D; {
+    purchase_id: &#x27;&#x27;,
+    evaluation_basis: &#x27;&#x27;,
+    vendor_status: &#x27;&#x27;,
+    qualitybasis_grading: &#x27;&#x27;,
+    pricebasis_grading: &#x27;&#x27;,
+    communicationbasis_grading: &#x27;&#x27;,
+    deliverybasis_grading: &#x27;&#x27;,
+    commitmentbasis_grading: &#x27;&#x27;,
+    flag: &#x27;true&#x27;,
+    evaluation_done_by: localStorage.getItem(&#x27;login_id&#x27;)
+  }
+
+
+  evaluationGradingValuesArray: any &#x3D; []
+  qualityGrading: any;
+  priceGrading: any;
+  communicationGrading: any;
+  deliveryGrading: any;
+  commitmentGrading: any;
+
+  TotalGrading &#x3D; 0;
+  purchaseId &#x3D; {
+    purchase_id: &#x27;&#x27;
+  }
+  supplierevaluationForm: any;
+  purchaseIdFromparams: any;
+  display: boolean &#x3D; true;
+  makeEvaluationbasisreadOnly: boolean &#x3D; false;
+  bgColor &#x3D; &#x27;white&#x27;;
+  textColor &#x3D; &#x27;black&#x27;;
+  BackgroundColor: any;
+  TextColor: any;
+
+  checkadminapproval &#x3D; {
+    admin1: 0,
+    admin2: 0
+  };
+
+  hideEvaluation &#x3D; false;
+
+  constructor(public activatedRoute: ActivatedRoute, private router: Router, private sharedService: SharedService, private adminService: AdminService, private checkService: CheckService) {
+  }
+
+
+  ngOnInit() {
+    this.validation();
+    this.activatedRoute.params.subscribe({
+      next: (params: any) &#x3D;&gt; {
+
+        this.purchaseIdFromparams &#x3D; params[&#x27;pid&#x27;];
+        this.purchaseId.purchase_id &#x3D; this.purchaseIdFromparams
+        this.getsupplierdata(this.purchaseId);
+
+        this.getPurchaseJoinDatabyPid();
+
+        //verifying the supplier is already evaluated or not
+        this.checkService.verificationofpIdinsupplierEvaluation(this.purchaseId).subscribe(
+          {
+            next: (results: any) &#x3D;&gt; {
+              if (results[0].verification_of_supplierevaluation &#x3D;&#x3D; 1) {
+                this.sharedService.getsupplierEvaluationdatabypid(this.purchaseId).subscribe(
+                  {
+                    next: (results: any) &#x3D;&gt; {
+                      if (results[0].vendor_status &#x3D;&#x3D; &#x27;Approved&#x27;) {
+                        this.BackgroundColor &#x3D; &#x27;#cbf5dd&#x27;
+                      }
+                      else if (results[0].vendor_status &#x3D;&#x3D; &#x27;Rejected&#x27;) {
+                        this.BackgroundColor &#x3D; &#x27;#ff9a98&#x27;;
+                      }
+                      else {
+                        this.BackgroundColor &#x3D; &#x27;#FFD580&#x27;;
+                      }
+                      this.evaluationData.evaluation_basis &#x3D; results[0].evaluation_basis;
+                      this.evaluationData.qualitybasis_grading &#x3D; results[0].qualitybasis_grading;
+                      this.evaluationData.pricebasis_grading &#x3D; results[0].pricebasis_grading;
+                      this.evaluationData.communicationbasis_grading &#x3D; results[0].communicationbasis_grading;
+                      this.evaluationData.deliverybasis_grading &#x3D; results[0].deliverybasis_grading;
+                      this.evaluationData.commitmentbasis_grading &#x3D; results[0].commitmentbasis_grading;
+                      this.evaluationData.vendor_status &#x3D; results[0].vendor_status;
+                      this.display &#x3D; false;
+                      this.supplierevaluationForm.get(&#x27;qualitybasis_grading&#x27;)?.disable();
+                      this.supplierevaluationForm.get(&#x27;pricebasis_grading&#x27;)?.disable();
+                      this.supplierevaluationForm.get(&#x27;communicationbasis_grading&#x27;)?.disable();
+                      this.supplierevaluationForm.get(&#x27;deliverybasis_grading&#x27;)?.disable();
+                      this.supplierevaluationForm.get(&#x27;commitmentbasis_grading&#x27;)?.disable();
+                      this.supplierevaluationForm.get(&#x27;vendor_status&#x27;)?.disable();
+                      this.makeEvaluationbasisreadOnly &#x3D; true;
+                    },
+                    error: (error) &#x3D;&gt; {
+                      if (error.status &#x3D;&#x3D; 403) {
+                        Swal.fire({
+                          icon: &#x27;error&#x27;,
+                          title: &#x27;Oops!&#x27;,
+                          text: &#x27;Token expired.&#x27;,
+                          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+                        }).then(() &#x3D;&gt; {
+                          this.router.navigate([&#x27;../login&#x27;]);
+                        })
+                      }
+                      else {
+                        Swal.fire({
+                          icon: &#x27;error&#x27;,
+                          title: &#x27;Oops!&#x27;,
+                          text: &#x27;Internal server error.Please try after some time!&#x27;,
+                          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+                        }).then(() &#x3D;&gt; {
+                          location.reload();
+                        })
+                      }
+                    }
+                  })
+
+              } else {
+                console.log(&#x27;Supplier didn\&#x27;t evaluate yet....&#x27;)
+              }
+
+            }, error: (error) &#x3D;&gt; {
+              if (error.status &#x3D;&#x3D; 403) {
+                Swal.fire({
+                  icon: &#x27;error&#x27;,
+                  title: &#x27;Oops!&#x27;,
+                  text: &#x27;Token expired.&#x27;,
+                  footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+                }).then(() &#x3D;&gt; {
+                  this.router.navigate([&#x27;../login&#x27;]);
+                })
+              }
+              else {
+                Swal.fire({
+                  icon: &#x27;error&#x27;,
+                  title: &#x27;Oops!&#x27;,
+                  text: &#x27;Internal server error.Please try after some time!&#x27;,
+                  footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+                }).then(() &#x3D;&gt; {
+                  location.reload();
+                })
+              }
+            }
+          })
+      },
+      error: (error) &#x3D;&gt; {
+        if (error.status &#x3D;&#x3D; 403) {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Token expired.&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;../login&#x27;]);
+          })
+        }
+        else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Internal server error.Please try after some time!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          })
+        }
+      }
+    })
+
+  }
+
+  getsupplierdata(pid: any) {
+
+    this.sharedService.getsupplierjoindatafrompo(pid).subscribe({
+      next: (results: any) &#x3D;&gt; {
+        console.log(results[0].phone, &quot;results&quot;);
+        this.supplierData.purchase_id &#x3D; results[0].purchase_id;
+        this.evaluationData.purchase_id &#x3D; results[0].purchase_id;
+
+        this.supplierData.supplier_name &#x3D; results[0].supplier_name;
+        this.supplierData.address &#x3D; results[0].address;
+        this.supplierData.phone &#x3D; results[0].phone;
+        this.supplierData.mobile &#x3D; results[0].mobile;
+        this.supplierData.email &#x3D; results[0].email;
+      }, error: (error) &#x3D;&gt; {
+        if (error.status &#x3D;&#x3D; 403) {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Token expired.&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;../login&#x27;]);
+          })
+        }
+        else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Internal server error.Please try after some time!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          })
+        }
+      }
+    })
+  }
+
+
+  Selectqualitygrading(data: any) {
+    if (data &#x3D;&#x3D; &#x27;A&#x27;) {
+      this.evaluationGradingValuesArray[0] &#x3D; 3;
+
+    }
+    else if (data &#x3D;&#x3D; &#x27;B&#x27;) {
+      this.evaluationGradingValuesArray[0] &#x3D; 2;
+
+    }
+    else {
+      this.evaluationGradingValuesArray[0] &#x3D; 1;
+
+    }
+    this.evaluationData.qualitybasis_grading &#x3D; data;
+    this.TotalGrading &#x3D; this.evaluationGradingValuesArray.reduce(this.add, 0);
+    this.gradingValue();
+  }
+
+  Selectpricegrading(data: any) {
+    if (data &#x3D;&#x3D; &#x27;A&#x27;) {
+      this.evaluationGradingValuesArray[1] &#x3D; 3;
+
+
+    }
+    else if (data &#x3D;&#x3D; &#x27;B&#x27;) {
+      this.evaluationGradingValuesArray[1] &#x3D; 2;
+
+
+    }
+    else {
+      this.evaluationGradingValuesArray[1] &#x3D; 1;
+
+
+    }
+
+    this.evaluationData.pricebasis_grading &#x3D; data;
+    this.TotalGrading &#x3D; this.evaluationGradingValuesArray.reduce(this.add, 0);
+    this.gradingValue();
+  }
+
+  Selectcommunicationgrading(data: any) {
+    if (data &#x3D;&#x3D; &#x27;A&#x27;) {
+      this.evaluationGradingValuesArray[2] &#x3D; 3;
+
+
+    }
+    else if (data &#x3D;&#x3D; &#x27;B&#x27;) {
+      this.evaluationGradingValuesArray[2] &#x3D; 2;
+
+
+    }
+    else {
+      this.evaluationGradingValuesArray[2] &#x3D; 1;
+
+    }
+
+
+    this.evaluationData.communicationbasis_grading &#x3D; data;
+
+    this.TotalGrading &#x3D; this.evaluationGradingValuesArray.reduce(this.add, 0);
+    this.gradingValue();
+
+  }
+
+  Selectdeliverygrading(data: any) {
+    if (data &#x3D;&#x3D; &#x27;A&#x27;) {
+      this.evaluationGradingValuesArray[3] &#x3D; 3;
+
+    }
+    else if (data &#x3D;&#x3D; &#x27;B&#x27;) {
+      this.evaluationGradingValuesArray[3] &#x3D; 2;
+
+    }
+    else {
+      this.evaluationGradingValuesArray[3] &#x3D; 1;
+
+    }
+
+    this.evaluationData.deliverybasis_grading &#x3D; data;
+    this.TotalGrading &#x3D; this.evaluationGradingValuesArray.reduce(this.add, 0);
+    this.gradingValue();
+  }
+
+  //sum of array values thorugh reduce method
+  add(accumulator: any, a: any) {
+    return accumulator + a;
+  }
+
+  gradingValue() {
+    if (this.TotalGrading &gt; 12) {
+      this.evaluationData.vendor_status &#x3D; &#x27;Approved&#x27;;
+      this.textColor &#x3D; &#x27;#007500&#x27;;
+    }
+    else if (this.TotalGrading &lt; 12) {
+      this.evaluationData.vendor_status &#x3D; &#x27;Rejected&#x27;;
+      this.textColor &#x3D; &#x27;#ff3333&#x27;;
+    }
+    else {
+      this.evaluationData.vendor_status &#x3D; &#x27;Conditionally accepted&#x27;;
+      this.textColor &#x3D; &#x27; #CC5500&#x27;;
+    }
+  }
+
+  Selectcommitmentgrading(data: any) {
+    if (data &#x3D;&#x3D; &#x27;A&#x27;) {
+      this.evaluationGradingValuesArray[4] &#x3D; 3;
+    }
+    else if (data &#x3D;&#x3D; &#x27;B&#x27;) {
+      this.evaluationGradingValuesArray[4] &#x3D; 2;
+    }
+    else {
+      this.evaluationGradingValuesArray[4] &#x3D; 1;
+    }
+
+    this.evaluationData.commitmentbasis_grading &#x3D; data;
+    this.TotalGrading &#x3D; this.evaluationGradingValuesArray.reduce(this.add, 0);
+
+    // Clear array using the length property
+    this.TotalGrading &#x3D; this.evaluationGradingValuesArray.reduce(this.add, 0);
+    this.gradingValue();
+    // this.evaluationGradingValuesArray.length &#x3D; 0;
+
+  }
+
+
+  getPurchaseJoinDatabyPid() {
+    this.sharedService.getPurchaseJoinDatabyPid(this.purchaseId).subscribe(
+      {
+        next: (results: any) &#x3D;&gt; {
+          //evaluation is  possible after purchase order is fully inspected....
+
+          const checkinpection &#x3D; results.map((e: any) &#x3D;&gt; {
+            //checking all purchase items are inspected in the respective purchase order
+            if (e.inspected_by &#x3D;&#x3D;&#x3D; 10) {
+              return true   //true ---&gt; inspected
+            }
+            else {
+              return false     // false ---&gt; not inspected
+            }
+          })
+
+          // if includes(false) is true indicate that there is any item which is not inspected
+          if (checkinpection.includes(false)) {
+            this.hideEvaluation &#x3D; true;
+            Swal.fire({
+              icon: &#x27;warning&#x27;,
+              title: &#x27;Oops...&#x27;,
+              text: &#x27;Please evaluate after inspection!&#x27;,
+              footer: &#x27;Without inpection, evaluation is not possible!&#x27;
+
+            }).then(() &#x3D;&gt; {
+              this.navigateBack();
+              // this.router.navigateByUrl(&#x27;/user/upload-inspection-form&#x27;);
+            })
+          }
+
+          this.checkadminapproval.admin1 &#x3D; results[0].approved_by_admin1;
+          this.checkadminapproval.admin2 &#x3D; results[0].approved_by_admin2;
+
+        },
+        error: (error) &#x3D;&gt; {
+          if (error.status &#x3D;&#x3D; 403) {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Token expired.&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              this.router.navigate([&#x27;../login&#x27;]);
+            })
+          }
+          else {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Internal server error.Please try after some time!&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              location.reload();
+            })
+          }
+        }
+      })
+  }
+
+  async addsupplierEvaluation() {
+    if (this.supplierevaluationForm.invalid) {
+      this.supplierevaluationForm.controls[&#x27;qualitybasis_grading&#x27;].markAsTouched();
+      this.supplierevaluationForm.controls[&#x27;pricebasis_grading&#x27;].markAsTouched();
+      this.supplierevaluationForm.controls[&#x27;communicationbasis_grading&#x27;].markAsTouched();
+      this.supplierevaluationForm.controls[&#x27;deliverybasis_grading&#x27;].markAsTouched();
+      this.supplierevaluationForm.controls[&#x27;commitmentbasis_grading&#x27;].markAsTouched();
+      this.supplierevaluationForm.controls[&#x27;evaluation_basis&#x27;].markAsTouched();
+    }
+    else {
+      // this.adminService.addsupplierEvaluation(this.evaluationData).subscribe(
+      //   {
+      //     next: (results: any) &#x3D;&gt; {
+      //       Swal.fire({
+      //         title: &#x27;Success!&#x27;,
+      //         text: &#x27;Evaluation done successfully!&#x27;,
+      //         icon: &#x27;success&#x27;,
+      //       }).then(() &#x3D;&gt; {
+
+      //         // this.router.navigateByUrl(&#x27;user/upload-inspection-form&#x27;);
+      //         this.navigateBackWithParams();
+
+      //       })
+      //     }, error: (error) &#x3D;&gt; {
+      //       // console.log(&#x27;error&#x27;)
+      //       if (error.status &#x3D;&#x3D; 403) {
+      //         Swal.fire({
+      //           icon: &#x27;error&#x27;,
+      //           title: &#x27;Oops!&#x27;,
+      //           text: &#x27;Token expired.&#x27;,
+      //           footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+      //         }).then(() &#x3D;&gt; {
+      //           this.router.navigate([&#x27;../login&#x27;]);
+      //         })
+      //       }
+      //       else {
+      //         Swal.fire({
+      //           icon: &#x27;error&#x27;,
+      //           title: &#x27;Oops!&#x27;,
+      //           text: &#x27;Internal server error.Please try after some time!&#x27;,
+      //           footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+      //         }).then(() &#x3D;&gt; {
+      //           location.reload();
+      //         })
+      //       }
+      //     }
+      //   })
+      try {
+        await firstValueFrom(this.adminService.addsupplierEvaluation(this.evaluationData));
+        await Swal.fire({
+          title: &#x27;Success!&#x27;,
+          text: &#x27;Evaluation done successfully!&#x27;,
+          icon: &#x27;success&#x27;,
+        })
+          .then(async () &#x3D;&gt; {
+            await firstValueFrom(this.adminService.sentMailforverification(this.evaluationData));
+            console.info(&#x27;Mail sent to vinay sir.&#x27;);
+
+            let timerInterval:any;
+            Swal.fire({
+              html: &#x60;&lt;h2 style&#x3D;&quot;color:red&quot;&gt;Redirecting to upload inspection form page!&lt;/h2&gt;&#x60;,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: () &#x3D;&gt; {
+                Swal.showLoading();
+              },
+              willClose: () &#x3D;&gt; {
+                clearInterval(timerInterval);
+              }
+            }).then((result) &#x3D;&gt; {
+              /* Read more about handling dismissals below */
+              if (result.dismiss &#x3D;&#x3D;&#x3D; Swal.DismissReason.timer) {
+                console.log(&quot;I was closed by the timer&quot;);
+              }
+              this.navigateBackWithParams();
+            });
+          })
+      }
+      catch (error: unknown) {
+        if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Token expired.&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;../login&#x27;]);
+          });
+        } else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Internal server error. Please try again later!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          });
+        }
+      }
+
+    }
+
+  }
+
+  getcolor() {
+
+    if (this.evaluationData.vendor_status &#x3D;&#x3D; &#x27;Rejected&#x27;) {
+      return &#x27;red&#x27;;
+    }
+    else if (this.evaluationData.vendor_status &#x3D;&#x3D; &#x27;Approved&#x27;) {
+      return &#x27;green&#x27;;
+    }
+    else {
+      return &#x27;white&#x27;;
+    }
+  }
+  instructions() {
+    Swal.fire({
+      title: &#x27;&lt;strong&gt;Instructions to evaluate&lt;/strong&gt;&#x27;,
+      icon: &#x27;info&#x27;,
+      html:
+        // &#x27;&lt;span class&#x3D;&quot;text-left&quot;&gt;&lt;strong&gt;If you select&lt;/strong&gt;&lt;/span&gt;, &#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary mt-2&quot;&gt;A + A + A + A + ? &#x3D; Accepted&lt;/p&gt; &#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;A + A + A + B + B &#x3D; Accepted&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;A + A + B + B + B &#x3D; Accepted&lt;/p&gt;&#x27; +
+        &#x27; &lt;p class&#x3D;&quot;text-secondary&quot;&gt;A + A + A + C + C &#x3D; Rejected&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;A + A + B + B + C &#x3D; Rejected&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;B + B + B + B + ? &#x3D; Rejected&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;B + B + B + C + C &#x3D; Rejected&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;C + C + C + C + ? &#x3D; Rejected&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;A + A + B + B + B &#x3D; Conditionally Accepted&lt;/p&gt;&#x27; +
+        &#x27;&lt;p class&#x3D;&quot;text-secondary&quot;&gt;A + A + A + B + C &#x3D; Conditionally Accepted&lt;/p&gt;&#x27;,
+      showCloseButton: true,
+    })
+  }
+
+  navigateBack() {
+    let variable &#x3D; localStorage.getItem(&#x27;backUrl&#x27;);
+    this.router.navigateByUrl(&#x60;${variable}&#x60;);
+    localStorage.removeItem(&#x27;backUrl&#x27;);
+  }
+
+  navigateBackWithParams() {
+    const backUrl &#x3D; localStorage.getItem(&#x27;backUrl&#x27;);
+    const queryParamsRaw &#x3D; localStorage.getItem(&#x27;backUrlQueryParams&#x27;);
+    const queryParams &#x3D; queryParamsRaw ? JSON.parse(queryParamsRaw) : {};
+
+    if (backUrl) {
+      this.router.navigate([backUrl], { queryParams });
+    } else {
+      this.ngOnInit();
+    }
+  }
+
+
+  validation() {
+    this.supplierevaluationForm &#x3D; new FormGroup({
+      purchase_id: new FormControl(&#x27;&#x27;, [Validators.required]),
+      evaluation_basis: new FormControl(&#x27;&#x27;, [Validators.required]),
+      vendor_status: new FormControl({ value: &#x27;&#x27;, disabled: true }, [Validators.required]),
+      qualitybasis_grading: new FormControl(&#x27;&#x27;, [Validators.required]),
+      pricebasis_grading: new FormControl(&#x27;&#x27;, [Validators.required]),
+      communicationbasis_grading: new FormControl(&#x27;&#x27;, [Validators.required]),
+      deliverybasis_grading: new FormControl(&#x27;&#x27;, [Validators.required]),
+      commitmentbasis_grading: new FormControl(&#x27;&#x27;, [Validators.required])
+    })
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;section class&#x3D;&quot;content-header&quot;&gt;
+  &lt;div class&#x3D;&quot;header-icon&quot;&gt;&lt;i class&#x3D;&quot;fa fa-user&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+  &lt;div class&#x3D;&quot;header-title&quot;&gt;
+    &lt;h1&gt;Vendor Evaluation&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+  &lt;div class&#x3D;&quot;data-content&quot; *ngIf&#x3D;&quot;!hideEvaluation&quot;&gt;
+    &lt;div class&#x3D;&quot;page-background&quot;&gt;
+      &lt;div class&#x3D;&quot;data-box&quot;&gt;
+        &lt;div class&#x3D;&quot;container-fluid&quot; [formGroup]&#x3D;&quot;supplierevaluationForm&quot;&gt;
+
+          &lt;div class&#x3D;&quot;row &quot; &gt;
+            &lt;div class&#x3D;&quot;col-lg-12 col-xl-12 col-sm-12 col-md-12 col-12 my-2 &quot;&gt;
+              &lt;button class&#x3D;&quot; btn-toggle-back&quot; (click)&#x3D;&quot;navigateBack()&quot;&gt; &lt;i
+                  class&#x3D;&quot;fa fa-arrow-left pr-1&quot;&gt;&lt;/i&gt;Back&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;vendor-bg&quot;&gt;
+            &lt;div class&#x3D;&quot;col-xl-10 col-lg-12 col-md-12 offset-md-0 offset-lg-0 offset-xl-1 box-shadow-border&quot;&gt;
+              &lt;div class&#x3D;&quot;row&quot;&gt;
+                &lt;div class&#x3D;&quot;col-lg-12&quot;&gt;
+                  &lt;!-- &lt;h1 class&#x3D;&quot;text-center form-heading&quot;&gt;Vendor Evaluation&lt;/h1&gt; --&gt;
+                  &lt;h1 class&#x3D;&quot;text-center form-heading&quot;&gt;Grading&lt;/h1&gt;
+
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-xl-6 col-lg-12 border rounded p-4&quot; [style.background]&#x3D;&quot;BackgroundColor&quot; [style.color]&#x3D;&quot;TextColor&quot;&gt;
+                  &lt;div class&#x3D;&quot;evaluation-form&quot; [style.background]&#x3D;&quot;BackgroundColor&quot; [style.color]&#x3D;&quot;TextColor&quot;&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;purchase_id&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Purchase Id&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;purchase_id&quot; class&#x3D;&quot;form-control data-control&quot;
+                          formControlName&#x3D;&quot;purchase_id&quot; readonly [(ngModel)]&#x3D;&quot;supplierData.purchase_id&quot;&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;supplier_name&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Vendor Name&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;supplier_name&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot;
+                          [ngModelOptions]&#x3D;&quot;{standalone: true}&quot; readonly [(ngModel)]&#x3D;&quot;supplierData.supplier_name&quot;&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;address&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Address&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;address&quot; class&#x3D;&quot;form-control data-control form-control-sm&quot;
+                          [ngModelOptions]&#x3D;&quot;{standalone: true}&quot; readonly [(ngModel)]&#x3D;&quot;supplierData.address&quot;&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;phone&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Phone&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;phone&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot;
+                          [ngModelOptions]&#x3D;&quot;{standalone: true}&quot; readonly [(ngModel)]&#x3D;&quot;supplierData.phone&quot;&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;mobile&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Mobile&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;mobile&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot;
+                          [ngModelOptions]&#x3D;&quot;{standalone: true}&quot; readonly [(ngModel)]&#x3D;&quot;supplierData.mobile&quot;&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;email&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Email&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;email&quot; id&#x3D;&quot;email&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot;
+                          [ngModelOptions]&#x3D;&quot;{standalone: true}&quot; readonly [(ngModel)]&#x3D;&quot;supplierData.email&quot;&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;evaluation_basis&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Evaluation Basis &lt;sup
+                          class&#x3D;&quot;text-danger&quot;&gt;*&lt;/sup&gt;&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;evaluation_basis&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot;
+                          formControlName&#x3D;&quot;evaluation_basis&quot; [readOnly]&#x3D;&quot;makeEvaluationbasisreadOnly&quot;
+                          placeholder&#x3D;&quot;Evaluation Basis&quot; [(ngModel)]&#x3D;&quot;evaluationData.evaluation_basis&quot;&gt;
+
+                        &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                          *ngIf&#x3D;&quot;supplierevaluationForm.get(&#x27;evaluation_basis&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; supplierevaluationForm.get(&#x27;evaluation_basis&#x27;).touched&quot;&gt;
+                          Required.&lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;div class&#x3D;&quot;col-xl-6 col-lg-12 border rounded p-4&quot; [style.background]&#x3D;&quot;BackgroundColor&quot; [style.color]&#x3D;&quot;TextColor&quot;&gt;
+                  &lt;div class&#x3D;&quot;evaluation-form&quot; [style.background]&#x3D;&quot;BackgroundColor&quot; [style.color]&#x3D;&quot;TextColor&quot;&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;qualitybasis_grading&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Quality &lt;sup
+                          class&#x3D;&quot;text-danger&quot;&gt;*&lt;/sup&gt;&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;qualitybasis_grading&quot;
+                          [disabled]&#x3D;&quot;supplierevaluationForm.get(&#x27;qualitybasis_grading&#x27;).disabled&quot; name&#x3D;&quot;qualitygrading&quot;
+                          #qualitygrading formControlName&#x3D;&quot;qualitybasis_grading&quot;
+                          (change)&#x3D;&quot;Selectqualitygrading(qualitygrading.value)&quot;
+                          [(ngModel)]&#x3D;&quot;evaluationData.qualitybasis_grading&quot; [style.color]&#x3D;&quot;textColor&quot;&gt;
+                          &lt;option value&#x3D;&quot;&quot; hidden disabled&gt;Select&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;A&quot;&gt;A&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;B&quot;&gt;B&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;C&quot;&gt;C&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;div class&#x3D;&quot; mandatory my-1 text-danger font-italic&quot;
+                          *ngIf&#x3D;&quot;supplierevaluationForm.get(&#x27;qualitybasis_grading&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; supplierevaluationForm.get(&#x27;qualitybasis_grading&#x27;).touched&quot;&gt;
+                          Required.&lt;/div&gt;
+                      &lt;/div&gt;
+
+                    &lt;/div&gt;
+
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;pricegrading&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Price &lt;sup
+                          class&#x3D;&quot;text-danger&quot;&gt;*&lt;/sup&gt;&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;pricegrading&quot; name&#x3D;&quot;pricegrading&quot;
+                          #pricegrading formControlName&#x3D;&quot;pricebasis_grading&quot;
+                          (change)&#x3D;&quot;Selectpricegrading(pricegrading.value)&quot;
+                          [(ngModel)]&#x3D;&quot;evaluationData.pricebasis_grading&quot; [style.color]&#x3D;&quot;textColor&quot;&gt;
+                          &lt;option value&#x3D;&quot;&quot; hidden disabled&gt;Select&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;A&quot;&gt;A&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;B&quot;&gt;B&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;C&quot;&gt;C&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                          *ngIf&#x3D;&quot;supplierevaluationForm.get(&#x27;pricebasis_grading&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; supplierevaluationForm.get(&#x27;pricebasis_grading&#x27;).touched&quot;&gt;
+                          Required.&lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;communicationgrading&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Communication &lt;sup
+                          class&#x3D;&quot;text-danger&quot;&gt;*&lt;/sup&gt;&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;communicationgrading&quot;
+                          name&#x3D;&quot;communicationgrading&quot; #communicationgrading formControlName&#x3D;&quot;communicationbasis_grading&quot;
+                          (change)&#x3D;&quot;Selectcommunicationgrading(communicationgrading.value)&quot;
+                          [(ngModel)]&#x3D;&quot;evaluationData.communicationbasis_grading&quot; [style.color]&#x3D;&quot;textColor&quot;&gt;
+                          &lt;option value&#x3D;&quot;&quot; hidden disabled&gt;Select&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;A&quot;&gt;A&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;B&quot;&gt;B&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;C&quot;&gt;C&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                          *ngIf&#x3D;&quot;supplierevaluationForm.get(&#x27;pricebasis_grading&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; supplierevaluationForm.get(&#x27;pricebasis_grading&#x27;).touched&quot;&gt;
+                          Required.&lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;deliverygrading&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Delivery &lt;sup
+                          class&#x3D;&quot;text-danger&quot;&gt;*&lt;/sup&gt;&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;deliverygrading&quot;
+                          name&#x3D;&quot;deliverygrading&quot; #deliverygrading formControlName&#x3D;&quot;deliverybasis_grading&quot;
+                          (change)&#x3D;&quot;Selectdeliverygrading(deliverygrading.value)&quot;
+                          [(ngModel)]&#x3D;&quot;evaluationData.deliverybasis_grading&quot; [style.color]&#x3D;&quot;textColor&quot;&gt;
+                          &lt;option value&#x3D;&quot;&quot; hidden disabled&gt;Select&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;A&quot;&gt;A&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;B&quot;&gt;B&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;C&quot;&gt;C&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                          *ngIf&#x3D;&quot;supplierevaluationForm.get(&#x27;deliverybasis_grading&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; supplierevaluationForm.get(&#x27;deliverybasis_grading&#x27;).touched&quot;&gt;
+                          Required.&lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;commitmentgrading&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Commitment &lt;sup
+                          class&#x3D;&quot;text-danger&quot;&gt;*&lt;/sup&gt;&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;select class&#x3D;&quot;form-control  form-control-sm data-control&quot; id&#x3D;&quot;commitmentgrading&quot;
+                          name&#x3D;&quot;commitmentgrading&quot; #commitmentgrading formControlName&#x3D;&quot;commitmentbasis_grading&quot;
+                          (change)&#x3D;&quot;Selectcommitmentgrading(commitmentgrading.value)&quot;
+                          [(ngModel)]&#x3D;&quot;evaluationData.commitmentbasis_grading&quot; [style.color]&#x3D;&quot;textColor&quot;&gt;
+                          &lt;option value&#x3D;&quot;&quot; hidden disabled&gt;Select&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;A&quot;&gt;A&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;B&quot;&gt;B&lt;/option&gt;
+                          &lt;option value&#x3D;&quot;C&quot;&gt;C&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                          *ngIf&#x3D;&quot;supplierevaluationForm.get(&#x27;commitmentbasis_grading&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; supplierevaluationForm.get(&#x27;commitmentbasis_grading&#x27;).touched&quot;&gt;
+                          Required.&lt;/div&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;form-group row my-2&quot;&gt;
+                      &lt;label for&#x3D;&quot;vendor&quot; class&#x3D;&quot;col-lg-4 col-form-label form-label&quot;&gt;Status&lt;/label&gt;
+                      &lt;div class&#x3D;&quot;col-lg-8&quot;&gt;
+                        &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;vendor&quot; name&#x3D;&quot;deliverygrading&quot;
+                          #vendor formControlName&#x3D;&quot;vendor_status&quot; readOnly [(ngModel)]&#x3D;&quot;evaluationData.vendor_status&quot;
+                          [style.color]&#x3D;&quot;textColor&quot;&gt;
+                          &lt;option value&#x3D;&quot;&quot; hidden disabled&gt;Select&lt;/option&gt;
+                          &lt;option value&#x3D;&#x27;Approved&#x27;&gt;Approved&lt;/option&gt;
+                          &lt;option value&#x3D;&#x27;Conditionally accepted&#x27;&gt;Conditionally accepted&lt;/option&gt;
+                          &lt;option value&#x3D;&#x27;Rejected&#x27;&gt;Rejected&lt;/option&gt;
+                        &lt;/select&gt;
+                      &lt;/div&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-lg-12&quot;&gt;
+                  &lt;div class&#x3D;&quot;data-form-btn&quot;&gt;
+                    &lt;div class&#x3D;&quot;form-group text-center &quot;&gt;
+                      &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn btn-data-login btn-block&quot; *ngIf&#x3D;&quot;display&quot;
+                        (click)&#x3D;&quot;addsupplierEvaluation()&quot;&gt;Submit&lt;/button&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;span id&#x3D;&quot;note&quot; class&#x3D;&quot;pb-2&quot;&gt;
+                    &lt;button class&#x3D;&quot;btn instruction-btn&quot; (click)&#x3D;&quot;instructions()&quot;&gt;Instructions&lt;/button&gt;
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;data-content&quot; *ngIf&#x3D;&quot;hideEvaluation&quot;&gt;
+    &lt;div class&#x3D;&quot;background&quot;&gt;
+      &lt;div class&#x3D;&quot;nocontent text-center&quot;&gt;
+        &lt;h1 class&#x3D;&quot;text-danger&quot;&gt;Evaluation is not possible before inspection....&lt;/h1&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./supplier-evaluation.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">input[type&#x3D;&#x27;text&#x27;]:disabled{
+    color:red;
+    background-color: #F5FEFD;
+
+}
+
+input[type&#x3D;&#x27;text&#x27;]:read-only{
+    color:red;
+    background-color: #F5FEFD;
+
+}
+input[type&#x3D;&#x27;number&#x27;]:read-only{
+    color:red;
+    background-color: #F5FEFD;
+
+}
+
+input[type&#x3D;&#x27;email&#x27;]:read-only{
+    color:red;
+    background-color: #F5FEFD;
+
+}
+
+select:disabled{
+    // color:green;
+    background-color: #F5FEFD;
+    font-weight: 600;
+}
+.rectangle-box {
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+
+  .square-box p{
+    margin-left:6rem;
+  }
+
+  #note{
+    cursor: pointer;
+  }
+  
+  @media (min-width: 992px) {
+    .container-fluid {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    
+    .data-box {
+      margin-right: 10px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .container-fluid {
+      flex-direction: row;
+      justify-content: center;
+    }
+    // .data-box {
+    //   margin-right: 10px;
+    // }
+  }</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><section class="content-header">  <div class="header-icon"><i class="fa fa-user" aria-hidden="true"></i></div>  <div class="header-title">    <h1>Vendor Evaluation</h1>  </div></section><div class="container-fluid">  <div class="data-content" *ngIf="!hideEvaluation">    <div class="page-background">      <div class="data-box">        <div class="container-fluid" [formGroup]="supplierevaluationForm">          <div class="row " >            <div class="col-lg-12 col-xl-12 col-sm-12 col-md-12 col-12 my-2 ">              <button class=" btn-toggle-back" (click)="navigateBack()"> <i                  class="fa fa-arrow-left pr-1"></i>Back</button>            </div>          </div>          <div class="vendor-bg">            <div class="col-xl-10 col-lg-12 col-md-12 offset-md-0 offset-lg-0 offset-xl-1 box-shadow-border">              <div class="row">                <div class="col-lg-12">                  <!-- <h1 class="text-center form-heading">Vendor Evaluation</h1> -->                  <h1 class="text-center form-heading">Grading</h1>                </div>                <div class="col-xl-6 col-lg-12 border rounded p-4" [style.background]="BackgroundColor" [style.color]="TextColor">                  <div class="evaluation-form" [style.background]="BackgroundColor" [style.color]="TextColor">                    <div class="form-group row my-2">                      <label for="purchase_id" class="col-lg-4 col-form-label form-label">Purchase Id</label>                      <div class="col-lg-8">                        <input type="text" id="purchase_id" class="form-control data-control"                          formControlName="purchase_id" readonly [(ngModel)]="supplierData.purchase_id">                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="supplier_name" class="col-lg-4 col-form-label form-label">Vendor Name</label>                      <div class="col-lg-8">                        <input type="text" id="supplier_name" class="form-control form-control-sm data-control"                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.supplier_name">                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="address" class="col-lg-4 col-form-label form-label">Address</label>                      <div class="col-lg-8">                        <input type="text" id="address" class="form-control data-control form-control-sm"                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.address">                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="phone" class="col-lg-4 col-form-label form-label">Phone</label>                      <div class="col-lg-8">                        <input type="text" id="phone" class="form-control form-control-sm data-control"                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.phone">                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="mobile" class="col-lg-4 col-form-label form-label">Mobile</label>                      <div class="col-lg-8">                        <input type="text" id="mobile" class="form-control form-control-sm data-control"                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.mobile">                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="email" class="col-lg-4 col-form-label form-label">Email</label>                      <div class="col-lg-8">                        <input type="email" id="email" class="form-control form-control-sm data-control"                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.email">                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="evaluation_basis" class="col-lg-4 col-form-label form-label">Evaluation Basis <sup                          class="text-danger">*</sup></label>                      <div class="col-lg-8">                        <input type="text" id="evaluation_basis" class="form-control form-control-sm data-control"                          formControlName="evaluation_basis" [readOnly]="makeEvaluationbasisreadOnly"                          placeholder="Evaluation Basis" [(ngModel)]="evaluationData.evaluation_basis">                        <div class="mandatory my-1 text-danger font-italic"                          *ngIf="supplierevaluationForm.get(\'evaluation_basis\').hasError(\'required\') && supplierevaluationForm.get(\'evaluation_basis\').touched">                          Required.</div>                      </div>                    </div>                  </div>                </div>                <div class="col-xl-6 col-lg-12 border rounded p-4" [style.background]="BackgroundColor" [style.color]="TextColor">                  <div class="evaluation-form" [style.background]="BackgroundColor" [style.color]="TextColor">                    <div class="form-group row my-2">                      <label for="qualitybasis_grading" class="col-lg-4 col-form-label form-label">Quality <sup                          class="text-danger">*</sup></label>                      <div class="col-lg-8">                        <select class="form-control form-control-sm data-control" id="qualitybasis_grading"                          [disabled]="supplierevaluationForm.get(\'qualitybasis_grading\').disabled" name="qualitygrading"                          #qualitygrading formControlName="qualitybasis_grading"                          (change)="Selectqualitygrading(qualitygrading.value)"                          [(ngModel)]="evaluationData.qualitybasis_grading" [style.color]="textColor">                          <option value="" hidden disabled>Select</option>                          <option value="A">A</option>                          <option value="B">B</option>                          <option value="C">C</option>                        </select>                        <div class=" mandatory my-1 text-danger font-italic"                          *ngIf="supplierevaluationForm.get(\'qualitybasis_grading\').hasError(\'required\') && supplierevaluationForm.get(\'qualitybasis_grading\').touched">                          Required.</div>                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="pricegrading" class="col-lg-4 col-form-label form-label">Price <sup                          class="text-danger">*</sup></label>                      <div class="col-lg-8">                        <select class="form-control form-control-sm data-control" id="pricegrading" name="pricegrading"                          #pricegrading formControlName="pricebasis_grading"                          (change)="Selectpricegrading(pricegrading.value)"                          [(ngModel)]="evaluationData.pricebasis_grading" [style.color]="textColor">                          <option value="" hidden disabled>Select</option>                          <option value="A">A</option>                          <option value="B">B</option>                          <option value="C">C</option>                        </select>                        <div class="mandatory my-1 text-danger font-italic"                          *ngIf="supplierevaluationForm.get(\'pricebasis_grading\').hasError(\'required\') && supplierevaluationForm.get(\'pricebasis_grading\').touched">                          Required.</div>                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="communicationgrading" class="col-lg-4 col-form-label form-label">Communication <sup                          class="text-danger">*</sup></label>                      <div class="col-lg-8">                        <select class="form-control form-control-sm data-control" id="communicationgrading"                          name="communicationgrading" #communicationgrading formControlName="communicationbasis_grading"                          (change)="Selectcommunicationgrading(communicationgrading.value)"                          [(ngModel)]="evaluationData.communicationbasis_grading" [style.color]="textColor">                          <option value="" hidden disabled>Select</option>                          <option value="A">A</option>                          <option value="B">B</option>                          <option value="C">C</option>                        </select>                        <div class="mandatory my-1 text-danger font-italic"                          *ngIf="supplierevaluationForm.get(\'pricebasis_grading\').hasError(\'required\') && supplierevaluationForm.get(\'pricebasis_grading\').touched">                          Required.</div>                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="deliverygrading" class="col-lg-4 col-form-label form-label">Delivery <sup                          class="text-danger">*</sup></label>                      <div class="col-lg-8">                        <select class="form-control form-control-sm data-control" id="deliverygrading"                          name="deliverygrading" #deliverygrading formControlName="deliverybasis_grading"                          (change)="Selectdeliverygrading(deliverygrading.value)"                          [(ngModel)]="evaluationData.deliverybasis_grading" [style.color]="textColor">                          <option value="" hidden disabled>Select</option>                          <option value="A">A</option>                          <option value="B">B</option>                          <option value="C">C</option>                        </select>                        <div class="mandatory my-1 text-danger font-italic"                          *ngIf="supplierevaluationForm.get(\'deliverybasis_grading\').hasError(\'required\') && supplierevaluationForm.get(\'deliverybasis_grading\').touched">                          Required.</div>                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="commitmentgrading" class="col-lg-4 col-form-label form-label">Commitment <sup                          class="text-danger">*</sup></label>                      <div class="col-lg-8">                        <select class="form-control  form-control-sm data-control" id="commitmentgrading"                          name="commitmentgrading" #commitmentgrading formControlName="commitmentbasis_grading"                          (change)="Selectcommitmentgrading(commitmentgrading.value)"                          [(ngModel)]="evaluationData.commitmentbasis_grading" [style.color]="textColor">                          <option value="" hidden disabled>Select</option>                          <option value="A">A</option>                          <option value="B">B</option>                          <option value="C">C</option>                        </select>                        <div class="mandatory my-1 text-danger font-italic"                          *ngIf="supplierevaluationForm.get(\'commitmentbasis_grading\').hasError(\'required\') && supplierevaluationForm.get(\'commitmentbasis_grading\').touched">                          Required.</div>                      </div>                    </div>                    <div class="form-group row my-2">                      <label for="vendor" class="col-lg-4 col-form-label form-label">Status</label>                      <div class="col-lg-8">                        <select class="form-control form-control-sm data-control" id="vendor" name="deliverygrading"                          #vendor formControlName="vendor_status" readOnly [(ngModel)]="evaluationData.vendor_status"                          [style.color]="textColor">                          <option value="" hidden disabled>Select</option>                          <option value=\'Approved\'>Approved</option>                          <option value=\'Conditionally accepted\'>Conditionally accepted</option>                          <option value=\'Rejected\'>Rejected</option>                        </select>                      </div>                    </div>                  </div>                </div>                <div class="col-lg-12">                  <div class="data-form-btn">                    <div class="form-group text-center ">                      <button type="submit" class="btn btn-data-login btn-block" *ngIf="display"                        (click)="addsupplierEvaluation()">Submit</button>                    </div>                  </div>                  <span id="note" class="pb-2">                    <button class="btn instruction-btn" (click)="instructions()">Instructions</button>                  </span>                </div>              </div>            </div>          </div>        </div>      </div>    </div>  </div>  <div class="data-content" *ngIf="hideEvaluation">    <div class="background">      <div class="nocontent text-center">        <h1 class="text-danger">Evaluation is not possible before inspection....</h1>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AcceptedRequestComponent', 'selector': 'app-accepted-request'},{'name': 'AddItemComponent', 'selector': 'app-add-item'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssetsComponent', 'selector': 'app-assets'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'DesignationComponent', 'selector': 'app-designation'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ForgetPasswordComponent', 'selector': 'app-forget-password'},{'name': 'GatepassComponent', 'selector': 'app-gatepass'},{'name': 'GatepassidListComponent', 'selector': 'app-gatepassid-list'},{'name': 'GatepassListComponent', 'selector': 'app-gatepass-list'},{'name': 'GatepassViewComponent', 'selector': 'app-gatepass-view'},{'name': 'GenarateRequestComponent', 'selector': 'app-genarate-request'},{'name': 'GroupComponent', 'selector': 'app-group'},{'name': 'IncomingItemDetailsComponent', 'selector': 'app-incoming-item-details'},{'name': 'ItemWithPoInvoiceMovetoinventoryForAPeriodComponent', 'selector': 'app-item-with-po-invoice-movetoinventory-for-a-period'},{'name': 'LocationComponent', 'selector': 'app-location'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MakeDirectpurchaseOrderComponent', 'selector': 'app-make-directpurchase-order'},{'name': 'MakePurchaseOrderComponent', 'selector': 'app-make-purchase-order'},{'name': 'MovetoItsmComponent', 'selector': 'app-moveto-itsm'},{'name': 'NewsystemInformationComponent', 'selector': 'app-newsystem-information'},{'name': 'PendingRequestComponent', 'selector': 'app-pending-request'},{'name': 'PoApprovalMailComponent', 'selector': 'app-po-approval-mail'},{'name': 'PoRejectionMailComponent', 'selector': 'app-po-rejection-mail'},{'name': 'ProductComponent', 'selector': 'app-product'},{'name': 'PurchaseInfoComponent', 'selector': 'app-purchase-info'},{'name': 'PurchaseOrderListComponent', 'selector': 'app-purchase-order-list'},{'name': 'PurchaseOrderViewComponent', 'selector': 'app-purchase-order-view'},{'name': 'ReceivedPurchaseOrderComponent', 'selector': 'app-received-purchase-order'},{'name': 'ReceivedRequestComponent', 'selector': 'app-received-request'},{'name': 'ReceivedRequestModalComponent', 'selector': 'app-received-request-modal'},{'name': 'RejectedRequestComponent', 'selector': 'app-rejected-request'},{'name': 'ReportActiveSupplierComponent', 'selector': 'app-report-active-supplier'},{'name': 'ReportCompleteAssetComponent', 'selector': 'app-report-complete-asset'},{'name': 'ReportGoodsAndServicesComponent', 'selector': 'app-report-goods-and-services'},{'name': 'ReportItemsListComponent', 'selector': 'app-report-items-list'},{'name': 'ReportItemWithLocationanduserComponent', 'selector': 'app-report-item-with-locationanduser'},{'name': 'ReportItemWithPriceComponent', 'selector': 'app-report-item-with-price'},{'name': 'ReportLicenseManagementComponent', 'selector': 'app-report-license-management'},{'name': 'ReportLifeCycleComponent', 'selector': 'app-report-life-cycle'},{'name': 'ReportPendingStockComponent', 'selector': 'app-report-pending-stock'},{'name': 'ReportPurchaseOrderComponent', 'selector': 'app-report-purchase-order'},{'name': 'ReportScrapedItemsComponent', 'selector': 'app-report-scraped-items'},{'name': 'ReportStockInHandComponent', 'selector': 'app-report-stock-in-hand'},{'name': 'ReportUploadDocumentComponent', 'selector': 'app-report-upload-document'},{'name': 'ReportVendorEvaluationComponent', 'selector': 'app-report-vendor-evaluation'},{'name': 'ReportWarrantyItemsComponent', 'selector': 'app-report-warranty-items'},{'name': 'SupplierEvaluationComponent', 'selector': 'app-supplier-evaluation'},{'name': 'SystemDetailComponent', 'selector': 'app-system-detail'},{'name': 'SystemInformationListComponent', 'selector': 'app-system-information-list'},{'name': 'TransferStockComponent', 'selector': 'app-transfer-stock'},{'name': 'UpdateItemsComponent', 'selector': 'app-update-items'},{'name': 'UpdateUserComponent', 'selector': 'app-update-user'},{'name': 'UpdateVendorComponent', 'selector': 'app-update-vendor'},{'name': 'UploadInspectionFormComponent', 'selector': 'app-upload-inspection-form'},{'name': 'UploadInvoiceComponent', 'selector': 'app-upload-invoice'},{'name': 'UploadScanDocumentComponent', 'selector': 'app-upload-scan-document'},{'name': 'UploadScanQuotationComponent', 'selector': 'app-upload-scan-quotation'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserDashboardComponent', 'selector': 'app-user-dashboard'},{'name': 'UserListComponent', 'selector': 'app-user-list'},{'name': 'UserPrivilegeComponent', 'selector': 'app-user-privilege'},{'name': 'VendorApprovalMailComponent', 'selector': 'app-vendor-approval-mail'},{'name': 'VendorEvaluationModalComponent', 'selector': 'app-vendor-evaluation-modal'},{'name': 'VendorListComponent', 'selector': 'app-vendor-list'},{'name': 'VendorRejectionMailComponent', 'selector': 'app-vendor-rejection-mail'}];
+    var DIRECTIVES = [{'name': 'PositiveNumberDirective', 'selector': '[b-positive]'}];
+    var ACTUAL_COMPONENT = {'name': 'SupplierEvaluationComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'SupplierEvaluationComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

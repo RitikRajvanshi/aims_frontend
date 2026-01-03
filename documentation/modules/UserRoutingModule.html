@@ -1,0 +1,388 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content module">
+                   <div class="content-data">
+
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >UserRoutingModule</li>
+</ol>
+
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+    </li>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/user/user-routing.module.ts</code>
+        </p>
+
+
+
+
+
+        <div class="container-fluid module">
+            <div class="row">
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
+import { Routes, RouterModule } from &#x27;@angular/router&#x27;;
+import { UserDashboardComponent } from &#x27;./user-component/user-dashboard/user-dashboard.component&#x27;;
+import { UserComponent } from &#x27;./user.component&#x27;;
+import { CategoryComponent } from &#x27;./user-component/category/category.component&#x27;;
+import { ProductComponent } from &#x27;./user-component/product/product.component&#x27;;
+import { GroupComponent } from &#x27;./user-component/group/group.component&#x27;;
+import { DesignationComponent } from &#x27;./user-component/designation/designation.component&#x27;;
+import { UserPrivilegeComponent } from &#x27;./user-component/user-privilege/user-privilege.component&#x27;;
+import { LocationComponent } from &#x27;./user-component/location/location.component&#x27;;
+import { AddUserComponent } from &#x27;./user-component/add-user/add-user.component&#x27;;
+import { UserListComponent } from &#x27;./user-component/user-list/user-list.component&#x27;;
+import { AddVendorComponent } from &#x27;./user-component/add-vendor/add-vendor.component&#x27;;
+import { VendorListComponent } from &#x27;./user-component/vendor-list/vendor-list.component&#x27;;
+import { MakePurchaseOrderComponent } from &#x27;./user-component/make-purchase-order/make-purchase-order.component&#x27;;
+import { PurchaseOrderListComponent } from &#x27;./user-component/purchase-order-list/purchase-order-list.component&#x27;;
+import { GenarateRequestComponent } from &#x27;./user-component/genarate-request/genarate-request.component&#x27;;
+import { AcceptedRequestComponent } from &#x27;./user-component/accepted-request/accepted-request.component&#x27;;
+import { PendingRequestComponent } from &#x27;./user-component/pending-request/pending-request.component&#x27;;
+import { RejectedRequestComponent } from &#x27;./user-component/rejected-request/rejected-request.component&#x27;;
+import { UploadInvoiceComponent } from &#x27;./user-component/upload-invoice/upload-invoice.component&#x27;;
+import { UploadInspectionFormComponent } from &#x27;./user-component/upload-inspection-form/upload-inspection-form.component&#x27;;
+import { UpdateItemsComponent } from &#x27;./user-component/update-items/update-items.component&#x27;;
+import { UploadScanDocumentComponent } from &#x27;./user-component/upload-scan-document/upload-scan-document.component&#x27;;
+import { UploadScanQuotationComponent } from &#x27;./user-component/upload-scan-quotation/upload-scan-quotation.component&#x27;;
+import { IncomingItemDetailsComponent } from &#x27;./user-component/incoming-item-details/incoming-item-details.component&#x27;;
+
+import { CompanyRegistrationComponent } from &#x27;./user-component/company-registration/company-registration.component&#x27;;
+import { MovetoItsmComponent } from &#x27;./user-component/moveto-itsm/moveto-itsm.component&#x27;;
+import { NewsystemInformationComponent } from &#x27;./user-component/newsystem-information/newsystem-information.component&#x27;;
+import { SystemInformationListComponent } from &#x27;./user-component/system-information-list/system-information-list.component&#x27;;
+import { AssetsComponent } from &#x27;./user-component/assets/assets.component&#x27;;
+import { TransferStockComponent } from &#x27;./user-component/transfer-stock/transfer-stock.component&#x27;;
+import { UpdateVendorComponent } from &#x27;./user-component/update-vendor/update-vendor.component&#x27;;
+import { ReportActiveSupplierComponent } from &#x27;./user-component/report-active-supplier/report-active-supplier.component&#x27;;
+import { UpdateUserComponent } from &#x27;./user-component/update-user/update-user.component&#x27;;
+import { PurchaseOrderViewComponent } from &#x27;./user-component/purchase-order-view/purchase-order-view.component&#x27;;
+import { SupplierEvaluationComponent } from &#x27;./user-component/supplier-evaluation/supplier-evaluation.component&#x27;;
+import { ReportPurchaseOrderComponent } from &#x27;./user-component/report-purchase-order/report-purchase-order.component&#x27;;
+import { ReportVendorEvaluationComponent } from &#x27;./user-component/report-vendor-evaluation/report-vendor-evaluation.component&#x27;;
+import { ReportUploadDocumentComponent } from &#x27;./user-component/report-upload-document/report-upload-document.component&#x27;;
+import { ReportItemsListComponent } from &#x27;./user-component/report-items-list/report-items-list.component&#x27;;
+import { ReceivedRequestComponent } from &#x27;./user-component/received-request/received-request.component&#x27;;
+import { ReceivedPurchaseOrderComponent } from &#x27;./user-component/received-purchase-order/received-purchase-order.component&#x27;;
+import { AuthGuard } from &#x27;../guards/auth.guard&#x27;;
+import { ReportPendingStockComponent } from &#x27;./user-component/report-pending-stock/report-pending-stock.component&#x27;;
+import { ReportStockInHandComponent } from &#x27;./user-component/report-stock-in-hand/report-stock-in-hand.component&#x27;;
+import { ReportCompleteAssetComponent } from &#x27;./user-component/report-complete-asset/report-complete-asset.component&#x27;;
+import { EditProfileComponent } from &#x27;./user-component/edit-profile/edit-profile.component&#x27;;
+import { SystemDetailComponent } from &#x27;./user-component/system-detail/system-detail.component&#x27;;
+import { UserRoleGuard } from &#x27;../guards/user-role.guard&#x27;;
+import { SuperAdminGuard } from &#x27;../guards/super-admin.guard&#x27;;
+import { ReportItemWithPriceComponent } from &#x27;./user-component/report-item-with-price/report-item-with-price.component&#x27;;
+import { ReportItemWithLocationanduserComponent } from &#x27;./user-component/report-item-with-locationanduser/report-item-with-locationanduser.component&#x27;;
+import { PurchaseInfoComponent } from &#x27;./user-component/purchase-info/purchase-info.component&#x27;;
+import { ReportWarrantyItemsComponent } from &#x27;./user-component/report-warranty-items/report-warranty-items.component&#x27;;
+import { ReportScrapedItemsComponent } from &#x27;./user-component/report-scraped-items/report-scraped-items.component&#x27;;
+import { AddItemComponent } from &#x27;./user-component/add-item/add-item.component&#x27;;
+import { GatepassComponent } from &#x27;./user-component/gatepass/gatepass.component&#x27;;
+import { GatepassViewComponent } from &#x27;./user-component/gatepass-view/gatepass-view.component&#x27;;
+import { GatepassListComponent } from &#x27;./user-component/gatepass-list/gatepass-list.component&#x27;;
+import { GatepassidListComponent } from &#x27;./user-component/gatepassid-list/gatepassid-list.component&#x27;;
+import { ReportLicenseManagementComponent } from &#x27;./user-component/report-license-management/report-license-management.component&#x27;;
+import { ReportLifeCycleComponent } from &#x27;./user-component/report-life-cycle/report-life-cycle.component&#x27;;
+import { ReportGoodsAndServicesComponent } from &#x27;./user-component/report-goods-and-services/report-goods-and-services.component&#x27;;
+import { ItemWithPoInvoiceMovetoinventoryForAPeriodComponent } from &#x27;./user-component/item-with-po-invoice-movetoinventory-for-a-period/item-with-po-invoice-movetoinventory-for-a-period.component&#x27;;
+import { PoApprovalMailComponent } from &#x27;./user-component/po-approval-mail/po-approval-mail.component&#x27;;
+import { PoRejectionMailComponent } from &#x27;./user-component/po-rejection-mail/po-rejection-mail.component&#x27;;
+import { MakeDirectpurchaseOrderComponent } from &#x27;./user-component/make-directpurchase-order/make-directpurchase-order.component&#x27;;
+import { VendorApprovalMailComponent } from &#x27;./user-component/vendor-approval-mail/vendor-approval-mail.component&#x27;;
+import { VendorRejectionMailComponent } from &#x27;./user-component/vendor-rejection-mail/vendor-rejection-mail.component&#x27;;
+
+export const routes: Routes &#x3D; [
+
+{
+  path:&#x27;&#x27; , component:UserComponent, canActivate:[AuthGuard],
+
+  children:[
+   {path:&#x27;&#x27;, component:UserDashboardComponent },
+   {path:&#x27;user-dashboard&#x27;, component:UserDashboardComponent},
+   {path:&#x27;assets&#x27;, component:AssetsComponent},
+   {path:&#x27;category&#x27;, component:CategoryComponent},
+   {path:&#x27;item&#x27;, component:ProductComponent},
+   {path:&#x27;department&#x27;, component:GroupComponent},
+   {path:&#x27;designation&#x27;, component:DesignationComponent},
+   {path:&#x27;user-privilege&#x27;, component:UserPrivilegeComponent},
+   {path:&#x27;location&#x27;, component:LocationComponent},
+   {path:&#x27;add-user&#x27;, component:AddUserComponent, canActivate:[UserRoleGuard]},
+   {path:&#x27;user-list&#x27;, component:UserListComponent},
+   {path:&#x27;update-user/:id&#x27;, component:UpdateUserComponent},
+   {path:&#x27;add-vendor&#x27;, component:AddVendorComponent},
+   {path:&#x27;vendor-list&#x27;, component:VendorListComponent},
+   {path:&#x27;make-purchase-order&#x27;, component:MakePurchaseOrderComponent},
+   {path:&#x27;purchase-order-list&#x27;, component:PurchaseOrderListComponent},
+   {path:&#x27;genarate-request&#x27;, component:GenarateRequestComponent},
+   {path:&#x27;accepted-request&#x27;, component:AcceptedRequestComponent},
+   {path:&#x27;pending-request&#x27;, component:PendingRequestComponent},
+   {path:&#x27;rejected-request&#x27;, component:RejectedRequestComponent},
+   {path:&#x27;upload-invoice&#x27;, component:UploadInvoiceComponent},
+   {path:&#x27;upload-inspection-form&#x27;, component:UploadInspectionFormComponent},
+   {path:&#x27;update-items&#x27;, component:UpdateItemsComponent},
+   {path:&#x27;upload-scan-document&#x27;, component:UploadScanDocumentComponent},
+   {path:&#x27;upload-scan-quotation&#x27;, component:UploadScanQuotationComponent},
+   {path:&#x27;incoming-item-details&#x27;, component:IncomingItemDetailsComponent},
+   {path:&#x27;company-registration&#x27;, component:CompanyRegistrationComponent, canActivate:[SuperAdminGuard]},
+   {path:&#x27;moveto-itsm&#x27;, component:MovetoItsmComponent},
+   {path:&#x27;newsystem-information&#x27;, component:NewsystemInformationComponent, canActivate:[UserRoleGuard]},
+   {path:&#x27;system-information-list&#x27;, component:SystemInformationListComponent},
+   {path:&#x27;transfer-stock&#x27;, component:TransferStockComponent, canActivate:[UserRoleGuard]},
+   {path:&#x27;update-vendor/:id&#x27;, component:UpdateVendorComponent},
+   {path:&#x27;report-active-vendor&#x27;, component:ReportActiveSupplierComponent},
+   {path:&#x27;purchase-order-view/:pid&#x27;, component:PurchaseOrderViewComponent},
+   {path:&#x27;vendor-evaluation/:pid&#x27;, component:SupplierEvaluationComponent},
+   {path:&#x27;report-purchase-order&#x27;, component:ReportPurchaseOrderComponent},
+   {path:&#x27;report-vendor-evaluation&#x27;, component:ReportVendorEvaluationComponent},
+   {path:&#x27;report-direct-purchases&#x27;, component:ReportUploadDocumentComponent},
+   {path:&#x27;report-items-list&#x27;, component:ReportItemsListComponent},
+   {path:&#x27;received-request&#x27;, component:ReceivedRequestComponent, canActivate:[SuperAdminGuard]},
+   {path:&#x27;received-purhchase-order&#x27;, component:ReceivedPurchaseOrderComponent , canActivate:[SuperAdminGuard]},
+   {path:&#x27;report-pending-stock&#x27;, component:ReportPendingStockComponent},
+   {path:&#x27;report-stock-in-hand&#x27;, component:ReportStockInHandComponent},
+   {path:&#x27;report-total-assets&#x27;, component:ReportCompleteAssetComponent},
+   {path:&#x27;edit-profile&#x27;, component:EditProfileComponent},
+   {path:&#x27;system-detail/:transferto/:itemid&#x27;, component:SystemDetailComponent},
+   {path:&#x27;report-item-with-price&#x27;, component:ReportItemWithPriceComponent},
+   {path:&#x27;report-item-with-location&#x27;, component:ReportItemWithLocationanduserComponent},
+   {path:&#x27;purchase-info/:pid&#x27;, component:PurchaseInfoComponent},
+   {path:&#x27;report-item-with-warranty&#x27;, component:ReportWarrantyItemsComponent},
+   {path:&#x27;report-scraped-item&#x27;, component:ReportScrapedItemsComponent},
+   {path:&#x27;add-items&#x27;, component:AddItemComponent, canActivate:[UserRoleGuard]},
+   {path:&#x27;gate-pass&#x27;, component:GatepassComponent,canActivate:[UserRoleGuard]},
+   {path:&#x27;gate-pass-list/:id&#x27;, component:GatepassListComponent},
+   {path:&#x27;gatepass-view&#x27;, component:GatepassViewComponent},
+   {path:&#x27;gatepassid-list&#x27;, component:GatepassidListComponent},
+   {path:&#x27;report-license-management&#x27;, component:ReportLicenseManagementComponent},
+   {path:&#x27;report-item-life-cycle&#x27;, component:ReportLifeCycleComponent},
+   {path:&#x27;report-goods-and-services&#x27;, component:ReportGoodsAndServicesComponent},
+   {path:&#x27;report-item-with-po-invoice-movetoinventory-for-a-period&#x27;, component:ItemWithPoInvoiceMovetoinventoryForAPeriodComponent},
+    //  {path:&#x27;make-directpurchase-order&#x27;, component:MakeDirectpurchaseOrderComponent},
+  ]
+},
+
+{
+  path:&#x27;po-approval-mail/:pid&#x27;, component:PoApprovalMailComponent
+},
+
+{
+  path:&#x27;po-rejection-mail/:pid&#x27;, component:PoRejectionMailComponent
+},
+{
+  path:&#x27;vendor-approval-mail/:vid&#x27;, component:VendorApprovalMailComponent
+},
+
+{
+  path:&#x27;vendor-rejection-mail/:vid&#x27;, component:VendorRejectionMailComponent
+}
+
+
+
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class UserRoutingModule { }
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
+            var COMPODOC_CURRENT_PAGE_URL = 'UserRoutingModule.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

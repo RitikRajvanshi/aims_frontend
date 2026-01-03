@@ -1,0 +1,271 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-smile-o" style="color:#FF5733 " aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Update Vendor</h1>
+    </div>
+</section>
+<!-- NEW CSS STARTS HERE -->
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="add-icon-section pl-2">
+            <button class="btn-toggle-back" (click)="navigateBack()"> <i class="fa fa-arrow-left pr-1"></i>
+                Back</button>
+        </div>
+        <div class="page-background-h">
+            <div class="flex-box">
+                <div class=" col-md-12 col-sm-12 col-lg-8 mt-5  ">
+                    <div class=" data-form" >
+                        <h1 class="text-center form-heading mb-4 mt-3">Update Vendor</h1>
+                        <form [formGroup]="updatesupplierForm" >
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="supplier_name" class="form-label"><sup>*</sup>Vendor's Name:</label>
+                                    <input type="text" id="supplier_name" class="form-control form-control-sm data-control" placeholder="Enter Supplier Name" (keydown)="NoSpaceallowedatstart($event)"  formControlName='supplier_name' [(ngModel)]="supplierdata.supplier_name" [readOnly]="getsupplierdata?.status!=1"/>                                   
+                                <div class="mandatory my-1 text-danger"
+                                *ngIf="updatesupplierForm.get('supplier_name').hasError('required') && updatesupplierForm.get('supplier_name').touched">
+                                Required</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contact_person" class="form-label"><sup>*</sup>Contact Person:</label>
+                                    <input type="text" id="contact_person" class="form-control form-control-sm data-control" placeholder="Enter Contact Person "  (keydown)="NoSpaceallowedatstart($event)"  formControlName="contact_person" [(ngModel)]="supplierdata.contact_person"/>
+            
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                  *ngIf="updatesupplierForm.get('contact_person').hasError('required') && updatesupplierForm.get('contact_person').touched">
+                                  Required</div>
+                                </div>
+                              </div>
+                              <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="rating" class="form-label"> <sup>*</sup>Initial Rating</label>
+                                    <select class="form-control form-control-sm data-control" id="rating" formControlName="rating" [(ngModel)]="supplierdata.rating" [disabled]="getsupplierdata?.staus!='1'">
+                
+                                      <option [selected]=true disabled hidden>Select</option>
+                
+                                      <!-- <option selected="true" [disabled]=true value="">Select</option> -->
+                
+                
+                                      <option>A+</option>
+                                      <option>A</option>
+                                      <option>B</option>
+                                      <option>C</option>
+                                      <option>D</option>
+                
+                                    </select>
+                
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                    *ngIf="updatesupplierForm.get('rating').hasError('required') && updatesupplierForm.get('rating').touched">
+                                    Require.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="category" class="form-label"> <sup>*</sup>Mode</label>
+                                    <select class="form-control form-control-sm data-control" id="category" formControlName="category"
+                                    [(ngModel)]="supplierdata.category">
+                
+                                      <option [selected]=true disabled hidden>Select</option>
+                
+                                      <!-- <option selected="true" [disabled]=true value="">Select</option> -->
+                                      <option value="0">Offline</option>
+                                      <option value="1">Online</option>
+                                
+                                    </select>
+                                </div>
+                              </div>
+                              <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="text" class="form-label"><sup>*</sup>Phone:</label>
+                                    <input type="text" id="phone" class="form-control form-control-sm data-control" placeholder="Enter Phone " formControlName="phone" maxlength="13" [(ngModel)]="supplierdata.phone" 
+                                    (keydown)="NoSpaceallowedatstart($event)"  (keypress)="tendigitnumber($event)"/>
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                    *ngIf="updatesupplierForm.get('phone').hasError('pattern')">
+                                   Invalid</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="mobile" class="form-label"><sup>*</sup>Mobile:</label>
+                        <input type="text" id="mobile" class="form-control form-control-sm data-control" placeholder="Enter Mobile " formControlName="mobile" [(ngModel)]="supplierdata.mobile" (keydown)="NoSpaceallowedatstart($event)"  (keypress)="tendigitnumber($event)" />
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                        *ngIf="updatesupplierForm.get('mobile').hasError('required') && updatesupplierForm.get('mobile').touched">
+                        Required</div>
+                        <div class="mandatory my-1 text-danger font-italic"
+                        *ngIf="updatesupplierForm.get('mobile').hasError('pattern')">
+                        Invalid</div>
+                                </div>
+                              </div>
+                              <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="gstn" class="form-label">GSTIN:</label>
+                                    <input type="text" id="gstn" class="form-control form-control-sm data-control" placeholder="Enter Vendor's GSTIN"
+                                        formControlName="gstn" maxlength="16" [(ngModel)]="supplierdata.gstn" (keydown)="NoSpaceallowedatstart($event)" [readOnly]="getsupplierdata?.status!=1" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pan_no" class="form-label">PAN No.</label>
+                                    <input type="text" id="pan_no" class="form-control form-control-sm data-control" placeholder="Enter PAN"
+                                        formControlName="pan_no" maxlength="10" [(ngModel)]="supplierdata.pan_no" (keydown)="NoSpaceallowedatstart($event)" [readOnly]="getsupplierdata?.status!=1" />
+                                </div>
+                              </div>
+                           
+                              <div class="form-row m-2">
+                             
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label"><sup>*</sup>Email:</label>
+                                    <input type="text" class="form-control form-control-sm data-control" id="email" placeholder="Enter Email "  formControlName="email" (keydown)="NoSpaceallowedatstart($event)" 
+                                    [(ngModel)]="supplierdata.email"/>
+            
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                  *ngIf="updatesupplierForm.get('email').hasError('required') && updatesupplierForm.get('email').touched">
+                                  Required
+                                </div>
+                                <div class="mandatory mandatory my-1 text-danger font-italic"
+                                *ngIf="updatesupplierForm.get('email').hasError('pattern') && updatesupplierForm.get('email').touched">
+                               Invalid</div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label for="address" class="form-label"><sup>*</sup>Address:</label>
+                                    <textarea class="form-control form-control-sm data-control-textarea" #address id="address" rows="1" formControlName="address"
+                                    [(ngModel)]="supplierdata.address" (keydown)="NoSpaceallowedatstart($event)"></textarea>
+            
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                    *ngIf="updatesupplierForm.get('address').hasError('required') && updatesupplierForm.get('address').touched">
+                                    Required</div>
+                                </div>
+                              </div>
+                              <div class="data-form-btn  ">
+                                <div class="form-group text-center ">
+                                    <button class="btn btn-data-login btn-block" (click)="updateSupplier()"
+                                    autocomplete="on">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- NEW CSS ENDS HERE -->
+
+<!-- <div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="col-md-6 offset-md-2 ">
+                <div class="data-form" [formGroup]="updatesupplierForm" >
+                    <h1 class="text-center form-heading">Update Vendor</h1>
+
+                    <div class="form-group  m-2" >
+                        <label for="supplier_name" class="form-label"><sup>*</sup>Vendor's Name:</label>
+                        <input type="text" id="supplier_name" class="form-control data-control" placeholder="Enter Supplier Name" formControlName='supplier_name' [(ngModel)]="supplierdata.supplier_name"/>
+
+                        
+                    <div class="mandatory my-1 text-danger"
+                    *ngIf="updatesupplierForm.get('supplier_name').hasError('required') && updatesupplierForm.get('supplier_name').touched">
+                    Supplier Name is Required.</div>
+
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="contact_person" class="form-label"><sup>*</sup>Contact Person:</label>
+                        <input type="text" id="contact_person" class="form-control data-control" placeholder="Enter Contact Person "  formControlName="contact_person" [(ngModel)]="supplierdata.contact_person"/>
+
+                        <div class="mandatory my-1 text-danger"
+                      *ngIf="updatesupplierForm.get('contact_person').hasError('required') && updatesupplierForm.get('contact_person').touched">
+                      Contact Person is Required.</div>
+
+                    </div>
+              
+                    <div class="form-group m-2">
+                        <label for="rating" class="form-label"> <sup>*</sup>Rating</label>
+                        <select class="w-100 p-2 border rounded" id="rating" formControlName="rating" [(ngModel)]="supplierdata.rating">
+    
+                          <option [selected]=true disabled hidden>Select</option>
+    
+                       
+    
+    
+                          <option>A+</option>
+                          <option>A</option>
+                          <option>B</option>
+                          <option>C</option>
+                          <option>D</option>
+    
+                        </select>
+    
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updatesupplierForm.get('rating').hasError('required') && updatesupplierForm.get('rating').touched">
+                        Rating is Required.</div>
+                      </div>
+                    <div class="form-group m-2">
+                        <label for="address" class="form-label"><sup>*</sup>Address:</label>
+                        <textarea class="form-control data-control" id="address" rows="3" formControlName="address"
+                        [(ngModel)]="supplierdata.address"></textarea>
+
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updatesupplierForm.get('address').hasError('required') && updatesupplierForm.get('address').touched">
+                        Address is Required.</div>
+                    </div>
+
+
+                    <div class="form-group m-2">
+                        <label for="phone" class="form-label"><sup>*</sup>Phone:</label>
+                        <input type="text" id="phone" class="form-control data-control" placeholder="Enter Phone " formControlName="phone" [(ngModel)]="supplierdata.phone"/>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="mobile" class="form-label"><sup>*</sup>Mobile:</label>
+                        <input type="text" id="mobile" class="form-control data-control" placeholder="Enter Mobile " formControlName="mobile" [(ngModel)]="supplierdata.mobile"/>
+
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updatesupplierForm.get('mobile').hasError('required') && updatesupplierForm.get('mobile').touched">
+                        Supplier mobile is Required.</div>
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updatesupplierForm.get('mobile').hasError('pattern') && updatesupplierForm.get('mobile').touched">
+                        Minimum 10 digit number is allowed.</div>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="email" class="form-label"><sup>*</sup>Email:</label>
+                        <input type="text" class="form-control data-control" id="email" placeholder="Enter Email "  formControlName="email"
+                        [(ngModel)]="supplierdata.email"/>
+
+                        <div class="mandatory my-1 text-danger"
+                      *ngIf="updatesupplierForm.get('email').hasError('required') && updatesupplierForm.get('email').touched">
+                      Supplier email is Required.
+                    </div>
+                    <div class="mandatory mandatory my-1 text-danger"
+                    *ngIf="updatesupplierForm.get('email').hasError('pattern') && updatesupplierForm.get('email').touched">
+                    Email Address is not valid.</div>
+                    </div>
+
+                    <div class="form-group m-2">
+                        <label for="gstn" class="form-label">GSTIN:</label>
+                        <input type="text" id="gstn" class="form-control data-control p-2" placeholder="Enter Vendor's GSTIN"
+                            formControlName="gstn" maxlength="16" [(ngModel)]="supplierdata.gstn" />
+                    </div>
+
+                    <div class="form-group m-2">
+                        <label for="pan_no" class="form-label">PAN No.</label>
+                        <input type="text" id="pan_no" class="form-control data-control p-2" placeholder="Enter PAN"
+                            formControlName="pan_no" maxlength="10" [(ngModel)]="supplierdata.pan_no" />
+                    </div>
+                
+                    <div class="form-group m-2">
+                        <label for="category" class="form-label"> <sup>*</sup>Category</label>
+                        <select class="w-100 p-2 border rounded" id="category" formControlName="category"
+                        [(ngModel)]="supplierdata.category">
+    
+                          <option [selected]=true disabled hidden>Select</option>
+    
+                      
+                          <option value="0">Offline</option>
+                          <option value="1">Online</option>
+                    
+                        </select>
+
+                    <div class="data-form-btn">
+                        <div class="form-group text-center ">
+                            <button class="btn btn-data-login btn-block" (click)="updateSupplier()"
+                            autocomplete="on">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

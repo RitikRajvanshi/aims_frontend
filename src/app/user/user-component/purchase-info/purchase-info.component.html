@@ -1,0 +1,143 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-list-alt text-info"  aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Purchase Information</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content" >
+        <div class="page-background-h">
+          <div class="add-icon-section pl-2 container-fluid">
+         <button class="btn-toggle-back" (click)="navigateBack()" > <i class="fa fa-arrow-left pr-1"></i> Back</button> 
+ </div>
+
+ <div class="container-fluid mb-5 mt-3">
+<table class="table  table-bordered table-hover" *ngIf="isDataornot">
+    <thead>
+               <tr>
+                 <th scope="col">S.No.</th>
+                 <th scope="col">Purchase Id</th>
+                <th scope="col">Supplier Name</th>
+                 <th scope="col">Purchase Date</th>
+                 <th scope="col">Purchase Order</th>
+                 <th scope="col">Invoice</th>
+                 <th scope="col">Vendor Evaluation</th>
+                 <th scope="col" style="width:10%">Inspection Report</th>
+                 <th scope="col">Ordered Item(s)</th>
+               </tr>
+            </thead>
+            <tbody>
+              <tr>
+                 <td>1</td>
+                 <td>{{purchaseInfocheck?.purchase_id}}</td>
+                 <td>{{purchaseInfocheck?.supplier_name}}</td>
+                <td>{{purchaseInfocheck?.issue_date}}</td>
+                <td><a class="text-primary" style="cursor: pointer;" (click)="openModal(purchaseInfocheck)">View PO</a></td>
+                <td><a class="text-primary " id="viewinvoice" (click)="checkAndOpenFile(purchaseInfocheck?.filepath)" style="cursor: pointer;">View Invoice</a></td>
+                 <!-- <td><a class="text-primary "  (click)="navigateToNewRoute(purchaseInfocheck)"  style="cursor: pointer;" (click)="openEvaluation(purchaseInfocheck)">View Evaluation</a></td> -->
+                 <td [ngClass]="{ 'disabled-wrapper': hideEvaluation }"><a class="text-primary "   
+                   style="cursor: pointer;" 
+                   (click)="openEvaluation(purchaseInfocheck)"
+                   [class.disabled]="hideEvaluation"
+                    [attr.aria-disabled]="hideEvaluation ? true : null" 
+                    >View Evaluation</a></td>
+                 <td class="text-center"> <a  id="viewinvoice" class="text-primary" data-toggle="modal"  data-target="#exampleModalToggle" style="cursor: pointer;" (click)="openInspectionReport()">View Inspection</a></td>
+                 <td [innerHTML]="productsname"></td>  
+               </tr>
+            </tbody>
+        </table>
+      </div>
+          </div>
+          </div>
+          </div>
+
+
+
+    <!-- Modal Template -->
+<ng-template #modalContent>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Inspection Report</h1>
+        <button type="button" class="close" (click)="closeDialog()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img [src]="companyLogo2 ? companyLogo2:  companyLogo" alt="Company Logo" class="img-fluid ml-5" style="max-width: 75px;"><br>
+                    <small class="text-dark" style="font-size: 14px;"><strong>{{comapanyDetail[0]?.nick_name}}</strong></small>
+                </div>
+                <div class="col-md-4 text-center text-dark">
+                    <h1><strong>APV Assets & Inventory Management System</strong></h1>
+                </div>
+                <div class="col-md-4 text-right">
+                  
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                  <table class="table  table-bordered table-hover">
+                    <thead>
+                             <tr>
+                                 <th scope="col">S.No.</th>
+                                 <th scope="col">Purchase Id</th>
+                                <th scope="col">Item</th>
+                                 <th scope="col">Description</th>
+                                 <th scope="col">Ordered Qty.</th>
+                                 <th scope="col">Inspected Qty.</th>
+                                 <th scope="col" style="width:10%">Inspected By Vishnu</th>
+                                 <th scope="col" style="width:10%">Inspected By Amit</th>
+                                 <th scope="col">Item Received Date</th>
+                                 <th scope="col">Inspected Date</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of purchaseInfo; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{item?.purchase_id}}</td>
+                                <td>{{item?.product_name}}</td>
+                                <td>{{item?.description}}</td>
+                                <td>{{item?.quantity}}</td>
+                                <td>{{item?.quantity}}</td>
+                                <td  [ngClass]="{'text-success': item.approved_by_admin2 == 1, 'text-muted':item.approved_by_admin2 != 1}">{{item.approved_by_admin2==1?'Inspected':'Not inspected Yet'}}</td>
+                                <td  [ngClass]="{'text-success': item.approved_by_admin1 == 1, 'text-muted':item.approved_by_admin1 != 1}">{{item.approved_by_admin1?'Inspected':'Not inspected Yet'}}</td>  
+                                <td>{{item?.product_received_date}}</td>  
+                                <td>{{item?.date_of_inspection}}</td>  
+                               </tr>
+                            </tbody>
+                        </table>
+               
+            </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <span><b>Inspected By:</b></span><br>
+                    <span>Dy.System Admin</span><br>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span><b>Inspected By:</b></span><br>
+                    <span>Sr. System Admin</span><br>
+                </div>
+                <div class="col-md-4 text-right">
+                    <span><b>Approved By:</b></span><br>
+                    <span>Director</span><br>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+    <div class="noData text-center container-fluid" *ngIf="!isDataornot" style="height:90vh">
+        <h1 class="text-danger">No data found</h1>
+    </div>
+
+
+

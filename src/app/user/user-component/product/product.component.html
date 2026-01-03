@@ -1,0 +1,202 @@
+
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+    
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Item</h1>
+    </div>
+
+    <div class="add-icon-section" *ngIf="toggleAddbtn">
+       
+        <button class=" btn btn-toggle "  (click)="toggleActionAdd()" [disabled]="userRole !== '2' && userRole !== '3'"><i class="fa fa-plus pr-1"></i>Add Item</button> 
+    </div>
+
+    <div class="add-icon-section"  *ngIf="toggleListBtn">
+        <button  class="btn btn-toggle "   (click)="toggleActionUpdate()"><i class="fa fa-search  pr-1"></i>Item List</button> 
+</div>
+
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="flex-box">
+                <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayaddProduct">
+                    <div class="data-form"  [formGroup]="productForm" >
+                        <h1 class="text-center form-heading  mb-4 mt-3">Add Item</h1> 
+                        <div class="form-group m-0">
+                            <label for="product_name" class="form-label">Item Name:<sup>*</sup></label>
+                            <input type="text" id="product_name" class="form-control form-control-sm data-control" placeholder="Enter Item Name"  formControlName='product_name' [readonly]="updateProductbtn" [(ngModel)]="productData.product_name" (keydown)="NoSpaceallowedatstart($event)"/>
+                            <div class="mandatory my-1 text-danger font-italic"
+                            *ngIf="productForm.get('product_name').hasError('required') && productForm.get('product_name').touched">
+                           Required
+                          </div>
+                        </div>
+                        <div class="form-group m-0 mt-2">
+                            <label for="category" class="form-label ">Category:<sup>*</sup></label>
+                            <!-- <input type="text" class="form-control data-control" placeholder="Enter Cateogory Name" /> -->
+    
+                            <select #category id="category" class="form-control form-control-sm data-control"  formControlName="category_id" (change)="categoryId(category.value)"  [(ngModel)]="productData.category_id">
+                                <!-- <option selected="true" disabled="disabled" value="">Select</option> -->
+                                <option class="select-border" hidden disabled value=0>Select</option>
+                    
+                                <option class="select-border" *ngFor=" let name of categoryData" [value]="name.category_id">{{name.category_name}}</option>
+                              </select>
+                              <div class="mandatory my-1 text-danger font-italic"
+                            *ngIf="productForm.get('category_id').hasError('pattern') && productForm.get('category_id').touched">
+                           Required
+                          </div>
+                        </div>
+
+                        <div class="form-group m-0 mt-2" *ngIf="addProductbtn">
+                            <label for="last_item_code" class="form-label ">Item Code(sequence):<sup>*</sup></label>
+                            <input type="text" id="last_item_code" class="form-control form-control-sm data-control" placeholder="e.g. ITEMNAME-00"  formControlName='last_item_code' [(ngModel)]="productData.last_item_code" (keyup)="validateInput($event);NoSpaceallowedatstart($event)"/>
+    
+                            <div class="mandatory my-1 text-danger font-italic"
+                            *ngIf="productForm.get('last_item_code').hasError('required') && productForm.get('last_item_code').touched && addProductbtn">
+                           Required
+                          </div>
+                          <div *ngIf="productForm.get('last_item_code').touched && !isValid" class="mandatory my-1 text-danger font-italic">
+                            <p>Input must meet the following conditions:</p>
+                            <ul>
+                              <li>Minimum 4 alphabetic characters</li>
+                              <li>No spaces allowed</li>
+                              <li>Should have alteast one hyphen (-)</li>
+                              <li>Always ends with two zeros</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div class="form-group m-0 mt-2">
+                            <label for="isasset" class="form-label">Is Asset:</label>
+                            <!-- <input type="text" class="form-control data-control" placeholder="Enter Cateogory Name" /> -->
+                             
+                            <select #isasset id="isasset" class="form-control form-control-sm data-control"  formControlName="is_asset" (change)="isAsset(isasset.value)"  [(ngModel)]="productData.is_asset">
+                                <option class="select-border" hidden disabled value=null>Select</option>                
+                                <option class="select-border" value=1>Yes</option>
+                                <option class="select-border" value=0>No</option>
+                              </select>
+                        </div>
+
+                        <div class="form-group m-0 mt-2">
+                            <label for="lifecycle" class="form-label">Life Cycle(months):</label>
+                            <!-- <input type="text" class="form-control data-control" placeholder="Enter Cateogory Name" /> -->
+    
+                            <select #lifecycle id="lifecycle" class="form-control form-control-sm data-control"   formControlName="life_cycle"   [(ngModel)]="productData.life_cycle"  [disabled]="isChecked">
+                                <option class="select-border" hidden disabled value=null>Select</option>                
+                                <option class="select-border" value=12>12</option>
+                                <option class="select-border" value=24>24</option>
+                                <option class="select-border" value=36>36</option>
+                                <option class="select-border" value=48>48</option>
+                                <option class="select-border" value=60>60</option>
+                                <option class="select-border" value=120>120</option>
+                              </select>
+
+                              <label for="custom" class="form-label">Custom Life Cycle(months):</label> <input class="m-2" type="checkbox" name="custom" id="custom" [checked]="isChecked" (click)="checked()" >  
+
+                              <input class="m-2 form-control form-control-sm data-control" type="number" name="" id="" step="1"  [(ngModel)]="productData.life_cycle" [ngModelOptions]="{standalone:true}" b-positive *ngIf="isChecked"  (keydown)="preventDecimal($event)">
+
+                        </div>
+
+
+                        <div class="data-form-btn">
+                            <div class="form-group text-center">
+      
+                                <button class="btn btn-data-login btn-block"   *ngIf="addProductbtn" (click)="addProductfunc()">Add</button>
+                            </div>
+                        </div> 
+                        
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block"   *ngIf="updateProductbtn" (click)="UpdateProductFunction()">Update</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="data-control-box" *ngIf="displaycategoryList && isDataorNot">
+                <div class="container-fluid" *ngIf="isDataorNot">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="input-group my-3  search-container">
+
+                                        <input type="text" class=" data-control  form-control mr-2"
+                                            placeholder="Search..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="searchItem" (keydown)="NoSpaceallowedatstart($event)">
+                                        <!-- <button type="submit"><i class="fa fa-filter"></i></button> -->
+                                       
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- new -->
+                <div class="container-fluid" *ngIf="isDataorNot">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <table class="table  table-bordered table-hover">
+                                    <thead>
+                                        <tr >
+                                            <th scope="col" class="table-heading-color"  style="width:5%;">S.No.</th>                    
+                                            <th scope="col" class="table-heading-color" style="width:20%;" (click)="sort('product_name')">Item Name <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color" style="width:20%;" (click)="sort('category_name')">Category Name <i class="fa fa-sort"></i></th>
+                                            <th scope="col"  class="table-heading-color" style="width:10%;white-space: nowrap;" (click)="sort('is_asset')">Is Asset <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color" style="width:10%; white-space: nowrap;" (click)="sort('user_name')">Created By <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color" style="width:10%;" (click)="sort('created_date')">Created Date <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color" colspan="2" style="width:5%;" *ngIf="userRole === '2'">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let items of filteredproductdata | filter:searchItem| paginate:{itemsPerPage: tableSize,
+                                            currentPage: page, totalItems:emptyDataList.length}; let i = index">
+                                            <th  class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                            <td class="table-heading-sub-text">{{items.product_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.category_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.is_asset !== null ? (items.is_asset === 1 ? 'Yes' : 'No') : 'Not Decided Yet'}}</td>
+                                            <td class="table-heading-sub-text">{{items.user_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.created_date}}</td>
+                                            <td class="table-heading-sub-text" *ngIf="userRole === '2'"><i class="fa fa-edit table-edit-icon icon-green" (click)="updateproduct(items)" aria-hidden="true"></i></td>
+                                            <td class="table-heading-sub-text" *ngIf="userRole === '2'"><i class="fa fa-trash table-edit-icon icon-red" (click)="productRemove(items.product_id)" aria-hidden="true"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-2 mb-2 ">
+                        <div class="row">
+                            <div class="col-lg-10  d-flex">
+                                <div class="pagination "  class="active" >
+                                    <pagination-controls   previousLabel="Prev" nextLabel="Next" (pageChange)="ontableDatachange($event)">
+                                        </pagination-controls>
+                            
+                                </div>
+                            </div>
+                            <div class="col-lg-2   ml-auto ">
+                                <div class="form-group  select-size d-flex">
+                                    <p class="  report-headings">Items/page</p>
+                                    <select class=" data-control-select ml-2  select-size form-control"
+                                    (change)="ontableSizechange($event)">
+                                    <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                        {{ size  }}
+                                    </option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                   </div> 
+                </div>
+            </div>
+            <div class="noData text-center container-fluid mt-2 mb-2" *ngIf="!isDataorNot && !displayaddProduct">
+                <h1 class="text-danger">No data found</h1>
+            </div>
+        </div>
+    </div>
+</div>

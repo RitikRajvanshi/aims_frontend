@@ -1,0 +1,383 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-exchange" style="color:#FF8A65" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Transfer Stock</h1>
+    </div>
+</section>
+
+
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="add-icon-section pl-2" >
+                <button class="btn-toggle-back" [disabled]="checkBackURL" (click)="navigateBack()"> <i class="fa fa-arrow-left pr-1"></i>
+                  Back</button>
+              </div>
+            <div class="flex-box">
+
+                <div class="col-md-12 col-sm-12 col-lg-7 mt-5 ">
+                    <div class="data-form" [formGroup]="transferStockForm">
+
+                        <div class="">
+                            <div>
+                               
+                                  <label for="assignsystemtouser" class="text-center form-heading-radio-btn ">
+                                    System to
+                                    User</label>
+                                    <input type="radio" checked="checked" id="assignsystemtouser" checked="checked"  class=" ml-1 mr-1"
+                                    name="transferType" value="assignsystemtouser" formControlName="transferType" (click)="assignsysttouserbtn()">
+                                   
+                                  <label for="assingitemtosystem" class="text-center form-heading-radio-btn">
+                                    Items to
+                                    User</label>
+                                    <input type="radio" id="assingitemtosystem" name="transferType"  class=" ml-1 mr-1"
+                                    value="assingitemtosystem" formControlName="transferType" (click)="assignitemstosysbtn()">
+                                    
+                                  <label for="assignlocationtoitem" class="text-center form-heading-radio-btn ">
+                                    Items to Location</label>
+                                    <input type="radio" id="assignlocationtoitem" name="transferType" class=" ml-1 mr-1"
+                                    value="assignlocationtoitem" formControlName="transferType"(click)="assignitemstolocationbtn()">                          
+                            </div>
+                        </div>
+
+
+                        <!-- Assign System assign to user -->
+                        <div class="form-group m-2"
+                            *ngIf="transferStockForm.get('transferType').value === 'assignsystemtouser'"
+                            [formGroup]="systemtouserForm">
+                            <label for="item_id" class="form-label mt-2">System<sup>*</sup></label>
+                            <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option" id="item_id"
+                            [items]="systemData"
+                            formControlName="item_id"
+                            bindLabel="item_code"
+                            bindValue="item_id"
+                            (clear)="resetsystemTransfer();"
+                            [placeholder]="!transferStockData.item_id ? 'Select System' : ''"
+                            [(ngModel)]="transferStockData.item_id" (change)="selectedCPU($event)">
+                            <ng-template ng-option-tmp let-item="item">
+                                <div [ngStyle]="{ 'background-color': allconnectedusersandsystems.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                                    {{item?.item_code}}
+                                </div>
+                            </ng-template>  
+                        </ng-select>
+
+                        <div class="note d-flex">
+                            <p class="mt-1 text-secondary font-italic">Note:<i class="fa fa-square text-success" aria-hidden="true"></i> Assigned Systems </p>
+                            </div>
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="systemtouserForm.get('item_id').hasError('required') || systemtouserForm.get('item_id').hasError('pattern') && systemtouserForm.get('item_id').touched">
+                                Required</div>
+
+                            <label for="transferto" class="form-label mt-2">User<sup>*</sup></label>
+                            <ng-select  id="transferto" #transferto class="form-control form-control-sm data-control-for-ngselect select-option"
+                            [items]="getuserData"
+                            formControlName="transfer_to_user"
+                            bindLabel="user_name"
+                            bindValue="user_id"
+                            (clear)="resetItemsDataForuser();"
+                            [placeholder]="!transferStockData.transfer_to_user ? 'Select User' : ''"
+                            [(ngModel)]="transferStockData.transfer_to_user" (change)="selecteduser($event)">
+                            <ng-template ng-option-tmp let-item="item">
+                                <div [ngStyle]="{ 'background-color': allconnectedusersandsystems.includes(item?.user_name)  ?'rgb(188, 245, 204)':'white'}">
+                                    {{item?.user_name}}
+                                </div>
+                            </ng-template>
+                            <!-- {{getuserData?.user_name}} -->
+                        
+                        </ng-select>
+
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="systemtouserForm.get('transfer_to_user').hasError('required') ||systemtouserForm.get('transfer_to_user').hasError('pattern')  && systemtouserForm.get('transfer_to_user').touched">
+                               Required</div>
+
+                            <label for="location_id" class="form-label mt-2">Location<sup>*</sup></label>
+                            <ng-select  id="location_id" class="form-control form-control-sm data-control-for-ngselect select-option"
+                            [items]="locationdata"
+                            formControlName="location_id"
+                            bindLabel="location_name"
+                            bindValue="location_id"
+                            [placeholder]="!transferStockData.location_id ? 'Select Location' : ''"
+                            [(ngModel)]="transferStockData.location_id">
+                            <ng-template ng-option-tmp let-item="item">
+                                <div [ngStyle]="{ 'background-color':'white'}">
+                                    {{item?.location_name}}
+                                </div>
+                            </ng-template>
+                        
+                        </ng-select>
+
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="(systemtouserForm.get('location_id').hasError('required') || systemtouserForm.get('location_id').hasError('pattern')) && systemtouserForm.get('location_id').touched">
+                               Required</div>
+
+                                <div class="data-form-btn">
+                                    <div class="form-group text-center ">
+                                        <button class="btn btn-data-login btn-block"  (click)="transfersystemtouser()">Transfer</button>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <!-- Assing Items to user -->
+                        <div class="form-group m-2" *ngIf="transferStockForm.get('transferType').value === 'assingitemtosystem'"  [formGroup]="itemtosystemForm">
+
+                        <label for="transfer_to_user" class="form-label mt-2">User<sup>*</sup></label>
+                        <ng-select  id="transfer_to_user" #transfer_to_user class="form-control form-control-sm data-control-for-ngselect select-option"
+                        [items]="getuserData"
+                        formControlName="transfer_to_user"
+                        bindLabel="user_name"
+                        bindValue="user_id"
+                        (clear)="resetItemsDataForuser();"
+                        [placeholder]="!transferStockData2.transfer_to_user ? 'Select User' : ''"
+                        [(ngModel)]="transferStockData2.transfer_to_user" (change)="selecteduser2($event)">
+                        <ng-template ng-option-tmp let-item="item">
+                            <div [ngStyle]="{ 'background-color': allconnectedusersandsystems.includes(item?.user_name)  ?'rgb(188, 245, 204)':'white'}">
+                                {{item?.user_name}}
+                            </div>
+                        </ng-template>
+                        <!-- {{getuserData?.user_name}} -->
+                    
+                    </ng-select>
+
+                        <div class="note d-flex">
+                            <p class="mt-1 text-secondary font-italic">Note:<i class="fa fa-square text-success" aria-hidden="true"></i> Assigned Systems </p>
+                            </div>
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="(itemtosystemForm.get('transfer_to_user').hasError('required') || itemtosystemForm.get('transfer_to_user').hasError('pattern')) && itemtosystemForm.get('transfer_to_user').touched">
+                                Required</div>
+
+                            <label for="item_id2" class="form-label mt-2">Items<sup>*</sup></label>
+                          <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option" id="item_id2"
+                          [items]="itemDataOtherThanCPU"
+                          formControlName="item_id2"
+                          [placeholder]="!transferStockData2.item_id ? 'Select Item' : ''"
+                          [(ngModel)]="transferStockData2.item_id"
+                          bindLabel="item_code"
+                          (clear)="resetItemsTransfer();"
+                          bindValue="item_id" (change)="selecteditems2($event)">
+                          <ng-template ng-option-tmp let-item="item">
+                            <div [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                                {{item?.item_code}}
+                            </div>
+                        </ng-template>
+                          
+                          <!-- {{itemDataOtherThanCPU?.item_code}}-->
+                        </ng-select>
+                        <div class="note d-flex">
+                            <p class="mt-1 text-secondary font-italic">Note: <i class="fa fa-square text-success" aria-hidden="true"></i> Utilized Items </p>
+                            </div>
+                          <!-- <p class="text-danger font-italic" style="font-size:10px" *ngIf="this.itemnamearray.includes(this.selecteditemname)">*{{itemnamearray.length}} {{itemnamearray[0]}} already installed in the above system.</p> -->
+
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                            *ngIf="(itemtosystemForm.get('item_id2').hasError('required') || itemtosystemForm.get('item_id2').hasError('pattern'))&& itemtosystemForm.get('item_id2').touched">
+                            Required</div>
+
+                            <label for="location_id2" class="form-label mt-2">Location<sup>*</sup></label>                       
+                            <ng-select  class="form-control form-control-sm  data-control-for-ngselect select-option" id="location_id2"
+                            [items]="locationdata"
+                            formControlName="location_id2"
+                            [placeholder]="!transferStockData2.location_id ? 'Select Location' : ''"
+                            [(ngModel)]="transferStockData2.location_id"
+                            bindLabel="location_name"
+                            bindValue="location_id" >
+                            <ng-template ng-option-tmp let-item="item">
+                                <div [ngStyle]="{ 'background-color':'white'}">
+                                    {{item?.location_name}}
+                                </div>
+                            </ng-template>
+                        </ng-select>
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="(itemtosystemForm.get('location_id2').hasError('required') || itemtosystemForm.get('location_id2').hasError('pattern'))  && itemtosystemForm.get('location_id2').touched">
+                              Required</div>
+                                <div class="data-form-btn">
+                                    <div class="form-group text-center ">
+                                        <button class="btn btn-data-login btn-block" (click)="transferItemtoSystem()">Transfer</button>
+                                    </div>
+                                </div>
+
+                        </div>
+
+
+                        <!-- Assing location to other Item  -->
+                        <div class="form-group m-2"
+                            *ngIf="transferStockForm.get('transferType').value === 'assignlocationtoitem'"
+                            [formGroup]="itemtolocationForm">
+
+                                <label for="item_id3" class="form-label mt-2">Items<sup>*</sup></label>
+
+                              <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="item_id3"
+                               [items]="itemDataOtherThanCPUwithalllocation"
+                               formControlName="item_id3"
+                               (clear)="resetItemsTransfer();"
+                               [placeholder]="!transferStockData3.item_id ? 'Select Item' : ''"
+                               [(ngModel)]="transferStockData3.item_id"
+                               bindLabel="item_code"
+                               bindValue="item_id" (change)="selectitem3($event)">
+                               
+                               <ng-template ng-option-tmp let-item="item">
+                                <div [ngStyle]="{
+                                    'color': arrayforscrappeddata.includes(item?.item_id) ? 'red' : 'black',
+                                    'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                                    {{item.item_code}}
+                                </div>
+        
+                            </ng-template>
+                               <!-- {{getItemsData.item_code}} -->
+                            
+                            
+                            </ng-select>
+                            <div class="note d-flex">
+                            <p class="mt-1 text-secondary font-italic mr-3">Note: <i class="fa fa-square text-danger" aria-hidden="true"></i> Scrapped Items </p>
+                            <p class="mt-1 text-secondary font-italic"><i class="fa fa-square text-success" aria-hidden="true"></i> Utilized Items </p>
+                            </div>
+                                <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="(itemtolocationForm.get('item_id3').hasError('required') || itemtolocationForm.get('item_id3').hasError('pattern')) && itemtolocationForm.get('item_id3').touched">
+                                    Required</div>
+                              
+
+                            <label for="location_id3" class="form-label mt-3">Location<sup>*</sup></label>
+                          <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option" id="location_id3"
+                          [items]="locationdata"
+                          formControlName="location_id3"
+                          [placeholder]="!transferStockData3.location_id ? 'Select Location' : ''"
+                          [(ngModel)]="transferStockData3.location_id"
+                          bindLabel="location_name"
+                          bindValue="location_id"
+                          (change)="selectLocation3($event)">
+                          <ng-template ng-option-tmp let-item="item">
+                            <div [ngStyle]="{ 'background-color':'white'}">
+                                {{item?.location_name}}
+                            </div>
+                        </ng-template>
+                        </ng-select>
+                          
+
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="(itemtolocationForm.get('location_id3').hasError('required') || itemtolocationForm.get('location_id3').hasError('pattern'))&& itemtolocationForm.get('location_id3').touched">
+                                Required</div>
+                                <div class="data-form-btn">
+                                    <div class="form-group text-center ">
+                                        <button class="btn btn-data-login btn-block"  (click)="transferitemtoLocation()">Transfer</button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2 " *ngIf="configureitemdetails || getTransferDataDetailotherthanCPU">
+                <div class="col-12 col-md-8 m-auto text-center">
+                    <h3 class=" p-2 m-2 text-dark">{{getTransferDataDetailotherthanCPU}}</h3>
+                </div>
+              </div>
+
+
+            <div class="flex-box mt-3"  *ngIf="systemTransferData && this.systemTransferData!==null  && systemTransferData?.length!=0 && systemTransferDatadistplay">
+                <div class="col-md-12 col-sm-12 col-lg-8">
+                    <div class="data-box">
+                        <div class="data-table overflow-auto">
+            
+                            <table class="table table-bordered table-hover ">
+                                <caption class="text-dark text-center m-0 p-0" style="caption-side:top;"><h4><strong>Last Assignee</strong></h4></caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col"   style="width:5%;">S.No.</th>
+                                        <th scope="col"   style="width:25%;">System</th>
+                                        <th scope="col"   style="width:15%;">User</th>
+                                        <th scope="col"   style="width:35%;">Present Location</th>
+                                        <th scope="col"   style="width:20%;">Transferred Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <td>1</td>
+                                        <td>{{systemTransferData?.item_code?systemTransferData?.item_code:'NA'}}</td>
+                                        <td>{{systemTransferData?.user_name?systemTransferData?.user_name:'NA'}}</td>
+                                        <td>{{systemTransferData?.location_name?systemTransferData?.location_name:'NA'}}</td>
+                                        <td>{{systemTransferData?.transfer_date?systemTransferData?.transfer_date:'NA'}}</td>
+                                    </tr>
+            
+                                </tbody>
+                            </table>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-box mt-3"  *ngIf="itemsdataforusers && this.itemsdataforusers!==null  && itemsdataforusers?.length!=0">
+                <div class="col-md-12 col-sm-12 col-lg-8">
+                    <div class="data-box">
+                        <div class="data-table overflow-auto">
+            
+                            <table class="table table-bordered table-hover ">
+                                <caption class="text-dark text-center m-0 p-0" style="caption-side:top;"><h4><strong>Assign Item/s</strong></h4></caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col"   style="width:5%;">S.No.</th>
+                                        <th scope="col"   style="width:25%;">System</th>
+                                        <th scope="col"   style="width:15%;">User</th>
+                                        <th scope="col"   style="width:35%;">Present Location</th>
+                                        <th scope="col"   style="width:20%;">Transferred Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of itemsdataforusers;let i = index">
+                                        <td>1</td>
+                                        <td>{{item.item_code?item.item_code:'NA'}}</td>
+                                        <td>{{item.user_name?item.user_name:'NA'}}</td>
+                                        <td>{{item.location_name?item.location_name:'NA'}}</td>
+                                        <td>{{item.transfer_date ?item.transfer_date:'NA'}}</td>
+                                    </tr>
+            
+                                </tbody>
+                            </table>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-box mt-3" *ngIf="systemConfigurationobj.length!==0">
+                <div class="col-md-12 col-sm-12 col-lg-8">
+                    <div class="data-box box-shadowing">
+                        <div class="data-table overflow-auto">
+
+                            <table class="table table-bordered table-hover m-0 p-0">
+                                <caption class="text-dark text-center m-0 p-0" style="caption-side:top;"><h4><strong>System Configuration</strong></h4></caption>
+                                <thead>
+                                   
+                                    <tr>
+                                        <th  scope="col" style="width:5%;">S.No.</th>
+                                        <th scope="col" style="width:35%;">Items</th>
+                                        <th scope="col" style="width:15%;">Transfer by</th>
+                                        <th scope="col" style="width:20%;">Transfer Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of systemConfigurationobj;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.item_code?item.item_code:'NA'}}</td>
+                                        <td>{{item.transfer_user?item:'NA'}}</td>
+                                        <td>{{item.transfer_date?item.transfer_dat:'NA'}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

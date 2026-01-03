@@ -1,0 +1,142 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-cubes" style="color:#00235e"></i></div>
+    <div class="header-title">
+        <h1>Update Items</h1>
+    </div>
+</section>
+<div class="container-fluid ">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="container-fluid mt-3 mb-2">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12">
+                        <div class="input-group   mb-2  search-container">
+                            <input type="text" class=" data-control form-control mr-2" placeholder="Search..."
+                            aria-describedby="basic-addon2" [(ngModel)]="searchTerm" (keyup)="applyFilter()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" *ngIf="isDataorNot">
+                <div class="row" >
+                    <div class="col-lg-12 col-12 col-sm-12 ">
+                        <div class=" table-responsive ">
+                            <table class="table  table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"  style="width:5%;">S.No.</th>
+                                        <th scope="col"  style="width:10%;" (click)="sort('purchase_id')">Purchase Id <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:17%;" (click)="sort('item_code')">Item Code <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:15%;" (click)="sort('item_name')">Item Name <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:10%;" (click)="sort('category_name')">Category <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:10%;" (click)="sort('location_name')">Location <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:8%; white-space: nowrap;" (click)="sort('date_')">Purchase Date <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:10%;" (click)="sort('warrantyend_date')">Warranty End Date <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  style="width:20%;" (click)="sort('description')">Description <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  colspan="2" style="width:5%;"  *ngIf="userRole === '2'">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  *ngFor="let data of filteredItemData | paginate:
+                                        {itemsPerPage: tableSize,
+                                          currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                        <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                        <td >{{data.purchase_id}}</td>
+                                        <td > {{data.item_code}} </td>
+                                        <td >{{ data.item_name }}</td>
+                                        <td >{{data.category_name}}</td>
+                                        <td >{{data.location_name}}</td>
+                                        <td >{{data.date_}}</td>
+                                        <td >
+                                            <input type="date" class="form-control form-control-sm description-btn"
+                                                #warrantyendDate (keydown)="NoSpaceallowedatstart($event)" 
+                                                [value]="data.warrantyend_date" [(ngModel)]="data.warrantyend_date" (change)="changeWarranty(data)">
+                                        </td>
+                                        <td  style="width:300px; max-width: 300px; word-break: break-all;">
+
+                                            <!-- <input type="text"
+                                                class="form-control form-control-sm description-btn" placeholder="Description"
+                                                #description (keydown)="NoSpaceallowedatstart($event)"
+                                                [(ngModel)]="data.description"> -->
+
+                                                <div *ngIf="!data.isEditing && !data.isExpanded && data.description && data.description.length > 20">
+
+                                                    {{ data.description.slice(0, 20) }} 
+
+                                                    <span class="read-more text-secondary" (click)="toggleExpand(data)">...</span>
+                                                    <!-- <span (click)="startEditing(data)">✎</span> -->
+
+                                                  </div>
+                                                  
+                                                  <div *ngIf="!data.isEditing && !data.isExpanded && data.description && data.description.length <= 20">
+                                                    {{ data.description }}
+                                                    <!-- <span (click)="startEditing(data)">✎</span> -->
+
+                                                  </div>
+                                                
+                                                  <textarea class="form-control form-control-sm  data-control-textarea"
+                                                            *ngIf="data.isEditing"
+                                                            placeholder="Description"
+                                                            #description
+                                                            (keydown)="NoSpaceallowedatstart($event)"
+                                                            [(ngModel)]="data.description" ></textarea>
+                                                  
+                                                  <div *ngIf="data.isExpanded && !data.isEditing">
+                                                    {{ data.description }}
+                                                    <span class="read-more text-secondary" (click)="toggleExpand(data)">Read less</span>
+                                                  </div>
+                                                
+                                                  <div *ngIf="!data.description">
+                                                    {{ 'NA' }}
+                                                    <!-- <span class="edit-icon" (click)="startEditing(data)">✎</span> -->
+                                                  </div>
+                                                  
+
+
+                                        </td>
+
+                                        <td   *ngIf="userRole === '2'">
+                                            <i class="fa fa-edit table-edit-icon icon-green" aria-hidden="true" (click)="startEditing(data)" [Disabled]="userRole !== '2'" ></i>
+                                        </td>
+
+                                        <td    *ngIf="userRole === '2'"><button class="view-button" [disabled]="!data.isEditing"
+                                                (click)="updateItem(data.item_id, data.description, warrantyendDate.value)">Update</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-4 mb-2">
+                <div class="row">
+                    <div class="col-lg-10  d-flex">
+                        <div class="pagination " class="active">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="ontableDatachange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 ml-auto ">
+                        <div class="form-group  select-size d-flex">
+                            <p class="  report-headings">Items/page</p>
+                            <select class=" data-control-select ml-2  select-size form-control"
+                            (change)="ontableSizechange($event)" >
+                            <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                {{size}}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="noData text-center container-fluid" *ngIf="!isDataorNot">
+                <h1 class="text-danger">No data found</h1>
+            </div>
+        </div>
+    </div>
+</div>

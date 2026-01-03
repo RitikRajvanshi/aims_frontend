@@ -1,0 +1,159 @@
+<!-- <ngx-spinner size="large" bdColor="rgba(0, 0, 0, 0.8)"  color="#fff" type="ball-clip-rotate">
+  <p style="font-size: 20px; color: #fff;">Loading ...</p>
+  </ngx-spinner> -->
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+
+<section>
+
+  <section class="content-header mb-0">
+    <div class="header-icon"><i class="fa fa-tachometer text-info" aria-hidden="true"></i></div>
+    <div class="header-title">
+      <h1>Welcome {{userName}}</h1>
+    </div>
+  </section>
+  <section>
+    <div class="container-fluid container-marque mt-0 p-3"
+      *ngIf="userRole == '1' && (OrderCount > 0 || requestCount > 0 || gatepassCount >0 )">
+      <div *ngIf="userRole == '1'">
+        <marquee direction="left" *ngIf="OrderCount > 0"><a routerLink="/user/received-purhchase-order"
+            class="blink">You have {{OrderCount}} purchase order/s pending for approval ....</a></marquee>
+        <marquee direction="left" *ngIf="requestCount > 0"><a routerLink="/user/received-request" class="blink">You have
+            {{requestCount}} request/s pending for approval.....</a></marquee>
+        <marquee direction="left" *ngIf="gatepassCount > 0"><a routerLink="/user/gatepassid-list" class="blink">You have
+            {{gatepassCount}} gate pass request/s pending for approval.....</a></marquee>
+        <marquee direction="left" *ngIf="vendorData.length > 0"><a routerLink="/user/vendor-list" class="blink">You have
+            {{vendorData.length}} vendor/s pending for approval.....</a></marquee>
+      </div>
+    </div>
+
+    <div class="container-fluid container-marque mt-0 p-3"
+      *ngIf="userRole != '1' && (purchaseIdsnotpresentinItems.length > 0)">
+      <div *ngIf="userRole != '1'">
+
+
+        <marquee  type="button" direction="left" *ngIf="purchaseIdsString">
+          <span class="blink2" (click)="RoutetoInspectionForm()">Items missing. Kindly update items of these purchase IDs: <strong>{{ purchaseIdsString }}</strong> </span>
+        </marquee>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="userRole == '1' && (OrderCount > 0 || requestCount > 0 || gatepassCount >0 )" class="marquee-container">
+
+      <div class="marquee-text" *ngIf="OrderCount > 0">
+        <a routerLink="/user/received-purhchase-order" class="blink">
+          You have {{OrderCount}} purchase order/s pending for approval ....
+        </a>
+      </div>
+
+      <div class="marquee-text" *ngIf="requestCount > 0">
+        <a routerLink="/user/received-request" class="blink">
+          You have {{requestCount}} request/s pending for approval.....
+        </a>
+      </div>
+
+      <div class="marquee-text" *ngIf="gatepassCount > 0">
+        <a routerLink="/user/gatepassid-list" class="blink">
+          You have {{gatepassCount}} gate pass request/s pending for approval.....
+        </a>
+      </div>
+
+      <div class="marquee-text" *ngIf="vendorData.length > 0">
+        <a routerLink="/user/vendor-list" class="blink">
+          You have {{vendorData.length}} vendor/s pending for approval.....
+        </a>
+      </div>
+
+    </div> -->
+
+  </section>
+
+  <!-- Add this in your header, near logo or wherever you want -->
+  <!-- Year selector below header, aligned right -->
+  <div class="d-flex justify-content-end mt-4 mr-4 p-0">
+    <div class="year-selector d-flex align-items-center">
+      <label for="yearSelect" class="mr-2 fw-bold">Financial Year: </label>
+      <select id="yearSelect" [(ngModel)]="selectedYear" (change)="onYearChange()" class="form-select w-auto">
+        <!-- Default placeholder option -->
+        <option class="text-muted " value=0 disabled selected>Choose Year Range</option>
+        <option *ngFor="let year of years" [value]="year">
+          {{year}} - {{year + 1}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+
+  <section class="box-content mt-5 mb-5">
+    <div class="container m-auto">
+      <div class="row justify-content-center align-items-stretch">
+        <div class="col-md-6 col-lg-5 col-12 col-sm-12 mb-3 d-flex">
+          <div class="card w-100 h-100">
+            <div class="card-body box-body2 rounded">
+              <h3 class="card-title"><strong>Number of POs</strong></h3>
+              <h4 class="card-title text-light font-italic">
+                FY({{DatesforFinancialyearreport.start_date.split('-')[0]}}-{{DatesforFinancialyearreport.end_date.split('-')[0]}})
+              </h4>
+              <h4 class="card-text">
+                <strong>{{ financialReport.count !== null ? financialReport.count : 0 }}</strong>
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-5 col-12 col-sm-12 mb-3 d-flex">
+          <div class="card w-100 h-100">
+            <div class="card-body box-body rounded">
+              <h3 class="card-title"><strong>Total Purchase Amount</strong></h3>
+              <h4 class="card-title text-light font-italic">
+                FY({{DatesforFinancialyearreport.start_date.split('-')[0]}}-{{DatesforFinancialyearreport.end_date.split('-')[0]}})
+              </h4>
+              <h4 class="card-title text-light font-italic">
+                <!-- <span *ngFor="let currency of objectKeys(financialReport.sumOfPurchase); let last = last"
+                  style="margin-right: 10px;">
+                  <strong>
+                    {{ financialReport.sumOfPurchase[currency].currency }}
+                    {{ financialReport.sumOfPurchase[currency].sumtotal.toFixed(2) ||0 }}
+                    <span *ngIf="!last">&nbsp;+</span>
+                  </strong>
+                </span> -->
+
+                <span *ngFor="let currency of objectKeys(financialReport.sumOfPurchase); let last = last"
+                  style="margin-right: 10px; direction:ltr; unicode-bidi:isolate;">
+                  <strong>
+                    {{ financialReport.sumOfPurchase[currency].currency }}
+                    {{ financialReport.sumOfPurchase[currency].sumtotal.toFixed(2) || 0 }}
+                    <span *ngIf="!last">&nbsp;+</span>
+                  </strong>
+                </span>
+              </h4>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- chart  starts here -->
+  <section>
+    <div class="container mt-5 mb-5 ">
+      <div class="row ">
+        <div class="col-lg-12 col-12 col-sm-12 col-md-12">
+          <div class="data-range text-center mb-2">
+            <p class="mb-0">
+              Bar Chart for: <strong>{{ headerLable.start_date }}</strong> – <strong>{{ headerLable.end_date }}</strong>
+            </p>
+          </div>
+          <div class="chart-box">
+            <canvas id="MyChart">{{ chart }}</canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- chart  ends here -->
+</section>

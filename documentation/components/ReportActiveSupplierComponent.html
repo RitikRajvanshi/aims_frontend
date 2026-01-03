@@ -1,0 +1,2161 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ReportActiveSupplierComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-report-active-supplier</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./report-active-supplier.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./report-active-supplier.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#count" >count</a>
+                            </li>
+                            <li>
+                                <a href="#currentdate" >currentdate</a>
+                            </li>
+                            <li>
+                                <a href="#currentSortColumn" >currentSortColumn</a>
+                            </li>
+                            <li>
+                                <a href="#dateForm" >dateForm</a>
+                            </li>
+                            <li>
+                                <a href="#dates" >dates</a>
+                            </li>
+                            <li>
+                                <a href="#displayList" >displayList</a>
+                            </li>
+                            <li>
+                                <a href="#empltyDataList" >empltyDataList</a>
+                            </li>
+                            <li>
+                                <a href="#filteredvendorData" >filteredvendorData</a>
+                            </li>
+                            <li>
+                                <a href="#isAscending" >isAscending</a>
+                            </li>
+                            <li>
+                                <a href="#isDataorNot" >isDataorNot</a>
+                            </li>
+                            <li>
+                                <a href="#itemData" >itemData</a>
+                            </li>
+                            <li>
+                                <a href="#lastfinnancialyrDate" >lastfinnancialyrDate</a>
+                            </li>
+                            <li>
+                                <a href="#nextfinnancialyrDate" >nextfinnancialyrDate</a>
+                            </li>
+                            <li>
+                                <a href="#page" >page</a>
+                            </li>
+                            <li>
+                                <a href="#searchItem" >searchItem</a>
+                            </li>
+                            <li>
+                                <a href="#searchTerm" >searchTerm</a>
+                            </li>
+                            <li>
+                                <a href="#tableSize" >tableSize</a>
+                            </li>
+                            <li>
+                                <a href="#tableSizes" >tableSizes</a>
+                            </li>
+                            <li>
+                                <a href="#totalItems" >totalItems</a>
+                            </li>
+                            <li>
+                                <a href="#VendorList" >VendorList</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilter" >applyFilter</a>
+                            </li>
+                            <li>
+                                <a href="#exportToexcelfromnode" >exportToexcelfromnode</a>
+                            </li>
+                            <li>
+                                <a href="#getFinancialYear" >getFinancialYear</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#NoSpaceallowedatstart" >NoSpaceallowedatstart</a>
+                            </li>
+                            <li>
+                                <a href="#ontableDatachange" >ontableDatachange</a>
+                            </li>
+                            <li>
+                                <a href="#ontableSizechange" >ontableSizechange</a>
+                            </li>
+                            <li>
+                                <a href="#sort" >sort</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#submitDate" >submitDate</a>
+                            </li>
+                            <li>
+                                <a href="#supplierEvaluationData" >supplierEvaluationData</a>
+                            </li>
+                            <li>
+                                <a href="#validation" >validation</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(sharedService: <a href="../injectables/SharedService.html" target="_self">SharedService</a>, router: Router, spinner: NgxSpinnerService, fileService: <a href="../injectables/FilesService.html" target="_self">FilesService</a>, matdialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>sharedService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SharedService.html" target="_self" >SharedService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>spinner</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgxSpinnerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fileService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FilesService.html" target="_self" >FilesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>matdialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <span ><b>applyFilter</b></span>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="exportToexcelfromnode"></a>
+                    <span class="name">
+                        <span ><b>exportToexcelfromnode</b></span>
+                        <a href="#exportToexcelfromnode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>exportToexcelfromnode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="206"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:206</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFinancialYear"></a>
+                    <span class="name">
+                        <span ><b>getFinancialYear</b></span>
+                        <a href="#getFinancialYear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFinancialYear()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="59"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="54"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NoSpaceallowedatstart"></a>
+                    <span class="name">
+                        <span ><b>NoSpaceallowedatstart</b></span>
+                        <a href="#NoSpaceallowedatstart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>NoSpaceallowedatstart(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="249"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:249</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ontableDatachange"></a>
+                    <span class="name">
+                        <span ><b>ontableDatachange</b></span>
+                        <a href="#ontableDatachange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ontableDatachange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ontableSizechange"></a>
+                    <span class="name">
+                        <span ><b>ontableSizechange</b></span>
+                        <a href="#ontableSizechange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ontableSizechange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:174</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sort"></a>
+                    <span class="name">
+                        <span ><b>sort</b></span>
+                        <a href="#sort"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sort(columnName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>columnName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitDate"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>submitDate</b></span>
+                        <a href="#submitDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>submitDate()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supplierEvaluationData"></a>
+                    <span class="name">
+                        <span ><b>supplierEvaluationData</b></span>
+                        <a href="#supplierEvaluationData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>supplierEvaluationData(id: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="255"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:255</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validation"></a>
+                    <span class="name">
+                        <span ><b>validation</b></span>
+                        <a href="#validation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validation()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="271"
+                                    class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:271</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="count"></a>
+                    <span class="name">
+                        <span ><b>count</b></span>
+                        <a href="#count"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentdate"></a>
+                    <span class="name">
+                        <span ><b>currentdate</b></span>
+                        <a href="#currentdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentSortColumn"></a>
+                    <span class="name">
+                        <span ><b>currentSortColumn</b></span>
+                        <a href="#currentSortColumn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dateForm"></a>
+                    <span class="name">
+                        <span ><b>dateForm</b></span>
+                        <a href="#dateForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dates"></a>
+                    <span class="name">
+                        <span ><b>dates</b></span>
+                        <a href="#dates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    start_date: &#x27;&#x27;,
+    end_date: &#x27;&#x27;
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayList"></a>
+                    <span class="name">
+                        <span ><b>displayList</b></span>
+                        <a href="#displayList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="empltyDataList"></a>
+                    <span class="name">
+                        <span ><b>empltyDataList</b></span>
+                        <a href="#empltyDataList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredvendorData"></a>
+                    <span class="name">
+                        <span ><b>filteredvendorData</b></span>
+                        <a href="#filteredvendorData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAscending"></a>
+                    <span class="name">
+                        <span ><b>isAscending</b></span>
+                        <a href="#isAscending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDataorNot"></a>
+                    <span class="name">
+                        <span ><b>isDataorNot</b></span>
+                        <a href="#isDataorNot"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemData"></a>
+                    <span class="name">
+                        <span ><b>itemData</b></span>
+                        <a href="#itemData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lastfinnancialyrDate"></a>
+                    <span class="name">
+                        <span ><b>lastfinnancialyrDate</b></span>
+                        <a href="#lastfinnancialyrDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextfinnancialyrDate"></a>
+                    <span class="name">
+                        <span ><b>nextfinnancialyrDate</b></span>
+                        <a href="#nextfinnancialyrDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="page"></a>
+                    <span class="name">
+                        <span ><b>page</b></span>
+                        <a href="#page"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchItem"></a>
+                    <span class="name">
+                        <span ><b>searchItem</b></span>
+                        <a href="#searchItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTerm"></a>
+                    <span class="name">
+                        <span ><b>searchTerm</b></span>
+                        <a href="#searchTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tableSize"></a>
+                    <span class="name">
+                        <span ><b>tableSize</b></span>
+                        <a href="#tableSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>20</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tableSizes"></a>
+                    <span class="name">
+                        <span ><b>tableSizes</b></span>
+                        <a href="#tableSizes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[20, 50, 100, &#x27;All&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalItems"></a>
+                    <span class="name">
+                        <span ><b>totalItems</b></span>
+                        <a href="#totalItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VendorList"></a>
+                    <span class="name">
+                        <span ><b>VendorList</b></span>
+                        <a href="#VendorList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/user/user-component/report-active-supplier/report-active-supplier.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { SharedService } from &#x27;src/app/services/shared.service&#x27;;
+import { FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import Swal from &#x27;sweetalert2&#x27;;
+import { NgxSpinnerService } from &quot;ngx-spinner&quot;;
+import * as moment from &#x27;moment&#x27;;
+import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import { catchError, retry } from &#x27;rxjs/operators&#x27;;
+import { of } from &#x27;rxjs&#x27;;
+import { FilesService } from &#x27;src/app/services/files.service&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { VendorEvaluationModalComponent } from &#x27;../vendor-evaluation-modal/vendor-evaluation-modal.component&#x27;;
+
+
+@Component({
+  selector: &#x27;app-report-active-supplier&#x27;,
+  templateUrl: &#x27;./report-active-supplier.component.html&#x27;,
+  styleUrls: [&#x27;./report-active-supplier.component.scss&#x27;]
+})
+export class ReportActiveSupplierComponent {
+  empltyDataList &#x3D; [];
+  isDataorNot: boolean &#x3D; true;
+  dateForm: any;
+  dates &#x3D; {
+    start_date: &#x27;&#x27;,
+    end_date: &#x27;&#x27;
+  }
+  displayList &#x3D; false;
+  VendorList: any &#x3D; [];
+
+  searchItem &#x3D; &#x27;&#x27;;
+  page: any &#x3D; 1;
+  count: any &#x3D; 0;
+  tableSize: any &#x3D; 20;
+  tableSizes: any &#x3D; [20, 50, 100, &#x27;All&#x27;];
+
+  lastfinnancialyrDate: any;
+  nextfinnancialyrDate: any;
+
+  itemData: any[] &#x3D; [];
+  filteredvendorData: any[] &#x3D; [];
+  searchTerm: string &#x3D; &#x27;&#x27;;
+  totalItems: number &#x3D; 0;
+  currentdate: any;
+  currentSortColumn: string &#x3D; &#x27;&#x27;; // Variable to store the current sort column
+  isAscending: any; // Variable to store the current sorting order
+
+  constructor(private sharedService: SharedService, private router: Router, private spinner: NgxSpinnerService, private fileService: FilesService, private matdialog: MatDialog) {
+    const today &#x3D; moment();
+    this.currentdate &#x3D; today.format(&#x27;YYYY-MM-DD&#x27;);
+  }
+
+  ngOnInit(): void {
+    this.validation();
+    this.getFinancialYear()
+  }
+
+  getFinancialYear() {
+    const today &#x3D; moment();
+    const curMonth &#x3D; today.month() + 1;
+    const curYear &#x3D; today.year();
+
+    if (curMonth &gt; 3) {
+      this.lastfinnancialyrDate &#x3D; moment(&#x60;${curYear}-04-01&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+      this.nextfinnancialyrDate &#x3D; moment(&#x60;${curYear + 1}-03-31&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+    } else {
+      this.lastfinnancialyrDate &#x3D; moment(&#x60;${curYear - 1}-04-01&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+      this.nextfinnancialyrDate &#x3D; moment(&#x60;${curYear}-03-31&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+    }
+
+    console.log(this.lastfinnancialyrDate, &quot;this.lastfinnancialyrDate&quot;);
+    console.log(this.nextfinnancialyrDate, &quot;this.nextfinnancialyrDate&quot;);
+
+    this.dates.start_date &#x3D; this.lastfinnancialyrDate;
+    this.dates.end_date &#x3D; this.nextfinnancialyrDate;
+  }
+
+  async submitDate() {
+    try {
+      if (this.dates?.start_date &gt; this.dates?.end_date) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;End date should be later than start date.&quot;,
+          icon: &quot;warning&quot;
+        })
+      }
+      else {
+        this.spinner.show();
+        this.displayList &#x3D; true;
+        const results: any &#x3D; await this.sharedService.getactivevendorbydate(this.dates).pipe(
+          retry(3), // Retry the request up to 3 times
+          // catchError((error: HttpErrorResponse) &#x3D;&gt; {
+          //   console.error(&#x27;Error fetching accepted requests:&#x27;, error);
+          //   return of([]); // Return an empty array if an error occurs
+          // })
+        ).toPromise();
+
+        if (results?.length &#x3D;&#x3D; 0) {
+          this.isDataorNot &#x3D; false;
+        }
+        else {
+          this.isDataorNot &#x3D; true;
+          const filteredResults &#x3D; results.map((item: any) &#x3D;&gt; {
+            const splitcreateddate &#x3D; item.created_date ? moment(item.created_date).format(&#x27;DD-MM-YYYY&#x27;) : null;
+            const splitmodifieddate &#x3D; item.modified_date ? moment(item.modified_date).format(&#x27;DD-MM-YYYY&#x27;) : null;
+            return { ...item, created_date: splitcreateddate, modified_date: splitmodifieddate };
+          });
+          console.log(filteredResults, &quot;filteredResults&quot;);
+          this.filteredvendorData &#x3D; filteredResults;
+          this.itemData &#x3D; filteredResults;
+          this.count &#x3D; filteredResults.length;
+        }
+      }
+    }
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        });
+      } else {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try again later!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        });
+      }
+    }
+    finally {
+      this.spinner.hide();
+    }
+  }
+
+  applyFilter(): void {
+    if (this.searchTerm) {
+      this.filteredvendorData &#x3D; this.itemData.filter((item: any) &#x3D;&gt; {
+        // Check if any property matches the search term and is not null or empty
+        return Object.keys(item).some(key &#x3D;&gt; {
+          if (item[key] !&#x3D;&#x3D; null &amp;&amp; item[key] !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; key &#x3D;&#x3D;&#x3D; &#x27;created_date&#x27;) {
+            return item[key]?.includes(this.searchTerm);
+
+          }
+          else if (item[key] !&#x3D;&#x3D; null &amp;&amp; item[key] !&#x3D;&#x3D; &#x27;&#x27;) {
+            // For other properties, check if they include the search term
+            return item[key]?.toString().toLowerCase()?.includes(this.searchTerm.toLowerCase());
+          }
+          return false; // Ignore null or empty properties
+        });
+      });
+    } else {
+      this.filteredvendorData &#x3D; this.itemData;
+    }
+
+    this.totalItems &#x3D; this.filteredvendorData.length;
+    this.count &#x3D; this.totalItems;
+    this.page &#x3D; 1; // Reset to the first page when filtering occurs 
+  }
+
+
+
+  ontableDatachange(event: any) {
+    this.page &#x3D; event;
+    // this.submitDate();
+  }
+
+  ontableSizechange(event: any): void {
+    const Value &#x3D; event.target.value
+    // this.tableSize &#x3D; ;
+    if (Value &#x3D;&#x3D; &quot;All&quot;) {
+      this.tableSize &#x3D; +this.count;
+    }
+    else {
+      // Otherwise, set the table size to the selected value
+      this.tableSize &#x3D; +Value;
+    }
+
+    this.page &#x3D; 1;
+    // this.submitDate();
+  }
+
+
+  sort(columnName: string) {
+    if (this.currentSortColumn &#x3D;&#x3D;&#x3D; columnName) {
+      this.isAscending &#x3D; !this.isAscending; // Toggle sorting order
+    } else {
+      this.currentSortColumn &#x3D; columnName; // Update current sort column
+      this.isAscending &#x3D; true; // Set sorting order to ascending for the new column
+    }
+
+    // Sort the data based on the current sort column and sorting order
+    this.filteredvendorData.sort((a, b) &#x3D;&gt; {
+      const comparison &#x3D; a[this.currentSortColumn].localeCompare(b[this.currentSortColumn]);
+      return this.isAscending ? comparison : -comparison;
+    });
+  }
+
+
+  exportToexcelfromnode(): any {
+    const modifiedItemsDataList &#x3D; this.filteredvendorData.map((item: any, index: any) &#x3D;&gt; {
+      const convertedCategory &#x3D; item.categories.join(&quot;, &quot;); // to change array item like [&quot;Hardware&quot;, &quot;Software&quot;](array) --&gt; Hardware, Software(string)
+
+      return {
+        ...item,  // Spread the original object properties
+        &quot;categories&quot;: convertedCategory,
+        &quot;S.No.&quot;: index + 1  // Add the S.No. field with the appropriate value
+      };
+    });
+
+    const reportRequest &#x3D; {
+      reportTitle: &quot;Report Active Vendor&quot;,
+      columns: [
+        { header: &#x27;S.No.&#x27;, key: &#x27;S.No.&#x27;, width: 10, filterButton: true },
+        { header: &#x27;Vendor Name&#x27;, key: &#x27;supplier_name&#x27;, width: 25, filterButton: true },
+        { header: &#x27;Contact Person&#x27;, key: &#x27;contact_person&#x27;, width: 40, filterButton: true },
+        { header: &#x27;Rating&#x27;, key: &#x27;rating&#x27;, width: 25, filterButton: true },
+        { header: &#x27;Phone&#x27;, key: &#x27;phone&#x27;, width: 25, filterButton: false },
+        { header: &#x27;Mobile&#x27;, key: &#x27;mobile&#x27;, width: 25, filterButton: false },
+        { header: &#x27;Email&#x27;, key: &#x27;email&#x27;, width: 35, filterButton: true },
+        { header: &#x27;Category&#x27;, key: &#x27;categories&#x27;, width: 40, filterButton: true },
+        { header: &#x27;Created By&#x27;, key: &#x27;user_name&#x27;, width: 25, filterButton: true },
+      ],
+
+      data: modifiedItemsDataList, // Data to populate the report
+      totalsrow:false,
+      filters: [
+        { filterBy: (this.dates.start_date &amp;&amp; this.dates.end_date) ? &#x27;Purchase Date&#x27; : &#x27;&#x27;, startDate: this.dates.start_date || &#x27;&#x27;, endDate: this.dates.end_date || &#x27;&#x27; }
+      ]
+    };
+
+    this.fileService.exportToExcel(reportRequest).subscribe(
+      (response: Blob) &#x3D;&gt; {
+        // Call downloadBlob to trigger the download with the response
+        this.fileService.downloadBlob(response, &#x27;report_active_vendors_data.xlsx&#x27;);
+      },
+      (error) &#x3D;&gt; {
+        console.error(&#x27;Error exporting to Excel&#x27;, error);
+      }
+    );
+  }
+
+  NoSpaceallowedatstart(event: any) {
+    if (event.target.selectionStart &#x3D;&#x3D;&#x3D; 0 &amp;&amp; event.code &#x3D;&#x3D;&#x3D; &quot;Space&quot;) {
+      event.preventDefault();
+    }
+  }
+
+  supplierEvaluationData(id: any) {
+    console.log(id, &quot;id&quot;);
+    if (id) {
+      //setting height width of the model and sending data to the VendorEvaluationModalComponent...
+      this.matdialog.open(VendorEvaluationModalComponent, {
+        width: &#x27;auto&#x27;, height: &#x27;auto&#x27;,
+        data: {
+          supplier_id: id
+        }
+      });
+    }
+    else{
+      console.info(&#x27;No id found&#x27;);
+    }
+  }
+
+  validation() {
+    this.dateForm &#x3D; new FormGroup({
+      start_date: new FormControl(&#x27;&#x27;),
+      end_date: new FormControl(&#x27;&#x27;),
+    })
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">
+&lt;ngx-spinner size&#x3D;&quot;medium&quot; bdColor&#x3D;&quot;rgba(0, 0, 0, 0.2)&quot; color&#x3D;&quot;#00235E&quot; type&#x3D;&quot;ball-clip-rotate&quot;&gt;
+&lt;/ngx-spinner&gt;
+&lt;section class&#x3D;&quot;content-header&quot;&gt;
+    &lt;div class&#x3D;&quot;header-icon&quot;&gt;&lt;i class&#x3D;&quot;fa fa-files-o&quot; style&#x3D;&quot;color:#FF00FF&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;div class&#x3D;&quot;header-title&quot;&gt;
+        &lt;h1&gt;Active Vendors&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;div class&#x3D;&quot;data-content&quot;&gt;
+        &lt;div class&#x3D;&quot;page-background-h&quot;&gt;
+                          &lt;!-- main starts here --&gt;
+        &lt;div class&#x3D;&quot;data-form mt-3&quot; [formGroup]&#x3D;&quot;dateForm&quot;&gt;
+              &lt;div class&#x3D;&quot;container-fluid  pt-0&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12 mt-3&quot;&gt;
+                        &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                            &lt;div class&#x3D;&quot;row&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-lg-4&quot;&gt;
+                                    &lt;label class&#x3D;&quot;form-label&quot;&gt;Start Date &lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;date&quot; id&#x3D;&quot;sdate&quot; class&#x3D;&quot;form-control data-control-date&quot;
+                                    placeholder&#x3D;&quot;Start Date&quot; formControlName&#x3D;&quot;start_date&quot;
+                                    [(ngModel)]&#x3D;&quot;dates.start_date&quot;&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-lg-4&quot;&gt;
+                                    &lt;label class&#x3D;&quot;form-label&quot;&gt;End Date &lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;date&quot; id&#x3D;&quot;edate&quot; class&#x3D;&quot;form-control data-control-date&quot;
+                                        placeholder&#x3D;&quot;End Date&quot; formControlName&#x3D;&quot;end_date&quot; [(ngModel)]&#x3D;&quot;dates.end_date&quot;&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-lg-4&quot;&gt;
+                                    &lt;div class&#x3D;&quot; mt-3&quot;&gt;
+                                        &lt;button class&#x3D;&quot;btn btn-data-login-report d-inline m-auto&quot; [disabled]&#x3D;&quot;!dates.start_date || !dates.end_date&quot;
+                                            (click)&#x3D;&quot;submitDate()&quot;&gt;Submit&lt;/button&gt;
+                                            &lt;button class&#x3D;&quot;btn btn-login-report  m-2&quot; (click)&#x3D;&quot;exportToexcelfromnode()&quot;
+                                            [disabled]&#x3D;&quot;!displayList&quot;&gt;Export To
+                                            Excel&lt;/button&gt;
+                                       
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+            &lt;!-- main here --&gt;
+
+        &lt;div class&#x3D;&quot;container-fluid&quot; *ngIf&#x3D;&quot;isDataorNot&quot;&gt;
+            &lt;div class&#x3D;&quot;data-table&quot; *ngIf&#x3D;&quot;displayList&quot;&gt;
+                &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                    &lt;div class&#x3D;&quot;row&quot;&gt;
+                        &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12&quot;&gt;
+                            &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                                &lt;div class&#x3D;&quot;row&quot;&gt;
+                                    &lt;div class&#x3D;&quot;input-group my-3   search-container&quot;&gt;
+                                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot; data-control form-control  mr-2&quot;
+                                            placeholder&#x3D;&quot;Search...&quot; aria-describedby&#x3D;&quot;basic-addon2&quot;
+                                            [(ngModel)]&#x3D;&quot;searchTerm&quot; (input)&#x3D;&quot;applyFilter()&quot;
+                                            (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                    &lt;div class&#x3D;&quot;row&quot;&gt;
+                        &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12 &quot;&gt;
+                            &lt;div class&#x3D;&quot; table-responsive overflow-auto &quot;&gt;
+                                &lt;table class&#x3D;&quot;table  table-bordered table-hover small-font&quot;&gt;
+                                    &lt;thead&gt;
+                                        &lt;tr&gt;
+                                            &lt;th style&#x3D;&quot;width:5%;&quot; scope&#x3D;&quot;col&quot;&gt;S.No.&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:19%;&quot; scope&#x3D;&quot;col&quot;
+                                                (click)&#x3D;&quot;sort(&#x27;supplier_name&#x27;)&quot;&gt;Vendor Name &lt;i
+                                                    class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:10%;&quot; scope&#x3D;&quot;col&quot;
+                                                (click)&#x3D;&quot;sort(&#x27;contact_person&#x27;)&quot;&gt;Contact Person &lt;i
+                                                    class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:5%;&quot; scope&#x3D;&quot;col&quot; (click)&#x3D;&quot;sort(&#x27;rating&#x27;)&quot;&gt;
+                                                Rating &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:8%;&quot; scope&#x3D;&quot;col&quot; (click)&#x3D;&quot;sort(&#x27;phone&#x27;)&quot;&gt; Phone
+                                                &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:8%;&quot; scope&#x3D;&quot;col&quot; (click)&#x3D;&quot;sort(&#x27;mobile&#x27;)&quot;&gt;
+                                                Mobile &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:18%;&quot; scope&#x3D;&quot;col&quot; (click)&#x3D;&quot;sort(&#x27;email&#x27;)&quot;&gt;Email
+                                                &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:18%;&quot; scope&#x3D;&quot;col&quot;&gt;Category&lt;/th&gt;
+                                            &lt;th style&#x3D;&quot;width:10%;&quot; scope&#x3D;&quot;col&quot; (click)&#x3D;&quot;sort(&#x27;user_name&#x27;)&quot;&gt;
+                                                Created By &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;&lt;/th&gt;
+                                        &lt;/tr&gt;
+                                    &lt;/thead&gt;
+                                    &lt;tbody&gt;
+                                        &lt;tr *ngFor&#x3D;&quot;let data of filteredvendorData | paginate:
+                         {itemsPerPage: tableSize,
+                           currentPage: page, totalItems:empltyDataList.length};  let i &#x3D; index&quot;&gt;
+                                            &lt;th scope&#x3D;&quot;row&quot;&gt;{{ (page - 1) *
+                                                tableSize + i +1 }}&lt;/th&gt;
+                                            &lt;td&gt;
+                                                {{data.supplier_name?data.supplier_name:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                            &lt;td&gt;
+                                                {{data.contact_person?data.contact_person:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                            &lt;!-- &lt;td class&#x3D;&quot;table-heading-sub-text center-data&quot;&gt;
+                                                {{data.rating?data.rating:&#x27;N/A&#x27;}}&lt;/td&gt; --&gt;
+
+                                                &lt;td class&#x3D;&quot;text-center table-heading-sub-text&quot;&gt;&lt;button
+                                                    class&#x3D;&quot;btn-warn view-button&quot;
+                                                    (click)&#x3D;&quot;supplierEvaluationData(data.supplier_id)&quot;&gt;Ratings&lt;/button&gt;&lt;/td&gt;
+                                                
+                                            &lt;td&gt;
+                                                {{data.phone?data.phone:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                            &lt;td&gt;
+                                                {{data.mobile?data.mobile:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                            &lt;td&gt;
+                                                {{data.email?data.email:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                            &lt;td&gt;
+                                                {{data.categories?data.categories:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                            &lt;td&gt;
+                                                {{data.user_name?data.user_name:&#x27;N/A&#x27;}}&lt;/td&gt;
+                                        &lt;/tr&gt;
+                                    &lt;/tbody&gt;
+                                &lt;/table&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;container-fluid mt-2 mb-2 &quot;&gt;
+                    &lt;div class&#x3D;&quot;row&quot;&gt;
+                        &lt;div class&#x3D;&quot;col-lg-10  d-flex&quot;&gt;
+                            &lt;div class&#x3D;&quot;pagination &quot; class&#x3D;&quot;active&quot;&gt;
+                                &lt;pagination-controls previousLabel&#x3D;&quot;Prev&quot; nextLabel&#x3D;&quot;Next&quot;
+                                    (pageChange)&#x3D;&quot;ontableDatachange($event)&quot;&gt;
+                                &lt;/pagination-controls&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class&#x3D;&quot;col-lg-2   ml-auto &quot;&gt;
+                            &lt;div class&#x3D;&quot;form-group d-flex select-size&quot;&gt;
+                                &lt;p class&#x3D;&quot;  report-headings&quot;&gt;Items/page&lt;/p&gt;
+                                &lt;select class&#x3D;&quot; data-control-select ml-2  select-size form-control&quot;
+                                (change)&#x3D;&quot;ontableSizechange($event)&quot; &gt;
+                                &lt;option class&#x3D;&quot;select-border&quot; *ngFor&#x3D;&quot; let size of tableSizes&quot; [value]&#x3D;&quot;size&quot;&gt;
+                                    {{size}}
+                                &lt;/option&gt;
+                            &lt;/select&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./report-active-supplier.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.center-data{
+    text-align: center!important;
+}
+
+table{
+    font-size:11px!important;
+    // color:black;
+    font-family: &#x27;Verdana&#x27;, &#x27;Geneva&#x27;, sans-serif !important;
+    //  font-family:&#x27;Tahoma&#x27;, &#x27;Geneva&#x27;, sans-serif;
+    //  font-family:&#x27;New Roman&#x27;, &#x27;Times&#x27;, serif;
+
+}
+
+.data-content{
+    line-height: 17px ;
+    padding: 0;
+}
+
+// .data-control-box{
+//     padding:0;
+// }
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate"></ngx-spinner><section class="content-header">    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>    <div class="header-title">        <h1>Active Vendors</h1>    </div></section><div class="container-fluid">    <div class="data-content">        <div class="page-background-h">                          <!-- main starts here -->        <div class="data-form mt-3" [formGroup]="dateForm">              <div class="container-fluid  pt-0">                <div class="row">                    <div class="col-lg-12 col-12 col-sm-12 mt-3">                        <div class="container-fluid">                            <div class="row">                                <div class="col-lg-4">                                    <label class="form-label">Start Date </label>                                    <input type="date" id="sdate" class="form-control data-control-date"                                    placeholder="Start Date" formControlName="start_date"                                    [(ngModel)]="dates.start_date">                                </div>                                <div class="col-lg-4">                                    <label class="form-label">End Date </label>                                    <input type="date" id="edate" class="form-control data-control-date"                                        placeholder="End Date" formControlName="end_date" [(ngModel)]="dates.end_date">                                </div>                                <div class="col-lg-4">                                    <div class=" mt-3">                                        <button class="btn btn-data-login-report d-inline m-auto" [disabled]="!dates.start_date || !dates.end_date"                                            (click)="submitDate()">Submit</button>                                            <button class="btn btn-login-report  m-2" (click)="exportToexcelfromnode()"                                            [disabled]="!displayList">Export To                                            Excel</button>                                                                           </div>                                </div>                            </div>                        </div>                    </div>                </div>            </div>        </div>            <!-- main here -->        <div class="container-fluid" *ngIf="isDataorNot">            <div class="data-table" *ngIf="displayList">                <div class="container-fluid">                    <div class="row">                        <div class="col-lg-12 col-12 col-sm-12">                            <div class="container-fluid">                                <div class="row">                                    <div class="input-group my-3   search-container">                                        <input type="text" class=" data-control form-control  mr-2"                                            placeholder="Search..." aria-describedby="basic-addon2"                                            [(ngModel)]="searchTerm" (input)="applyFilter()"                                            (keydown)="NoSpaceallowedatstart($event)">                                    </div>                                </div>                            </div>                        </div>                    </div>                </div>                <div class="container-fluid">                    <div class="row">                        <div class="col-lg-12 col-12 col-sm-12 ">                            <div class=" table-responsive overflow-auto ">                                <table class="table  table-bordered table-hover small-font">                                    <thead>                                        <tr>                                            <th style="width:5%;" scope="col">S.No.</th>                                            <th style="width:19%;" scope="col"                                                (click)="sort(\'supplier_name\')">Vendor Name <i                                                    class="fa fa-sort"></i></th>                                            <th style="width:10%;" scope="col"                                                (click)="sort(\'contact_person\')">Contact Person <i                                                    class="fa fa-sort"></i></th>                                            <th style="width:5%;" scope="col" (click)="sort(\'rating\')">                                                Rating <i class="fa fa-sort"></i></th>                                            <th style="width:8%;" scope="col" (click)="sort(\'phone\')"> Phone                                                <i class="fa fa-sort"></i></th>                                            <th style="width:8%;" scope="col" (click)="sort(\'mobile\')">                                                Mobile <i class="fa fa-sort"></i></th>                                            <th style="width:18%;" scope="col" (click)="sort(\'email\')">Email                                                <i class="fa fa-sort"></i></th>                                            <th style="width:18%;" scope="col">Category</th>                                            <th style="width:10%;" scope="col" (click)="sort(\'user_name\')">                                                Created By <i class="fa fa-sort"></i></th>                                        </tr>                                    </thead>                                    <tbody>                                        <tr *ngFor="let data of filteredvendorData | paginate:                         {itemsPerPage: tableSize,                           currentPage: page, totalItems:empltyDataList.length};  let i = index">                                            <th scope="row">{{ (page - 1) *                                                tableSize + i +1 }}</th>                                            <td>                                                {{data.supplier_name?data.supplier_name:\'N/A\'}}</td>                                            <td>                                                {{data.contact_person?data.contact_person:\'N/A\'}}</td>                                            <!-- <td class="table-heading-sub-text center-data">                                                {{data.rating?data.rating:\'N/A\'}}</td> -->                                                <td class="text-center table-heading-sub-text"><button                                                    class="btn-warn view-button"                                                    (click)="supplierEvaluationData(data.supplier_id)">Ratings</button></td>                                                                                            <td>                                                {{data.phone?data.phone:\'N/A\'}}</td>                                            <td>                                                {{data.mobile?data.mobile:\'N/A\'}}</td>                                            <td>                                                {{data.email?data.email:\'N/A\'}}</td>                                            <td>                                                {{data.categories?data.categories:\'N/A\'}}</td>                                            <td>                                                {{data.user_name?data.user_name:\'N/A\'}}</td>                                        </tr>                                    </tbody>                                </table>                            </div>                        </div>                    </div>                </div>                <div class="container-fluid mt-2 mb-2 ">                    <div class="row">                        <div class="col-lg-10  d-flex">                            <div class="pagination " class="active">                                <pagination-controls previousLabel="Prev" nextLabel="Next"                                    (pageChange)="ontableDatachange($event)">                                </pagination-controls>                            </div>                        </div>                        <div class="col-lg-2   ml-auto ">                            <div class="form-group d-flex select-size">                                <p class="  report-headings">Items/page</p>                                <select class=" data-control-select ml-2  select-size form-control"                                (change)="ontableSizechange($event)" >                                <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">                                    {{size}}                                </option>                            </select>                            </div>                        </div>                    </div>                </div>            </div>        </div>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AcceptedRequestComponent', 'selector': 'app-accepted-request'},{'name': 'AddItemComponent', 'selector': 'app-add-item'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssetsComponent', 'selector': 'app-assets'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'DesignationComponent', 'selector': 'app-designation'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ForgetPasswordComponent', 'selector': 'app-forget-password'},{'name': 'GatepassComponent', 'selector': 'app-gatepass'},{'name': 'GatepassidListComponent', 'selector': 'app-gatepassid-list'},{'name': 'GatepassListComponent', 'selector': 'app-gatepass-list'},{'name': 'GatepassViewComponent', 'selector': 'app-gatepass-view'},{'name': 'GenarateRequestComponent', 'selector': 'app-genarate-request'},{'name': 'GroupComponent', 'selector': 'app-group'},{'name': 'IncomingItemDetailsComponent', 'selector': 'app-incoming-item-details'},{'name': 'ItemWithPoInvoiceMovetoinventoryForAPeriodComponent', 'selector': 'app-item-with-po-invoice-movetoinventory-for-a-period'},{'name': 'LocationComponent', 'selector': 'app-location'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MakeDirectpurchaseOrderComponent', 'selector': 'app-make-directpurchase-order'},{'name': 'MakePurchaseOrderComponent', 'selector': 'app-make-purchase-order'},{'name': 'MovetoItsmComponent', 'selector': 'app-moveto-itsm'},{'name': 'NewsystemInformationComponent', 'selector': 'app-newsystem-information'},{'name': 'PendingRequestComponent', 'selector': 'app-pending-request'},{'name': 'PoApprovalMailComponent', 'selector': 'app-po-approval-mail'},{'name': 'PoRejectionMailComponent', 'selector': 'app-po-rejection-mail'},{'name': 'ProductComponent', 'selector': 'app-product'},{'name': 'PurchaseInfoComponent', 'selector': 'app-purchase-info'},{'name': 'PurchaseOrderListComponent', 'selector': 'app-purchase-order-list'},{'name': 'PurchaseOrderViewComponent', 'selector': 'app-purchase-order-view'},{'name': 'ReceivedPurchaseOrderComponent', 'selector': 'app-received-purchase-order'},{'name': 'ReceivedRequestComponent', 'selector': 'app-received-request'},{'name': 'ReceivedRequestModalComponent', 'selector': 'app-received-request-modal'},{'name': 'RejectedRequestComponent', 'selector': 'app-rejected-request'},{'name': 'ReportActiveSupplierComponent', 'selector': 'app-report-active-supplier'},{'name': 'ReportCompleteAssetComponent', 'selector': 'app-report-complete-asset'},{'name': 'ReportGoodsAndServicesComponent', 'selector': 'app-report-goods-and-services'},{'name': 'ReportItemsListComponent', 'selector': 'app-report-items-list'},{'name': 'ReportItemWithLocationanduserComponent', 'selector': 'app-report-item-with-locationanduser'},{'name': 'ReportItemWithPriceComponent', 'selector': 'app-report-item-with-price'},{'name': 'ReportLicenseManagementComponent', 'selector': 'app-report-license-management'},{'name': 'ReportLifeCycleComponent', 'selector': 'app-report-life-cycle'},{'name': 'ReportPendingStockComponent', 'selector': 'app-report-pending-stock'},{'name': 'ReportPurchaseOrderComponent', 'selector': 'app-report-purchase-order'},{'name': 'ReportScrapedItemsComponent', 'selector': 'app-report-scraped-items'},{'name': 'ReportStockInHandComponent', 'selector': 'app-report-stock-in-hand'},{'name': 'ReportUploadDocumentComponent', 'selector': 'app-report-upload-document'},{'name': 'ReportVendorEvaluationComponent', 'selector': 'app-report-vendor-evaluation'},{'name': 'ReportWarrantyItemsComponent', 'selector': 'app-report-warranty-items'},{'name': 'SupplierEvaluationComponent', 'selector': 'app-supplier-evaluation'},{'name': 'SystemDetailComponent', 'selector': 'app-system-detail'},{'name': 'SystemInformationListComponent', 'selector': 'app-system-information-list'},{'name': 'TransferStockComponent', 'selector': 'app-transfer-stock'},{'name': 'UpdateItemsComponent', 'selector': 'app-update-items'},{'name': 'UpdateUserComponent', 'selector': 'app-update-user'},{'name': 'UpdateVendorComponent', 'selector': 'app-update-vendor'},{'name': 'UploadInspectionFormComponent', 'selector': 'app-upload-inspection-form'},{'name': 'UploadInvoiceComponent', 'selector': 'app-upload-invoice'},{'name': 'UploadScanDocumentComponent', 'selector': 'app-upload-scan-document'},{'name': 'UploadScanQuotationComponent', 'selector': 'app-upload-scan-quotation'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserDashboardComponent', 'selector': 'app-user-dashboard'},{'name': 'UserListComponent', 'selector': 'app-user-list'},{'name': 'UserPrivilegeComponent', 'selector': 'app-user-privilege'},{'name': 'VendorApprovalMailComponent', 'selector': 'app-vendor-approval-mail'},{'name': 'VendorEvaluationModalComponent', 'selector': 'app-vendor-evaluation-modal'},{'name': 'VendorListComponent', 'selector': 'app-vendor-list'},{'name': 'VendorRejectionMailComponent', 'selector': 'app-vendor-rejection-mail'}];
+    var DIRECTIVES = [{'name': 'PositiveNumberDirective', 'selector': '[b-positive]'}];
+    var ACTUAL_COMPONENT = {'name': 'ReportActiveSupplierComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ReportActiveSupplierComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,986 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#$" title="src/app/user/user.component.ts" ><b>$</b>&nbsp;&nbsp;&nbsp;(src/.../user.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#$" title="src/app/user/user-component/report-goods-and-services/report-goods-and-services.component.ts" ><b>$</b>&nbsp;&nbsp;&nbsp;(src/.../report-goods-and-services.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#domtoimage" title="src/app/user/user-component/purchase-order-view/purchase-order-view.component.ts" ><b>domtoimage</b>&nbsp;&nbsp;&nbsp;(src/.../purchase-order-view.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/app/environments/environment.dev.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.dev.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/app/environments/environment.prod.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.prod.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/app/environments/environment.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#FileSaver" title="src/app/user/user-component/report-upload-document/report-upload-document.component.ts" ><b>FileSaver</b>&nbsp;&nbsp;&nbsp;(src/.../report-upload-document.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#FileSaver" title="src/app/user/user-component/upload-scan-document/upload-scan-document.component.ts" ><b>FileSaver</b>&nbsp;&nbsp;&nbsp;(src/.../upload-scan-document.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#FileSaver" title="src/app/user/user-component/upload-scan-quotation/upload-scan-quotation.component.ts" ><b>FileSaver</b>&nbsp;&nbsp;&nbsp;(src/.../upload-scan-quotation.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#require" title="src/app/user/user-component/report-upload-document/report-upload-document.component.ts" ><b>require</b>&nbsp;&nbsp;&nbsp;(src/.../report-upload-document.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#require" title="src/app/user/user-component/upload-scan-document/upload-scan-document.component.ts" ><b>require</b>&nbsp;&nbsp;&nbsp;(src/.../upload-scan-document.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#require" title="src/app/user/user-component/upload-scan-quotation/upload-scan-quotation.component.ts" ><b>require</b>&nbsp;&nbsp;&nbsp;(src/.../upload-scan-quotation.component.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/user/user.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="$"></a>
+                    <span class="name">
+                        <span ><b>$</b></span>
+                        <a href="#$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/user/user-component/report-goods-and-services/report-goods-and-services.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="$"></a>
+                    <span class="name">
+                        <span ><b>$</b></span>
+                        <a href="#$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/user/user-component/purchase-order-view/purchase-order-view.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="domtoimage"></a>
+                    <span class="name">
+                        <span ><b>domtoimage</b></span>
+                        <a href="#domtoimage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>require(&#x27;dom-to-image&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/environments/environment.dev.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    production: false,
+    BASE_URL: &#x27;http://localhost:3010/&#x27;,  //URL
+    ADMIN_URL: &#x27;http://localhost:3010/admin/&#x27;,
+    USER_URL: &#x27;http://localhost:3010/users/&#x27;,
+    CHECK_URL: &#x27;http://localhost:3010/check/&#x27;,
+    FILES_URL: &#x27;http://localhost:3010/files/&#x27;,
+    LOGIN_URL: &#x27;http://localhost:3010/login/&#x27;,
+    SHARED_URL: &#x27;http://localhost:3010/shared/&#x27;,
+
+
+    SHARED: {
+        GET_SUPPLIER_DATA: &#x27;getSupplierdata&#x27;,
+        GET_SUPPLIER_DATA_BYID: &#x27;getSupplierdatabyid&#x27;,
+        GETUSERSDATABYSTATUS: &#x27;getUsersdatabystatus&#x27;,
+        GETUSERSDATABYID: &#x27;getUsersdatabyid&#x27;,
+        GETPRODUCTDATA: &#x27;getproductdetail&#x27;,
+        GETPRODUCTNAMEBYID:&#x27;getProductnamebyId&#x27;,
+        GETPENDINGREQUEST: &#x27;getPendingrequest&#x27;,
+        GETPENDINGIREQUESTBYID: &#x27;getPendingrequestbyId&#x27;,
+
+        GETREJECTEDREQUEST: &#x27;getRejectedrequest&#x27;,
+        GETACCEPTEDREQUEST: &#x27;getAcceptedrequest&#x27;,
+        GETPURCHASEJOINDATA: &#x27;getpurchasejoindata&#x27;,
+        GETPURCHASEJOINDATABYIDORPURCHASEID: &#x27;getpurchasejoindatabyIdorpurchaseid&#x27;,
+        GETPURCHASEDATAFROMPURCHASEORDER: &#x27;getpurchasedatafrompo&#x27;,
+        GET_SUPPLIERDATABY_NAME: &#x27;getSupplierdatabyname&#x27;,
+        GETLASTPURCHASEID: &#x27;getLastPurchaseId&#x27;,
+        GETPURCHASEORDERDATABYPID: &#x27;getpurchaseorderdatabypid&#x27;,
+
+        GETPURCHASEORDERDATA: &#x27;getpurchaseorderData&#x27;,
+        GETPURCHASEORDERDATAACCTOINVOICEUPLOAD:&#x27;getpurchaseorderDataacctoinvoiceupload&#x27;,
+        GETPURCHASEDATAFORINVOICE: &#x27;getpurchasedatafrompoforinvoice&#x27;,
+        GETPURCHASEDATAFROMPOACCTOINVOICE: &#x27;getpurchasedatafrompoacctoinvoice&#x27;,
+        GETPURCHASEDATABYID: &#x27;getpurchasedatabyid&#x27;,
+        GETPURCHASEJOINDATABYPID: &#x27;getpurchasejoindatabypid&#x27;,
+        GETPURCHASEJOINDATABYID: &#x27;getpurchasejoindataby_id&#x27;,
+        GETLASTITEMCODEFROMITEM: &#x27;getlastItemCode&#x27;,
+        GETSUPPLIERJOINDATAFROMPO: &#x27;getSupplierjoindatafrompo&#x27;,
+        GETSUPPLIEREVALUATIONDATABYPID: &#x27;getsupplierEvaluationdatabyPid&#x27;,
+        GETSUPPLIEREVALUATIONBYSUPPLIERID: &#x27;getsupplierEvaluationdatabysupplierId&#x27;,
+        GETITEMSDATA: &#x27;getItemsData&#x27;,
+        GETITEMDATABYUSERANDLOCATION:&#x27;getItemsDatawithuserandlocation&#x27;,
+        GETCATEGORYDATA: &#x27;getcategorydetail&#x27;,
+        GETDOCUMENTDATA: &#x27;getDocumentdata&#x27;,
+        GETDOCUMENTDATABYDOCUMENTID: &#x27;getDocumentdatabydocId&#x27;,
+
+        //Quotation
+        GETQUOTATIONDATA: &#x27;getQuotationdata&#x27;,
+        GETQUOTATIONDATABYID: &#x27;getQuotationdatabyId&#x27;,
+        GETVENDOREVALUATIONJOINDATA: &#x27;getvendorEvaluationjoindata&#x27;,
+
+
+
+        //filters and sorting
+        GETPURCHASEJOINDATABYDATE: &#x27;getpurchasejoinDatabydate&#x27;,
+        GET_SUPPLIERDATA_BYDATEFILTER: &#x27;getSupplierdatabybydatefilter&#x27;,
+        GETPURCHASEORDERDATABYDATE: &#x27;getpurchaseorderDatabydate&#x27;,
+        GETREPORTPURCHASEORDERDATABYDATE: &#x27;getreportpurchaseorderDatabydate&#x27;,
+        GETREPORTPURCHASEORDERDATA: &#x27;getreportpurchaseorderData&#x27;,
+        GETPURCHASEORDERDATABYDATEFORASSET: &#x27;getpurchaseorderDatabydateforasset&#x27;,
+        GETSENDPURCHASEORDERDATA: &#x27;getsendpurchaseorderData&#x27;,
+        GETCOUNTOFRECEIVEDORDER: &#x27;getcountofreceivedpurchaseorder&#x27;,
+        GETCOUNTOFRECEIVEDREQUEST: &#x27;getcountofreceivedrequest&#x27;,                         //PENDING REQUEST COUNT
+
+        GETCOUNTOFPURCHASEORDERS: &#x27;getcountofPurchaseOrders&#x27;,
+        GETPURCHASEDATACCEPTORREJECT: &#x27;getpurchasedataacceptorreject&#x27;,
+        GETSUMOFPURCHASEORDERSBYDATE: &#x27;getSumofpurchaseordersbyDate&#x27;,
+        GETCOUNTOFITEMSBYDATE: &#x27;getcountofItemsbyDate&#x27;,
+
+        GETREPORTITEMWITHPRICE: &#x27;getreportItemwithPrice&#x27;,
+     // GETREPORTITEMWITHPRICETWO: &#x27;getreportItemwithPriceTwo&#x27;,
+
+        GETREPORTITEMWITHPOINVOICEMOVETOINVENTORYFORAPERIOD: &#x27;getreportItembypoinvoicemovetoinventoryforaperiod&#x27;,
+        GETREPORTPENDINGSTOCK: &#x27;getreportpendingStock&#x27;,
+        GETREPORTSTOCKINHAND: &#x27;getreportStockinhand&#x27;,
+        GETFULLASSETBYDATE: &#x27;getfullassetbyDate&#x27;,
+        GETTOTALPRICEANDITEMSFROMPI: &#x27;gettotalpriceanditemsfrompi&#x27;,
+        GETCOMPANYDATA: &#x27;getcompanyData&#x27;,
+        GETCOMPANYDATABYCOMPANYNAME: &#x27;getcompanyDatabycompanyName&#x27;,
+
+        GETPRODUCTDATAJOINBYSTATUS: &#x27;getProductDatajoinbystatus&#x27;,
+        GETSYSTEMDATAFROMITEMS: &#x27;getSystemdatafromitems&#x27;,
+        GETRAMDATAFROMITEMS:&#x27;getRamdatafromitems&#x27;,
+        GETSMPSDATAFROMITEMS:&#x27;getsmpsdatafromitems&#x27;,
+        GETHDDDATAFROMITEMS:&#x27;gethdddatafromitems&#x27;,
+        GETGRAPHICCARDDATAFROMITEMS:&#x27;getgraphiccardDatafromitems&#x27;,
+        GETITEMSOTHERTHANCPU: &#x27;getItemsotherthanCPU&#x27;,
+        GETITEMSOTHERTHANCPUWITHALLLOCATION: &#x27;getItemsotherthanCPUwithalllocation&#x27;,
+        GETSYSTEMDATABYITEMID: &#x27;getsystemDatabyitemId&#x27;,
+        GETSYSTEMDATAOTHERTHANCPU: &#x27;getsystemDataotherThanCPU&#x27;,
+        GETSYSTEMCONFIG: &#x27;getSystemConfiguration&#x27;,
+        GETSYSTEMDATAFROMTRANSFERSTOCK: &#x27;getSystemDataFromtransferStock&#x27;,
+        GETITEMSDATAFROMITEMID:&#x27;getItemsDatabyitemid&#x27;,
+
+        GETCOUNTASSETITEMS:&#x27;getCountofassetItems&#x27;,
+        GETLOCATIONBYITEMID:&#x27;getLocationbyitemid&#x27;,
+        GETACTIVEVENDORSBYDATE:&#x27;getActiveVendorbydate&#x27;,
+        GETITEMSWITHWARRANTY:&#x27;getitemswithwarranty&#x27;,
+        GETSYSTEMINFORMATIONLIST:&#x27;getsysteminformationlist&#x27;,
+        GETITEMDATAFROMITEMCODE:&#x27;getItemdatafromitemcode&#x27;,
+        GETALLUSERHAVINGSYSTEM:&#x27;getallusershavingsystem&#x27;,
+        GETTRANSFERSTOCKDATA:&#x27;getTransferStockdata&#x27;,
+        GETSCRAPEDGIFTEDSOLDOUTDATAFROMITEMS:&#x27;getScrapedgiftedsoldoutdatafromitems&#x27;,
+        GENERATENEXTITEMCODE:&#x27;generate-next-item-code&#x27;,
+        GETGENERATEDNEXTITEMCODE:&#x27;get-generated-next-item-code&#x27;,
+        GETLASTROWFROMPASSID:&#x27;getlastrowfromgatepassid&#x27;,
+        GETGATEPASSDATABYID:&#x27;getgatepassdatabyid&#x27;,
+        COUNTSENDGATEPASSES:&#x27;countsendgatepasses&#x27;,
+
+        GETITEMSFORUSERS:&#x27;getitemsforusers&#x27;,
+        GETASSIGNEDITEMSTOUSERFROMTS:&#x27;getassigneditemstousersfromts&#x27;,
+        GETLICENSEREPORT:&#x27;getLicensereport&#x27;,
+        GETGOODSANDSERVICES:&#x27;getGoodsandServices&#x27;,
+        GETLASTDIRECTPURCHASEID:&#x27;getLastdirectPurchaseId&#x27;
+    },
+
+    ADMIN: {
+        ADD_CATEGORY: &#x27;addCategory&#x27;,
+        UPDATE_CATEGORY: &#x27;updatecategory&#x27;,
+        ADD_GROUP: &#x27;addGroup&#x27;,
+        UPDATEGRP: &#x27;updateGrpdata&#x27;,
+        ADD_DESIGNATION: &#x27;addDesignation&#x27;,
+        UPDATEDESIGNATION: &#x27;updateDesignationdata&#x27;,
+        ADD_PRIVILEGE: &#x27;addPrivilege&#x27;,
+        UPDATEPRIVILEGE: &#x27;updatePrivilegedata&#x27;,
+        ADD_LOCATION: &#x27;addlocation&#x27;,
+        UPDATE_LOCATION: &#x27;updatelocation&#x27;,
+        ADD_PRODUCT: &#x27;addProducts&#x27;,
+        UPDATE_PRODUCT: &#x27;updateproduct&#x27;,
+
+        ADD_SUPPLIER: &#x27;addSupplier&#x27;,
+        // GET_SUPPLIER_DATA:&#x27;getSupplierdata&#x27;,
+
+        UPDATE_SUPPLIER: &#x27;updatesupplier&#x27;,
+        DELETE_SUPPLIER_DATA: &#x27;deleteSupplierdata&#x27;,
+
+        ADD_USER: &#x27;addUser&#x27;,
+        DEACTIVATEUSERSTATUSBYID: &#x27;deactivateuserstatusbyid&#x27;,       //deleting user temporary status &#x3D;0
+        UPDATEUSER: &#x27;updateUser&#x27;,
+        GENERATEREQUEST: &#x27;generateRequest&#x27;,
+        MAKEPRUCHASEORDER: &#x27;makePurchaseOrder&#x27;,
+        MAKENEWPRUCHASEORDER: &#x27;makenewPurchaseOrder&#x27;,
+        UPDATESENTINPURCHASEORDER: &#x27;updateSentinpurchaseOrder&#x27;,
+        UPDATESENTAPPROVEDPURCHASEORDER: &#x27;updatesentApprovedpurchaseorder&#x27;,
+        UPDATESENTREJECTPURCHASEORDER: &#x27;updatesentRejectpurchaseorder&#x27;,
+
+        ADDINSPECTIONINPI: &#x27;addInspectionapprovalinpi&#x27;,
+        ADDMULTIPLEINSPECTIONINPI:&#x27;addmutipleInspectionapprovalinpi&#x27;,
+        ADDITEM: &#x27;addItems&#x27;,
+        ADDSUPPLIEREVALUATION: &#x27;supplierEvaluation&#x27;,
+        UPDATEITEM: &#x27;updateItem&#x27;,
+
+        // GENERATEREQUEST:&#x27;generateRequest&#x27;,
+        UPDATEREQUESTGRANTEDQUANTITY: &#x27;updaterequestgrantedQuantity&#x27;,
+        COMPANYREGISTRATION: &#x27;companyRegisteration&#x27;,
+        TRANSFERSTOCK: &#x27;transferStock&#x27;,
+        // TRANSFERMULTIPLEITEMS:&#x27;transfermultipleitems&#x27;,
+        TRANSFERSTOCKFORMULTIPLEDATA:&#x27;transferStockformultipledata&#x27;,
+        UPDATELOCATIONINITEMANDTRANSFERSTOCK:&#x27;updateLocinItemandtransferStock&#x27;,
+        UPDATEISACTIVEINPIFORITEMS: &#x27;updateIsActiveinpi&#x27;,
+        UPDATEPURCHASEITEMFORHOLDINGSTOCK:&#x27;updatePurchaseItemforholdingStock&#x27;,
+
+        DELETESYSTEMINFORMATION:&#x27;deletesysteminformation&#x27;,
+        ADDSYSTEMINFO:&#x27;addsysteminformation&#x27;,
+        UPDATESYSTEMINFO:&#x27;updatesysteminformation&#x27;,
+        UPDATEUSERINSYSTEMINFO:&#x27;updateuserinsysteminformation&#x27;,
+        UPDATESCRAPPEDITEMINSYSTEMINFO:&#x27;updatescrappediteminsysteminformation&#x27;,
+        INSERTMULTIPLEITEMSINITEMSTABLE:&#x27;insertmultipledatainitemstable&#x27;,
+
+        UPDATEPO:&#x27;updatePurchaseOrder&#x27;,
+        DELETE_PO:&#x27;deletePo&#x27;,
+        SAVEGATEPASS:&#x27;savegatepass&#x27;,
+        RECEIVEDITEMFROMUSERFORGP:&#x27;receiveditemfromuserforgp&#x27;,
+        SENTGATEPASSFORAPPROVAL:&#x27;sentgatepassforapproval&#x27;,
+        GATEPASSAPPROVAL:&#x27;gatepassapproval&#x27;,
+        GATEPASSREJECTION:&#x27;gatepassrejection&#x27;,
+        DELETEITEMSFROMITEMSANDSYSTEMINFO:&#x27;deleteitemsfromItemsandSysteminfo&#x27;,
+        POAPPROVALMAIL:&#x27;approvePurchaseOrder&#x27;,
+        POREJECTIONMAIL:&#x27;rejectPurchaseOrder&#x27;,
+        UPDATEITEMSTATUS:&#x27;updateItemStatus&#x27;,
+        SENTMAILFORVERIFICATION:&#x27;sentMailforverification&#x27;
+    },
+
+    CHECK: {
+        GETCATEGORYBYSTATUS: &#x27;getcategorytDatabystatus&#x27;,
+        DEACTIVATECATEGORYSTATUSCHECK: &#x27;deactivateCategorystatuscheck&#x27;,
+        GETGROUPDATABYSTATUS: &#x27;getgroupDatabystatus&#x27;,
+        DEACTIVATEGROUPSTATUSBYCHECK: &#x27;deactivateGroupstatuscheck&#x27;,
+        GETDESIGNATIONBYSTATUS: &#x27;getdesignationDatabystatus&#x27;,
+        DEACTIVATEDESIGNATIONSTATUSBYCHECK: &#x27;deactivateDesingationstatuscheck&#x27;,
+        GETPRIVILEGEBYSTATUS: &#x27;getprivilegeDatabystatus&#x27;,
+        DEACTIVATEPRIVILEGESTATSUCHECK: &#x27;deactivatePrivilegestatuscheck&#x27;,
+        GETLOCATIONDATABYSTATUS: &#x27;getLocationbystatus&#x27;,
+        DEACTIVATELOCATIONDATABYID: &#x27;deactivateLocationstatusbyid&#x27;,
+        GETPRODUCTBYSTATUS: &#x27;getproductDatabystatus&#x27;,
+        // GETPRODUCTJOINDATABYSTATUS:&#x27;getproductjoinDatabystatus&#x27;,
+        DEACTIVATEPRODUCTSTATUSCHECK: &#x27;deactivateproductstatuscheck&#x27;,
+        GETUSERSDATABYID: &#x27;getUsersdatabyid&#x27;,
+        VERIFICATIONOFPIDINSUPPLIEREVALUATION: &#x27;verificationofpIdinsupplierEvaluation&#x27;,
+        CHANGESTATUSONACCEPTREQ: &#x27;onacceptrequest&#x27;,
+        CHANGESTATUSONREJECTREQ: &#x27;onrejectrequest&#x27;,
+        VERIFICATIONOFITEMS: &#x27;verificationofItems&#x27;
+
+    },
+    FILES: {
+
+        UPLOADFILEANDGETDATA: &#x27;uploadInvoicefileandgetdata&#x27;,
+        UPLOADDOCUMENTANDGETDATA:&#x27;uploadDocumentandgetdata&#x27;,
+        UPLOADQUOTATIONANDGETDATA:&#x27;uploadQuotationandgetdata&#x27;,
+        UPLOADINVOICEINPO: &#x27;uploadInvoicedatainpo&#x27;,
+        UPDATEINVOICENOINPO: &#x27;updateInvoicenoinpo&#x27;,
+        UPLOADSCANDOCUMENT: &#x27;uploadDocumentData&#x27;,
+        UPDATEDOCOTHERTHANFILE: &#x27;updateDocotherthanfile&#x27;,
+        UPDATEFULLDOCUMENT: &#x27;updateFullDocument&#x27;,
+        UPLOADQUOTATION: &#x27;uploadQuotation&#x27;,
+        UPDATEQUOTATIONOTHERTHANFILE: &#x27;updateQuotationotherthanfile&#x27;,
+        UPDATEFULLQUOTATION: &#x27;updateFullQuotation&#x27;,
+        UPLOADLOGOANDGETDATA:&#x27;uploadlogoandgetData&#x27;,
+        EXPORTTOEXCEL:&#x27;exportToexcel&#x27;
+    },
+
+    LOGIN: {
+
+        LOGIN_CUSTOMER: &#x27;login&#x27;,
+        COMPANY_REGISTERED_ORNOT: &#x27;companyregisteredorNot&#x27;,
+        ADD_INITIALDATA:&#x27;addInitalData&#x27;,
+        FORGETPASSWORD:&#x27;forgetPassword&#x27;,
+        CHANGEPASSWORD:&#x27;changePassword&#x27;
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/environments/environment.prod.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    production: true,
+    BASE_URL: &#x27;http://192.168.0.132:3010/&#x27;,  //URL
+    ADMIN_URL: &#x27;http://192.168.0.132:3010/admin/&#x27;,
+    CHECK_URL: &#x27;http://192.168.0.132:3010/check/&#x27;,
+    FILES_URL: &#x27;http://192.168.0.132:3010/files/&#x27;,
+    LOGIN_URL: &#x27;http://192.168.0.132:3010/login/&#x27;,
+    SHARED_URL: &#x27;http://192.168.0.132:3010/shared/&#x27;,
+    USER_URL: &#x27;http://192.168.0.132:3010/users/&#x27;,
+
+
+    SHARED: {
+        GET_SUPPLIER_DATA: &#x27;getSupplierdata&#x27;,
+        GET_SUPPLIER_DATA_BYID: &#x27;getSupplierdatabyid&#x27;,
+        GETUSERSDATABYSTATUS: &#x27;getUsersdatabystatus&#x27;,
+        GETUSERSDATABYID: &#x27;getUsersdatabyid&#x27;,
+        GETPRODUCTDATA: &#x27;getproductdetail&#x27;,
+        GETPRODUCTNAMEBYID:&#x27;getProductnamebyId&#x27;,
+        GETPENDINGREQUEST: &#x27;getPendingrequest&#x27;,
+        GETPENDINGIREQUESTBYID: &#x27;getPendingrequestbyId&#x27;,
+
+        GETREJECTEDREQUEST: &#x27;getRejectedrequest&#x27;,
+        GETACCEPTEDREQUEST: &#x27;getAcceptedrequest&#x27;,
+        GETPURCHASEJOINDATA: &#x27;getpurchasejoindata&#x27;,
+        GETPURCHASEJOINDATABYIDORPURCHASEID: &#x27;getpurchasejoindatabyIdorpurchaseid&#x27;,
+        GETPURCHASEDATAFROMPURCHASEORDER: &#x27;getpurchasedatafrompo&#x27;,
+        GET_SUPPLIERDATABY_NAME: &#x27;getSupplierdatabyname&#x27;,
+        GETLASTPURCHASEID: &#x27;getLastPurchaseId&#x27;,
+        GETPURCHASEORDERDATABYPID: &#x27;getpurchaseorderdatabypid&#x27;,
+
+        GETPURCHASEORDERDATA: &#x27;getpurchaseorderData&#x27;,
+        GETPURCHASEORDERDATAACCTOINVOICEUPLOAD:&#x27;getpurchaseorderDataacctoinvoiceupload&#x27;,
+        GETPURCHASEDATAFORINVOICE: &#x27;getpurchasedatafrompoforinvoice&#x27;,
+        GETPURCHASEDATAFROMPOACCTOINVOICE: &#x27;getpurchasedatafrompoacctoinvoice&#x27;,
+        GETPURCHASEDATABYID: &#x27;getpurchasedatabyid&#x27;,
+        GETPURCHASEJOINDATABYPID: &#x27;getpurchasejoindatabypid&#x27;,
+        GETINPECTIONINFOFROMARRAYOFPID:&#x27;getinspectioninfofromarrayofpid&#x27;,
+        GETPURCHASEJOINDATABYID: &#x27;getpurchasejoindataby_id&#x27;,
+        GETLASTITEMCODEFROMITEM: &#x27;getlastItemCode&#x27;,
+        GETSUPPLIERJOINDATAFROMPO: &#x27;getSupplierjoindatafrompo&#x27;,
+        GETSUPPLIEREVALUATIONDATABYPID: &#x27;getsupplierEvaluationdatabyPid&#x27;,
+        GETSUPPLIEREVALUATIONBYSUPPLIERID: &#x27;getsupplierEvaluationdatabysupplierId&#x27;,
+        GETITEMSDATA: &#x27;getItemsData&#x27;,
+        GETITEMDATAWITHUSERANDLOCATION:&#x27;getItemsDatawithuserandlocation&#x27;,
+        GETCATEGORYDATA: &#x27;getcategorydetail&#x27;,
+        GETDOCUMENTDATA: &#x27;getDocumentdata&#x27;,
+        GETDOCUMENTDATABYDOCUMENTID: &#x27;getDocumentdatabydocId&#x27;,
+
+        //Quotation
+        GETQUOTATIONDATA: &#x27;getQuotationdata&#x27;,
+        GETQUOTATIONDATABYID: &#x27;getQuotationdatabyId&#x27;,
+        GETVENDOREVALUATIONJOINDATA: &#x27;getvendorEvaluationjoindata&#x27;,
+
+        //filters and sorting
+        GETPURCHASEJOINDATABYDATE: &#x27;getpurchasejoinDatabydate&#x27;,
+        GET_SUPPLIERDATA_BYDATEFILTER: &#x27;getSupplierdatabybydatefilter&#x27;,
+        GETPURCHASEORDERDATABYDATE: &#x27;getpurchaseorderDatabydate&#x27;,
+        GETREPORTPURCHASEORDERDATABYDATE: &#x27;getreportpurchaseorderDatabydate&#x27;,
+        GETREPORTPURCHASEORDERDATA: &#x27;getreportpurchaseorderData&#x27;,
+        GETPURCHASEORDERDATABYDATEFORASSET: &#x27;getpurchaseorderDatabydateforasset&#x27;,
+        GETSENDPURCHASEORDERDATA: &#x27;getsendpurchaseorderData&#x27;,
+        GETCOUNTOFRECEIVEDORDER: &#x27;getcountofreceivedpurchaseorder&#x27;,
+        GETCOUNTOFRECEIVEDREQUEST: &#x27;getcountofreceivedrequest&#x27;,                         //PENDING REQUEST COUNT
+
+        GETCOUNTOFPURCHASEORDERS: &#x27;getcountofPurchaseOrders&#x27;,
+        GETPURCHASEDATACCEPTORREJECT: &#x27;getpurchasedataacceptorreject&#x27;,
+        GETSUMOFPURCHASEORDERSBYDATE: &#x27;getSumofpurchaseordersbyDate&#x27;,
+        GETCOUNTOFITEMSBYDATE: &#x27;getcountofItemsbyDate&#x27;,
+
+        GETREPORTITEMWITHPRICE: &#x27;getreportItemwithPrice&#x27;,
+        // GETREPORTITEMWITHPRICETWO: &#x27;getreportItemwithPriceTwo&#x27;,
+
+        GETREPORTITEMWITHPOINVOICEMOVETOINVENTORYFORAPERIOD: &#x27;getreportItembypoinvoicemovetoinventoryforaperiod&#x27;,
+
+        GETREPORTPENDINGSTOCK: &#x27;getreportpendingStock&#x27;,
+        GETREPORTSTOCKINHAND: &#x27;getreportStockinhand&#x27;,
+        GETFULLASSETBYDATE: &#x27;getfullassetbyDate&#x27;,
+        GETTOTALPRICEANDITEMSFROMPI: &#x27;gettotalpriceanditemsfrompi&#x27;,
+        GETCOMPANYDATA: &#x27;getcompanyData&#x27;,
+        GETCOMPANYDATABYCOMPANYNAME: &#x27;getcompanyDatabycompanyName&#x27;,
+
+        GETPRODUCTDATAJOINBYSTATUS: &#x27;getProductDatajoinbystatus&#x27;,
+        GETSYSTEMDATAFROMITEMS: &#x27;getSystemdatafromitems&#x27;,
+        GETRAMDATAFROMITEMS:&#x27;getRamdatafromitems&#x27;,
+        GETSMPSDATAFROMITEMS:&#x27;getsmpsdatafromitems&#x27;,
+        GETHDDDATAFROMITEMS:&#x27;gethdddatafromitems&#x27;,
+        GETGRAPHICCARDDATAFROMITEMS:&#x27;getgraphiccardDatafromitems&#x27;,
+        GETITEMSOTHERTHANCPU: &#x27;getItemsotherthanCPU&#x27;,
+        GETITEMSOTHERTHANCPUWITHALLLOCATION: &#x27;getItemsotherthanCPUwithalllocation&#x27;,
+        GETSYSTEMDATABYITEMID: &#x27;getsystemDatabyitemId&#x27;,
+        GETSYSTEMDATAOTHERTHANCPU: &#x27;getsystemDataotherThanCPU&#x27;,
+        GETSYSTEMCONFIG: &#x27;getSystemConfiguration&#x27;,
+        GETSYSTEMDATAFROMTRANSFERSTOCK: &#x27;getSystemDataFromtransferStock&#x27;,
+        GETITEMSDATAFROMITEMID:&#x27;getItemsDatabyitemid&#x27;,
+
+        GETCOUNTASSETITEMS:&#x27;getCountofassetItems&#x27;,
+        GETLOCATIONBYITEMID:&#x27;getLocationbyitemid&#x27;,
+        GETACTIVEVENDORSBYDATE:&#x27;getActiveVendorbydate&#x27;,
+        GETITEMSWITHWARRANTY:&#x27;getitemswithwarranty&#x27;,
+
+        GETSYSTEMINFORMATIONLIST:&#x27;getsysteminformationlist&#x27;,
+        GETASSIGNEDITEMSFROMTS:&#x27;getassigneditemsfromts&#x27;,
+        GETASSINGEDITEMFROMSYSTEMINFO:&#x27;getassigneditemsfromsysteminfo&#x27;,
+        GETITEMDATAFROMITEMCODE:&#x27;getItemdatafromitemcode&#x27;,
+        GETALLUSERHAVINGSYSTEM:&#x27;getallusershavingsystem&#x27;,
+        GETTRANSFERSTOCKDATA:&#x27;getTransferStockdata&#x27;,
+        GETSCRAPEDGIFTEDSOLDOUTDATAFROMITEMS:&#x27;getScrapedgiftedsoldoutdatafromitems&#x27;,
+        GENERATENEXTITEMCODE:&#x27;generate-next-item-code&#x27;,
+        GETGENERATEDNEXTITEMCODE:&#x27;get-generated-next-item-code&#x27;,
+        GETLASTROWFROMPASSID:&#x27;getlastrowfromgatepassid&#x27;,
+        GETGATEPASSDATABYID:&#x27;getgatepassdatabyid&#x27;,
+        GETGATEPASSDATAFROMTBLGATEPASSID:&#x27;getgatepassdatafromtblgatepassid&#x27;,
+        COUNTSENDGATEPASSES:&#x27;countsendgatepasses&#x27;,
+        // created on 04/07/2024
+        GETITEMSFORUSERS:&#x27;getitemsforusers&#x27;,
+        GETASSIGNEDITEMSTOUSERFROMTS:&#x27;getassigneditemstousersfromts&#x27;,
+        GETLICENSEREPORT:&#x27;getLicensereport&#x27;,
+        GETLIFECYCLEREPORT:&#x27;getLifecyclereport&#x27;,
+        GETGOODSANDSERVICES:&#x27;getGoodsandServices&#x27;,
+        // direct purchase
+        GETLASTDIRECTPURCHASEID:&#x27;getLastdirectPurchaseId&#x27;
+    },
+
+    ADMIN: {
+        ADD_CATEGORY: &#x27;addCategory&#x27;,
+        UPDATE_CATEGORY: &#x27;updatecategory&#x27;,
+        ADD_GROUP: &#x27;addGroup&#x27;,
+        UPDATEGRP: &#x27;updateGrpdata&#x27;,
+        ADD_DESIGNATION: &#x27;addDesignation&#x27;,
+        UPDATEDESIGNATION: &#x27;updateDesignationdata&#x27;,
+        ADD_PRIVILEGE: &#x27;addPrivilege&#x27;,
+        UPDATEPRIVILEGE: &#x27;updatePrivilegedata&#x27;,
+        ADD_LOCATION: &#x27;addlocation&#x27;,
+        UPDATE_LOCATION: &#x27;updatelocation&#x27;,
+        ADD_PRODUCT: &#x27;addProducts&#x27;,
+        UPDATE_PRODUCT: &#x27;updateproduct&#x27;,
+        ADD_SUPPLIER: &#x27;addSupplier&#x27;,
+        UPDATE_SUPPLIER: &#x27;updatesupplier&#x27;,
+        DELETE_SUPPLIER_DATA: &#x27;deleteSupplierdata&#x27;,
+        ADD_USER: &#x27;addUser&#x27;,
+        DEACTIVATEUSERSTATUSBYID: &#x27;deactivateuserstatusbyid&#x27;,       //deleting user temporary status &#x3D;0
+        UPDATEUSER: &#x27;updateUser&#x27;,
+        GENERATEREQUEST: &#x27;generateRequest&#x27;,
+        MAKEPRUCHASEORDER: &#x27;makePurchaseOrder&#x27;,
+        MAKENEWPRUCHASEORDER: &#x27;makenewPurchaseOrder&#x27;,
+        UPDATESENTINPURCHASEORDER: &#x27;updateSentinpurchaseOrder&#x27;,
+        
+        UPDATESENTAPPROVEDPURCHASEORDER: &#x27;updatesentApprovedpurchaseorder&#x27;,
+
+        UPDATESENTREJECTPURCHASEORDER: &#x27;updatesentRejectpurchaseorder&#x27;,
+        ADDINSPECTIONINPI: &#x27;addInspectionapprovalinpi&#x27;,
+        ADDMULTIPLEINSPECTIONINPI:&#x27;addmutipleInspectionapprovalinpi&#x27;,
+        ADDITEM: &#x27;addItems&#x27;,
+        ADDSUPPLIEREVALUATION: &#x27;supplierEvaluation&#x27;,
+        UPDATEITEM: &#x27;updateItem&#x27;,
+
+        // GENERATEREQUEST:&#x27;generateRequest&#x27;,
+        UPDATEREQUESTGRANTEDQUANTITY: &#x27;updaterequestgrantedQuantity&#x27;,
+        COMPANYREGISTRATION: &#x27;companyRegisteration&#x27;,
+        TRANSFERSTOCK: &#x27;transferStock&#x27;,
+        // TRANSFERMULTIPLEITEMS:&#x27;transfermultipleitems&#x27;,
+        TRANSFERSTOCKFORMULTIPLEDATA:&#x27;transferStockformultipledata&#x27;,
+        UPDATELOCATIONINITEMANDTRANSFERSTOCK:&#x27;updateLocinItemandtransferStock&#x27;,
+        UPDATEISACTIVEINPIFORITEMS: &#x27;updateIsActiveinpi&#x27;,
+        UPDATEPURCHASEITEMFORHOLDINGSTOCK:&#x27;updatePurchaseItemforholdingStock&#x27;,
+
+        DELETESYSTEMINFORMATION:&#x27;deletesysteminformation&#x27;,
+        ADDSYSTEMINFO:&#x27;addsysteminformation&#x27;,
+        UPDATESYSTEMINFO:&#x27;updatesysteminformation&#x27;,
+        UPDATEUSERINSYSTEMINFO:&#x27;updateuserinsysteminformation&#x27;,
+        UPDATESCRAPPEDITEMINSYSTEMINFO:&#x27;updatescrappediteminsysteminformation&#x27;,
+        INSERTMULTIPLEITEMSINITEMSTABLE:&#x27;insertmultipledatainitemstable&#x27;,
+
+        UPDATEPO:&#x27;updatePurchaseOrder&#x27;,
+        DELETE_PO:&#x27;deletePo&#x27;,
+        UPDATELASTITEMCODE:&#x27;update-last-itemCode&#x27;,
+        SAVEGATEPASS:&#x27;savegatepass&#x27;,
+        RECEIVEDITEMFROMUSERFORGP:&#x27;receiveditemfromuserforgp&#x27;,
+        SENDGATEPASSFORAPPROVAL:&#x27;sendgatepassforapproval&#x27;,
+        GATEPASSAPPROVAL:&#x27;gatepassapproval&#x27;,
+        GATEPASSREJECTION:&#x27;gatepassrejection&#x27;,
+        DELETEITEMSFROMITEMSANDSYSTEMINFO:&#x27;deleteitemsfromItemsandSysteminfo&#x27;,
+        POAPPROVALMAIL:&#x27;approvePurchaseOrder&#x27;,
+        POREJECTIONMAIL:&#x27;rejectPurchaseOrder&#x27;,
+        UPDATEITEMSTATUS:&#x27;updateItemStatus&#x27;,
+        SENTMAILFORVERIFICATION:&#x27;sentMailforverification&#x27;,
+        APPROVEORREJECTVENDOR:&#x27;approveorrejectVendor&#x27;
+
+    },
+
+    CHECK: {
+        GETCATEGORYBYSTATUS: &#x27;getcategorytDatabystatus&#x27;,
+        DEACTIVATECATEGORYSTATUSCHECK: &#x27;deactivateCategorystatuscheck&#x27;,
+        GETGROUPDATABYSTATUS: &#x27;getgroupDatabystatus&#x27;,
+        DEACTIVATEGROUPSTATUSBYCHECK: &#x27;deactivateGroupstatuscheck&#x27;,
+        GETDESIGNATIONBYSTATUS: &#x27;getdesignationDatabystatus&#x27;,
+        DEACTIVATEDESIGNATIONSTATUSBYCHECK: &#x27;deactivateDesingationstatuscheck&#x27;,
+        GETPRIVILEGEBYSTATUS: &#x27;getprivilegeDatabystatus&#x27;,
+        DEACTIVATEPRIVILEGESTATSUCHECK: &#x27;deactivatePrivilegestatuscheck&#x27;,
+        GETLOCATIONDATABYSTATUS: &#x27;getLocationbystatus&#x27;,
+        DEACTIVATELOCATIONDATABYID: &#x27;deactivateLocationstatusbyid&#x27;,
+        GETPRODUCTBYSTATUS: &#x27;getproductDatabystatus&#x27;,
+        DEACTIVATEPRODUCTSTATUSCHECK: &#x27;deactivateproductstatuscheck&#x27;,
+        GETUSERSDATABYID: &#x27;getUsersdatabyid&#x27;,
+        VERIFICATIONOFPIDINSUPPLIEREVALUATION: &#x27;verificationofpIdinsupplierEvaluation&#x27;,
+        CHANGESTATUSONACCEPTREQ: &#x27;onacceptrequest&#x27;,
+        CHANGESTATUSONREJECTREQ: &#x27;onrejectrequest&#x27;,
+        VERIFICATIONOFITEMS: &#x27;verificationofItems&#x27;
+
+    },
+    FILES: {
+
+        UPLOADFILEANDGETDATA: &#x27;uploadInvoicefileandgetdata&#x27;,
+        UPLOADDOCUMENTANDGETDATA:&#x27;uploadDocumentandgetdata&#x27;,
+        UPLOADQUOTATIONANDGETDATA:&#x27;uploadQuotationandgetdata&#x27;,
+        UPLOADINVOICEINPO: &#x27;uploadInvoicedatainpo&#x27;,
+        UPDATEINVOICENOINPO: &#x27;updateInvoicenoinpo&#x27;,
+        UPLOADSCANDOCUMENT: &#x27;uploadDocumentData&#x27;,
+        UPDATEDOCOTHERTHANFILE: &#x27;updateDocotherthanfile&#x27;,
+        UPDATEFULLDOCUMENT: &#x27;updateFullDocument&#x27;,
+        UPLOADQUOTATION: &#x27;uploadQuotation&#x27;,
+        UPDATEQUOTATIONOTHERTHANFILE: &#x27;updateQuotationotherthanfile&#x27;,
+        UPDATEFULLQUOTATION: &#x27;updateFullQuotation&#x27;,
+        UPLOADLOGOANDGETDATA:&#x27;uploadlogoandgetData&#x27;,
+        EXPORTTOEXCEL:&#x27;exportToexcel&#x27;
+    },
+
+    LOGIN: {
+        LOGIN_CUSTOMER: &#x27;login&#x27;,
+        COMPANY_REGISTERED_ORNOT: &#x27;companyregisteredorNot&#x27;,
+        ADD_INITIALDATA:&#x27;addInitalData&#x27;,
+        FORGETPASSWORD:&#x27;forgetPassword&#x27;,
+        CHANGEPASSWORD:&#x27;changePassword&#x27;
+    }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/environments/environment.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    production: false
+  }</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/user/user-component/report-upload-document/report-upload-document.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FileSaver"></a>
+                    <span class="name">
+                        <span ><b>FileSaver</b></span>
+                        <a href="#FileSaver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>require(&#x27;file-saver&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="require"></a>
+                    <span class="name">
+                        <span ><b>require</b></span>
+                        <a href="#require"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/user/user-component/upload-scan-document/upload-scan-document.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FileSaver"></a>
+                    <span class="name">
+                        <span ><b>FileSaver</b></span>
+                        <a href="#FileSaver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>require(&#x27;file-saver&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="require"></a>
+                    <span class="name">
+                        <span ><b>require</b></span>
+                        <a href="#require"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/user/user-component/upload-scan-quotation/upload-scan-quotation.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FileSaver"></a>
+                    <span class="name">
+                        <span ><b>FileSaver</b></span>
+                        <a href="#FileSaver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>require(&#x27;file-saver&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="require"></a>
+                    <span class="name">
+                        <span ><b>require</b></span>
+                        <a href="#require"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

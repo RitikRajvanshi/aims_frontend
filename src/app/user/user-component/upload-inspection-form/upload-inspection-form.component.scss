@@ -1,0 +1,33 @@
+
+// select:read-only{
+//     background-color: rgb(199, 199, 199);
+//     background-color: rgb(199, 199, 199);
+// }
+input[type="date"]{
+    color:black;
+}
+
+input[type="date"]:read-only{
+    background-color: #F5FEFD !important;
+    // color:black;
+}
+
+input[type="text"]:read-only{
+    background-color: #F5FEFD;
+}
+
+button:disabled{
+    background-color: #cccccc;
+    color:black;
+}
+
+.highlighted {
+    color: yellow !important;
+    color:#f0f0f0
+}
+
+// select:disabled{
+//     // background-color: #F5FEFD !important;
+//     background-color:grey;
+//     color:black;
+// }

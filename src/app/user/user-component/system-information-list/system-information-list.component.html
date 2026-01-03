@@ -1,0 +1,181 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-info-circle" style="color:#A1887F" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>System Information List</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content" *ngIf="isDataorNot">
+        <div class="page-background-h">
+            <div class="data-control-box m-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="ml-auto">
+                                        <button class="btn btn-login-report  mt-2 ml-0"
+                                            (click)="exportToexcelfromnode()">Export To
+                                            Excel</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-group my-3  search-container">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Search..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="searchTerm" (input)="applyFilter()"
+                                            (keydown)="NoSpaceallowedatstart($event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class="table-responsive" style="overflow-x: auto;">
+                                <table class="table table-bordered table-hover small-font" style="min-width: 1000px; table-layout: fixed;">
+          <thead>
+            <tr>
+              <th style="width: 60px;">S.No.</th>
+              <th style="width: 180px;" (click)="sort('system_type')">System Type <i class="fa fa-sort"></i></th>
+              <th style="width: 220px;" (click)="sort('cpucode')">CPU Code <i class="fa fa-sort"></i></th>
+              <th style="width: 180px;" (click)="sort('user_name')">User Name <i class="fa fa-sort"></i></th>
+              <th style="width: 220px;" (click)="sort('processor')">Processor <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('ram1')">RAM1 <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('ram2')">RAM2 <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('ram3')">RAM3 <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('ram4')">RAM4 <i class="fa fa-sort"></i></th>
+              <th style="width: 150px;" (click)="sort('hdd1')">HDD1 <i class="fa fa-sort"></i></th>
+              <th style="width: 150px;" (click)="sort('hdd2')">HDD2 <i class="fa fa-sort"></i></th>
+              <th style="width: 250px;" (click)="sort('graphiccard')">Graphic Card <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('smps')">SMPS <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('cabinet')">Cabinet <i class="fa fa-sort"></i></th>
+              <th style="width: 100px;" (click)="sort('cmos')">CMOS <i class="fa fa-sort"></i></th>
+              <th style="width: 150px;" (click)="sort('motherboard')">Motherboard <i class="fa fa-sort"></i></th>
+              <th style="width: 300px;" (click)="sort('description')">Description <i class="fa fa-sort"></i></th>
+              <th style="width: 80px;" *ngIf="userRole === '2'" colspan="2">Action</th>
+            </tr>
+          </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let items of filteredSystemData| paginate:
+                                        {itemsPerPage: tableSize,
+                                          currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                            <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                            <td>{{items.system_type}}</td>
+                                            <td> {{items.cpucode}}</td>
+                                            <td>{{items.user_name ? items.user_name: 'NA'}}</td>
+                                            <!-- <td>
+
+
+                                                <ng-container *ngIf="items.processor && items.processor.length > 13">
+                                                    <span *ngIf="!items.isExpanded">{{ items.processor.slice(0, 13)
+                                                        }}</span>
+                                                    <span *ngIf="items.isExpanded">{{ items.processor }}</span>
+
+                                                    <p class="d-inline text-secondary"
+                                                        *ngIf="items.processor.length > 13"
+                                                        (click)="toggleExpand(items)">
+                                                        {{ items.isExpanded ? 'read less' : '...' }}
+                                                    </p>
+                                                </ng-container>
+                                                <ng-container *ngIf="!items.processor || items.processor.length <= 13">
+                                                    {{ items?.processor }}
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!items.processor">
+                                                    {{ 'NA' }}
+                                                </ng-container>
+
+                                            </td> -->
+                                            <td> {{ items.processor ? items.processor:'NA'}}</td>
+                                            <td>{{items.ram1 ? items.ram1: 'NA'}}</td>
+                                            <td>{{items.ram2 ? items.ram2: 'NA'}}</td>
+                                            <td>{{items.ram3 ? items.ram3: 'NA'}}</td>
+                                            <td>{{items.ram4 ? items.ram4: 'NA'}}</td>
+                                            <td>{{items.hdd1 ? items.hdd1: 'NA'}}</td>
+                                            <td>{{items.hdd2 ? items.hdd2 : 'NA'}}</td>
+                                            <td>{{items.graphiccard ? items.graphiccard:'NA'}}</td>
+                                            <td>{{items.smps ? items.smps: 'NA'}}</td>
+                                            <td>{{items.cabinet ? items.cabinet : 'NA'}}</td>
+                                            <td>{{items.cmos? items.cmos: 'NA'}}</td>
+                                            <td>{{items.motherboard? items.motherboard:'NA'}}</td>
+                                            <td style="width: 125px;max-width: 125px; word-break: break-all ;">
+                                                <ng-container
+                                                    *ngIf="items.description && items.description.length > 40">
+                                                    <span *ngIf="!items.isExpanded">{{ items.description.slice(0, 40)
+                                                        }}</span>
+                                                    <span *ngIf="items.isExpanded">{{ items.description }}</span>
+
+                                                    <p class="d-inline text-secondary"
+                                                        *ngIf="items.description.length > 40"
+                                                        (click)="toggleExpand(items)">
+                                                        {{ items.isExpanded ? 'read less' : '...' }}
+                                                    </p>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="!items.description || items.description.length <= 40">
+                                                    {{ items.description }}
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!items.description">
+                                                    {{ 'NA' }}
+                                                </ng-container>
+
+                                            </td>
+                                            <td *ngIf="userRole === '2'"><i
+                                                    class="fa fa-edit table-edit-icon icon-green " aria-hidden="true"
+                                                    (click)="updateSystemInfo(items);navigateToNewRoute(items)"></i>
+                                            </td>
+
+                                            <td *ngIf="userRole === '2'"><i
+                                                    class="fa fa-trash table-edit-icon icon-red " aria-hidden="true"
+                                                    (click)="deletesystemInfo(items.sid)"></i></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="container-fluid mt-2 mb-2 ">
+                                    <div class="row">
+                                        <div class="col-lg-10  d-flex">
+                                            <div class="pagination " class="active">
+                                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                                    (pageChange)="ontableDatachange($event)">
+                                                </pagination-controls>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2   ml-auto ">
+                                            <div class="form-group  select-size d-flex">
+                                                <p class="  report-headings">Items/page</p>
+                                                <select class=" data-control-select ml-2  select-size form-control"
+                                                    (change)="ontableSizechange($event)" [(ngModel)]="itemsperPage">
+                                                    <option class="select-border" *ngFor=" let size of tableSizes"
+                                                        [value]="size">
+                                                        {{size}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="noData text-center container-fluid" *ngIf="!isDataorNot" style="height: 90vh;">
+        <h1 class="text-danger">No data found</h1>
+    </div>
+</div>

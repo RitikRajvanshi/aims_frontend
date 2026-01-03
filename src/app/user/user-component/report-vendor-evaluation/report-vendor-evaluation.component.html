@@ -1,0 +1,159 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Vendors' Evaluation</h1>
+    </div>
+</section>
+<div class="container-fluid" *ngIf="isDataorNot">
+    <div class="data-content">
+        <div class="page-background-h">
+            
+            <div class="container-fluid mt-0 pt-0">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Start Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="Start Date"
+                                        [(ngModel)]="vendorEvaluationbydate.start_date">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label">End Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="End Date"
+                                        [(ngModel)]="vendorEvaluationbydate.end_date">
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class=" mt-3">
+                                        <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"
+                                            (click)="refreshfilter()" title="refresh"></i>
+                                        <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
+                                            [disabled]="!vendorEvaluationbydate.start_date || !vendorEvaluationbydate.end_date">Filter</button>
+                                        <button class="btn btn-login-report m-2"
+                                            (click)="exportToexcelfromnode()">Export To Excel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="container-fluid  mb-3">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12">
+                        <div class="input-group   mb-2  search-container">
+                            <input type="text" class=" data-control form-control  mr-2" placeholder="Search..."
+                                aria-describedby="basic-addon2" [(ngModel)]="searchTerm" (input)="filterData()"
+                                (keydown)="NoSpaceallowedatstart($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 ">
+                        <div class=" table-responsive overflow-auto">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>
+                                        <th scope="col" class="table-heading-color" style="width:8%;"
+                                            (click)="sort('purchase_id')">Purchase Id <i class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color" style="width:17%;"
+                                            (click)="sort('supplier_name')">Vendor Name <i class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color center-data" style="width:10%;"
+                                            (click)="sort('qualitybasis_grading')">Quality Basis Grading <i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color center-data" style="width:10%;"
+                                            (click)="sort('pricebasis_grading')">Price Grading <i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color center-data" style="width:12%;"
+                                            (click)="sort('communicationbasis_grading')">Communication Grading <i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color center-data" style="width:10%;"
+                                            (click)="sort('deliverybasis_grading')">Delivery Grading <i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color center-data" style="width:10%;"
+                                            (click)="sort('commitmentbasis_grading')">Commitment Grading <i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color" style="width:10%;"
+                                            (click)="sort('vendor_status')">Overall Grading <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" class="table-heading-color" style="width:10%;"
+                                            (click)="sort('evaluation_date')">Evaluation Date <i class="fa fa-sort"></i>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of filteredvendorEvaluationData| paginate:{itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                        <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                        <td class="table-heading-sub-text"> <a class="text-primary"
+                                                style="cursor: pointer;" (click)="navigateToNewRoute(data)"
+                                                [disabled]="!data.purchase_id">{{data.purchase_id?data.purchase_id:'NA'}}</a>
+                                        </td>
+
+                                        <td class="table-heading-sub-text">
+                                            {{data.supplier_name}}
+                                        </td>
+
+                                        <td class="table-heading-sub-text center-data">
+                                            {{data.qualitybasis_grading?data.qualitybasis_grading:'NA'}} </td>
+                                        <td class="table-heading-sub-text center-data">
+                                            {{data.pricebasis_grading?data.pricebasis_grading:'NA'}}</td>
+                                        <td class="table-heading-sub-text center-data">
+                                            {{data.communicationbasis_grading?data.communicationbasis_grading:'NA'}}
+                                        </td>
+                                        <td class="table-heading-sub-text center-data">
+                                            {{data.deliverybasis_grading?data.deliverybasis_grading:'NA'}}</td>
+                                        <td class="table-heading-sub-text center-data">
+                                            {{data.commitmentbasis_grading?data.commitmentbasis_grading:'NA'}}</td>
+                                        <td class="table-heading-sub-text">
+                                            {{data.vendor_status?data.vendor_status:'NA'}}</td>
+                                        <td class="table-heading-sub-text">
+                                            {{data.evaluation_date?data.evaluation_date:'NA'}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-2 mb-2 ">
+                <div class="row">
+                    <div class="col-lg-10  d-flex">
+                        <div class="pagination " class="active">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="ontableDatachange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                    <div class="col-lg-2   ml-auto">
+                        <div class="form-group d-flex select-size">
+                            <p class="report-headings">Items/page</p>
+                            <select class=" data-control-select ml-2  select-size form-control"
+                                (change)="ontableSizechange($event)" [(ngModel)]="itemsperPage">
+                                <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                    {{size}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="noData text-center mt-4 mb-4 container-fluid" *ngIf="!isDataorNot">
+    <h1 class="text-danger">No data found</h1>
+</div>

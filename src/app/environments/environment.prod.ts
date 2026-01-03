@@ -1,0 +1,248 @@
+export const environment = {
+    production: true,
+    BASE_URL: 'http://192.168.0.160:2024/',  //URL
+    ADMIN_URL: 'http://192.168.0.160:2024/admin/',
+    CHECK_URL: 'http://192.168.0.160:2024/check/',
+    FILES_URL: 'http://192.168.0.160:2024/files/',
+    LOGIN_URL: 'http://192.168.0.160:2024/login/',
+    SHARED_URL: 'http://192.168.0.160:2024/shared/',
+    USER_URL: 'http://192.168.0.160:2024/users/',
+
+
+    SHARED: {
+        GET_SUPPLIER_DATA: 'getSupplierdata',
+        GET_SUPPLIER_DATA_BYID: 'getSupplierdatabyid',
+        GETUSERSDATABYSTATUS: 'getUsersdatabystatus',
+        GETUSERSDATABYID: 'getUsersdatabyid',
+        GETPRODUCTDATA: 'getproductdetail',
+        GETPRODUCTNAMEBYID: 'getProductnamebyId',
+        GETPENDINGREQUEST: 'getPendingrequest',
+        GETPENDINGIREQUESTBYID: 'getPendingrequestbyId',
+
+        GETREJECTEDREQUEST: 'getRejectedrequest',
+        GETACCEPTEDREQUEST: 'getAcceptedrequest',
+        GETPURCHASEJOINDATA: 'getpurchasejoindata',
+        GETPURCHASEJOINDATABYIDORPURCHASEID: 'getpurchasejoindatabyIdorpurchaseid',
+        GETPURCHASEDATAFROMPURCHASEORDER: 'getpurchasedatafrompo',
+        GET_SUPPLIERDATABY_NAME: 'getSupplierdatabyname',
+        GETLASTPURCHASEID: 'getLastPurchaseId',
+        GETPURCHASEORDERDATABYPID: 'getpurchaseorderdatabypid',
+
+        GETPURCHASEORDERDATA: 'getpurchaseorderData',
+        GETPURCHASEORDERDATAACCTOINVOICEUPLOAD: 'getpurchaseorderDataacctoinvoiceupload',
+        GETPURCHASEDATAFORINVOICE: 'getpurchasedatafrompoforinvoice',
+        GETPURCHASEDATAFROMPOACCTOINVOICE: 'getpurchasedatafrompoacctoinvoice',
+        GETPURCHASEDATABYID: 'getpurchasedatabyid',
+        GETPURCHASEJOINDATABYPID: 'getpurchasejoindatabypid',
+        GETINPECTIONINFOFROMARRAYOFPID: 'getinspectioninfofromarrayofpid',
+        GETPURCHASEJOINDATABYID: 'getpurchasejoindataby_id',
+        GETLASTITEMCODEFROMITEM: 'getlastItemCode',
+        GETSUPPLIERJOINDATAFROMPO: 'getSupplierjoindatafrompo',
+        GETSUPPLIEREVALUATIONDATABYPID: 'getsupplierEvaluationdatabyPid',
+        GETSUPPLIEREVALUATIONBYSUPPLIERID: 'getsupplierEvaluationdatabysupplierId',
+        GETITEMSDATA: 'getItemsData',
+        GETITEMDATAWITHUSERANDLOCATION: 'getItemsDatawithuserandlocation',
+        GETCATEGORYDATA: 'getcategorydetail',
+        GETDOCUMENTDATA: 'getDocumentdata',
+        GETDOCUMENTDATABYDOCUMENTID: 'getDocumentdatabydocId',
+
+        //Quotation
+        GETQUOTATIONDATA: 'getQuotationdata',
+        GETQUOTATIONDATABYID: 'getQuotationdatabyId',
+        GETVENDOREVALUATIONJOINDATA: 'getvendorEvaluationjoindata',
+
+        //filters and sorting
+        GETPURCHASEJOINDATABYDATE: 'getpurchasejoinDatabydate',
+        GET_SUPPLIERDATA_BYDATEFILTER: 'getSupplierdatabybydatefilter',
+        GETPURCHASEORDERDATABYDATE: 'getpurchaseorderDatabydate',
+        GETREPORTPURCHASEORDERDATABYDATE: 'getreportpurchaseorderDatabydate',
+        GETREPORTPURCHASEORDERDATA: 'getreportpurchaseorderData',
+        GETPURCHASEORDERDATABYDATEFORASSET: 'getpurchaseorderDatabydateforasset',
+        GETSENDPURCHASEORDERDATA: 'getsendpurchaseorderData',
+        GETCOUNTOFRECEIVEDORDER: 'getcountofreceivedpurchaseorder',
+        GETCOUNTOFRECEIVEDREQUEST: 'getcountofreceivedrequest',                         //PENDING REQUEST COUNT
+
+        GETCOUNTOFPURCHASEORDERS: 'getcountofPurchaseOrders',
+        GETPURCHASEDATACCEPTORREJECT: 'getpurchasedataacceptorreject',
+        GETSUMOFPURCHASEORDERSBYDATE: 'getSumofpurchaseordersbyDate',
+        GETCOUNTOFITEMSBYDATE: 'getcountofItemsbyDate',
+
+        GETREPORTITEMWITHPRICE: 'getreportItemwithPrice',
+        // GETREPORTITEMWITHPRICETWO: 'getreportItemwithPriceTwo',
+
+        GETREPORTITEMWITHPOINVOICEMOVETOINVENTORYFORAPERIOD: 'getreportItembypoinvoicemovetoinventoryforaperiod',
+
+        GETREPORTPENDINGSTOCK: 'getreportpendingStock',
+        GETREPORTSTOCKINHAND: 'getreportStockinhand',
+        GETFULLASSETBYDATE: 'getfullassetbyDate',
+        GETTOTALPRICEANDITEMSFROMPI: 'gettotalpriceanditemsfrompi',
+        GETCOMPANYDATA: 'getcompanyData',
+        GETCOMPANYDATABYCOMPANYNAME: 'getcompanyDatabycompanyName',
+
+        GETPRODUCTDATAJOINBYSTATUS: 'getProductDatajoinbystatus',
+        GETSYSTEMDATAFROMITEMS: 'getSystemdatafromitems',
+        GETRAMDATAFROMITEMS: 'getRamdatafromitems',
+        GETSMPSDATAFROMITEMS: 'getsmpsdatafromitems',
+        GETHDDDATAFROMITEMS: 'gethdddatafromitems',
+        GETGRAPHICCARDDATAFROMITEMS: 'getgraphiccardDatafromitems',
+        GETITEMSOTHERTHANCPU: 'getItemsotherthanCPU',
+        GETITEMSOTHERTHANCPUWITHALLLOCATION: 'getItemsotherthanCPUwithalllocation',
+        GETSYSTEMDATABYITEMID: 'getsystemDatabyitemId',
+        GETSYSTEMDATAOTHERTHANCPU: 'getsystemDataotherThanCPU',
+        GETSYSTEMCONFIG: 'getSystemConfiguration',
+
+        GETTRANSFERHISTORY: 'getTransferHistory',
+
+        GETSYSTEMDATAFROMTRANSFERSTOCK: 'getSystemDataFromtransferStock',
+        GETITEMSDATAFROMITEMID: 'getItemsDatabyitemid',
+
+        GETCOUNTASSETITEMS: 'getCountofassetItems',
+        //new api for asset count given below
+        GETCOUNTASSETITEMSWITHCURRENCY: 'getCountofassetItemswithcurrency',
+        GETLOCATIONBYITEMID: 'getLocationbyitemid',
+        GETACTIVEVENDORSBYDATE: 'getActiveVendorbydate',
+        GETITEMSWITHWARRANTY: 'getitemswithwarranty',
+
+        GETSYSTEMINFORMATIONLIST: 'getsysteminformationlist',
+        GETASSIGNEDITEMSFROMTS: 'getassigneditemsfromts',
+        GETASSINGEDITEMFROMSYSTEMINFO: 'getassigneditemsfromsysteminfo',
+        GETITEMDATAFROMITEMCODE: 'getItemdatafromitemcode',
+        GETALLUSERHAVINGSYSTEM: 'getallusershavingsystem',
+        GETTRANSFERSTOCKDATA: 'getTransferStockdata',
+        GETSCRAPEDGIFTEDSOLDOUTDATAFROMITEMS: 'getScrapedgiftedsoldoutdatafromitems',
+        GENERATENEXTITEMCODE: 'generate-next-item-code',
+        GETGENERATEDNEXTITEMCODE: 'get-generated-next-item-code',
+        GETLASTROWFROMPASSID: 'getlastrowfromgatepassid',
+        GETGATEPASSDATABYID: 'getgatepassdatabyid',
+        GETGATEPASSDATAFROMTBLGATEPASSID: 'getgatepassdatafromtblgatepassid',
+        COUNTSENDGATEPASSES: 'countsendgatepasses',
+        // created on 04/07/2024
+        GETITEMSFORUSERS: 'getitemsforusers',
+        GETASSIGNEDITEMSTOUSERFROMTS: 'getassigneditemstousersfromts',
+        GETLICENSEREPORT: 'getLicensereport',
+        GETLIFECYCLEREPORT: 'getLifecyclereport',
+        GETGOODSANDSERVICES: 'getGoodsandServices',
+        // direct purchase
+        GETLASTDIRECTPURCHASEID: 'getLastdirectPurchaseId',
+        GETALLCURRENCY: 'getallCurrency',
+        GETPURCHASEIDNOTINITEMS:'getPurchaseIdsnotinItems'
+    },
+
+    ADMIN: {
+        ADD_CATEGORY: 'addCategory',
+        UPDATE_CATEGORY: 'updatecategory',
+        ADD_GROUP: 'addGroup',
+        UPDATEGRP: 'updateGrpdata',
+        ADD_DESIGNATION: 'addDesignation',
+        UPDATEDESIGNATION: 'updateDesignationdata',
+        ADD_PRIVILEGE: 'addPrivilege',
+        UPDATEPRIVILEGE: 'updatePrivilegedata',
+        ADD_LOCATION: 'addlocation',
+        UPDATE_LOCATION: 'updatelocation',
+        ADD_PRODUCT: 'addProducts',
+        UPDATE_PRODUCT: 'updateproduct',
+
+        ADD_SUPPLIER: 'addSupplier',
+        // GET_SUPPLIER_DATA:'getSupplierdata',
+
+        UPDATE_SUPPLIER: 'updatesupplier',
+        DELETE_SUPPLIER_DATA: 'deleteSupplierdata',
+
+        ADD_USER: 'addUser',
+        DEACTIVATEUSERSTATUSBYID: 'deactivateuserstatusbyid',       //deleting user temporary status =0
+        UPDATEUSER: 'updateUser',
+        GENERATEREQUEST: 'generateRequest',
+        MAKEPRUCHASEORDER: 'makePurchaseOrder',
+        MAKENEWPRUCHASEORDER: 'makenewPurchaseOrder',
+        UPDATESENTINPURCHASEORDER: 'updateSentinpurchaseOrder',
+
+        UPDATESENTAPPROVEDPURCHASEORDER: 'updatesentApprovedpurchaseorder',
+
+        UPDATESENTREJECTPURCHASEORDER: 'updatesentRejectpurchaseorder',
+        ADDINSPECTIONINPI: 'addInspectionapprovalinpi',
+        ADDMULTIPLEINSPECTIONINPI: 'addmutipleInspectionapprovalinpi',
+        ADDITEM: 'addItems',
+        ADDSUPPLIEREVALUATION: 'supplierEvaluation',
+        UPDATEITEM: 'updateItem',
+
+        // GENERATEREQUEST:'generateRequest',
+        UPDATEREQUESTGRANTEDQUANTITY: 'updaterequestgrantedQuantity',
+        COMPANYREGISTRATION: 'companyRegisteration',
+        TRANSFERSTOCK: 'transferStock',
+        // TRANSFERMULTIPLEITEMS:'transfermultipleitems',
+        TRANSFERSTOCKFORMULTIPLEDATA: 'transferStockformultipledata',
+        UPDATELOCATIONINITEMANDTRANSFERSTOCK: 'updateLocinItemandtransferStock',
+        UPDATEISACTIVEINPIFORITEMS: 'updateIsActiveinpi',
+        UPDATEPURCHASEITEMFORHOLDINGSTOCK: 'updatePurchaseItemforholdingStock',
+
+        DELETESYSTEMINFORMATION: 'deletesysteminformation',
+        ADDSYSTEMINFO: 'addsysteminformation',
+        UPDATESYSTEMINFO: 'updatesysteminformation',
+        UPDATEUSERINSYSTEMINFO: 'updateuserinsysteminformation',
+        UPDATESCRAPPEDITEMINSYSTEMINFO: 'updatescrappediteminsysteminformation',
+        INSERTMULTIPLEITEMSINITEMSTABLE: 'insertmultipledatainitemstable',
+
+        UPDATEPO: 'updatePurchaseOrder',
+        DELETE_PO: 'deletePo',
+        UPDATELASTITEMCODE: 'update-last-itemCode',
+        SAVEGATEPASS: 'savegatepass',
+        RECEIVEDITEMFROMUSERFORGP: 'receiveditemfromuserforgp',
+        SENDGATEPASSFORAPPROVAL: 'sendgatepassforapproval',
+        GATEPASSAPPROVAL: 'gatepassapproval',
+        GATEPASSREJECTION: 'gatepassrejection',
+        DELETEITEMSFROMITEMSANDSYSTEMINFO: 'deleteitemsfromItemsandSysteminfo',
+        POAPPROVALMAIL: 'approvePurchaseOrder',
+        POREJECTIONMAIL: 'rejectPurchaseOrder',
+        UPDATEITEMSTATUS: 'updateItemStatus',
+        SENTMAILFORVERIFICATION: 'sentMailforverification',
+        APPROVEORREJECTVENDOR: 'approveorrejectVendor',
+        SENDVENDORAPPROVALMAIL:'sendvendorApprovalmail',
+        EXTENDLIFECYCLE:'extendLifecycle',
+    },
+
+    CHECK: {
+        GETCATEGORYBYSTATUS: 'getcategorytDatabystatus',
+        DEACTIVATECATEGORYSTATUSCHECK: 'deactivateCategorystatuscheck',
+        GETGROUPDATABYSTATUS: 'getgroupDatabystatus',
+        DEACTIVATEGROUPSTATUSBYCHECK: 'deactivateGroupstatuscheck',
+        GETDESIGNATIONBYSTATUS: 'getdesignationDatabystatus',
+        DEACTIVATEDESIGNATIONSTATUSBYCHECK: 'deactivateDesingationstatuscheck',
+        GETPRIVILEGEBYSTATUS: 'getprivilegeDatabystatus',
+        DEACTIVATEPRIVILEGESTATSUCHECK: 'deactivatePrivilegestatuscheck',
+        GETLOCATIONDATABYSTATUS: 'getLocationbystatus',
+        DEACTIVATELOCATIONDATABYID: 'deactivateLocationstatusbyid',
+        GETPRODUCTBYSTATUS: 'getproductDatabystatus',
+        // GETPRODUCTJOINDATABYSTATUS:'getproductjoinDatabystatus',
+        DEACTIVATEPRODUCTSTATUSCHECK: 'deactivateproductstatuscheck',
+        GETUSERSDATABYID: 'getUsersdatabyid',
+        VERIFICATIONOFPIDINSUPPLIEREVALUATION: 'verificationofpIdinsupplierEvaluation',
+        CHANGESTATUSONACCEPTREQ: 'onacceptrequest',
+        CHANGESTATUSONREJECTREQ: 'onrejectrequest',
+        VERIFICATIONOFITEMS: 'verificationofItems'
+
+    },
+    FILES: {
+
+        UPLOADFILEANDGETDATA: 'uploadInvoicefileandgetdata',
+        UPLOADDOCUMENTANDGETDATA: 'uploadDocumentandgetdata',
+        UPLOADQUOTATIONANDGETDATA: 'uploadQuotationandgetdata',
+        UPLOADINVOICEINPO: 'uploadInvoicedatainpo',
+        UPDATEINVOICENOINPO: 'updateInvoicenoinpo',
+        UPLOADSCANDOCUMENT: 'uploadDocumentData',
+        UPDATEDOCOTHERTHANFILE: 'updateDocotherthanfile',
+        UPDATEFULLDOCUMENT: 'updateFullDocument',
+        UPLOADQUOTATION: 'uploadQuotation',
+        UPDATEQUOTATIONOTHERTHANFILE: 'updateQuotationotherthanfile',
+        UPDATEFULLQUOTATION: 'updateFullQuotation',
+        UPLOADLOGOANDGETDATA: 'uploadlogoandgetData',
+        EXPORTTOEXCEL: 'exportToexcel'
+    },
+
+    LOGIN: {
+        LOGIN_CUSTOMER: 'login',
+        COMPANY_REGISTERED_ORNOT: 'companyregisteredorNot',
+        ADD_INITIALDATA: 'addInitalData',
+        FORGETPASSWORD: 'forgetPassword',
+        CHANGEPASSWORD: 'changePassword'
+    }
+};

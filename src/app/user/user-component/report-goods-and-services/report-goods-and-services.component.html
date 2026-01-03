@@ -1,0 +1,297 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate"></ngx-spinner>
+
+<section class="content-header">
+
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Goods & Services</h1>
+    </div>
+</section>
+
+<div class="container-fluid m-3">
+    <div class="row">
+
+
+        <!-- <div class="col-lg-3 col-md-5 col-sm-12 mb-2"> -->
+        <!-- Item Type Dropdown -->
+        <div class="col-lg-4">
+            <div class="input-group">
+                <label class="mr-3 font-weight-bold">Item Type:</label>
+                <select class="form-control" [(ngModel)]="selectedItemType" (change)="applyFilter()">
+                    <option *ngFor="let item of itemTypes" [value]="item.value">
+                        {{ item.viewValue }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- </div> -->
+        <div class="col-lg-3">
+            <div class="input-group">
+                <button class="btn btn-login-report m-2 " (click)="exportToexcelfromnode()">Export
+                    To
+                    Excel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid m-3">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12 mb-2">
+            <div class="form-check form-check-inline m-2">
+                <input class="form-check-input" type="radio" name="dateRange" id="datePeriod" value="datePeriod"
+                    [(ngModel)]="selectedRadio" [ngModelOption]="{standalone:true}" (click)="selectPeriod()">
+                <label class="form-check-label font-weight-bold" for="datePeriod">
+                    Select Time Period
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-5 col-sm-12 mb-2">
+            <!-- Item Type Dropdown -->
+            <div class="form-check form-check-inline m-2">
+                <input class="form-check-input" type="radio" name="dateRange" id="dateRange" value="dateRange"
+                    [(ngModel)]="selectedRadio" [ngModelOption]="{standalone:true}" (click)="selectRange()">
+                <label class="form-check-label font-weight-bold" for="dateRange">
+                    Select Date Range
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid " *ngIf="displaySelectPeriod">
+    <div class="data-content m-4">
+        <div class="row">
+            <div class="col-lg-4 col-md-2 col-sm-12 mb-2">
+                <div class="input-group">
+                    <label class="mr-3 font-weight-bold">Time Period:</label>
+                    <select class="form-control" [(ngModel)]="selectedTimeRange" (change)="applyFilter()">
+                        <option *ngFor="let range of timeRanges" [value]="range.value">
+                            {{ range.viewValue }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid " *ngIf="displayDateRange">
+    <div class="data-content ml-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <label class="form-label">Start Date </label>
+                <input type="date" class="form-control data-control-date" placeholder="Start Date"
+                    [(ngModel)]="filterbydate.start_date">
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label">End Date </label>
+                <input type="date" class="form-control data-control-date" placeholder="End Date"
+                    [(ngModel)]="filterbydate.end_date">
+            </div>
+
+            <div class="col-lg-6">
+                <div class=" mt-3">
+                    <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating" (click)="refreshfilter()"
+                        title="refresh"></i>
+
+                    <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
+                        [disabled]="!filterbydate.start_date || !filterbydate.end_date">Filter</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="data-content">
+    <div class="page-background-h">
+        <div class="container-fluid mt-3 mb-2">
+            <div class="row">
+
+
+                <div class="container-fluid mb-2">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="input-group   mb-2  search-container">
+                                <input type="text" class=" data-control form-control mr-2" placeholder="Search..."
+                                    aria-describedby="basic-addon2" [(ngModel)]="searchTerm" (input)="filterData()">
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-4 col-12 col-sm-12">
+                                <span class="font-weight-bold">Total Invoice Amount:</span><span class="text-danger font-weight-bold"> ₹ {{sumofInvoiceamount?sumofInvoiceamount.toFixed(2):0}}</span>
+                            </div> -->
+                    </div>
+                </div>
+                <div class="container-fluid" *ngIf="isDataorNot">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive ">
+                                <table class="table  table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width:5%;">S.No.</th>
+                                            <th scope="col" style="width:15%;" (click)="sort('item_code')">Item Code
+                                                <i class="fa fa-sort"></i>
+                                            </th>
+                                            <th scope="col" style="width:10%;" (click)="sort('item_name')">Item Name
+                                                <i class="fa fa-sort"></i>
+                                            </th>
+
+                                            <th scope="col" style="width:10%;" (click)="sort('item_name')">Category
+                                                <i class="fa fa-sort"></i>
+                                            </th>
+                                         <th scope="col" style="width:12%;" (click)="sort('description')">
+                                                    Description <i class="fa fa-sort"></i></th>
+
+                                            <th scope="col" style="width:16%;" (click)="sort('purchase_id')">
+                                                Purchase Id <i class="fa fa-sort"></i></th>
+
+
+                                            <th scope="col" style="width:8%; white-space: nowrap;"
+                                                (click)="sort('date_')">Purchase Date<i class="fa fa-sort"></i>
+                                            </th>
+
+                                            <!-- <th scope="col" style="width:8%; white-space: nowrap;"
+                                                    (click)="sort('date_')">Invoice Number <i class="fa fa-sort"></i>
+                                                </th> -->
+                                            <!-- <th scope="col" style="width:8%; white-space: nowrap;"
+                                                (click)="sort('invoice_amount')">Invoice Amount <i class="fa fa-sort"></i>
+                                            </th>
+                                                <th scope="col" style="width:8%; white-space: nowrap;"
+                                                (click)="sort('invoice_date')">Invoice Date <i class="fa fa-sort"></i>
+                                            </th> -->
+                                            <th scope="col" style="width:10%;" (click)="sort('warrantyend_date')">
+                                                Warranty End Date <i class="fa fa-sort"></i></th>
+
+                                            <th scope="col" style="width:20%;" colspan="2" class="text-center"> Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let data of filteredItemData | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                            <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                            <td>
+                                                {{data.item_code}}
+                                            </td>
+                                            <td>{{ data.item_name }}</td>
+                                            <td>{{ data.category_name }}</td>
+                                            <td style="width:300px; max-width: 300px; word-break: break-all;">
+                                                <div
+                                                    *ngIf="!data.isEditing && !data.isExpanded && data.description && data.description.length > 30">
+
+                                                    {{ data.description.slice(0, 30) }}
+
+                                                    <span class="read-more text-secondary"
+                                                        (click)="toggleExpand(data)">...</span>
+
+
+                                                </div>
+
+                                                <div
+                                                    *ngIf="!data.isEditing && !data.isExpanded && data.description && data.description.length <= 30">
+                                                    {{ data.description }}
+
+
+                                                </div>
+
+
+
+                                                <div *ngIf="data.isExpanded && !data.isEditing">
+                                                    {{ data.description }}
+                                                    <span class="read-more text-secondary"
+                                                        (click)="toggleExpand(data)">Read less</span>
+                                                </div>
+
+                                                <div *ngIf="!data.description">
+                                                    {{ 'NA' }}
+                                                </div>
+
+
+                                            </td>
+                                            <td> {{ data.purchase_id }}</td>
+
+                                            <td>{{data.date_?data.date_:'NA'}}</td>
+                                            <!-- <td>{{data.invoice_amount?data.invoice_amount:'NA'}}</td>
+                                                <td>{{data.invoice_date?data.invoice_date:'NA'}}</td> -->
+                                            <td>{{data.warrantyend_date?data.warrantyend_date:'NA'}}</td>
+
+                                            <td class="table-heading-sub-text" class="text-center">
+                                                <!-- <a class="text-primary" style="cursor: pointer;" (click)="navigateToNewRoute(data)">View PO</a> </td> -->
+                                                <a class="text-primary" style="cursor: pointer;"
+                                                    (click)="openModal(data)">View PO</a>
+                                            </td>
+                                            <td class="table-heading-sub-text" class="text-center"> <a
+                                                    class="text-primary" (click)="openInvoiceModal(data)"
+                                                    style="cursor: pointer;">View Invoice</a></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid mt-4 mb-2">
+                    <div class="row">
+                        <div class="col-lg-10  d-flex">
+                            <div class="pagination " class="active">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="ontableDatachange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 ml-auto ">
+                            <div class="form-group  select-size d-flex">
+                                <p class="  report-headings">Items/page</p>
+                                <select class=" data-control-select ml-2  select-size form-control"
+                                    (change)="ontableSizechange($event)">
+                                    <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                        {{size}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="noData text-center container-fluid" *ngIf="!isDataorNot">
+                    <h1 class="text-danger">No data found</h1>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document"> <!-- Use modal-lg for large size -->
+        <div class="modal-content" style="width: 1400px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">PDF Viewer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 600px;"> <!-- Adjust height here -->
+                <iframe *ngIf="pdfUrl" [src]="pdfUrl " width="100%" height="100%"></iframe>
+                <!-- Use 100% for iframe height -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

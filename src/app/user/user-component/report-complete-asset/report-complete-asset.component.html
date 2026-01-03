@@ -1,0 +1,110 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Total Assets</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content" *ngIf="isDataorNot">
+        <div class="page-background-h">
+            <div class="container-fluid mb-3 mt-3">
+                <div class="row">
+                    <div class="col-lg-6 col-6 col-md-6 col-sm-6">
+                        <div class="input-group mb-2 search-container">
+                            <input type="text" class="data-control form-control mr-2"
+                                   placeholder="Search..." aria-describedby="basic-addon2"
+                                   [(ngModel)]="searchItem" (keydown)="NoSpaceallowedatstart($event)">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-6 col-md-6 col-sm-6 d-flex justify-content-end align-items-center">
+                        <!-- <button class="btn btn-login-report mt-0" (click)="exportToexcelfromnode()" [disabled]="!this.totalAssetsPurchasewithoutgst || !this.totalAssetsPurchasewithgst">Export To Excel</button> -->
+                        <button class="btn btn-login-report mt-0" (click)="exportToexcelfromnode()" [disabled]="!this.totalAssetsPurchasewithgstininr">Export To Excel</button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 ">
+                        <div class=" table-responsive overflow-auto">
+                            <table class="table  table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="table-heading-color" style="width:5%">S.No.
+                                        </th>
+                                        <th scope="col" class="table-heading-color" style="width:20%"
+                                            (click)="sort('item_name')">Items <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" class="table-heading-color" style="width:15%"
+                                            (click)="sort('quantity')">Quantity <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" class="table-heading-color" style="width:20%"
+                                            (click)="sort('total_withgst_in_inr')">Total Price(₹) <i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color" style="width:20%"
+                                            (click)="sort('total_withgst_in_usd')">Total Price($) <i
+                                                class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let data of assetListObject| filter:searchItem  | paginate:
+                                    {itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:fullAssetList.length} ; let i = index ">
+                                        <th class="table-heading-sub-text" scope="row">{{ (page - 1) *
+                                            tableSize + i +1 }}</th>
+                                        <td class="table-heading-sub-text">{{data.item_name}}</td>
+                                        <td class="table-heading-sub-text">{{data.quantity}}</td>
+                                        <td class="table-heading-sub-text text-danger">
+                                             {{data.total_withgst_in_inr.toFixed(2)}}
+                                        </td>
+                                        <!-- <td class="table-heading-sub-text text-danger">₹ {{data.sum_withgst|
+                                            number: '1.2-2'}}</td> -->
+                                            <td class="table-heading-sub-text text-danger"> {{data.total_withgst_in_usd.toFixed(2)}}</td>
+
+                                    </tr>
+                                    <tr *ngIf="!searchItem" class="shadow-row">
+                                        <td colspan=2></td>
+                                        <td class="table-heading-color"><strong>Grand Total:</strong></td>
+                                        <td class="table-heading-sub-text text-danger">
+                                            <strong> {{totalAssetsPurchasewithgstininr.toFixed(2)}}</strong></td>
+                                        <td class="table-heading-sub-text text-danger">
+                                            <strong> {{totalAssetsPurchasewithgstinusd.toFixed(2)}}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-2 mb-2">
+                <div class="row">
+                    <div class="col-lg-10  d-flex">
+                        <div class="pagination " class="active">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="ontableDatachange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                    <div class="col-lg-2   ml-auto">
+                        <div class="form-group d-flex select-size">
+                            <p class="report-headings">Items/page</p>
+                            <select class=" data-control-select ml-2  select-size form-control"
+                            (change)="ontableSizechange($event)" >
+                            <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                {{size}}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+    </div>
+    <div class="noData mt-4 mb-4 text-center container-fluid" *ngIf="!isDataorNot">
+        <h1 class="text-danger">No data found</h1>
+    </div>
+</div>

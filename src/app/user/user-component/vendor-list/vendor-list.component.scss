@@ -1,0 +1,26 @@
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+::ng-deep button#sent-button-direct:disabled{
+    background-color: #dbdcdc !important;
+    color:white !important;
+    border:2px solid #d9dce0;
+}
+
+
+.year-selector {
+  display: flex;
+  align-items: center;
+}
+
+.year-selector label {
+  font-weight: bold;
+}
+
+.year-selector select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

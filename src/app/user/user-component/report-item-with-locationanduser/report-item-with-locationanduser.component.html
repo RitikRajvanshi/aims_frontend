@@ -1,0 +1,299 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Items with Location</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+
+            <!-- copy paste comment starts here -->
+            <div class="container-fluid mt-0 pt-0">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Start Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="Start Date"
+                                        [(ngModel)]="transferDate.start_date">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label">End Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="End Date"
+                                        [(ngModel)]="transferDate.end_date">
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class=" mt-3">
+                                        <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"
+                                            (click)="refreshfilter()" title="refresh"></i>
+
+                                        <button class="btn btn-data-add d-inline m-auto" id="filtering"
+                                            (click)="filterData()"
+                                            [disabled]="!transferDate.start_date || !transferDate.end_date">Filter</button>
+                                        <button class="btn btn-login-report m-2 "
+                                            (click)="exportToexcelfromnode()">Export
+                                            To
+                                            Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ends here -->
+            <div class="container-fluid mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="input-group mb-3">
+                                        <!-- <label
+                                            class=" data-control form-control mr-0 border border-0 text-dark form-label"
+                                            for="purchaseId">Search By:</label> -->
+
+                                              <span class=" data-control input-group-text text-dark border-0 mr-1 p-2"><strong>Search By:</strong></span>
+
+
+                                        <input type="text" class=" data-control  form-control mr-2"
+                                            placeholder="Purchase Id..." id="purchaseId" aria-describedby="basic-addon2"
+                                            [(ngModel)]="purchaseId" (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Item Code..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="itemCode" (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Item Name..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="itemName" (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Transfer Date..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="transferDateInput" (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Location..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="locationName" (input)="filterData()">
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Group..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="groupName" (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="System..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="SystemName" (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2" placeholder="User..."
+                                            aria-describedby="basic-addon2" [(ngModel)]="UserName"
+                                            (input)="filterData()">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Remark..." aria-describedby="basic-addon2" [(ngModel)]="remark"
+                                            (input)="filterData()">
+
+                                               <input type="text" class=" data-control  form-control mr-2"
+                                            placeholder="Search any keyword." id="All" aria-describedby="basic-addon2"
+                                            [(ngModel)]="globalSearch" (input)="filterData()">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" *ngIf="isDataorNot && filtereditemData.length!==0">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto " id="content" #content>
+                                <table class="table  table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width:5%">S.No.</th>
+                                            <th scope="col" style="width:7%" (click)="sort('purchase_id')">Purchase Id <i class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:12%" (click)="sort('item_code')">Item Code <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:10%" (click)="sort('item_name')">Item Name <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:7%" (click)="sort('transfer_date')">Transfer
+                                                Date <i class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:7%" (click)="sort('location_name')">Location
+                                                <i class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:10%" (click)="sort('grp_name')">Department <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:8%" (click)="sort('system_code')">System <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:8%" (click)="sort('user_name')">User <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:13%" (click)="sort('description')">Remark <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th scope="col" style="width:5%" *ngIf="userRole=='2'">Transfer</th>
+                                            <th scope="col" style="width:8%">Transfer History</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of filtereditemData| paginate:{ itemsPerPage: tableSize,
+                                  currentPage: page, totalItems:filtereditemData.length}; let i = index ; trackBy: trackById">
+                                            <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+
+                                            <td
+                                                *ngIf="data.purchase_id!=='NA' && !data.purchase_id.startsWith('BRND-')">
+                                                <a (click)="navigateTopurchaseinfo(data)" class="text-primary"
+                                                    style="cursor: pointer;">{{data.purchase_id}}</a></td>
+
+                                            <td
+                                                *ngIf="data.purchase_id=='NA' || !data.purchase_id || data.purchase_id=='' || data.purchase_id.startsWith('BRND-')">
+                                                {{data.purchase_id}}</td>
+
+
+                                            <!-- <td>
+                                                <ng-container *ngIf="data.item_code && data.item_code.length > 20">
+                                                    <span *ngIf="!data.isExpanded">{{ data.item_code.slice(0, 20)
+                                                        }}</span>
+                                                    <span *ngIf="data.isExpanded">{{ data.item_code }}</span>
+
+                                                    <p class="d-inline text-secondary"
+                                                        *ngIf="data.item_code.length > 20" (click)="toggleExpand(data)">
+                                                        {{ data.isExpanded ? 'read less' : '...' }}
+                                                    </p>
+                                                </ng-container>
+                                                <ng-container *ngIf="data.item_code && data.item_code.length <= 20">
+                                                    {{ data.item_code }}
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!data.item_code">
+                                                    {{ 'NA' }}
+                                                </ng-container>
+                                            </td> -->
+
+                                            <td> {{ data.item_code }}</td>
+
+                                            <td>{{data.item_name}}</td>
+                                            <td>{{ (data.transfer_date ? data.transfer_date : 'NA') }}</td>
+                                            <td>{{data.location_name?data.location_name:'NA'}}</td>
+                                            <td>{{(data.grp_name=='NA')?data.user_grp_name:data.grp_name}}</td>
+                                            <td>
+                                                <ng-container *ngIf="data.system_code && data.system_code.length > 20">
+                                                    <span *ngIf="!data.isExpanded">{{ data.system_code.slice(0, 20)
+                                                        }}</span>
+                                                    <span *ngIf="data.isExpanded">{{ data.system_code }}</span>
+
+                                                    <p class="d-inline text-secondary"
+                                                        *ngIf="data.system_code.length > 20"
+                                                        (click)="toggleExpand(data)">
+                                                        {{ data.isExpanded ? 'read less' : '...' }}
+                                                    </p>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="data.system_code && data.system_code.length <= 20">
+                                                    {{ data.system_code }}
+                                                </ng-container>
+                                            </td>
+                                            <td>{{(data.user_name=='NA')?data.system_user_name:data.user_name}}</td>
+
+                                            <!-- <td style="width:200px; max-width:200px; word-break: break-all;">
+                                                <ng-container *ngIf="data.description && data.description.length > 15">
+                                                    <span *ngIf="!data.isExpanded">{{ data.description.slice(0, 15)
+                                                        }}</span>
+                                                    <span *ngIf="data.isExpanded">{{ data.description }}</span>
+
+                                                    <p class="d-inline text-secondary"
+                                                        *ngIf="data.description.length > 15"
+                                                        (click)="toggleExpand(data)">
+                                                        {{ data.isExpanded ? 'read less' : '...' }}
+                                                    </p>
+                                                </ng-container>
+                                                <ng-container *ngIf="data.description && data.description.length <= 15">
+                                                    {{ data.description }}
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!data.description">
+                                                    {{ 'NA' }}
+                                                </ng-container>
+
+                                            </td> -->
+                                            
+                                            <td>{{data.description}}</td>
+
+                                            <td *ngIf="userRole=='2'" style="text-align: center; vertical-align: middle;"
+                                                (mouseenter)="onMouseEnter(data)" (mouseleave)="onMouseLeave(data)">
+                                                <div style="position: relative; display: inline-block;">
+                                                    <a style=" cursor: pointer;">
+                                                        <button class="fa fa-2x fa-exchange border rounded px-3"
+                                                            style="color:#FF8A65; cursor: pointer;"
+                                                            aria-hidden="true"></button>
+                                                    </a>
+
+                                                    <ul class="hover-list"  style="display: none; position: absolute; background: white; border: 1px solid #ccc; list-style: none; padding: 0; margin: 0;z-index: 999;">
+                                                        <li>
+                                                            <button
+                                                                *ngIf="this.hoveredDataResultForItemName[data.item_name]"
+                                                                class="w-100 h-100 border border-0"
+                                                                style="padding: 8px; cursor: pointer;"
+                                                                (click)="navigateTotransferStock(data,'assignsystemtouser')">
+                                                                System to user
+                                                            </button>
+
+                                                            <button
+                                                                *ngIf="!this.hoveredDataResultForItemName[data.item_name] && this.hoveredDataResultForCategoryName[data.category_name]"
+                                                                class="w-100 h-100 border border-0"
+                                                                style="padding: 8px; cursor: pointer;"
+                                                                (click)="navigateTotransferStock(data,'assingitemtosystem')">
+                                                                Item to user
+                                                            </button>
+                                                        </li>
+
+                                                        <li><button class=" w-100 h-100 border border-0"
+                                                                style="padding: 8px; cursor: pointer;"
+                                                                (click)="navigateTotransferStock(data,'assignlocationtoitem')">Item
+                                                                to location</button></li>
+                                                    </ul>
+                                                </div>
+
+
+                                            </td>
+                                            <td class="text-center">
+                                                <a (click)="navigateToNewRoute(data)"><button class="view-button"><i
+                                                            class="fa fa-search pr-1"></i>View</button></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid mt-2 mb-2 " *ngIf="filtereditemData.length!==0">
+                    <div class="row">
+                        <div class="col-lg-10  d-flex">
+                            <div class="pagination " class="active">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="ontableDatachange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                        <div class="col-lg-2   ml-auto">
+                            <div class="form-group d-flex select-size">
+                                <p class="report-headings">Items/page</p>
+                                <select class=" data-control-select ml-2  select-size form-control"
+                                    (change)="ontableSizechange($event)" [(ngModel)]="itemsperPage">
+                                    <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                        {{size}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="noData text-center mt-4 mb-4 container-fluid"
+                    *ngIf="!isDataorNot || filtereditemData.length==0">
+                    <h1 class="text-danger">No data found</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

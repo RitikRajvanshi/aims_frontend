@@ -1,0 +1,814 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  GatepassViewComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/user/user-component/gatepass-view/gatepass-view.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-gatepass-view</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./gatepass-view.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./gatepass-view.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#logo" >logo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#hideSpinner" >hideSpinner</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onImageError" >onImageError</a>
+                            </li>
+                            <li>
+                                <a href="#onImageLoad" >onImageLoad</a>
+                            </li>
+                            <li>
+                                <a href="#showSpinner" >showSpinner</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(spinner: NgxSpinnerService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:10</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>spinner</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgxSpinnerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hideSpinner"></a>
+                    <span class="name">
+                        <span ><b>hideSpinner</b></span>
+                        <a href="#hideSpinner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hideSpinner()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="28"
+                                    class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="14"
+                                    class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onImageError"></a>
+                    <span class="name">
+                        <span ><b>onImageError</b></span>
+                        <a href="#onImageError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onImageError()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onImageLoad"></a>
+                    <span class="name">
+                        <span ><b>onImageLoad</b></span>
+                        <a href="#onImageLoad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onImageLoad()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showSpinner"></a>
+                    <span class="name">
+                        <span ><b>showSpinner</b></span>
+                        <a href="#showSpinner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>showSpinner()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="24"
+                                    class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logo"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>logo</b></span>
+                        <a href="#logo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef&lt;HTMLImageElement&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;logo&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/user/user-component/gatepass-view/gatepass-view.component.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, ElementRef } from &#x27;@angular/core&#x27;;
+import { NgxSpinnerService } from &#x27;ngx-spinner&#x27;;
+
+@Component({
+  selector: &#x27;app-gatepass-view&#x27;,
+  templateUrl: &#x27;./gatepass-view.component.html&#x27;,
+  styleUrls: [&#x27;./gatepass-view.component.scss&#x27;]
+})
+export class GatepassViewComponent {
+  @ViewChild(&#x27;logo&#x27;, { static: true }) logo!: ElementRef&lt;HTMLImageElement&gt;;
+
+  constructor(private spinner: NgxSpinnerService) { }
+
+  ngOnInit(): void {
+    this.showSpinner();
+    // Start loading the image here if necessary
+    const img &#x3D; this.logo.nativeElement;
+    if (img.complete) {
+      // If the image is already cached and loaded
+      this.onImageLoad();
+    }
+  }
+
+  showSpinner() {
+    this.spinner.show();
+  }
+
+  hideSpinner() {
+    this.spinner.hide();
+  }
+
+  onImageLoad() {
+    this.hideSpinner();
+  }
+
+  onImageError() {
+    this.hideSpinner();
+    console.error(&#x27;Error loading the logo.&#x27;);
+    // You can handle the error here (e.g., show a fallback image or message)
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">
+&lt;ngx-spinner size&#x3D;&quot;medium&quot; bdColor&#x3D;&quot;rgba(0, 0, 0, 0.2)&quot; color&#x3D;&quot;#00235E&quot; type&#x3D;&quot;ball-clip-rotate&quot;&gt;&lt;/ngx-spinner&gt;
+
+&lt;!-- Gate Pass section starts here  --&gt;
+&lt;section class&#x3D;&quot;content-header&quot;&gt;
+    &lt;div class&#x3D;&quot;header-icon&quot;&gt;&lt;i class&#x3D;&quot;fa fa-list-alt text-info&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;div class&#x3D;&quot;header-title&quot;&gt;
+        &lt;h1&gt;Gate Pass&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+&lt;section&gt;
+    &lt;div class&#x3D;&quot;container &quot;&gt;
+        &lt;div class&#x3D;&quot;data-content&quot;&gt;
+            &lt;div class&#x3D;&quot;add-icon-section pl-2&quot;&gt;
+                &lt;button class&#x3D;&quot;btn-toggle-back&quot;&gt; &lt;i class&#x3D;&quot;fa fa-arrow-left pr-1&quot;&gt;&lt;/i&gt; Back&lt;/button&gt;
+                &lt;button class&#x3D;&quot;btn-toggle-pdf &quot;&gt;&lt;i class&#x3D;&quot;fa fa-plus pr-1&quot;&gt;&lt;/i&gt;Print&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;page-background &quot;&gt;
+                &lt;div class&#x3D;&quot;data-form m-2 p-5 pdfTable&quot;&gt;
+                   
+                    &lt;div class&#x3D;&quot;container&quot;&gt;
+                        &lt;div class&#x3D;&quot;row&quot;&gt;
+                            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                                       &lt;img #logo src&#x3D;&quot;./assets/images/apvlogo.PNG&quot; class&#x3D;&quot;img-fluid ml-5&quot; style&#x3D;&quot;max-width: 75px;&quot; crossorigin&#x3D;&quot;anonymous&quot;&gt;
+                                &lt;!-- &lt;img [src]&#x3D;&quot;companyLogo2 ? companyLogo2:  companyLogo&quot; alt&#x3D;&quot;Company Logo&quot; class&#x3D;&quot;img-fluid ml-5&quot; style&#x3D;&quot;max-width: 75px;&quot;&gt; --&gt;
+                                &lt;br&gt;
+                                &lt;small style&#x3D;&quot;font-size: 14px;color:black;&quot;&gt;&lt;strong&gt;APV Technologies Pvt. Ltd.&lt;/strong&gt;&lt;/small&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;col-md-8 &quot;&gt;
+                            &lt;h1 &gt;&lt;strong class&#x3D;&quot;gate-heading&quot;&gt;Gate Pass&lt;/strong&gt;&lt;/h1&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;billing-section mb-0&quot;&gt;
+                        &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                            &lt;div class&#x3D;&quot;row d-flex billing-left billing-right&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-lg-10 col-md-6&quot;&gt;
+                                    &lt;div class&#x3D;&quot;d-flex&quot;&gt;
+                                        &lt;h3&gt;Gatepass Id :&lt;span class&#x3D;&quot;pl-2 billing-para&quot;&gt;Gatepass Id&lt;/span&gt;&lt;/h3&gt;
+
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-lg-2 col-md-6&quot;&gt;
+                                    &lt;div class&#x3D;&quot;d-flex&quot;&gt;
+                                        &lt;h3&gt;Date :&lt;span class&#x3D;&quot;pl-2 billing-para&quot;&gt;12\12\1224&lt;/span&gt;&lt;/h3&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+           
+                    &lt;div class&#x3D;&quot;container-fluid &quot;&gt;
+                        &lt;div class&#x3D;&quot;row&quot;&gt;
+                            &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12 &quot;&gt;
+                                &lt;div class&#x3D;&quot; table-responsive&quot;&gt;
+                                    &lt;table
+                                        class&#x3D;&quot;table table-striped table-bordered  table-hover text-dark potable table-font&quot;&gt;
+                                        &lt;thead&gt;
+                                            &lt;tr&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:5%;&quot;&gt;S.No.&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:10%;&quot;&gt;Item Code&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:10%;&quot;&gt;Quantity&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:25%;&quot;&gt;Description&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:10%;&quot;&gt;In Date&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:10%;&quot;&gt;Out Date&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:10%;&quot;&gt;Remarks&lt;/th&gt;
+                                                &lt;th scope&#x3D;&quot;col&quot;  style&#x3D;&quot;width:20%;&quot;&gt;Returnable&lt;/th&gt;
+
+
+                                            &lt;/tr&gt;
+                                        &lt;/thead&gt;
+                                        &lt;tbody&gt;
+                                            &lt;tr &gt;
+                                                &lt;th scope&#x3D;&quot;row&quot;&gt;1&lt;/th&gt;
+                                               &lt;td&gt;13456&lt;/td&gt;
+                                               &lt;td&gt;Report Table Description&lt;/td&gt;
+                                               &lt;td&gt;1&lt;/td&gt;
+                                               &lt;td&gt;YES/NO&lt;/td&gt;
+                                               &lt;td&gt;YES/NO&lt;/td&gt;
+                                               &lt;td&gt;YES/NO&lt;/td&gt;
+                                               &lt;td&gt;YES/NO&lt;/td&gt;
+
+                                            &lt;/tr&gt;
+                                        &lt;/tbody&gt;
+                                    &lt;/table&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;billing-section mb-0&quot;&gt;
+                        &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                            &lt;div class&#x3D;&quot;row d-flex billing-left billing-right&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-lg-6 col-md-6&quot;&gt;
+                                 &lt;div class&#x3D;&quot;gate-line&quot;&gt;
+                                    &lt;p&gt;Mr./Mrs  &lt;span&gt;Ritik&lt;/span&gt; is allow to take in/out above material/s.&lt;/p&gt;
+                                 &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;hr class&#x3D;&quot;gate-hr&quot;&gt;
+                    &lt;div class&#x3D;&quot;container&quot;&gt;
+                        &lt;div class&#x3D;&quot;row d-flex&quot;&gt;
+                            &lt;div class&#x3D;&quot;col-md-6 col-lg-10 col-12&quot;&gt;
+                                &lt;span&gt;&lt;b&gt;Issued By:&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+                                &lt;span&gt;System Admin&lt;/span&gt;&lt;br&gt;
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;col-md-6  col-lg-2 col-12 &quot;&gt;
+                                &lt;span&gt;&lt;b&gt;Approved By:&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+                                &lt;span&gt;Director&lt;/span&gt;&lt;br&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./gatepass-view.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss"></code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate"></ngx-spinner><!-- Gate Pass section starts here  --><section class="content-header">    <div class="header-icon"><i class="fa fa-list-alt text-info" aria-hidden="true"></i></div>    <div class="header-title">        <h1>Gate Pass</h1>    </div></section><section>    <div class="container ">        <div class="data-content">            <div class="add-icon-section pl-2">                <button class="btn-toggle-back"> <i class="fa fa-arrow-left pr-1"></i> Back</button>                <button class="btn-toggle-pdf "><i class="fa fa-plus pr-1"></i>Print</button>            </div>            <div class="page-background ">                <div class="data-form m-2 p-5 pdfTable">                                       <div class="container">                        <div class="row">                            <div class="col-md-4">                                       <img #logo src="./assets/images/apvlogo.PNG" class="img-fluid ml-5" style="max-width: 75px;" crossorigin="anonymous">                                <!-- <img [src]="companyLogo2 ? companyLogo2:  companyLogo" alt="Company Logo" class="img-fluid ml-5" style="max-width: 75px;"> -->                                <br>                                <small style="font-size: 14px;color:black;"><strong>APV Technologies Pvt. Ltd.</strong></small>                            </div>                            <div class="col-md-8 ">                            <h1 ><strong class="gate-heading">Gate Pass</strong></h1>                            </div>                        </div>                    </div>                    <div class="billing-section mb-0">                        <div class="container-fluid">                            <div class="row d-flex billing-left billing-right">                                <div class="col-lg-10 col-md-6">                                    <div class="d-flex">                                        <h3>Gatepass Id :<span class="pl-2 billing-para">Gatepass Id</span></h3>                                    </div>                                </div>                                <div class="col-lg-2 col-md-6">                                    <div class="d-flex">                                        <h3>Date :<span class="pl-2 billing-para">12\12\1224</span></h3>                                    </div>                                </div>                            </div>                        </div>                    </div>                               <div class="container-fluid ">                        <div class="row">                            <div class="col-lg-12 col-12 col-sm-12 ">                                <div class=" table-responsive">                                    <table                                        class="table table-striped table-bordered  table-hover text-dark potable table-font">                                        <thead>                                            <tr>                                                <th scope="col"  style="width:5%;">S.No.</th>                                                <th scope="col"  style="width:10%;">Item Code</th>                                                <th scope="col"  style="width:10%;">Quantity</th>                                                <th scope="col"  style="width:25%;">Description</th>                                                <th scope="col"  style="width:10%;">In Date</th>                                                <th scope="col"  style="width:10%;">Out Date</th>                                                <th scope="col"  style="width:10%;">Remarks</th>                                                <th scope="col"  style="width:20%;">Returnable</th>                                            </tr>                                        </thead>                                        <tbody>                                            <tr >                                                <th scope="row">1</th>                                               <td>13456</td>                                               <td>Report Table Description</td>                                               <td>1</td>                                               <td>YES/NO</td>                                               <td>YES/NO</td>                                               <td>YES/NO</td>                                               <td>YES/NO</td>                                            </tr>                                        </tbody>                                    </table>                                </div>                            </div>                        </div>                    </div>                    <div class="billing-section mb-0">                        <div class="container-fluid">                            <div class="row d-flex billing-left billing-right">                                <div class="col-lg-6 col-md-6">                                 <div class="gate-line">                                    <p>Mr./Mrs  <span>Ritik</span> is allow to take in/out above material/s.</p>                                 </div>                                </div>                            </div>                        </div>                    </div>                    <hr class="gate-hr">                    <div class="container">                        <div class="row d-flex">                            <div class="col-md-6 col-lg-10 col-12">                                <span><b>Issued By:</b></span><br>                                <span>System Admin</span><br>                            </div>                            <div class="col-md-6  col-lg-2 col-12 ">                                <span><b>Approved By:</b></span><br>                                <span>Director</span><br>                            </div>                        </div>                    </div>                </div>            </div>        </div>    </div></section></div>'
+    var COMPONENTS = [{'name': 'AcceptedRequestComponent', 'selector': 'app-accepted-request'},{'name': 'AddItemComponent', 'selector': 'app-add-item'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssetsComponent', 'selector': 'app-assets'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'DesignationComponent', 'selector': 'app-designation'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ForgetPasswordComponent', 'selector': 'app-forget-password'},{'name': 'GatepassComponent', 'selector': 'app-gatepass'},{'name': 'GatepassidListComponent', 'selector': 'app-gatepassid-list'},{'name': 'GatepassListComponent', 'selector': 'app-gatepass-list'},{'name': 'GatepassViewComponent', 'selector': 'app-gatepass-view'},{'name': 'GenarateRequestComponent', 'selector': 'app-genarate-request'},{'name': 'GroupComponent', 'selector': 'app-group'},{'name': 'IncomingItemDetailsComponent', 'selector': 'app-incoming-item-details'},{'name': 'ItemWithPoInvoiceMovetoinventoryForAPeriodComponent', 'selector': 'app-item-with-po-invoice-movetoinventory-for-a-period'},{'name': 'LocationComponent', 'selector': 'app-location'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MakeDirectpurchaseOrderComponent', 'selector': 'app-make-directpurchase-order'},{'name': 'MakePurchaseOrderComponent', 'selector': 'app-make-purchase-order'},{'name': 'MovetoItsmComponent', 'selector': 'app-moveto-itsm'},{'name': 'NewsystemInformationComponent', 'selector': 'app-newsystem-information'},{'name': 'PendingRequestComponent', 'selector': 'app-pending-request'},{'name': 'PoApprovalMailComponent', 'selector': 'app-po-approval-mail'},{'name': 'PoRejectionMailComponent', 'selector': 'app-po-rejection-mail'},{'name': 'ProductComponent', 'selector': 'app-product'},{'name': 'PurchaseInfoComponent', 'selector': 'app-purchase-info'},{'name': 'PurchaseOrderListComponent', 'selector': 'app-purchase-order-list'},{'name': 'PurchaseOrderViewComponent', 'selector': 'app-purchase-order-view'},{'name': 'ReceivedPurchaseOrderComponent', 'selector': 'app-received-purchase-order'},{'name': 'ReceivedRequestComponent', 'selector': 'app-received-request'},{'name': 'ReceivedRequestModalComponent', 'selector': 'app-received-request-modal'},{'name': 'RejectedRequestComponent', 'selector': 'app-rejected-request'},{'name': 'ReportActiveSupplierComponent', 'selector': 'app-report-active-supplier'},{'name': 'ReportCompleteAssetComponent', 'selector': 'app-report-complete-asset'},{'name': 'ReportGoodsAndServicesComponent', 'selector': 'app-report-goods-and-services'},{'name': 'ReportItemsListComponent', 'selector': 'app-report-items-list'},{'name': 'ReportItemWithLocationanduserComponent', 'selector': 'app-report-item-with-locationanduser'},{'name': 'ReportItemWithPriceComponent', 'selector': 'app-report-item-with-price'},{'name': 'ReportLicenseManagementComponent', 'selector': 'app-report-license-management'},{'name': 'ReportLifeCycleComponent', 'selector': 'app-report-life-cycle'},{'name': 'ReportPendingStockComponent', 'selector': 'app-report-pending-stock'},{'name': 'ReportPurchaseOrderComponent', 'selector': 'app-report-purchase-order'},{'name': 'ReportScrapedItemsComponent', 'selector': 'app-report-scraped-items'},{'name': 'ReportStockInHandComponent', 'selector': 'app-report-stock-in-hand'},{'name': 'ReportUploadDocumentComponent', 'selector': 'app-report-upload-document'},{'name': 'ReportVendorEvaluationComponent', 'selector': 'app-report-vendor-evaluation'},{'name': 'ReportWarrantyItemsComponent', 'selector': 'app-report-warranty-items'},{'name': 'SupplierEvaluationComponent', 'selector': 'app-supplier-evaluation'},{'name': 'SystemDetailComponent', 'selector': 'app-system-detail'},{'name': 'SystemInformationListComponent', 'selector': 'app-system-information-list'},{'name': 'TransferStockComponent', 'selector': 'app-transfer-stock'},{'name': 'UpdateItemsComponent', 'selector': 'app-update-items'},{'name': 'UpdateUserComponent', 'selector': 'app-update-user'},{'name': 'UpdateVendorComponent', 'selector': 'app-update-vendor'},{'name': 'UploadInspectionFormComponent', 'selector': 'app-upload-inspection-form'},{'name': 'UploadInvoiceComponent', 'selector': 'app-upload-invoice'},{'name': 'UploadScanDocumentComponent', 'selector': 'app-upload-scan-document'},{'name': 'UploadScanQuotationComponent', 'selector': 'app-upload-scan-quotation'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserDashboardComponent', 'selector': 'app-user-dashboard'},{'name': 'UserListComponent', 'selector': 'app-user-list'},{'name': 'UserPrivilegeComponent', 'selector': 'app-user-privilege'},{'name': 'VendorApprovalMailComponent', 'selector': 'app-vendor-approval-mail'},{'name': 'VendorEvaluationModalComponent', 'selector': 'app-vendor-evaluation-modal'},{'name': 'VendorListComponent', 'selector': 'app-vendor-list'},{'name': 'VendorRejectionMailComponent', 'selector': 'app-vendor-rejection-mail'}];
+    var DIRECTIVES = [{'name': 'PositiveNumberDirective', 'selector': '[b-positive]'}];
+    var ACTUAL_COMPONENT = {'name': 'GatepassViewComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'GatepassViewComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

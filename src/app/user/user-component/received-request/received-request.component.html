@@ -1,0 +1,129 @@
+<section class="content-header">
+  <div class="header-icon"><i class="fa fa-check" style="color:purple" aria-hidden="true"></i></div>
+  <div class="header-title">
+
+
+    <h1>Pending Request</h1>
+
+  </div>
+</section>
+
+<div class="container-fluid">
+  <div class="data-content">
+    <div class="page-background-h">
+      <div class="data-box">
+        <div class="data-content" *ngIf="isDataorNot">
+          <div class="data-table overflow-auto ">
+            <table class="table  table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"  class="table-heading-color">S.No.</th>
+                  <th scope="col"  class="table-heading-color">Requested Item</th>
+                  <th scope="col"  class="table-heading-color">Quantity</th>
+                  <th scope="col"  class="table-heading-color">Estimated Price</th>
+                  <th scope="col"  class="table-heading-color">Remark</th>
+                  <th scope="col"  class="table-heading-color">Created by</th>
+                  <th scope="col"  class="table-heading-color">Creation date</th>
+                  <th scope="col"  class="table-heading-color" colspan="2">Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <tr *ngFor="let items of request; let i = index">
+                  <th scope="row" class="table-heading-sub-text">{{i+1}}</th>
+                  <td class="table-heading-sub-text">{{items.request_item}}</td>
+                  <td class="table-heading-sub-text">{{items.quantity}}</td>
+                  <td class="table-heading-sub-text"><strong>₹ {{(items.estimated_price ?items.estimated_price:0) | number : '1.2-2'}}</strong></td>
+                  <td class="table-heading-sub-text">{{items.remark}}</td>
+                  <td class="table-heading-sub-text">{{items.user_name}}</td>
+                  <td class="table-heading-sub-text">{{items.created_date | date: 'dd-MM-yyyy'}}</td>
+                  <td class="table-heading-sub-text"> <button type="button" class="btn btn-accept" data-toggle="modal" data-target="#exampleModal"
+                      (click)="onaccept(items.request_id)">Accept</button></td>
+                      
+                      <!-- <td><button class="btn btn-reject" (click)="onreject(items.request_id)">Reject</button></td> -->
+                      <td class="table-heading-sub-text"><button class="btn btn-reject" data-toggle="modal"  data-target="#exampleModal2" (click)="onreject(items.request_id)">Reject</button></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header" >
+                    <h3 class="modal-title text-danger"  id="exampleModalLabel"><strong>Please Enter Quantity</strong></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <form [formGroup]="updateRequestForm">
+
+                      <div class="form-group">
+                        <label for="quantity" class="col-form-label">Quantity:</label>
+                        <input type="text" id="quantity" class="form-control" id="recipient-name" formControlName="quantity" placeholder="Enter Quantity..." min="0"  oninput="this.value = Math.abs(this.value)"
+                          [(ngModel)]="RequestData.quantity">
+                      </div>
+
+                    </form>
+
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-accept" (click)="updatereq()">Accept</button>
+
+                    <button type="button" class=" btn btn-reject" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header" >
+                    <h3 class="modal-title text-danger"  id="exampleModalLabel2"><strong>Reject</strong></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <form [formGroup]="rejectRequestForm">
+
+                      <div class="form-group">
+                        <label for="rejection_reason" class="col-form-label text-dark"><strong>Incorporate Rejection Reason (if any):</strong></label>
+                        <textarea class="form-control data-control" #rejection_reason id="rejection_reason" rows="3" formControlName="rejection_reason"
+                                [(ngModel)]="rejectRequestData.rejection_reason" (keydown)="NoSpaceallowedatstart($event)">{{rejectRequestData.rejection_reason}}</textarea>
+                        <!-- <input type="text" class="form-control" id="recipient-name" formControlName="rejection_reason"
+                          [(ngModel)]="rejectRequestData.rejection_reason"> -->
+                      </div>
+
+                    </form>
+
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-accept" (click)="rejectionUpdate()">Submit</button>
+
+                    <button type="button" class=" btn btn-reject" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="noData text-center container-fluid" *ngIf="!isDataorNot">
+          <h1 class="text-danger">No data found</h1>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

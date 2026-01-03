@@ -1,0 +1,3248 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ReportPurchaseOrderComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-report-purchase-order</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./report-purchase-order.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./report-purchase-order.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#baseUrl" >baseUrl</a>
+                            </li>
+                            <li>
+                                <a href="#count" >count</a>
+                            </li>
+                            <li>
+                                <a href="#currentdate" >currentdate</a>
+                            </li>
+                            <li>
+                                <a href="#currentSortColumn" >currentSortColumn</a>
+                            </li>
+                            <li>
+                                <a href="#datesforpofilter" >datesforpofilter</a>
+                            </li>
+                            <li>
+                                <a href="#displayList" >displayList</a>
+                            </li>
+                            <li>
+                                <a href="#empltyDataList" >empltyDataList</a>
+                            </li>
+                            <li>
+                                <a href="#filteredpoData" >filteredpoData</a>
+                            </li>
+                            <li>
+                                <a href="#isAscending" >isAscending</a>
+                            </li>
+                            <li>
+                                <a href="#isDataorNot" >isDataorNot</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#isNavigatedBack" >isNavigatedBack</a>
+                            </li>
+                            <li>
+                                <a href="#isRotating" >isRotating</a>
+                            </li>
+                            <li>
+                                <a href="#itemsData" >itemsData</a>
+                            </li>
+                            <li>
+                                <a href="#lastfinnancialyrDate" >lastfinnancialyrDate</a>
+                            </li>
+                            <li>
+                                <a href="#nextfinnancialyrDate" >nextfinnancialyrDate</a>
+                            </li>
+                            <li>
+                                <a href="#page" >page</a>
+                            </li>
+                            <li>
+                                <a href="#previousUrl" >previousUrl</a>
+                            </li>
+                            <li>
+                                <a href="#purchaseDataList" >purchaseDataList</a>
+                            </li>
+                            <li>
+                                <a href="#purchaseId" >purchaseId</a>
+                            </li>
+                            <li>
+                                <a href="#searchItem" >searchItem</a>
+                            </li>
+                            <li>
+                                <a href="#searchTerm" >searchTerm</a>
+                            </li>
+                            <li>
+                                <a href="#sortingorder" >sortingorder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#tablepurchaseOrder" >tablepurchaseOrder</a>
+                            </li>
+                            <li>
+                                <a href="#tableSize" >tableSize</a>
+                            </li>
+                            <li>
+                                <a href="#tableSizes" >tableSizes</a>
+                            </li>
+                            <li>
+                                <a href="#totalItems" >totalItems</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#buildQueryString" >buildQueryString</a>
+                            </li>
+                            <li>
+                                <a href="#checkAndOpenFile" >checkAndOpenFile</a>
+                            </li>
+                            <li>
+                                <a href="#documentnotexists" >documentnotexists</a>
+                            </li>
+                            <li>
+                                <a href="#documentnotuploaded" >documentnotuploaded</a>
+                            </li>
+                            <li>
+                                <a href="#exportToexcelfromnode" >exportToexcelfromnode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#filterData" >filterData</a>
+                            </li>
+                            <li>
+                                <a href="#getFinancialYear" >getFinancialYear</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getpurchaseData" >getpurchaseData</a>
+                            </li>
+                            <li>
+                                <a href="#invoicenotuploaded" >invoicenotuploaded</a>
+                            </li>
+                            <li>
+                                <a href="#isDate" >isDate</a>
+                            </li>
+                            <li>
+                                <a href="#isNumber" >isNumber</a>
+                            </li>
+                            <li>
+                                <a href="#navigateToNewRoute" >navigateToNewRoute</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#NoSpaceallowedatstart" >NoSpaceallowedatstart</a>
+                            </li>
+                            <li>
+                                <a href="#ontableDatachange" >ontableDatachange</a>
+                            </li>
+                            <li>
+                                <a href="#ontableSizechange" >ontableSizechange</a>
+                            </li>
+                            <li>
+                                <a href="#openModal" >openModal</a>
+                            </li>
+                            <li>
+                                <a href="#refreshfilter" >refreshfilter</a>
+                            </li>
+                            <li>
+                                <a href="#sort" >sort</a>
+                            </li>
+                            <li>
+                                <a href="#statemanagement" >statemanagement</a>
+                            </li>
+                            <li>
+                                <a href="#supplierEvaluationData" >supplierEvaluationData</a>
+                            </li>
+                            <li>
+                                <a href="#toggleExpand" >toggleExpand</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(sharedService: <a href="../injectables/SharedService.html" target="_self">SharedService</a>, router: Router, matdialog: MatDialog, location: Location, spinner: NgxSpinnerService, checkService: <a href="../injectables/CheckService.html" target="_self">CheckService</a>, activatedRoute: ActivatedRoute, fileService: <a href="../injectables/FilesService.html" target="_self">FilesService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>sharedService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SharedService.html" target="_self" >SharedService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>matdialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>location</td>
+                                                  
+                                                        <td>
+                                                                    <code>Location</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>spinner</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgxSpinnerService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>checkService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CheckService.html" target="_self" >CheckService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>activatedRoute</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>fileService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FilesService.html" target="_self" >FilesService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildQueryString"></a>
+                    <span class="name">
+                        <span ><b>buildQueryString</b></span>
+                        <a href="#buildQueryString"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>buildQueryString(params: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="433"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:433</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>params</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkAndOpenFile"></a>
+                    <span class="name">
+                        <span ><b>checkAndOpenFile</b></span>
+                        <a href="#checkAndOpenFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkAndOpenFile(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="447"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:447</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filePath</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="documentnotexists"></a>
+                    <span class="name">
+                        <span ><b>documentnotexists</b></span>
+                        <a href="#documentnotexists"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>documentnotexists()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="473"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:473</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="documentnotuploaded"></a>
+                    <span class="name">
+                        <span ><b>documentnotuploaded</b></span>
+                        <a href="#documentnotuploaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>documentnotuploaded()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="465"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:465</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="exportToexcelfromnode"></a>
+                    <span class="name">
+                        <span ><b>exportToexcelfromnode</b></span>
+                        <a href="#exportToexcelfromnode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>exportToexcelfromnode()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="317"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:317</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterData"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>filterData</b></span>
+                        <a href="#filterData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>filterData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="193"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:193</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getFinancialYear"></a>
+                    <span class="name">
+                        <span ><b>getFinancialYear</b></span>
+                        <a href="#getFinancialYear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getFinancialYear()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getpurchaseData"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getpurchaseData</b></span>
+                        <a href="#getpurchaseData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getpurchaseData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="invoicenotuploaded"></a>
+                    <span class="name">
+                        <span ><b>invoicenotuploaded</b></span>
+                        <a href="#invoicenotuploaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>invoicenotuploaded()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="437"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:437</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDate"></a>
+                    <span class="name">
+                        <span ><b>isDate</b></span>
+                        <a href="#isDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isDate(dateString: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="404"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:404</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dateString</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isNumber"></a>
+                    <span class="name">
+                        <span ><b>isNumber</b></span>
+                        <a href="#isNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isNumber(value: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="409"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:409</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigateToNewRoute"></a>
+                    <span class="name">
+                        <span ><b>navigateToNewRoute</b></span>
+                        <a href="#navigateToNewRoute"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigateToNewRoute(items: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="413"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:413</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>items</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NoSpaceallowedatstart"></a>
+                    <span class="name">
+                        <span ><b>NoSpaceallowedatstart</b></span>
+                        <a href="#NoSpaceallowedatstart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>NoSpaceallowedatstart(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="291"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ontableDatachange"></a>
+                    <span class="name">
+                        <span ><b>ontableDatachange</b></span>
+                        <a href="#ontableDatachange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ontableDatachange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="297"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:297</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ontableSizechange"></a>
+                    <span class="name">
+                        <span ><b>ontableSizechange</b></span>
+                        <a href="#ontableSizechange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ontableSizechange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="302"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:302</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openModal"></a>
+                    <span class="name">
+                        <span ><b>openModal</b></span>
+                        <a href="#openModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openModal(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="481"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:481</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshfilter"></a>
+                    <span class="name">
+                        <span ><b>refreshfilter</b></span>
+                        <a href="#refreshfilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>refreshfilter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="243"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:243</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sort"></a>
+                    <span class="name">
+                        <span ><b>sort</b></span>
+                        <a href="#sort"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sort(columnName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="362"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:362</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>columnName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="statemanagement"></a>
+                    <span class="name">
+                        <span ><b>statemanagement</b></span>
+                        <a href="#statemanagement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>statemanagement()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supplierEvaluationData"></a>
+                    <span class="name">
+                        <span ><b>supplierEvaluationData</b></span>
+                        <a href="#supplierEvaluationData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>supplierEvaluationData(id: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="281"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:281</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleExpand"></a>
+                    <span class="name">
+                        <span ><b>toggleExpand</b></span>
+                        <a href="#toggleExpand"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleExpand(item: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="358"
+                                    class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:358</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="baseUrl"></a>
+                    <span class="name">
+                        <span ><b>baseUrl</b></span>
+                        <a href="#baseUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="count"></a>
+                    <span class="name">
+                        <span ><b>count</b></span>
+                        <a href="#count"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentdate"></a>
+                    <span class="name">
+                        <span ><b>currentdate</b></span>
+                        <a href="#currentdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentSortColumn"></a>
+                    <span class="name">
+                        <span ><b>currentSortColumn</b></span>
+                        <a href="#currentSortColumn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="datesforpofilter"></a>
+                    <span class="name">
+                        <span ><b>datesforpofilter</b></span>
+                        <a href="#datesforpofilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    start_date: &#x27;&#x27;,
+    end_date: &#x27;&#x27;
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayList"></a>
+                    <span class="name">
+                        <span ><b>displayList</b></span>
+                        <a href="#displayList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="empltyDataList"></a>
+                    <span class="name">
+                        <span ><b>empltyDataList</b></span>
+                        <a href="#empltyDataList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredpoData"></a>
+                    <span class="name">
+                        <span ><b>filteredpoData</b></span>
+                        <a href="#filteredpoData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAscending"></a>
+                    <span class="name">
+                        <span ><b>isAscending</b></span>
+                        <a href="#isAscending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDataorNot"></a>
+                    <span class="name">
+                        <span ><b>isDataorNot</b></span>
+                        <a href="#isDataorNot"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isNavigatedBack"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>isNavigatedBack</b></span>
+                        <a href="#isNavigatedBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isRotating"></a>
+                    <span class="name">
+                        <span ><b>isRotating</b></span>
+                        <a href="#isRotating"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemsData"></a>
+                    <span class="name">
+                        <span ><b>itemsData</b></span>
+                        <a href="#itemsData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lastfinnancialyrDate"></a>
+                    <span class="name">
+                        <span ><b>lastfinnancialyrDate</b></span>
+                        <a href="#lastfinnancialyrDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextfinnancialyrDate"></a>
+                    <span class="name">
+                        <span ><b>nextfinnancialyrDate</b></span>
+                        <a href="#nextfinnancialyrDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="page"></a>
+                    <span class="name">
+                        <span ><b>page</b></span>
+                        <a href="#page"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousUrl"></a>
+                    <span class="name">
+                        <span ><b>previousUrl</b></span>
+                        <a href="#previousUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="purchaseDataList"></a>
+                    <span class="name">
+                        <span ><b>purchaseDataList</b></span>
+                        <a href="#purchaseDataList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="purchaseId"></a>
+                    <span class="name">
+                        <span ><b>purchaseId</b></span>
+                        <a href="#purchaseId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchItem"></a>
+                    <span class="name">
+                        <span ><b>searchItem</b></span>
+                        <a href="#searchItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTerm"></a>
+                    <span class="name">
+                        <span ><b>searchTerm</b></span>
+                        <a href="#searchTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortingorder"></a>
+                    <span class="name">
+                        <span ><b>sortingorder</b></span>
+                        <a href="#sortingorder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tablepurchaseOrder"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>tablepurchaseOrder</b></span>
+                        <a href="#tablepurchaseOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;tablepurchaseOrder&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tableSize"></a>
+                    <span class="name">
+                        <span ><b>tableSize</b></span>
+                        <a href="#tableSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>20</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tableSizes"></a>
+                    <span class="name">
+                        <span ><b>tableSizes</b></span>
+                        <a href="#tableSizes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[20, 50, 100, &#x27;All&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalItems"></a>
+                    <span class="name">
+                        <span ><b>totalItems</b></span>
+                        <a href="#totalItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/user/user-component/report-purchase-order/report-purchase-order.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ViewChild, ElementRef } from &#x27;@angular/core&#x27;;
+import { SharedService } from &#x27;src/app/services/shared.service&#x27;;
+import { Router, ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { Location } from &#x27;@angular/common&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { VendorEvaluationModalComponent } from &#x27;../vendor-evaluation-modal/vendor-evaluation-modal.component&#x27;;
+import { environment } from &#x27;src/app/environments/environment.prod&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
+import { NgxSpinnerService } from &quot;ngx-spinner&quot;;
+import Swal from &#x27;sweetalert2&#x27;;
+import * as moment from &#x27;moment&#x27;;
+import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import { CheckService } from &#x27;src/app/services/check.service&#x27;;
+import { catchError, retry } from &#x27;rxjs/operators&#x27;;
+import { of } from &#x27;rxjs&#x27;;
+import { PurchaseOrderViewComponent } from &#x27;../purchase-order-view/purchase-order-view.component&#x27;;
+import { FilesService } from &#x27;src/app/services/files.service&#x27;;
+
+@Component({
+  selector: &#x27;app-report-purchase-order&#x27;,
+  templateUrl: &#x27;./report-purchase-order.component.html&#x27;,
+  styleUrls: [&#x27;./report-purchase-order.component.scss&#x27;]
+})
+export class ReportPurchaseOrderComponent {
+  @ViewChild(&#x27;tablepurchaseOrder&#x27;) tablepurchaseOrder!: ElementRef;
+
+  isDataorNot: boolean &#x3D; true;
+  empltyDataList &#x3D; [];
+  datesforpofilter &#x3D; {
+    start_date: &#x27;&#x27;,
+    end_date: &#x27;&#x27;
+  }
+  displayList &#x3D; false;
+  purchaseDataList: any &#x3D; [];
+  searchItem &#x3D; &#x27;&#x27;;
+
+  page: any &#x3D; 1;
+  count: any &#x3D; 0;
+  tableSize: any &#x3D; 20;
+  tableSizes: any &#x3D; [20, 50, 100, &#x27;All&#x27;];
+
+  lastfinnancialyrDate: any;
+  nextfinnancialyrDate: any;
+  purchaseId: any;
+  previousUrl: any;
+  baseUrl: any
+  itemsData: any[] &#x3D; [];
+  // itemsData: any[] &#x3D; [];
+  filteredpoData: any[] &#x3D; [];
+  // filteredpoData: any[] &#x3D; [];
+  searchTerm: string &#x3D; &#x27;&#x27;;
+  totalItems: number &#x3D; 0;
+  currentdate: any;
+  currentSortColumn: string &#x3D; &#x27;&#x27;; // Variable to store the current sort column
+  isAscending: any; // Variable to store the current sorting order
+  isRotating: boolean &#x3D; false;
+  private isNavigatedBack: boolean &#x3D; false; // Flag to check navigation source
+  sortingorder: any;
+
+  constructor(private sharedService: SharedService, private router: Router, private matdialog: MatDialog,
+    private location: Location, private spinner: NgxSpinnerService, private checkService: CheckService, private activatedRoute: ActivatedRoute, private fileService:FilesService) {
+    const today &#x3D; moment();
+    this.currentdate &#x3D; today.format(&#x27;YYYY-MM-DD&#x27;);
+  }
+
+  ngOnInit(): void {
+    this.statemanagement();
+    this.getpurchaseData();
+    this.baseUrl &#x3D; environment.BASE_URL;
+  }
+
+  statemanagement() {
+    this.isNavigatedBack &#x3D; localStorage.getItem(&#x27;navigated&#x27;) &#x3D;&#x3D;&#x3D; &#x27;true&#x27;;
+    localStorage.removeItem(&#x27;navigated&#x27;);
+    this.activatedRoute.queryParams.subscribe(async (params: any) &#x3D;&gt; {
+      if (this.isNavigatedBack &#x3D;&#x3D;&#x3D; true) {
+        if (params[&#x27;searchTerm&#x27;] &amp;&amp; params[&#x27;searchTerm&#x27;] !&#x3D;&#x3D; &#x27;&#x27;) {
+          this.searchTerm &#x3D; params[&#x27;searchTerm&#x27;];
+        }
+        if (params[&#x27;from&#x27;] &amp;&amp; params[&#x27;from&#x27;] !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; params[&#x27;to&#x27;] &amp;&amp; params[&#x27;to&#x27;] !&#x3D;&#x3D; &#x27;&#x27;) {
+          this.datesforpofilter.start_date &#x3D; params[&#x27;from&#x27;];
+          this.datesforpofilter.end_date &#x3D; params[&#x27;to&#x27;];
+        }
+
+        setTimeout(() &#x3D;&gt; {
+          // Call the filter method to apply the saved state
+          this.filterData();
+          if (params[&#x27;page&#x27;] &amp;&amp; params[&#x27;page&#x27;] !&#x3D;&#x3D; null) {
+            this.page &#x3D; +params[&#x27;page&#x27;];
+          }
+          if (params[&#x27;tableSize&#x27;] &amp;&amp; params[&#x27;tableSize&#x27;] !&#x3D;&#x3D; null) {
+            this.tableSize &#x3D; +params[&#x27;tableSize&#x27;];
+          }
+          if (params[&#x27;sort&#x27;] &amp;&amp; params[&#x27;sort&#x27;] !&#x3D;&#x3D; &#x27;&#x27;) {
+            const [column, sortParams] &#x3D; params[&#x27;sort&#x27;].split(&#x27;-&#x27;);
+            console.log (params[&#x27;sort&#x27;].split(&#x27;-&#x27;)[1]);
+            const ascending &#x3D; sortParams &#x3D;&#x3D;&#x3D; &#x27;asc&#x27;?true:false;
+            this.isAscending &#x3D; ascending;  
+            // Ensure sortingorder is set properly when restoring state
+            this.sortingorder &#x3D; &#x60;${column}-${this.isAscending}&#x60;;
+            this.sort(column);
+          }
+        }, 800)
+      }
+      else {
+
+        console.log(&#x27;notnavigated&#x27;)
+        // Remove all query params when isNavigatedBack is false
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute, // Navigate relative to the current route
+          queryParams: {}, // Empty object to clear the query parameters
+          queryParamsHandling: &#x27;&#x27; // Explicitly state that no query params should be handled
+        });
+      }
+    });
+
+    this.isNavigatedBack &#x3D;&#x3D;&#x3D; false;
+  }
+
+  getFinancialYear() {
+    const today &#x3D; moment();
+    const curMonth &#x3D; today.month() + 1;
+    const curYear &#x3D; today.year();
+
+    if (curMonth &gt; 3) {
+      this.lastfinnancialyrDate &#x3D; moment(&#x60;${curYear}-04-01&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+      this.nextfinnancialyrDate &#x3D; moment(&#x60;${curYear + 1}-03-31&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+    } else {
+      this.lastfinnancialyrDate &#x3D; moment(&#x60;${curYear - 1}-04-01&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+      this.nextfinnancialyrDate &#x3D; moment(&#x60;${curYear}-03-31&#x60;).format(&#x27;YYYY-MM-DD&#x27;);
+    }
+  }
+
+  async getpurchaseData() {
+    try {
+      this.spinner.show();
+      const results: any &#x3D; await this.sharedService.getreportpurchaseorderData().pipe(
+        retry(3), // Retry the request up to 3 times
+        // catchError((error: HttpErrorResponse) &#x3D;&gt; {
+        //   console.error(&#x27;Error fetching accepted requests:&#x27;, error);
+        //   return of([]); // Return an empty array if an error occurs
+        // })
+      ).toPromise();
+
+      console.log(results, &quot;results&quot;);
+      if (results?.length &#x3D;&#x3D; 0) {
+        this.spinner.hide();
+        this.isDataorNot &#x3D; false;
+      }
+      else {
+        this.isDataorNot &#x3D; true;
+        const filteredResults &#x3D; results.map((item: any) &#x3D;&gt; {
+          const splitcreateddate &#x3D; item.created_date ? moment(item.created_date).format(&#x27;DD-MM-YYYY&#x27;) : null;
+          const splitmodifieddate &#x3D; item.modified_date ? moment(item.modified_date).format(&#x27;DD-MM-YYYY&#x27;) : null;
+          const splitsentdata &#x3D; item.sent_date ? moment(item.sent_date).format(&#x27;YDD-MM-YYYY&#x27;) : null;
+          return { ...item, created_date: splitcreateddate, modified_date: splitmodifieddate, sent_date: splitsentdata };
+        });
+
+        console.log(filteredResults, &quot;filteredResults&quot;)
+        this.filteredpoData &#x3D; filteredResults;
+        this.itemsData &#x3D; filteredResults;
+        this.purchaseId &#x3D; filteredResults[0].purchase_id;
+        this.count &#x3D; filteredResults.length;
+      }
+    }
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        });
+      } else {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try again later!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        });
+      }
+    }
+    finally {
+      this.spinner.hide();
+    }
+  }
+
+
+  async filterData(): Promise&lt;void&gt; {
+    // If the originalData is not set, initialize it with the current itemsData
+    if (!this.itemsData) {
+      this.itemsData &#x3D; this.itemsData;
+    }
+    // Start with the original data or the previously filtered data
+    let filteredData: any[] &#x3D; this.itemsData;
+    // // Filter by search term
+    if (this.searchTerm) {
+      filteredData &#x3D; filteredData.filter((item: any) &#x3D;&gt; {
+        return Object.keys(item).some(key &#x3D;&gt; {
+          if (item[key] !&#x3D;&#x3D; null &amp;&amp; item[key] !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; key &#x3D;&#x3D;&#x3D; &#x27;created_date&#x27; || key &#x3D;&#x3D;&#x3D; &#x27;modified_date&#x27; || key &#x3D;&#x3D;&#x3D; &#x27;sent_date&#x27;) {
+            return item[key]?.includes(this.searchTerm);
+          } else if (item[key] !&#x3D;&#x3D; null &amp;&amp; item[key] !&#x3D;&#x3D; &#x27;&#x27;) {
+            return item[key]?.toString().toLowerCase()?.includes(this.searchTerm.toLowerCase());
+          }
+          return false;
+        });
+      });
+    }
+
+    // Filter by date range only if there is a valid date range
+    if (this.datesforpofilter?.start_date &amp;&amp; this.datesforpofilter?.end_date) {
+      if (this.datesforpofilter.start_date &lt;&#x3D; this.datesforpofilter.end_date) {
+        filteredData &#x3D; filteredData.filter((item: any) &#x3D;&gt; {
+          const filteredcreateddate &#x3D; moment(item?.created_date, &#x27;DD-MM-YYYY&#x27;).format(&#x27;YYYY-MM-DD&#x27;);
+          if (filteredcreateddate) {
+            return filteredcreateddate &gt;&#x3D; this.datesforpofilter.start_date &amp;&amp;
+              filteredcreateddate &lt;&#x3D; this.datesforpofilter.end_date;
+          }
+          return false;
+        });
+      } else {
+        Swal.fire({
+          title: &#x27;Warning&#x27;,
+          text: &#x27;End date should be later than start date.&#x27;,
+          icon: &#x27;warning&#x27;
+        });
+        // If there&#x27;s a date range error, return an empty array to show no results
+        filteredData &#x3D; [];
+      }
+    }
+
+    // Update filtered data and totalItems
+    this.filteredpoData &#x3D; filteredData;
+    this.totalItems &#x3D; this.filteredpoData.length;
+    this.count &#x3D; filteredData.length;
+    this.page &#x3D; 1; // Reset to the first page when filtering occurs
+  }
+
+  refreshfilter() {
+    this.isRotating &#x3D; true;
+    this.getpurchaseData().then(() &#x3D;&gt; {
+      // Clear date filters
+      if (this.datesforpofilter?.start_date || this.datesforpofilter?.end_date) {
+        this.datesforpofilter.start_date &#x3D; &#x27;&#x27;;
+        this.datesforpofilter.end_date &#x3D; &#x27;&#x27;;
+      }
+      // If the originalData is not set, initialize it with the current itemsData
+      if (!this.itemsData) {
+        this.itemsData &#x3D; this.itemsData;
+      }
+      // Start with the original data or the previously filtered data
+      let filteredData: any[] &#x3D; this.itemsData;
+
+      // // Filter by search term
+      if (this.searchTerm) {
+        filteredData &#x3D; filteredData.filter((item: any) &#x3D;&gt; {
+          return Object.keys(item).some(key &#x3D;&gt; {
+            if (item[key] !&#x3D;&#x3D; null &amp;&amp; item[key] !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; key &#x3D;&#x3D;&#x3D; &#x27;created_date&#x27; || key &#x3D;&#x3D;&#x3D; &#x27;modified_date&#x27; || key &#x3D;&#x3D;&#x3D; &#x27;sent_date&#x27;) {
+              return item[key]?.includes(this.searchTerm);
+            } else if (item[key] !&#x3D;&#x3D; null &amp;&amp; item[key] !&#x3D;&#x3D; &#x27;&#x27;) {
+              return item[key]?.toString().toLowerCase()?.includes(this.searchTerm.toLowerCase());
+            }
+            return false;
+          });
+        });
+      }
+      // Update filtered data and totalItems
+      this.filteredpoData &#x3D; filteredData;
+      this.totalItems &#x3D; this.filteredpoData.length;
+      this.page &#x3D; 1; // Reset to the first page when filtering occurs
+      setTimeout(() &#x3D;&gt; {
+        this.isRotating &#x3D; false;
+      }, 500);
+    });
+  }
+
+  supplierEvaluationData(id: any) {
+    //setting height width of the model and sending data to the VendorEvaluationModalComponent...
+    this.matdialog.open(VendorEvaluationModalComponent, {
+      width: &#x27;auto&#x27;, height: &#x27;auto&#x27;,
+      data: {
+        supplier_id: id
+      }
+    });
+  }
+
+  NoSpaceallowedatstart(event: any) {
+    if (event.target.selectionStart &#x3D;&#x3D;&#x3D; 0 &amp;&amp; event.code &#x3D;&#x3D;&#x3D; &quot;Space&quot;) {
+      event.preventDefault();
+    }
+  }
+
+  ontableDatachange(event: any) {
+    this.page &#x3D; event;
+    // this.submitDate();
+  }
+
+   ontableSizechange(event: any): void {
+    const Value &#x3D; event.target.value
+    // this.tableSize &#x3D; ;
+    if(Value &#x3D;&#x3D; &quot;All&quot;){
+      this.tableSize &#x3D; +this.count;
+    }
+    else {
+      // Otherwise, set the table size to the selected value
+      this.tableSize &#x3D; +Value;
+    }
+
+    this.page &#x3D; 1;
+    // this.submitDate();
+  }
+
+  exportToexcelfromnode(): any {
+    const modifiedItemsDataList &#x3D; this.filteredpoData.map((item: any, index: any) &#x3D;&gt; {
+
+      const convertedOrderedItems &#x3D; item.products.join(&quot;, &quot;); // to change array item like [&quot;1 CPU&quot;, &quot;2 Mouse&quot;](array) --&gt; 1 CPU, 2 Mouse(string)
+
+      return {
+        ...item,  // Spread the original object properties
+        &quot;products&quot;:convertedOrderedItems,
+        &quot;S.No.&quot;: index + 1  // Add the S.No. field with the appropriate value
+      };
+    });
+
+    const reportRequest &#x3D; {
+      reportTitle: &quot;Report Purchase Order&quot;,
+      columns: [
+        { header: &#x27;S.No.&#x27;, key: &#x27;S.No.&#x27;, width: 10, filterButton: false },
+        { header: &#x27;Purchase Id&#x27;, key: &#x27;purchase_id&#x27;,width: 35, filterButton: true },
+        { header: &#x27;Vendor Name&#x27;, key: &#x27;supplier_name&#x27;,width: 55, filterButton: true },
+        { header: &#x27;Purchase Date&#x27;, key: &#x27;created_date&#x27;, width: 35, format: &#x27;date&#x27;, filterButton: false },
+        { header: &#x27;Ordered Items&#x27;, key: &#x27;products&#x27;, width: 80, format: &#x27;date&#x27;, filterButton: false },
+      ],
+
+      data: modifiedItemsDataList , // Data to populate the report
+      totalsrow:false,
+
+      filters:[
+        { filterBy:(this.datesforpofilter.start_date &amp;&amp; this.datesforpofilter.end_date)?&#x27;Purchase Date&#x27;:&#x27;&#x27; , startDate:this.datesforpofilter.start_date||&#x27;&#x27;, endDate:this.datesforpofilter.end_date||&#x27;&#x27;}
+      ]
+    };
+
+    this.fileService.exportToExcel(reportRequest).subscribe(
+      (response: Blob) &#x3D;&gt; {
+        // Call downloadBlob to trigger the download with the response
+        this.fileService.downloadBlob(response, &#x27;report_purchase_order.xlsx&#x27;);
+      },
+      (error) &#x3D;&gt; {
+        console.error(&#x27;Error exporting to Excel&#x27;, error);
+      }
+    );
+  }
+
+  toggleExpand(item: any) {
+    item.isExpanded &#x3D; !item.isExpanded;
+  }
+
+  sort(columnName: string) {
+    console.log(columnName, &quot;columnName&quot;);
+    if (this.currentSortColumn &#x3D;&#x3D;&#x3D; columnName) {
+      this.isAscending &#x3D; !this.isAscending; // Toggle sorting order
+    }
+    else {
+      this.currentSortColumn &#x3D; columnName; // Update current sort column
+      this.isAscending &#x3D; this.isAscending ? this.isAscending : false; // Set sorting order to ascending for the new column
+    }
+
+    // Update sortingorder with the new column and sorting order
+    this.sortingorder &#x3D; &#x60;${columnName}-${this.isAscending ? &#x27;asc&#x27; : &#x27;desc&#x27;}&#x60;;
+
+    this.filteredpoData.sort((a: any, b: any) &#x3D;&gt; {
+      let comparison &#x3D; 0;
+      const valueA &#x3D; a[columnName];
+      const valueB &#x3D; b[columnName];
+
+      // Handle null or undefined values
+      if (valueA &#x3D;&#x3D;&#x3D; null || valueA &#x3D;&#x3D;&#x3D; undefined) {
+        comparison &#x3D; valueB &#x3D;&#x3D;&#x3D; null || valueB &#x3D;&#x3D;&#x3D; undefined ? 0 : -1;
+      } else if (valueB &#x3D;&#x3D;&#x3D; null || valueB &#x3D;&#x3D;&#x3D; undefined) {
+        comparison &#x3D; 1;
+      } else {
+        // console.log(valueA, valueB, &quot;sorting&quot;)
+        if (this.isDate(valueA) &amp;&amp; this.isDate(valueB)) {
+        // Parse dates using moment.js with strict parsing
+        const dateA &#x3D; moment(valueA, &#x27;DD-MM-YYYY&#x27;, true); 
+        const dateB &#x3D; moment(valueB, &#x27;DD-MM-YYYY&#x27;, true);
+        comparison &#x3D; dateA.diff(dateB); 
+          
+        } else if (this.isNumber(valueA) &amp;&amp; this.isNumber(valueB)) {
+          comparison &#x3D; valueA - valueB;
+        } else {
+          comparison &#x3D; valueA.toString().localeCompare(valueB.toString());
+        }
+      }
+
+      return this.isAscending ? comparison : -comparison;
+    });
+  }
+
+  isDate(dateString:any): boolean {
+    const isValidDate &#x3D; moment(dateString, &#x27;DD-MM-YYYY&#x27;, true).isValid();
+    return isValidDate;
+  }
+
+  isNumber(value: any): boolean {
+    return !isNaN(value);
+  }
+
+  navigateToNewRoute(items: any) {
+    const queryParams &#x3D; {
+      searchTerm: this.searchTerm || &#x27;&#x27;,
+      page: this.page || 1,
+      tableSize: this.tableSize || 10,
+      from: this.datesforpofilter.start_date || &#x27;&#x27;,
+      to: this.datesforpofilter.end_date || &#x27;&#x27;,
+      sort: this.sortingorder || &#x27;&#x27;,
+    }
+
+    this.previousUrl &#x3D; this.location.path().split(&#x27;?&#x27;)[0];
+    // console.log(this.previousUrl, &quot;this.previousUrl&quot;)
+    // localStorage.setItem(&#x27;backUrl&#x27;, this.previousUrl);
+
+    // Store the current URL with query params
+    localStorage.setItem(&#x27;backUrl&#x27;, this.previousUrl + this.buildQueryString(queryParams));
+    localStorage.setItem(&#x27;navigated&#x27;, &#x27;true&#x27;); // Set the flag for navigation
+    this.router.navigate([&#x27;user/purchase-order-view&#x27;, items.purchase_id], { queryParams });
+  }
+
+  buildQueryString(params: any): string {
+    return &#x27;?&#x27; + Object.keys(params).map(key &#x3D;&gt; key + &#x27;&#x3D;&#x27; + params[key]).join(&#x27;&amp;&#x27;);
+  }
+
+  invoicenotuploaded() {
+    Swal.fire({
+      icon: &#x27;warning&#x27;,
+      title: &#x27;Warning!&#x27;,
+      text: &#x27;Invoice not uploaded yet!&#x27;
+    }).then(() &#x3D;&gt; {
+      this.ngOnInit();
+    })
+  }
+
+  checkAndOpenFile(filePath: string) {
+    if (filePath) {
+      const fullPath &#x3D; this.baseUrl + filePath;
+      this.checkService.checkFileExistence(this.baseUrl + filePath).subscribe(exists &#x3D;&gt; {
+        console.log(exists);
+        if (exists) {
+          window.open(fullPath, &#x27;_blank&#x27;);
+        } else {
+          this.documentnotexists();
+        }
+      });
+    }
+    else {
+      this.documentnotuploaded();
+    }
+
+  }
+
+  documentnotuploaded() {
+    Swal.fire({
+      icon: &#x27;warning&#x27;,
+      title: &#x27;Warning!&#x27;,
+      text: &#x27;File not uploaded yet!&#x27;
+    })
+  }
+
+  documentnotexists() {
+    Swal.fire({
+      icon: &#x27;warning&#x27;,
+      title: &#x27;Warning!&#x27;,
+      text: &#x27;File does not exists!&#x27;
+    })
+  }
+
+  openModal(data: any) {
+    this.matdialog.open(PurchaseOrderViewComponent,{
+      width:&#x27;1200px&#x27;,
+      maxHeight: &#x27;85vh&#x27;,
+      data:data.purchase_id
+    }) 
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ngx-spinner size&#x3D;&quot;medium&quot; bdColor&#x3D;&quot;rgba(0, 0, 0, 0.2)&quot; color&#x3D;&quot;#00235E&quot; type&#x3D;&quot;ball-clip-rotate&quot;&gt;
+&lt;/ngx-spinner&gt;
+&lt;section class&#x3D;&quot;content-header&quot;&gt;
+    &lt;div class&#x3D;&quot;header-icon&quot;&gt;&lt;i class&#x3D;&quot;fa fa-files-o&quot; style&#x3D;&quot;color:#FF00FF&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;div class&#x3D;&quot;header-title&quot;&gt;
+        &lt;h1&gt;Purchase Order&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot; *ngIf&#x3D;&quot;isDataorNot&quot;&gt;
+    &lt;div class&#x3D;&quot;data-content&quot;&gt;
+        &lt;div class&#x3D;&quot;page-background-h&quot;&gt;
+            &lt;!-- copy paste comment starts here --&gt;
+            &lt;div class&#x3D;&quot;container-fluid mt-0 pt-0&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12 mt-3&quot;&gt;
+                        &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                            &lt;div class&#x3D;&quot;row&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-lg-3&quot;&gt;
+                                    &lt;label class&#x3D;&quot;form-label&quot;&gt;Start Date &lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;date&quot; class&#x3D;&quot;form-control data-control-date&quot;
+                                        [(ngModel)]&#x3D;&quot;datesforpofilter.start_date&quot; placeholder&#x3D;&quot;Start Date&quot;&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-lg-3&quot;&gt;
+                                    &lt;label class&#x3D;&quot;form-label&quot;&gt;End Date &lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;date&quot; class&#x3D;&quot;form-control data-control-date&quot;
+                                        [(ngModel)]&#x3D;&quot;datesforpofilter.end_date&quot; placeholder&#x3D;&quot;End Date&quot;&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+                                    &lt;div class&#x3D;&quot; mt-3&quot;&gt;
+                                        &lt;i class&#x3D;&quot;fa fa-refresh mr-2 refresh-icon&quot; [class.rotate]&#x3D;&quot;isRotating&quot;
+                                            (click)&#x3D;&quot;refreshfilter()&quot; title&#x3D;&quot;refresh&quot;&gt;&lt;/i&gt;
+                                        &lt;button class&#x3D;&quot;btn btn-data-add d-inline m-auto&quot; (click)&#x3D;&quot;filterData()&quot;
+                                            [disabled]&#x3D;&quot;!datesforpofilter.start_date || !datesforpofilter.end_date&quot;&gt;Filter&lt;/button&gt;
+                                        &lt;button class&#x3D;&quot;btn btn-login-report m-2&quot; (click)&#x3D;&quot;exportToexcelfromnode()&quot;&gt;Export To
+                                            Excel&lt;/button&gt;
+                                           
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;container-fluid  mb-3&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12&quot;&gt;
+                        &lt;div class&#x3D;&quot;input-group   mb-2  search-container&quot;&gt;
+                            &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot; data-control form-control  mr-2&quot;
+                            placeholder&#x3D;&quot;Search...&quot; aria-describedby&#x3D;&quot;basic-addon2&quot;
+                            [(ngModel)]&#x3D;&quot;searchTerm&quot; (input)&#x3D;&quot;filterData()&quot;
+                            (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+           
+            &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-lg-12 col-12 col-sm-12 &quot;&gt;
+                        &lt;div class&#x3D;&quot; table-responsive overflow-auto&quot;&gt;
+                            &lt;table class&#x3D;&quot;table table-bordered table-hover&quot;&gt;
+                                &lt;thead&gt;
+                                    &lt;tr&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:5%&quot;&gt;S.No.&lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:15%&quot;
+                                            (click)&#x3D;&quot;sort(&#x27;purchase_id&#x27;)&quot;&gt;Purchase Id &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;
+                                        &lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:20%&quot;
+                                            (click)&#x3D;&quot;sort(&#x27;supplier_name&#x27;)&quot;&gt;Vendor Name &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;
+                                        &lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:15%&quot;
+                                            (click)&#x3D;&quot;sort(&#x27;modified_date&#x27;)&quot;&gt;Purchase Date &lt;i class&#x3D;&quot;fa fa-sort&quot;&gt;&lt;/i&gt;
+                                        &lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:5%&quot;&gt;Invoice&lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color center-data&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:10%&quot;&gt;
+                                            View PO&lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color center-data&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:5%&quot;&gt;
+                                            Evaluation&lt;/th&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-color&quot; scope&#x3D;&quot;col&quot; style&#x3D;&quot;width:30%&quot;&gt;Ordered Items
+                                        &lt;/th&gt;
+                                    &lt;/tr&gt;
+                                &lt;/thead&gt;
+                                &lt;tbody&gt;
+                                    &lt;tr *ngFor&#x3D;&quot;let data of filteredpoData| paginate:
+                        {itemsPerPage: tableSize,
+                          currentPage: page, totalItems:empltyDataList.length} ; let i &#x3D; index &quot;&gt;
+                                        &lt;th class&#x3D;&quot;table-heading-sub-text&quot; scope&#x3D;&quot;row&quot;&gt;{{ (page - 1)
+                                            * tableSize + i +1 }}&lt;/th&gt;
+                                        &lt;td class&#x3D;&quot;table-heading-sub-text&quot;&gt;{{data.purchase_id}}&lt;/td&gt;
+                                        &lt;td class&#x3D;&quot;table-heading-sub-text&quot;&gt;{{data.supplier_name}}
+                                        &lt;/td&gt;
+                                        &lt;td class&#x3D;&quot;table-heading-sub-text&quot;&gt;{{data.created_date}}
+                                        &lt;/td&gt;
+                                        &lt;td class&#x3D;&quot;table-heading-sub-text center-data&quot;&gt;
+                                            &lt;a (click)&#x3D;&quot;checkAndOpenFile(data.filepath)&quot;&gt;
+                                                &lt;i class&#x3D;&quot;fa fa-eye icon-eye table-edit-icon&quot;
+                                                    aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
+                                            &lt;/a&gt;
+                                        &lt;/td&gt;
+                                        &lt;!-- &lt;td class&#x3D;&quot;text-center table-heading-sub-text center-data&quot;&gt;
+                                            &lt;a [routerLink]&#x3D;&quot;[&#x27;../purchase-order-view&#x27;, data.purchase_id]&quot; &gt;
+                                                &lt;i class&#x3D;&quot;fa fa-search icon-search table-edit-icon &quot;
+                                                    aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
+                                            &lt;/a&gt;
+                                        &lt;/td&gt; --&gt;
+
+                                        &lt;td class&#x3D;&quot;text-center table-heading-sub-text center-data&quot;&gt;
+                                            &lt;a (click)&#x3D;&quot;openModal(data)&quot; &gt;
+                                                &lt;i class&#x3D;&quot;fa fa-search icon-search table-edit-icon &quot;
+                                                    aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
+                                            &lt;/a&gt;
+                                        &lt;/td&gt;
+                                        &lt;td class&#x3D;&quot;text-center table-heading-sub-text&quot;&gt;
+                                            &lt;button class&#x3D;&quot;btn-warn view-button&quot;
+                                                (click)&#x3D;&quot;supplierEvaluationData(data.supplier_id)&quot;&gt;Ratings&lt;/button&gt;
+                                        &lt;/td&gt;
+                                        &lt;td class&#x3D;&quot;table-heading-sub-text&quot;&gt;{{data.products}}&lt;/td&gt;
+                                    &lt;/tr&gt;
+                                &lt;/tbody&gt;
+                            &lt;/table&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+           
+            &lt;div class&#x3D;&quot;container-fluid mt-2 mb-2 &quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-lg-10  d-flex&quot;&gt;
+                        &lt;div class&#x3D;&quot;pagination &quot; class&#x3D;&quot;active&quot;&gt;
+                            &lt;pagination-controls previousLabel&#x3D;&quot;Prev&quot; nextLabel&#x3D;&quot;Next&quot;
+                                (pageChange)&#x3D;&quot;ontableDatachange($event)&quot;&gt;
+                            &lt;/pagination-controls&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-lg-2   ml-auto&quot;&gt;
+                        &lt;div class&#x3D;&quot;form-group d-flex select-size&quot;&gt;
+                            &lt;p class&#x3D;&quot;report-headings&quot;&gt;Items/page&lt;/p&gt;
+                            &lt;select class&#x3D;&quot; data-control-select ml-2  select-size form-control&quot;
+                            (change)&#x3D;&quot;ontableSizechange($event)&quot; &gt;
+                            &lt;option class&#x3D;&quot;select-border&quot; *ngFor&#x3D;&quot; let size of tableSizes&quot; [value]&#x3D;&quot;size&quot;&gt;
+                                {{size}}
+                            &lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class&#x3D;&quot;noData text-center container-fluid mt-4 mb-4&quot; *ngIf&#x3D;&quot;!isDataorNot&quot;&gt;
+    &lt;h1 class&#x3D;&quot;text-danger&quot;&gt;No data found&lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./report-purchase-order.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.disabled-icon{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.center-data{
+    text-align: center!important;
+}
+
+table th, td{
+    font-size:11px;
+    font-family: &#x27;Verdana&#x27;, &#x27;Geneva&#x27;, sans-serif ;
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate"></ngx-spinner><section class="content-header">    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>    <div class="header-title">        <h1>Purchase Order</h1>    </div></section><div class="container-fluid" *ngIf="isDataorNot">    <div class="data-content">        <div class="page-background-h">            <!-- copy paste comment starts here -->            <div class="container-fluid mt-0 pt-0">                <div class="row">                    <div class="col-lg-12 col-12 col-sm-12 mt-3">                        <div class="container-fluid">                            <div class="row">                                <div class="col-lg-3">                                    <label class="form-label">Start Date </label>                                    <input type="date" class="form-control data-control-date"                                        [(ngModel)]="datesforpofilter.start_date" placeholder="Start Date">                                </div>                                <div class="col-lg-3">                                    <label class="form-label">End Date </label>                                    <input type="date" class="form-control data-control-date"                                        [(ngModel)]="datesforpofilter.end_date" placeholder="End Date">                                </div>                                <div class="col-lg-6">                                    <div class=" mt-3">                                        <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"                                            (click)="refreshfilter()" title="refresh"></i>                                        <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"                                            [disabled]="!datesforpofilter.start_date || !datesforpofilter.end_date">Filter</button>                                        <button class="btn btn-login-report m-2" (click)="exportToexcelfromnode()">Export To                                            Excel</button>                                                                               </div>                                </div>                            </div>                        </div>                    </div>                </div>            </div>            <div class="container-fluid  mb-3">                <div class="row">                    <div class="col-lg-12 col-12 col-sm-12">                        <div class="input-group   mb-2  search-container">                            <input type="text" class=" data-control form-control  mr-2"                            placeholder="Search..." aria-describedby="basic-addon2"                            [(ngModel)]="searchTerm" (input)="filterData()"                            (keydown)="NoSpaceallowedatstart($event)">                        </div>                    </div>                </div>            </div>                       <div class="container-fluid">                <div class="row">                    <div class="col-lg-12 col-12 col-sm-12 ">                        <div class=" table-responsive overflow-auto">                            <table class="table table-bordered table-hover">                                <thead>                                    <tr>                                        <th class="table-heading-color" scope="col" style="width:5%">S.No.</th>                                        <th class="table-heading-color" scope="col" style="width:15%"                                            (click)="sort(\'purchase_id\')">Purchase Id <i class="fa fa-sort"></i>                                        </th>                                        <th class="table-heading-color" scope="col" style="width:20%"                                            (click)="sort(\'supplier_name\')">Vendor Name <i class="fa fa-sort"></i>                                        </th>                                        <th class="table-heading-color" scope="col" style="width:15%"                                            (click)="sort(\'modified_date\')">Purchase Date <i class="fa fa-sort"></i>                                        </th>                                        <th class="table-heading-color" scope="col" style="width:5%">Invoice</th>                                        <th class="table-heading-color center-data" scope="col" style="width:10%">                                            View PO</th>                                        <th class="table-heading-color center-data" scope="col" style="width:5%">                                            Evaluation</th>                                        <th class="table-heading-color" scope="col" style="width:30%">Ordered Items                                        </th>                                    </tr>                                </thead>                                <tbody>                                    <tr *ngFor="let data of filteredpoData| paginate:                        {itemsPerPage: tableSize,                          currentPage: page, totalItems:empltyDataList.length} ; let i = index ">                                        <th class="table-heading-sub-text" scope="row">{{ (page - 1)                                            * tableSize + i +1 }}</th>                                        <td class="table-heading-sub-text">{{data.purchase_id}}</td>                                        <td class="table-heading-sub-text">{{data.supplier_name}}                                        </td>                                        <td class="table-heading-sub-text">{{data.created_date}}                                        </td>                                        <td class="table-heading-sub-text center-data">                                            <a (click)="checkAndOpenFile(data.filepath)">                                                <i class="fa fa-eye icon-eye table-edit-icon"                                                    aria-hidden="true"></i>                                            </a>                                        </td>                                        <!-- <td class="text-center table-heading-sub-text center-data">                                            <a [routerLink]="[\'../purchase-order-view\', data.purchase_id]" >                                                <i class="fa fa-search icon-search table-edit-icon "                                                    aria-hidden="true"></i>                                            </a>                                        </td> -->                                        <td class="text-center table-heading-sub-text center-data">                                            <a (click)="openModal(data)" >                                                <i class="fa fa-search icon-search table-edit-icon "                                                    aria-hidden="true"></i>                                            </a>                                        </td>                                        <td class="text-center table-heading-sub-text">                                            <button class="btn-warn view-button"                                                (click)="supplierEvaluationData(data.supplier_id)">Ratings</button>                                        </td>                                        <td class="table-heading-sub-text">{{data.products}}</td>                                    </tr>                                </tbody>                            </table>                        </div>                    </div>                </div>            </div>                       <div class="container-fluid mt-2 mb-2 ">                <div class="row">                    <div class="col-lg-10  d-flex">                        <div class="pagination " class="active">                            <pagination-controls previousLabel="Prev" nextLabel="Next"                                (pageChange)="ontableDatachange($event)">                            </pagination-controls>                        </div>                    </div>                    <div class="col-lg-2   ml-auto">                        <div class="form-group d-flex select-size">                            <p class="report-headings">Items/page</p>                            <select class=" data-control-select ml-2  select-size form-control"                            (change)="ontableSizechange($event)" >                            <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">                                {{size}}                            </option>                        </select>                        </div>                    </div>                </div>            </div>        </div>    </div></div><div class="noData text-center container-fluid mt-4 mb-4" *ngIf="!isDataorNot">    <h1 class="text-danger">No data found</h1></div></div>'
+    var COMPONENTS = [{'name': 'AcceptedRequestComponent', 'selector': 'app-accepted-request'},{'name': 'AddItemComponent', 'selector': 'app-add-item'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssetsComponent', 'selector': 'app-assets'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'DesignationComponent', 'selector': 'app-designation'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ForgetPasswordComponent', 'selector': 'app-forget-password'},{'name': 'GatepassComponent', 'selector': 'app-gatepass'},{'name': 'GatepassidListComponent', 'selector': 'app-gatepassid-list'},{'name': 'GatepassListComponent', 'selector': 'app-gatepass-list'},{'name': 'GatepassViewComponent', 'selector': 'app-gatepass-view'},{'name': 'GenarateRequestComponent', 'selector': 'app-genarate-request'},{'name': 'GroupComponent', 'selector': 'app-group'},{'name': 'IncomingItemDetailsComponent', 'selector': 'app-incoming-item-details'},{'name': 'ItemWithPoInvoiceMovetoinventoryForAPeriodComponent', 'selector': 'app-item-with-po-invoice-movetoinventory-for-a-period'},{'name': 'LocationComponent', 'selector': 'app-location'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MakeDirectpurchaseOrderComponent', 'selector': 'app-make-directpurchase-order'},{'name': 'MakePurchaseOrderComponent', 'selector': 'app-make-purchase-order'},{'name': 'MovetoItsmComponent', 'selector': 'app-moveto-itsm'},{'name': 'NewsystemInformationComponent', 'selector': 'app-newsystem-information'},{'name': 'PendingRequestComponent', 'selector': 'app-pending-request'},{'name': 'PoApprovalMailComponent', 'selector': 'app-po-approval-mail'},{'name': 'PoRejectionMailComponent', 'selector': 'app-po-rejection-mail'},{'name': 'ProductComponent', 'selector': 'app-product'},{'name': 'PurchaseInfoComponent', 'selector': 'app-purchase-info'},{'name': 'PurchaseOrderListComponent', 'selector': 'app-purchase-order-list'},{'name': 'PurchaseOrderViewComponent', 'selector': 'app-purchase-order-view'},{'name': 'ReceivedPurchaseOrderComponent', 'selector': 'app-received-purchase-order'},{'name': 'ReceivedRequestComponent', 'selector': 'app-received-request'},{'name': 'ReceivedRequestModalComponent', 'selector': 'app-received-request-modal'},{'name': 'RejectedRequestComponent', 'selector': 'app-rejected-request'},{'name': 'ReportActiveSupplierComponent', 'selector': 'app-report-active-supplier'},{'name': 'ReportCompleteAssetComponent', 'selector': 'app-report-complete-asset'},{'name': 'ReportGoodsAndServicesComponent', 'selector': 'app-report-goods-and-services'},{'name': 'ReportItemsListComponent', 'selector': 'app-report-items-list'},{'name': 'ReportItemWithLocationanduserComponent', 'selector': 'app-report-item-with-locationanduser'},{'name': 'ReportItemWithPriceComponent', 'selector': 'app-report-item-with-price'},{'name': 'ReportLicenseManagementComponent', 'selector': 'app-report-license-management'},{'name': 'ReportLifeCycleComponent', 'selector': 'app-report-life-cycle'},{'name': 'ReportPendingStockComponent', 'selector': 'app-report-pending-stock'},{'name': 'ReportPurchaseOrderComponent', 'selector': 'app-report-purchase-order'},{'name': 'ReportScrapedItemsComponent', 'selector': 'app-report-scraped-items'},{'name': 'ReportStockInHandComponent', 'selector': 'app-report-stock-in-hand'},{'name': 'ReportUploadDocumentComponent', 'selector': 'app-report-upload-document'},{'name': 'ReportVendorEvaluationComponent', 'selector': 'app-report-vendor-evaluation'},{'name': 'ReportWarrantyItemsComponent', 'selector': 'app-report-warranty-items'},{'name': 'SupplierEvaluationComponent', 'selector': 'app-supplier-evaluation'},{'name': 'SystemDetailComponent', 'selector': 'app-system-detail'},{'name': 'SystemInformationListComponent', 'selector': 'app-system-information-list'},{'name': 'TransferStockComponent', 'selector': 'app-transfer-stock'},{'name': 'UpdateItemsComponent', 'selector': 'app-update-items'},{'name': 'UpdateUserComponent', 'selector': 'app-update-user'},{'name': 'UpdateVendorComponent', 'selector': 'app-update-vendor'},{'name': 'UploadInspectionFormComponent', 'selector': 'app-upload-inspection-form'},{'name': 'UploadInvoiceComponent', 'selector': 'app-upload-invoice'},{'name': 'UploadScanDocumentComponent', 'selector': 'app-upload-scan-document'},{'name': 'UploadScanQuotationComponent', 'selector': 'app-upload-scan-quotation'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserDashboardComponent', 'selector': 'app-user-dashboard'},{'name': 'UserListComponent', 'selector': 'app-user-list'},{'name': 'UserPrivilegeComponent', 'selector': 'app-user-privilege'},{'name': 'VendorApprovalMailComponent', 'selector': 'app-vendor-approval-mail'},{'name': 'VendorEvaluationModalComponent', 'selector': 'app-vendor-evaluation-modal'},{'name': 'VendorListComponent', 'selector': 'app-vendor-list'},{'name': 'VendorRejectionMailComponent', 'selector': 'app-vendor-rejection-mail'}];
+    var DIRECTIVES = [{'name': 'PositiveNumberDirective', 'selector': '[b-positive]'}];
+    var ACTUAL_COMPONENT = {'name': 'ReportPurchaseOrderComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ReportPurchaseOrderComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

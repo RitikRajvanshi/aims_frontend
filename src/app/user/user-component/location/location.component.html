@@ -1,0 +1,127 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Location</h1>
+    </div>
+    <div class="add-icon-section" *ngIf="toggleAddbtn">
+        <button class=" btn btn-toggle " (click)="toggleActionAdd()" [disabled]="userRole !== '2'"><i class="fa fa-plus pr-1"></i> Add
+            Location</button>
+    </div>
+    <div class="add-icon-section" *ngIf="toggleListBtn">
+        <button class=" btn btn-toggle " (click)="toggleActionUpdate()"  ><i class="fa fa-search pr-1"></i>Location
+            List</button>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="flex-box">
+                <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayaddLocation">
+                    <div class="data-form ">
+                        <div class="form-group mt-3" [formGroup]="locationForm">
+                            <label for="location_name" class="form-label">Location Name:<sup>*</sup></label>
+                            <input type="text" id="location_name" class="form-control form-control-sm data-control"
+                                placeholder="Enter Location " formControlName='location_name'
+                                [(ngModel)]="locationData.location_name" (keydown)="NoSpaceallowedatstart($event)" />
+                        </div>
+                        <div class="mandatory my-1 text-danger font-italic"
+                            *ngIf="locationForm.get('location_name').hasError('required') && locationForm.get('location_name').touched">
+                            Required
+                        </div>
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block" *ngIf="addLocationbtn"
+                                    (click)="addLocationFunction()">Add</button>
+                            </div>
+                        </div>
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block" *ngIf="updateLocationbtn"
+                                    (click)="updateLocationfunc()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="data-control-box" *ngIf="displayLocationlist && isDataorNot">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="input-group my-3  search-container">
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Search..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="searchItem" (keydown)="NoSpaceallowedatstart($event)">
+                                        <!-- <button type="submit"><i class="fa fa-filter"></i></button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" *ngIf="isDataorNot">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <table class="table table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>
+                                            <th scope="col" class="table-heading-color" style="width:40%;" (click)="sort('location_name')">Location Name <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color"style="width:35%;white-space: nowrap;" (click)="sort('user_name')">Created By <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color" style="width:15%;" (click)="sort('created_date')">Created Date <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color" colspan="2" style="width:5%;" *ngIf="userRole === '2'"> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let items of filteredlocationdata | filter:searchItem| paginate:{itemsPerPage: tableSize,
+                                            currentPage: page, totalItems:emptyDataList.length}; let i = index">
+                                            <th  class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                            <td class="table-heading-sub-text">{{items.location_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.user_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.created_date}}</td>
+                                            <td class="table-heading-sub-text" *ngIf="userRole === '2'"><i
+                                                    class="fa fa-edit table-edit-icon  icon-green" aria-hidden="true"
+                                                    (click)="updatelocation(items)" *ngIf="userRole === '2'"></i></td>
+                                            <td class="table-heading-sub-text" *ngIf="userRole === '2'"><i
+                                                    class="fa fa-trash table-edit-icon icon-red" aria-hidden="true"
+                                                    (click)="removelocation(items.location_id)" ></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid mt-2 mb-2 ">
+                    <div class="row">
+                        <div class="col-lg-10  d-flex">
+                            <div class="pagination "  class="active" >
+                                <pagination-controls   previousLabel="Prev" nextLabel="Next" (pageChange)="ontableDatachange($event)">
+                                    </pagination-controls>
+                        
+                            </div>
+                        </div>
+                        <div class="col-lg-2   ml-auto ">
+                            <div class="form-group  select-size d-flex">
+                                <p class="  report-headings">Items/page</p>
+                                <select class=" data-control-select ml-2  select-size form-control"
+                                    (change)="ontableSizechange($event)" >
+                                    <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                        {{size}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>    
+               </div> 
+            </div>
+            <div class="noData text-center container-fluid mt-2 mb-2" *ngIf="!isDataorNot && displayLocationlist">
+                <h1 class="text-danger">No data found</h1>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate"></ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-question" style="color:purple" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Generate Request</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="flex-box">
+                <div class=" col-md-12 col-sm-12 col-lg-5 mt-5 ">
+                    <div class="data-form" [formGroup]="generateRequestForm">
+                        <h1 class="text-center form-heading mb-4 mt-3">Generate Request</h1>
+                        <div class="form-group  m-2">
+                            <label for="product_name" class="form-label">Item:<sup>*</sup></label>
+                            <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                                id="product_name" [items]="productdata" formControlName="request_item"
+                                [placeholder]="!generaterequestData.request_item ? 'Select Item' : ''"
+                                [(ngModel)]="generaterequestData.request_item" bindLabel="product_name"
+                                bindValue="product_name"
+                                [clearable]="!generaterequestData.request_item?false:true"
+                                (change)="selectRequest($event)">
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div
+                                      [ngStyle]="{ 'background-color': 'white'}">
+                                      {{item?.product_name}}
+                                    </div>
+                                  </ng-template>
+                            </ng-select>
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="generateRequestForm.get('request_item').hasError('required') && generateRequestForm.get('request_item').touched">
+                                Required
+                            </div>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="quantity" class="form-label">Quantity:<sup>*</sup></label>
+                            <input type="number" id="quantity" class="form-control form-control-sm data-control"
+                                placeholder="Enter Quantity " formControlName="quantity" oninput="this.value = Math.abs(this.value)"
+                                [(ngModel)]="generaterequestData.quantity" b-positive/>
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="generateRequestForm.get('quantity').hasError('pattern') && generateRequestForm.get('quantity').touched">
+                                Required
+                            </div>
+
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="estimated_price" class="form-label">Estimated Price:<sup>*</sup></label>
+                            <input type="number" step="any" id="estimated_price" class="form-control form-control-sm data-control"
+                                placeholder="Enter Price... " formControlName="estimated_price" min="1"
+                                (keyup)="sharedServices.onDecimalInput($event)"
+                                 (paste)="sharedServices.onDecimalPaste($event)"
+                                [(ngModel)]="generaterequestData.estimated_price" b-positive/>
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="(generateRequestForm.get('estimated_price').hasError('pattern')||generateRequestForm.get('estimated_price').hasError('required')) && generateRequestForm.get('estimated_price').touched">
+                                Required
+                            </div>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="remark" class="form-label">Remark:<sup>*</sup></label>
+                            <input type="text" id="remark" class="form-control form-control-sm data-control"
+                                placeholder="Enter Remark " formControlName="remark"
+                                [(ngModel)]="generaterequestData.remark" />
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="generateRequestForm.get('remark').hasError('required') && generateRequestForm.get('remark').touched">
+                                Required
+                            </div>
+                        </div>
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block" (click)="addrequest()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

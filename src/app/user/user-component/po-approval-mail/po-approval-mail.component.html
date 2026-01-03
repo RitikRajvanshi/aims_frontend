@@ -1,0 +1,30 @@
+<div class="po-approval-parent" *ngIf="poStatus === 'approved'">
+    <div class="container">
+      <img src="./assets/images/info_icon.png" alt="Already approved" style="width: 100px; height: 100px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">This PO has already been approved!</h1>
+    </div>
+  </div>
+  
+  <div class="po-approval-parent" *ngIf="poStatus === 'rejected'">
+    <div class="container">
+      <img src="./assets/images/info_icon.png" alt="Already rejected" style="width: 100px; height: 100px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">This PO has already been rejected!</h1>
+    </div>
+  </div>
+  
+  <div class="po-approval-parent" *ngIf="poStatus === 'approvedNow'">
+    <div class="container">
+      <img src="./assets/images/verified.gif" alt="Approved PO" style="width: 200px; height: 150px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">PO Approved!</h1>
+    </div>
+  </div>
+  
+  <div class="po-approval-parent" *ngIf="poStatus === 'cancelled'" style ="background:#f6f6f6">
+    <div class="container">
+      <img src="./assets/images/cancelled.jpg" alt="Operation cancelled" style="width: 200px; height: 200px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Operation cancelled!</h1>
+    </div>
+  </div>
+  
+
+

@@ -1,0 +1,51 @@
+input{
+    padding:0.2rem !important;
+}
+
+// input[type='text']:read-only {
+//     // color: red;
+//     color: rgb(108, 108, 108);
+//     // background-color: 	#FBFCFB;
+//     background-color: #F5FEFD;
+   
+// }
+
+
+
+// input[type='number']:read-only {
+//     // background-color: #F5FEFD;
+//     background-color: #F5FEFD;
+
+// }
+input:read-only{
+    background-color: #F5FEFD;
+}
+// input[type='number']:disabled {
+//     // background-color: #F5FEFD;
+//     background-color: #F5FEFD;
+
+// }
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(1.7rem + 2px);
+}
+
+.form-group {
+     margin-bottom: 0rem !important; 
+}
+
+// ng-select{
+//     z-index: 999;
+// }
+
+.no-flash {
+  background-color: white !important;
+  color: black !important;
+  transition: none !important;
+  outline: none;
+}
+
+.no-flash option {
+  background-color: white !important;
+  color: black !important;
+}

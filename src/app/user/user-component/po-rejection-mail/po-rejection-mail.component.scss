@@ -1,0 +1,51 @@
+.po-rejection-parent {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.icon {
+    font-size: 100px;
+    color: green;
+}
+
+h1 {
+    color: #004080;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #333;
+}
+
+/* Custom styling for the SweetAlert2 input modal */
+.swal2-input {
+    display: inline-block !important;;
+    width: 70% !important;;; /* Adjust width as needed */
+    margin-left: 10px !important;;
+  }
+  
+  .swal2-input-label {
+    display: inline-block !important;
+    width: 20% !important;; /* Adjust width for label as needed */
+    text-align: left !important;;
+    padding-right: 10px !important;;
+  }

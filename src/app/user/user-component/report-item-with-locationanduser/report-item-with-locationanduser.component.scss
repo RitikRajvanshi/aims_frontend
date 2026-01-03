@@ -1,0 +1,57 @@
+
+
+#filtering:disabled{
+    background-color: #ffe884;
+    color:black;
+}
+
+button:disabled {
+  background-color: #d3d3d3; /* Light gray background */
+  // color: #a9a9a9; /* Darker gray text */
+  cursor: not-allowed; /* Indicates the button is not interactive */
+}
+
+.link-like-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: blue;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .link-like-button:hover {
+    text-decoration: underline;
+    border:none;
+  }
+
+  table{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+/* Show the lists when hovering over the button or anchor */
+td div:hover .hover-list {
+  display: block !important;
+}
+
+    /* Optional: Style for the list items */
+    .hover-list li {
+      white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  /* Hover effect for list items */
+  .hover-list button:hover {
+      background-color: grey; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  }
+
+  table {
+  table-layout: fixed;
+}
+
+
+  
+
+
+  

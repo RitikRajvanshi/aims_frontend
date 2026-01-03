@@ -1,0 +1,143 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-th-list" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Assets</h1>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="data-control">
+                <div class="col-md-12 col-12 ">
+                    <div class="data-form" [formGroup]="dateForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="sdate">Start Date</label>
+                                <input type="date" id="sdate" class="form-control" placeholder="Start Date"
+                                    formControlName="start_date" [(ngModel)]="dates.start_date">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="ddate">End Date</label>
+                                <input type="date" id="ddate" class="form-control" placeholder="End Date"
+                                    formControlName="end_date" [(ngModel)]="dates.end_date">
+                            </div>
+                        </div>
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login " (click)="submitDate()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-table" *ngIf="displayList && isDataorNot">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12 col-12 col-sm-12">
+
+                                    <div class="container-fluid">
+                                        <div class="row">
+
+                                            <div class="input-group my-3  search-container">
+                                                <input type="text" class=" data-control form-control mr-2"
+                                                    placeholder="Enter Any Text...." aria-describedby="basic-addon2"
+                                                    [(ngModel)]="searchItem">
+                                                <button type="submit"><i class="fa fa-filter"></i></button>
+                                                <!-- <input type="text" class="form-control" placeholder="Enter Supplier Name"  aria-describedby="basic-addon2" [(ngModel)]="searchItem2" (ngModelChange)="EmptySearchItem()"> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid ">
+                            <div class="row">
+                                <div class="col-lg-12 col-12 col-sm-12 ">
+                                    <div class=" table-responsive overflow-x-auto overflow-y-auto ">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" style="width:5%">S NO.</th>
+                                                    <th scope="col" style="width:20%">Purchase Id</th>
+                                                    <th scope="col" style="width:20%">Item Name</th>
+                                                    <th scope="col">Vendor's Name</th>
+                                                    <th scope="col" style="width:5%">Invoice</th>
+                                                    <th scope="col" style="width:5%">View PO</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr
+                                                    *ngFor="let data of purchaseDataList  | paginate:
+                                                {itemsPerPage: tableSize,
+                                                  currentPage: page, totalItems:purchaseDataList.length}| filter:searchItem ; let i = index ">
+
+                                                    <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                                    <td>{{data.purchase_id}}</td>
+                                                    <td>{{data.product_name}}</td>
+                                                    <td>{{data.supplier_name}}</td>
+                                                    <td> <a target="_blank"
+                                                            href='{{pathTobackend}}/{{data.filename}}'><i
+                                                                class="fa fa-eye table-edit-icon icon-eye "
+                                                                aria-hidden="true"></i></a></td>
+                                                    <td> <button class="p-0 border-0"><a
+                                                                [routerLink]="['../purchase-order-view', data.purchase_id]"
+                                                                (click)="navigateToNewRoute()"><i
+                                                                    class="fa fa-search icon-search table-edit-icon "
+                                                                    aria-hidden="true"></i></a></button> </td>
+
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <!-- <ng-template *ngIf="purchaseDataList?.length===0">
+                                            <div class="empty-message">
+                                              No items to display.
+                                            </div>
+                                          </ng-template> -->
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid mt-4 mb-4 " *ngIf="purchaseDataList?.length>0">
+                            <div class="row">
+                                <div class="col-lg-10  d-flex">
+                                    <div class="pagination " class="active">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="ontableDatachange($event)">
+                                        </pagination-controls>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-2   ml-auto d-flex">
+                                    <div class="form-group  select-size">
+                                        <p class="mb-2  report-headings">Items/page</p>
+                                        <select class=" data-control-select ml-2  select-size form-control"
+                                            (change)="ontableSizechange($event)">
+                                            <option class="select-border" *ngFor=" let size of tableSizes"
+                                                [value]="size">{{size}}
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="noData text-center container-fluid" *ngIf="!isDataorNot">
+                    <h1 class="text-danger">No data found</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

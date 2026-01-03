@@ -1,0 +1,174 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-user text-danger" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Users' List</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="data-box">
+                <div class="container-fluid mt-0 pt-0">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label class="form-label">Start Date </label>
+                                        <input type="date" class="form-control data-control-date"
+                                            placeholder="Start Date" [(ngModel)]="UserdatabyDate.start_date">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label class="form-label">End Date </label>
+                                        <input type="date" class="form-control data-control-date" placeholder="End Date"
+                                            [(ngModel)]="UserdatabyDate.end_date">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class=" mt-3">
+                                            <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"
+                                                (click)="refreshfilter()" title="refresh"></i>
+                                            <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
+                                                [disabled]="!UserdatabyDate.start_date || !UserdatabyDate.end_date">Filter</button>
+                                            <button class="btn btn-login-report m-2" (click)="exportToexcelfromnode()">Export To
+                                                Excel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 mb-3" *ngIf="isDataorNot">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 col-sm-12">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="input-group mb-3  search-container">
+                                            <input type="text" class=" data-control form-control mr-2"
+                                                aria-describedby="basic-addon2" placeholder="Search..."
+                                                (input)="filterData()" [(ngModel)]="searchTerm"
+                                                (keydown)="NoSpaceallowedatstart($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 col-sm-12 ">
+                                <div class=" table-responsive  overflow-auto ">
+                                    <table class="table  table-bordered table-hover m-0 ">
+                                        <thead>
+                                            <tr>
+                                                <th class="table-heading-color; " scope="col" style="width:5%;">S.No.
+                                                </th>
+                                                <th class="table-heading-color" style="width:15%;" scope="col"
+                                                    (click)="sort('user_name')">User Name <i class="fa fa-sort"></i>
+                                                </th>
+                                                <th class="table-heading-color" style="width:25%;" scope="col"
+                                                    (click)="sort('user_email')">Email <i class="fa fa-sort"></i></th>
+                                                <th class="table-heading-color" style="width:15%;" scope="col"
+                                                    (click)="sort('privilege_name')">Privilege <i
+                                                        class="fa fa-sort"></i></th>
+                                                <th class="table-heading-color" style="width:10%;" scope="col"
+                                                    (click)="sort('grp_name')">Department <i class="fa fa-sort"></i>
+                                                </th>
+                                                <th class="table-heading-color" style="width:10%;" scope="col"
+                                                    (click)="sort('designation_name')"> Designation <i
+                                                        class="fa fa-sort"></i></th>
+                                                <th class="table-heading-color" style="width:15%; white-space: nowrap;"
+                                                    scope="col" (click)="sort('user_created_date')">Created Date <i
+                                                        class="fa fa-sort"></i></th>
+                                                <th class="table-heading-color" style="width:5%;" scope="col"
+                                                    colspan="3" *ngIf="userRole === '2'">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let items of filtereduserData | paginate:{itemsPerPage: tableSize,
+                                                currentPage: page, totalItems:emptyDataList.length}; let i = index">
+                                                <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize
+                                                    + i +1 }}</th>
+                                                <td class="table-heading-sub-text">{{items.user_name}}</td>
+                                                <!-- <td>{{items.user_pssword}}</td> -->
+                                                <td class="table-heading-sub-text"
+                                                    style="width:200px ; max-width: 200px;word-break: break-all;">
+                                                    <ng-container
+                                                        *ngIf="items.user_email && items.user_email.length > 42">
+                                                        <span *ngIf="!items.isExpanded">{{ items.user_email.slice(0, 42)
+                                                            }}</span>
+                                                        <span *ngIf="items.isExpanded">{{ items.user_email }}</span>
+
+                                                        <p class="d-inline text-secondary"
+                                                            *ngIf="items.user_email.length > 42"
+                                                            (click)="toggleExpand(items)">
+                                                            {{ items.isExpanded ? 'read less' : '...' }}
+                                                        </p>
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="!items.user_email || items.user_email.length <= 42">
+                                                        {{ items.user_email }}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!items.user_email">
+                                                        {{ 'NA' }}
+                                                    </ng-container>
+                                                </td>
+
+                                                <td class="table-heading-sub-text">{{items.privilege_name}}</td>
+                                                <td class="table-heading-sub-text">{{items.grp_name}}</td>
+                                                <td class="table-heading-sub-text">{{items.designation_name}}</td>
+                                                <td class="table-heading-sub-text">{{items.user_created_date}}</td>
+                                                <!-- <td *ngIf="userRole === '2'" class="table-heading-sub-text"><a
+                                                        [routerLink]="['../update-user',items.user_id]"
+                                                        (click)="navigateToNewRoute()">
+                                                        <i class="fa fa-edit table-edit-icon icon-green "
+                                                            aria-hidden="true"></i></a></td> -->
+
+                                                <td *ngIf="userRole === '2'" class="table-heading-sub-text">
+                                                    <a (click)="navigateToNewRoute(items)"> <i
+                                                            class="fa fa-edit table-edit-icon icon-green "
+                                                            aria-hidden="true"></i></a>
+                                                </td>
+                                                <td *ngIf="userRole === '2'" class="table-heading-sub-text"><i
+                                                        class="fa fa-trash table-edit-icon icon-red " aria-hidden="true"
+                                                        (click)="deleteUser(items.user_id)"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-4 mb-2">
+                        <div class="row">
+                            <div class="col-lg-10  d-flex">
+                                <div class="pagination " class="active">
+                                    <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                        (pageChange)="ontableDatachange($event)">
+                                    </pagination-controls>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 ml-auto ">
+                                <div class="form-group  select-size d-flex">
+                                    <p class="  report-headings">Items/page</p>
+                                    <select class=" data-control-select ml-2  select-size form-control"
+                                        (change)="ontableSizechange($event)" [(ngModel)]="itemsperPage">
+                                        <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                            {{size}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="noData text-center container-fluid mt-2 mb-2" *ngIf="!isDataorNot">
+                    <h1 class="text-danger">No data found</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

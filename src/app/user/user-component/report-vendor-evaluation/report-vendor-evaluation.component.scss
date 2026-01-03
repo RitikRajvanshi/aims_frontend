@@ -1,0 +1,25 @@
+.center-data{
+    text-align: center!important;
+}
+
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+/* Make the <td> containing the icon a flex container */
+.td-with-icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  
+  /* Icon styling to make it right-aligned and clickable */
+//   .td-with-icon i.fa-info-circle {
+//     font-size: 18px;
+//     color: #007bff;
+//     cursor: pointer;
+//     padding-left: 10px; /* Add some space from the text */
+//   }
+  

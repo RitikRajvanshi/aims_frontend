@@ -1,0 +1,1204 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AddVendorComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/user/user-component/add-vendor/add-vendor.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-add-vendor</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./add-vendor.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./add-vendor.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addSupplierForm" >addSupplierForm</a>
+                            </li>
+                            <li>
+                                <a href="#categoryValue" >categoryValue</a>
+                            </li>
+                            <li>
+                                <a href="#response" >response</a>
+                            </li>
+                            <li>
+                                <a href="#supplierdata" >supplierdata</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addnewSupplier" >addnewSupplier</a>
+                            </li>
+                            <li>
+                                <a href="#focusEmailInput" >focusEmailInput</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#NoSpaceallowedatstart" >NoSpaceallowedatstart</a>
+                            </li>
+                            <li>
+                                <a href="#tendigitnumber" >tendigitnumber</a>
+                            </li>
+                            <li>
+                                <a href="#validation" >validation</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(adminserive: <a href="../injectables/AdminService.html" target="_self">AdminService</a>, router: Router, renderer: Renderer2, el: ElementRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:31</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>adminserive</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AdminService.html" target="_self" >AdminService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>el</td>
+                                                  
+                                                        <td>
+                                                                    <code>ElementRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addnewSupplier"></a>
+                    <span class="name">
+                        <span ><b>addnewSupplier</b></span>
+                        <a href="#addnewSupplier"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addnewSupplier()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="43"
+                                    class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="focusEmailInput"></a>
+                    <span class="name">
+                        <span ><b>focusEmailInput</b></span>
+                        <a href="#focusEmailInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>focusEmailInput()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NoSpaceallowedatstart"></a>
+                    <span class="name">
+                        <span ><b>NoSpaceallowedatstart</b></span>
+                        <a href="#NoSpaceallowedatstart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>NoSpaceallowedatstart(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tendigitnumber"></a>
+                    <span class="name">
+                        <span ><b>tendigitnumber</b></span>
+                        <a href="#tendigitnumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>tendigitnumber(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validation"></a>
+                    <span class="name">
+                        <span ><b>validation</b></span>
+                        <a href="#validation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>validation()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addSupplierForm"></a>
+                    <span class="name">
+                        <span ><b>addSupplierForm</b></span>
+                        <a href="#addSupplierForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="categoryValue"></a>
+                    <span class="name">
+                        <span ><b>categoryValue</b></span>
+                        <a href="#categoryValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="response"></a>
+                    <span class="name">
+                        <span ><b>response</b></span>
+                        <a href="#response"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="supplierdata"></a>
+                    <span class="name">
+                        <span ><b>supplierdata</b></span>
+                        <a href="#supplierdata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    &#x27;supplier_name&#x27;: &#x27;&#x27;,
+    &#x27;contact_person&#x27;: &#x27;&#x27;,
+    &#x27;rating&#x27;: &#x27;&#x27;,
+    &#x27;address&#x27;: &#x27;&#x27;,
+    &#x27;phone&#x27;: &#x27;&#x27;,
+    &#x27;mobile&#x27;: &#x27;&#x27;,
+    &#x27;email&#x27;: &#x27;&#x27;,
+    &#x27;status&#x27;: &#x27;1&#x27;,
+    &#x27;created_by&#x27;: localStorage.getItem(&#x27;login_id&#x27;),
+    &#x27;category&#x27;: &#x27;&#x27;,
+    &#x27;gstn&#x27;: &#x27;&#x27;,
+    &#x27;pan_no&#x27;: null
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/user/user-component/add-vendor/add-vendor.component.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ElementRef, Renderer2 } from &#x27;@angular/core&#x27;;
+import { FormControl, FormGroup, Validators } from &#x27;@angular/forms&#x27;;
+import { AdminService } from &#x27;src/app/services/admin.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import Swal from &#x27;sweetalert2&#x27;;
+
+@Component({
+  selector: &#x27;app-add-vendor&#x27;,
+  templateUrl: &#x27;./add-vendor.component.html&#x27;,
+  styleUrls: [&#x27;./add-vendor.component.scss&#x27;]
+})
+export class AddVendorComponent {
+
+  addSupplierForm: any;
+  response: any;
+  categoryValue: any;
+
+  supplierdata &#x3D; {
+    &#x27;supplier_name&#x27;: &#x27;&#x27;,
+    &#x27;contact_person&#x27;: &#x27;&#x27;,
+    &#x27;rating&#x27;: &#x27;&#x27;,
+    &#x27;address&#x27;: &#x27;&#x27;,
+    &#x27;phone&#x27;: &#x27;&#x27;,
+    &#x27;mobile&#x27;: &#x27;&#x27;,
+    &#x27;email&#x27;: &#x27;&#x27;,
+    &#x27;status&#x27;: &#x27;1&#x27;,
+    &#x27;created_by&#x27;: localStorage.getItem(&#x27;login_id&#x27;),
+    &#x27;category&#x27;: &#x27;&#x27;,
+    &#x27;gstn&#x27;: &#x27;&#x27;,
+    &#x27;pan_no&#x27;: null
+  }
+
+
+  constructor(private adminserive: AdminService, private router: Router, private renderer: Renderer2, private el: ElementRef) { }
+
+
+  ngOnInit(): void {
+
+    this.validation();
+  }
+
+
+  addnewSupplier() {
+    this.addSupplierForm.get(&#x27;supplier_name&#x27;).value;
+    if (this.addSupplierForm.invalid) {
+      this.addSupplierForm.controls[&#x27;supplier_name&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;contact_person&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;rating&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;address&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;mobile&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;phone&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;email&#x27;].markAsTouched();
+      this.addSupplierForm.controls[&#x27;category&#x27;].markAsTouched();
+    }
+    else {
+      this.adminserive.addSupplierservice(this.supplierdata).subscribe(
+        {
+          next: (results: any) &#x3D;&gt; {
+            console.log(JSON.parse(JSON.stringify(results)), &quot;response during adding supplier&quot;);
+            this.response &#x3D; JSON.parse(JSON.stringify(results));
+            console.log(results, &quot;results&quot;);
+
+            //firstcheck email is registered or not according to it, addsupplier.
+
+            if (this.response &amp;&amp; this.response.length &gt; 0) {
+              Swal.fire({
+                title: &#x27;Success!&#x27;,
+                text: &#x27;Vendor added successfully!&#x27;,
+                icon: &#x27;success&#x27;,
+              }).then(()&#x3D;&gt;{
+                this.supplierdata.rating &#x3D; &#x27;null&#x27;;
+                this.supplierdata.category &#x3D; &#x27;null&#x27;;
+                this.ngOnInit();
+              })
+             
+            }
+
+            else {
+              this.focusEmailInput();
+              Swal.fire({
+                icon: &#x27;warning&#x27;,
+                title: &#x27;Warning&#x27;,
+                text: &#x27;This email id is already registered!&#x27;,
+              })
+
+            }
+          },
+          error: (error) &#x3D;&gt; {
+            if (error.status &#x3D;&#x3D; 403) {
+                
+              Swal.fire({
+                icon: &#x27;error&#x27;,
+                title: &#x27;Oops!&#x27;,
+                text: &#x27;Token expired.&#x27;,
+                footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+              }).then(()&#x3D;&gt;{
+                this.router.navigate([&#x27;../login&#x27;]);
+              })
+            }
+            else {
+              Swal.fire({
+                icon: &#x27;error&#x27;,
+                title: &#x27;Oops!&#x27;,
+                text: &#x27;Internal server error.Please try after some time!&#x27;,
+                footer:&#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+              }).then(()&#x3D;&gt;{
+                location.reload();
+              })
+            }
+          }
+        })
+    }
+  }
+
+  focusEmailInput() {
+    const emailInput &#x3D; this.el.nativeElement.querySelector(&#x27;#email&#x27;); // Replace &#x27;email&#x27; with the actual ID or selector of your email input
+    emailInput.focus();
+
+  }
+
+  NoSpaceallowedatstart(event:any){
+    if(event.target.selectionStart &#x3D;&#x3D;&#x3D; 0 &amp;&amp; event.code &#x3D;&#x3D;&#x3D;&quot;Space&quot;)
+    {
+      event.preventDefault();
+    }
+  
+  }
+
+  tendigitnumber(event:any){
+    const input &#x3D; event.target;
+    const maxLength &#x3D; 13; // Set your desired max length here
+
+    if (input.value.length &gt;&#x3D; maxLength) {
+      event.preventDefault();
+    }
+  }
+
+  // tendigitnumber(event: any) {
+  //   const input &#x3D; event.target;
+  //   const maxLength &#x3D; 10; // Set your desired max length here
+  
+  //   // Define the regular expression pattern for validation
+  //   const customPattern &#x3D; /\A(?&#x3D;\d+-?\d+\z)([\d-]{11}|\d{10})(?&lt;!\d{11})\z/;
+  
+  //   // Remove all characters except digits and hyphen
+  //   // const cleanedValue &#x3D; input.value.replace(/[^\d-]/g, &#x27;&#x27;);
+  
+  //   // Check if the cleaned value matches the custom pattern
+  //   if (!customPattern.test(input.value)) {
+  //     event.preventDefault();
+  //     return;
+  //   }
+  
+  //   if (input.value.length &gt;&#x3D; maxLength) {
+  //     event.preventDefault();
+  //   }
+  // }
+  
+
+  validation() {
+    const emailPattern &#x3D; &#x27;[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,64}&#x27;;
+    const CellphonePattern &#x3D; &quot;^[0-9-+]{10,}$&quot;;
+    this.addSupplierForm &#x3D; new FormGroup(
+      {
+
+        supplier_name: new FormControl(null, [Validators.required]),
+        contact_person: new FormControl(null, [Validators.required]),
+        rating: new FormControl(null, [Validators.required]),
+        address: new FormControl(null, [Validators.required]),
+        phone: new FormControl(null, [Validators.pattern(CellphonePattern)]),
+        mobile: new FormControl(null, [Validators.required, Validators.pattern(CellphonePattern)]),
+        email: new FormControl(null, [Validators.required, Validators.email, Validators.pattern(emailPattern)]),
+        category: new FormControl(null, [Validators.required]),
+        gstn: new FormControl(null),
+        pan_no: new FormControl(null)
+      }
+
+    )
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;section class&#x3D;&quot;content-header&quot;&gt;
+    &lt;div class&#x3D;&quot;header-icon&quot;&gt;&lt;i class&#x3D;&quot;fa fa-smile-o &quot; style&#x3D;&quot;color:#FF5733 &quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;div class&#x3D;&quot;header-title&quot;&gt;
+        &lt;h1&gt;Add Vendor&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;div class&#x3D;&quot;data-content&quot;&gt;
+        &lt;div class&#x3D;&quot;page-background-h&quot;&gt;
+            &lt;div class&#x3D;&quot;flex-box&quot;&gt;
+                &lt;div class&#x3D;&quot; col-md-12 col-sm-12 col-lg-8 mt-5  &quot;&gt;
+                    &lt;div class&#x3D;&quot;  data-form&quot; [formGroup]&#x3D;&quot;addSupplierForm&quot;&gt;
+                        &lt;h1 class&#x3D;&quot;text-center form-heading mb-4 mt-3&quot;&gt;Add Vendor&lt;/h1&gt;
+                        &lt;form [formGroup]&#x3D;&quot;addSupplierForm&quot;&gt;
+                            &lt;div class&#x3D;&quot;form-row m-2&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                  &lt;label for&#x3D;&quot;supplier_name&quot;  class&#x3D;&quot;form-label&quot;&gt;Vendor Name:&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control  form-control-sm data-control&quot; placeholder&#x3D;&quot;Enter Supplier Name &quot;
+                                  formControlName&#x3D;&#x27;supplier_name&#x27; [(ngModel)]&#x3D;&quot;supplierdata.supplier_name&quot;  (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;/&gt;
+                                  &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                  *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;supplier_name&#x27;).hasError(&#x27;required&#x27;)  &amp;&amp; addSupplierForm.get(&#x27;supplier_name&#x27;).touched&quot;&gt;
+                                  Required&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                  &lt;label   class&#x3D;&quot;form-label&quot;&gt;Contact Person:&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                                  &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot; placeholder&#x3D;&quot;Enter Contact Person &quot;
+                                  formControlName&#x3D;&quot;contact_person&quot; [(ngModel)]&#x3D;&quot;supplierdata.contact_person&quot; (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot; /&gt;
+                                  &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                  *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;contact_person&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; addSupplierForm.get(&#x27;contact_person&#x27;).touched&quot;&gt;
+                                 Required&lt;/div&gt;
+                                &lt;/div&gt;
+                              &lt;/div&gt;
+                              &lt;div class&#x3D;&quot;form-row m-2&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                  &lt;label  for&#x3D;&quot;rating&quot;  class&#x3D;&quot;form-label&quot;&gt;Initial Rating&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                                  &lt;!-- &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control data-control p-1&quot; /&gt; --&gt;
+                                  &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;rating&quot; formControlName&#x3D;&quot;rating&quot;
+                                  [(ngModel)]&#x3D;&quot;supplierdata.rating&quot;&gt;
+  
+                                  &lt;option class&#x3D;&quot;select-border&quot; [selected]&#x3D;true disabled hidden value&#x3D;&quot;null&quot;&gt;Select&lt;/option&gt;
+  
+                                  &lt;option class&#x3D;&quot;select-border&quot;&gt;A+&lt;/option&gt;
+                                  &lt;option class&#x3D;&quot;select-border&quot;&gt;A&lt;/option&gt;
+                                  &lt;option class&#x3D;&quot;select-border&quot;&gt;B&lt;/option&gt;
+                                  &lt;option class&#x3D;&quot;select-border&quot;&gt;C&lt;/option&gt;
+                                  &lt;option class&#x3D;&quot;select-border&quot;&gt;D&lt;/option&gt;
+  
+                              &lt;/select&gt;
+  
+                              &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                  *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;rating&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; addSupplierForm.get(&#x27;rating&#x27;).touched&quot;&gt;
+                                  Required&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label for&#x3D;&quot;category&quot; class&#x3D;&quot;form-label&quot;&gt;Mode&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                                    &lt;select class&#x3D;&quot;form-control form-control-sm data-control&quot; id&#x3D;&quot;category&quot; formControlName&#x3D;&quot;category&quot;
+                                        [(ngModel)]&#x3D;&quot;supplierdata.category&quot;&gt;
+        
+                                        &lt;option [selected]&#x3D;true disabled hidden value&#x3D;&#x27;null&#x27;&gt;Select&lt;/option&gt;
+                                        &lt;option class&#x3D;&quot;select-border p-1 &quot; value&#x3D;&quot;0&quot;&gt;Offline&lt;/option&gt;
+                                        &lt;option class&#x3D;&quot;select-border p-1&quot; value&#x3D;&quot;1&quot;&gt;Online&lt;/option&gt;
+        
+                                    &lt;/select&gt;
+                                    &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                        *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;category&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; addSupplierForm.get(&#x27;category&#x27;).touched&quot;&gt;
+                                       Required
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
+                              &lt;/div&gt;
+                              &lt;div class&#x3D;&quot;form-row m-2&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label   for&#x3D;&quot;phone&quot;  class&#x3D;&quot;form-label&quot;&gt;Phone:&lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot; placeholder&#x3D;&quot;Enter Phone &quot;
+                                    formControlName&#x3D;&quot;phone&quot;  [(ngModel)]&#x3D;&quot;supplierdata.phone&quot; (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot; (keypress)&#x3D;&quot;tendigitnumber($event)&quot;/&gt;
+                                    &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot; *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;phone&#x27;).hasError(&#x27;pattern&#x27;)&quot;&gt;Invalid&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label for&#x3D;&quot;mobile&quot; class&#x3D;&quot;form-label&quot;&gt;Mobile:&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;mobile&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot; placeholder&#x3D;&quot;Enter Mobile&quot;
+                                        formControlName&#x3D;&quot;mobile&quot;  [(ngModel)]&#x3D;&quot;supplierdata.mobile&quot; (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot; maxlength&#x3D;&quot;13&quot; (keypress)&#x3D;&quot;tendigitnumber($event)&quot;/&gt;
+                                    &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                        *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;mobile&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; addSupplierForm.get(&#x27;mobile&#x27;).touched&quot;&gt;Required&lt;/div&gt;
+                                       &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot; *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;mobile&#x27;).hasError(&#x27;pattern&#x27;) &quot;&gt; Invalid&lt;/div&gt;
+                                &lt;/div&gt;
+                              &lt;/div&gt;
+                              &lt;div class&#x3D;&quot;form-row m-2&quot;&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label for&#x3D;&quot;gstn&quot; class&#x3D;&quot;form-label&quot;&gt;GSTIN:&lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;text&quot;   id&#x3D;&quot;gstn&quot;  class&#x3D;&quot;form-control form-control-sm data-control&quot; placeholder&#x3D;&quot;Enter Vendor&#x27;s GSTIN&quot;
+                                     formControlName&#x3D;&quot;gstn&quot; maxlength&#x3D;&quot;16&quot; [(ngModel)]&#x3D;&quot;supplierdata.gstn&quot; (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;/&gt;
+                                &lt;/div&gt;
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label for&#x3D;&quot;pan_no&quot; class&#x3D;&quot;form-label&quot;&gt;PAN No.&lt;/label&gt;
+                                    &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;pan_no&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot; placeholder&#x3D;&quot;Enter PAN&quot;
+                                       id&#x3D;&quot;pan_no&quot; formControlName&#x3D;&quot;pan_no&quot; maxlength&#x3D;&quot;10&quot; [(ngModel)]&#x3D;&quot;supplierdata.pan_no&quot; (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;/&gt;
+                                &lt;/div&gt;
+                              &lt;/div&gt;
+                           
+                              &lt;div class&#x3D;&quot;form-row m-2&quot;&gt;
+                             
+                                &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label for&#x3D;&quot;email&quot; class&#x3D;&quot;form-label&quot;&gt;Email:&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                            &lt;input type&#x3D;&quot;email&quot; id&#x3D;&quot;email&quot; class&#x3D;&quot;form-control form-control-sm data-control&quot;  placeholder&#x3D;&quot;Enter Email&quot; id&#x3D;&quot;email&quot; [style.backgroundColor]&#x3D;&quot;response&#x3D;&#x3D;1?&#x27;#FFFFCC&#x27;:&#x27;#fff&#x27;&quot; 
+                            [style.border]&#x3D;&quot;response&#x3D;&#x3D;1 ?&#x27;1px solid #FFD700&#x27;:&#x27;&#x27;&quot;
+                                formControlName&#x3D;&quot;email&quot; [(ngModel)]&#x3D;&quot;supplierdata.email&quot; (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;/&gt;
+
+                            &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;email&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; addSupplierForm.get(&#x27;email&#x27;).touched&quot;&gt;
+                               Required
+                            &lt;/div&gt;
+                            &lt;div class&#x3D;&quot;mandatory mandatory my-1 text-danger font-italic&quot;
+                                *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;email&#x27;).hasError(&#x27;pattern&#x27;) &amp;&amp; addSupplierForm.get(&#x27;email&#x27;).touched&quot;&gt;
+                                Invalid Email.&lt;/div&gt;
+                                  &lt;/div&gt;
+                                  &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+                                    &lt;label for&#x3D;&quot;address&quot; class&#x3D;&quot;form-label&quot;&gt;Address:&lt;sup&gt;*&lt;/sup&gt;&lt;/label&gt;
+                                    &lt;textarea class&#x3D;&quot;form-control  data-control-textarea&quot; #address placeholder&#x3D;&quot;Enter Address&quot;   rows&#x3D;&quot;1&quot; id&#x3D;&quot;address&quot;  formControlName&#x3D;&quot;address&quot; [(ngModel)]&#x3D;&quot;supplierdata.address&quot;
+                                     (keydown)&#x3D;&quot;NoSpaceallowedatstart($event)&quot;&gt;&lt;/textarea&gt;
+        
+                                    &lt;div class&#x3D;&quot;mandatory my-1 text-danger font-italic&quot;
+                                        *ngIf&#x3D;&quot;addSupplierForm.get(&#x27;address&#x27;).hasError(&#x27;required&#x27;) &amp;&amp; addSupplierForm.get(&#x27;address&#x27;).touched&quot;&gt;
+                                        Required&lt;/div&gt;
+                                &lt;/div&gt;
+                              &lt;/div&gt;
+                              &lt;div class&#x3D;&quot;data-form-btn  &quot;&gt;
+                                &lt;div class&#x3D;&quot;form-group text-center &quot;&gt;
+                                    &lt;button class&#x3D;&quot;btn btn-data-login btn-block&quot; (click)&#x3D;&quot;addnewSupplier()&quot;
+                                        autocomplete&#x3D;&quot;on&quot;&gt;Add&lt;/button&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/form&gt;
+                       
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./add-vendor.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">// select.form-control:not([size]):not([multiple]) {
+//     height: calc(1.7rem + 2px);
+// }</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><section class="content-header">    <div class="header-icon"><i class="fa fa-smile-o " style="color:#FF5733 " aria-hidden="true"></i></div>    <div class="header-title">        <h1>Add Vendor</h1>    </div></section><div class="container-fluid">    <div class="data-content">        <div class="page-background-h">            <div class="flex-box">                <div class=" col-md-12 col-sm-12 col-lg-8 mt-5  ">                    <div class="  data-form" [formGroup]="addSupplierForm">                        <h1 class="text-center form-heading mb-4 mt-3">Add Vendor</h1>                        <form [formGroup]="addSupplierForm">                            <div class="form-row m-2">                                <div class="col-md-6">                                  <label for="supplier_name"  class="form-label">Vendor Name:<sup>*</sup></label>                                  <input type="text" class="form-control  form-control-sm data-control" placeholder="Enter Supplier Name "                                  formControlName=\'supplier_name\' [(ngModel)]="supplierdata.supplier_name"  (keydown)="NoSpaceallowedatstart($event)"/>                                  <div class="mandatory my-1 text-danger font-italic"                                  *ngIf="addSupplierForm.get(\'supplier_name\').hasError(\'required\')  && addSupplierForm.get(\'supplier_name\').touched">                                  Required</div>                                </div>                                <div class="col-md-6">                                  <label   class="form-label">Contact Person:<sup>*</sup></label>                                  <input type="text" class="form-control form-control-sm data-control" placeholder="Enter Contact Person "                                  formControlName="contact_person" [(ngModel)]="supplierdata.contact_person" (keydown)="NoSpaceallowedatstart($event)" />                                  <div class="mandatory my-1 text-danger font-italic"                                  *ngIf="addSupplierForm.get(\'contact_person\').hasError(\'required\') && addSupplierForm.get(\'contact_person\').touched">                                 Required</div>                                </div>                              </div>                              <div class="form-row m-2">                                <div class="col-md-6">                                  <label  for="rating"  class="form-label">Initial Rating<sup>*</sup></label>                                  <!-- <input type="text" class="form-control data-control p-1" /> -->                                  <select class="form-control form-control-sm data-control" id="rating" formControlName="rating"                                  [(ngModel)]="supplierdata.rating">                                    <option class="select-border" [selected]=true disabled hidden value="null">Select</option>                                    <option class="select-border">A+</option>                                  <option class="select-border">A</option>                                  <option class="select-border">B</option>                                  <option class="select-border">C</option>                                  <option class="select-border">D</option>                                </select>                                <div class="mandatory my-1 text-danger font-italic"                                  *ngIf="addSupplierForm.get(\'rating\').hasError(\'required\') && addSupplierForm.get(\'rating\').touched">                                  Required</div>                                </div>                                <div class="col-md-6">                                    <label for="category" class="form-label">Mode<sup>*</sup></label>                                    <select class="form-control form-control-sm data-control" id="category" formControlName="category"                                        [(ngModel)]="supplierdata.category">                                                <option [selected]=true disabled hidden value=\'null\'>Select</option>                                        <option class="select-border p-1 " value="0">Offline</option>                                        <option class="select-border p-1" value="1">Online</option>                                            </select>                                    <div class="mandatory my-1 text-danger font-italic"                                        *ngIf="addSupplierForm.get(\'category\').hasError(\'required\') && addSupplierForm.get(\'category\').touched">                                       Required                                    </div>                                </div>                              </div>                              <div class="form-row m-2">                                <div class="col-md-6">                                    <label   for="phone"  class="form-label">Phone:</label>                                    <input type="text" class="form-control form-control-sm data-control" placeholder="Enter Phone "                                    formControlName="phone"  [(ngModel)]="supplierdata.phone" (keydown)="NoSpaceallowedatstart($event)" (keypress)="tendigitnumber($event)"/>                                    <div class="mandatory my-1 text-danger font-italic" *ngIf="addSupplierForm.get(\'phone\').hasError(\'pattern\')">Invalid</div>                                </div>                                <div class="col-md-6">                                    <label for="mobile" class="form-label">Mobile:<sup>*</sup></label>                                    <input type="text" id="mobile" class="form-control form-control-sm data-control" placeholder="Enter Mobile"                                        formControlName="mobile"  [(ngModel)]="supplierdata.mobile" (keydown)="NoSpaceallowedatstart($event)" maxlength="13" (keypress)="tendigitnumber($event)"/>                                    <div class="mandatory my-1 text-danger font-italic"                                        *ngIf="addSupplierForm.get(\'mobile\').hasError(\'required\') && addSupplierForm.get(\'mobile\').touched">Required</div>                                       <div class="mandatory my-1 text-danger font-italic" *ngIf="addSupplierForm.get(\'mobile\').hasError(\'pattern\') "> Invalid</div>                                </div>                              </div>                              <div class="form-row m-2">                                <div class="col-md-6">                                    <label for="gstn" class="form-label">GSTIN:</label>                                    <input type="text"   id="gstn"  class="form-control form-control-sm data-control" placeholder="Enter Vendor\'s GSTIN"                                     formControlName="gstn" maxlength="16" [(ngModel)]="supplierdata.gstn" (keydown)="NoSpaceallowedatstart($event)"/>                                </div>                                <div class="col-md-6">                                    <label for="pan_no" class="form-label">PAN No.</label>                                    <input type="text" id="pan_no" class="form-control form-control-sm data-control" placeholder="Enter PAN"                                       id="pan_no" formControlName="pan_no" maxlength="10" [(ngModel)]="supplierdata.pan_no" (keydown)="NoSpaceallowedatstart($event)"/>                                </div>                              </div>                                                         <div class="form-row m-2">                                                             <div class="col-md-6">                                    <label for="email" class="form-label">Email:<sup>*</sup></label>                            <input type="email" id="email" class="form-control form-control-sm data-control"  placeholder="Enter Email" id="email" [style.backgroundColor]="response==1?\'#FFFFCC\':\'#fff\'"                             [style.border]="response==1 ?\'1px solid #FFD700\':\'\'"                                formControlName="email" [(ngModel)]="supplierdata.email" (keydown)="NoSpaceallowedatstart($event)"/>                            <div class="mandatory my-1 text-danger font-italic"                                *ngIf="addSupplierForm.get(\'email\').hasError(\'required\') && addSupplierForm.get(\'email\').touched">                               Required                            </div>                            <div class="mandatory mandatory my-1 text-danger font-italic"                                *ngIf="addSupplierForm.get(\'email\').hasError(\'pattern\') && addSupplierForm.get(\'email\').touched">                                Invalid Email.</div>                                  </div>                                  <div class="col-md-6">                                    <label for="address" class="form-label">Address:<sup>*</sup></label>                                    <textarea class="form-control  data-control-textarea" #address placeholder="Enter Address"   rows="1" id="address"  formControlName="address" [(ngModel)]="supplierdata.address"                                     (keydown)="NoSpaceallowedatstart($event)"></textarea>                                            <div class="mandatory my-1 text-danger font-italic"                                        *ngIf="addSupplierForm.get(\'address\').hasError(\'required\') && addSupplierForm.get(\'address\').touched">                                        Required</div>                                </div>                              </div>                              <div class="data-form-btn  ">                                <div class="form-group text-center ">                                    <button class="btn btn-data-login btn-block" (click)="addnewSupplier()"                                        autocomplete="on">Add</button>                                </div>                            </div>                        </form>                                           </div>                </div>            </div>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AcceptedRequestComponent', 'selector': 'app-accepted-request'},{'name': 'AddItemComponent', 'selector': 'app-add-item'},{'name': 'AddUserComponent', 'selector': 'app-add-user'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssetsComponent', 'selector': 'app-assets'},{'name': 'CategoryComponent', 'selector': 'app-category'},{'name': 'ChangePasswordComponent', 'selector': 'app-change-password'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'CompanyRegistrationComponent', 'selector': 'app-company-registration'},{'name': 'DesignationComponent', 'selector': 'app-designation'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'ForgetPasswordComponent', 'selector': 'app-forget-password'},{'name': 'GatepassComponent', 'selector': 'app-gatepass'},{'name': 'GatepassidListComponent', 'selector': 'app-gatepassid-list'},{'name': 'GatepassListComponent', 'selector': 'app-gatepass-list'},{'name': 'GatepassViewComponent', 'selector': 'app-gatepass-view'},{'name': 'GenarateRequestComponent', 'selector': 'app-genarate-request'},{'name': 'GroupComponent', 'selector': 'app-group'},{'name': 'IncomingItemDetailsComponent', 'selector': 'app-incoming-item-details'},{'name': 'ItemWithPoInvoiceMovetoinventoryForAPeriodComponent', 'selector': 'app-item-with-po-invoice-movetoinventory-for-a-period'},{'name': 'LocationComponent', 'selector': 'app-location'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MakeDirectpurchaseOrderComponent', 'selector': 'app-make-directpurchase-order'},{'name': 'MakePurchaseOrderComponent', 'selector': 'app-make-purchase-order'},{'name': 'MovetoItsmComponent', 'selector': 'app-moveto-itsm'},{'name': 'NewsystemInformationComponent', 'selector': 'app-newsystem-information'},{'name': 'PendingRequestComponent', 'selector': 'app-pending-request'},{'name': 'PoApprovalMailComponent', 'selector': 'app-po-approval-mail'},{'name': 'PoRejectionMailComponent', 'selector': 'app-po-rejection-mail'},{'name': 'ProductComponent', 'selector': 'app-product'},{'name': 'PurchaseInfoComponent', 'selector': 'app-purchase-info'},{'name': 'PurchaseOrderListComponent', 'selector': 'app-purchase-order-list'},{'name': 'PurchaseOrderViewComponent', 'selector': 'app-purchase-order-view'},{'name': 'ReceivedPurchaseOrderComponent', 'selector': 'app-received-purchase-order'},{'name': 'ReceivedRequestComponent', 'selector': 'app-received-request'},{'name': 'ReceivedRequestModalComponent', 'selector': 'app-received-request-modal'},{'name': 'RejectedRequestComponent', 'selector': 'app-rejected-request'},{'name': 'ReportActiveSupplierComponent', 'selector': 'app-report-active-supplier'},{'name': 'ReportCompleteAssetComponent', 'selector': 'app-report-complete-asset'},{'name': 'ReportGoodsAndServicesComponent', 'selector': 'app-report-goods-and-services'},{'name': 'ReportItemsListComponent', 'selector': 'app-report-items-list'},{'name': 'ReportItemWithLocationanduserComponent', 'selector': 'app-report-item-with-locationanduser'},{'name': 'ReportItemWithPriceComponent', 'selector': 'app-report-item-with-price'},{'name': 'ReportLicenseManagementComponent', 'selector': 'app-report-license-management'},{'name': 'ReportLifeCycleComponent', 'selector': 'app-report-life-cycle'},{'name': 'ReportPendingStockComponent', 'selector': 'app-report-pending-stock'},{'name': 'ReportPurchaseOrderComponent', 'selector': 'app-report-purchase-order'},{'name': 'ReportScrapedItemsComponent', 'selector': 'app-report-scraped-items'},{'name': 'ReportStockInHandComponent', 'selector': 'app-report-stock-in-hand'},{'name': 'ReportUploadDocumentComponent', 'selector': 'app-report-upload-document'},{'name': 'ReportVendorEvaluationComponent', 'selector': 'app-report-vendor-evaluation'},{'name': 'ReportWarrantyItemsComponent', 'selector': 'app-report-warranty-items'},{'name': 'SupplierEvaluationComponent', 'selector': 'app-supplier-evaluation'},{'name': 'SystemDetailComponent', 'selector': 'app-system-detail'},{'name': 'SystemInformationListComponent', 'selector': 'app-system-information-list'},{'name': 'TransferStockComponent', 'selector': 'app-transfer-stock'},{'name': 'UpdateItemsComponent', 'selector': 'app-update-items'},{'name': 'UpdateUserComponent', 'selector': 'app-update-user'},{'name': 'UpdateVendorComponent', 'selector': 'app-update-vendor'},{'name': 'UploadInspectionFormComponent', 'selector': 'app-upload-inspection-form'},{'name': 'UploadInvoiceComponent', 'selector': 'app-upload-invoice'},{'name': 'UploadScanDocumentComponent', 'selector': 'app-upload-scan-document'},{'name': 'UploadScanQuotationComponent', 'selector': 'app-upload-scan-quotation'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserDashboardComponent', 'selector': 'app-user-dashboard'},{'name': 'UserListComponent', 'selector': 'app-user-list'},{'name': 'UserPrivilegeComponent', 'selector': 'app-user-privilege'},{'name': 'VendorApprovalMailComponent', 'selector': 'app-vendor-approval-mail'},{'name': 'VendorEvaluationModalComponent', 'selector': 'app-vendor-evaluation-modal'},{'name': 'VendorListComponent', 'selector': 'app-vendor-list'},{'name': 'VendorRejectionMailComponent', 'selector': 'app-vendor-rejection-mail'}];
+    var DIRECTIVES = [{'name': 'PositiveNumberDirective', 'selector': '[b-positive]'}];
+    var ACTUAL_COMPONENT = {'name': 'AddVendorComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AddVendorComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

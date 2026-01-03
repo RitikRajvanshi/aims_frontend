@@ -1,0 +1,26 @@
+.empty-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* Adjust this to center vertically */
+    font-size: 25px;
+    color: #999;
+  }
+
+  button:disabled{
+    background-color:#999;
+  }
+
+  input{
+    padding:0.1rem;
+  }
+
+  table{
+    font-size:11px!important;
+    // color:black;
+    font-family: 'Verdana', 'Geneva', sans-serif !important;
+    //  font-family:'Tahoma', 'Geneva', sans-serif;
+    //  font-family:'New Roman', 'Times', serif;
+
+}
+

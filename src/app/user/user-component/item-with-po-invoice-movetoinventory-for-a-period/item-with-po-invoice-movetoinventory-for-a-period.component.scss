@@ -1,0 +1,27 @@
+table th, td{
+    font-size:11px;
+    // color:black;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+    //  font-family:'Tahoma', 'Geneva', sans-serif;
+    //  font-family:'New Roman', 'Times', serif;
+
+}
+
+input:read-only{
+    background-color: #F5FEFD;
+}
+// input[type='number']:disabled {
+//     // background-color: #F5FEFD;
+//     background-color: #F5FEFD;
+
+// }
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(1.7rem + 2px);
+}
+
+.form-group {
+     margin-bottom: 0rem !important; 
+}
+
+

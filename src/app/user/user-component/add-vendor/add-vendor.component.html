@@ -1,0 +1,138 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-smile-o " style="color:#FF5733 " aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Add Vendor</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="flex-box">
+                <div class=" col-md-12 col-sm-12 col-lg-8 mt-5  ">
+                    <div class="  data-form" [formGroup]="addSupplierForm">
+                        <h1 class="text-center form-heading mb-4 mt-3">Add Vendor</h1>
+                        <form [formGroup]="addSupplierForm">
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                  <label for="supplier_name"  class="form-label">Vendor Name:<sup>*</sup></label>
+                                  <input type="text" class="form-control  form-control-sm data-control" placeholder="Enter Supplier Name "
+                                  formControlName='supplier_name' [(ngModel)]="supplierdata.supplier_name"  (keydown)="NoSpaceallowedatstart($event)"/>
+                                  <div class="mandatory my-1 text-danger font-italic"
+                                  *ngIf="addSupplierForm.get('supplier_name').hasError('required')  && addSupplierForm.get('supplier_name').touched">
+                                  Required</div>
+                                </div>
+                                <div class="col-md-6">
+                                  <label   class="form-label">Contact Person:<sup>*</sup></label>
+                                  <input type="text" class="form-control form-control-sm data-control" placeholder="Enter Contact Person "
+                                  formControlName="contact_person" [(ngModel)]="supplierdata.contact_person" (keydown)="NoSpaceallowedatstart($event)" />
+                                  <div class="mandatory my-1 text-danger font-italic"
+                                  *ngIf="addSupplierForm.get('contact_person').hasError('required') && addSupplierForm.get('contact_person').touched">
+                                 Required</div>
+                                </div>
+                              </div>
+                              <div class="form-row m-2">
+                                <div class="col-md-6">
+                                  <label  for="rating"  class="form-label">Initial Rating<sup>*</sup></label>
+                                  <!-- <input type="text" class="form-control data-control p-1" /> -->
+                                  <select class="form-control form-control-sm data-control" id="rating" formControlName="rating"
+                                  [(ngModel)]="supplierdata.rating">
+  
+                                  <option class="select-border" [selected]=true disabled hidden value="null">Select</option>
+  
+                                  <option class="select-border">A+</option>
+                                  <option class="select-border">A</option>
+                                  <option class="select-border">B</option>
+                                  <option class="select-border">C</option>
+                                  <option class="select-border">D</option>
+  
+                              </select>
+  
+                              <div class="mandatory my-1 text-danger font-italic"
+                                  *ngIf="addSupplierForm.get('rating').hasError('required') && addSupplierForm.get('rating').touched">
+                                  Required</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="category" class="form-label">Mode<sup>*</sup></label>
+                                    <select class="form-control form-control-sm data-control" id="category" formControlName="category"
+                                        [(ngModel)]="supplierdata.category">
+        
+                                        <option [selected]=true disabled hidden value='null'>Select</option>
+                                        <option class="select-border p-1 " value="0">Offline</option>
+                                        <option class="select-border p-1" value="1">Online</option>
+        
+                                    </select>
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="addSupplierForm.get('category').hasError('required') && addSupplierForm.get('category').touched">
+                                       Required
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label   for="phone"  class="form-label">Phone:</label>
+                                    <input type="text" class="form-control form-control-sm data-control" placeholder="Enter Phone "
+                                    formControlName="phone"  [(ngModel)]="supplierdata.phone" (keydown)="NoSpaceallowedatstart($event)" (keypress)="tendigitnumber($event)"/>
+                                    <div class="mandatory my-1 text-danger font-italic" *ngIf="addSupplierForm.get('phone').hasError('pattern')">Invalid</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="mobile" class="form-label">Mobile:<sup>*</sup></label>
+                                    <input type="text" id="mobile" class="form-control form-control-sm data-control" placeholder="Enter Mobile"
+                                        formControlName="mobile"  [(ngModel)]="supplierdata.mobile" (keydown)="NoSpaceallowedatstart($event)" maxlength="13" (keypress)="tendigitnumber($event)"/>
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="addSupplierForm.get('mobile').hasError('required') && addSupplierForm.get('mobile').touched">Required</div>
+                                       <div class="mandatory my-1 text-danger font-italic" *ngIf="addSupplierForm.get('mobile').hasError('pattern') "> Invalid</div>
+                                </div>
+                              </div>
+                              <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="gstn" class="form-label">GSTIN:</label>
+                                    <input type="text"   id="gstn"  class="form-control form-control-sm data-control" placeholder="Enter Vendor's GSTIN"
+                                     formControlName="gstn" maxlength="16" [(ngModel)]="supplierdata.gstn" (keydown)="NoSpaceallowedatstart($event)"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="pan_no" class="form-label">PAN No.</label>
+                                    <input type="text" id="pan_no" class="form-control form-control-sm data-control" placeholder="Enter PAN"
+                                       id="pan_no" formControlName="pan_no" maxlength="10" [(ngModel)]="supplierdata.pan_no" (keydown)="NoSpaceallowedatstart($event)"/>
+                                </div>
+                              </div>
+                           
+                              <div class="form-row m-2">
+                             
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email:<sup>*</sup></label>
+                            <input type="email" id="email" class="form-control form-control-sm data-control"  placeholder="Enter Email" id="email" [style.backgroundColor]="response==1?'#FFFFCC':'#fff'" 
+                            [style.border]="response==1 ?'1px solid #FFD700':''"
+                                formControlName="email" [(ngModel)]="supplierdata.email" (keydown)="NoSpaceallowedatstart($event)"/>
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="addSupplierForm.get('email').hasError('required') && addSupplierForm.get('email').touched">
+                               Required
+                            </div>
+                            <div class="mandatory mandatory my-1 text-danger font-italic"
+                                *ngIf="addSupplierForm.get('email').hasError('pattern') && addSupplierForm.get('email').touched">
+                                Invalid Email.</div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label for="address" class="form-label">Address:<sup>*</sup></label>
+                                    <textarea class="form-control  data-control-textarea" #address placeholder="Enter Address"   rows="1" id="address"  formControlName="address" [(ngModel)]="supplierdata.address"
+                                     (keydown)="NoSpaceallowedatstart($event)"></textarea>
+        
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="addSupplierForm.get('address').hasError('required') && addSupplierForm.get('address').touched">
+                                        Required</div>
+                                </div>
+                              </div>
+                              <div class="data-form-btn  ">
+                                <div class="form-group text-center ">
+                                    <button class="btn btn-data-login btn-block" (click)="addnewSupplier()"
+                                        autocomplete="on">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

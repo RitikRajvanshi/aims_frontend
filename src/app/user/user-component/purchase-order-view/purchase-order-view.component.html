@@ -1,0 +1,319 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-list-alt text-info" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Purchase Order</h1>
+    </div>
+</section>
+<section>
+    <div class="container ">
+        <div class="data-content">
+
+            <div class="add-icon-section pl-2 pt-3">
+                <button class="btn-toggle-back" (click)="navigateBack()" *ngIf="!data"> <i class="fa fa-arrow-left pr-1"></i>
+                    Back</button>
+                <button class="btn-toggle-pdf " (click)="downloadAsPdf()"><i class="fa fa-plus pr-1"></i>Print
+                    PO</button>
+
+            </div>
+            <div class="page-background-h ">
+                <div class="data-form m-2 p-5 pdfTable" id="pdfTable" #pdfTable>
+
+                    <div
+                        style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom:80px">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12" style="flex: 1; text-align: left;">
+                            <img [src]="companyLogo2 ? companyLogo2 : companyLogo" style="width: 100px; height: 80px;"
+                                crossorigin="anonymous">
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-6 col-12" style="flex: 1; text-align: center;">
+                            <h1 style="margin: 0; font-size: 24px;color:black"><strong>Purchase Order</strong></h1>
+                        </div>
+                        <div style="flex: 1;"></div> 
+                    </div>
+
+
+                    <div class="billing-section mb-0">
+                        <div class="container-fluid">
+                            <div class="row d-flex billing-left billing-right" style="margin-bottom:15px">
+                                <div class="col-lg-6">
+                                    <h3 class="m-0">BILL TO :</h3>
+                                    <div style="color:black"><strong class="apv m-0"
+                                            style="margin:0">{{companydata.nick_name ?
+                                            companydata.nick_name:companydata.companyName}}</strong><br>
+                                        <p class="m-0" style="margin:0" *ngFor="let parts of adressParts">{{parts}}</p>
+                                        <p class="m-0" style="margin:0">
+                                            <strong>Phone No. :</strong>
+                                            {{companydata.telephoneNumber==null?'':companydata.telephoneNumber}}
+                                        </p>
+                                        <p class="m-0" style="margin:0"><strong>Mobile No. :</strong>
+                                            {{companydata.mobile1==null?'':companydata.mobile1}}</p>
+                                        <p class="m-0" style="margin:0">{{companydata.mobile2===null||undefined
+                                            ?'':companydata.mobile2}}
+                                        </p>
+
+                                        <p class="my-1" style="margin-top:0;margin-bottom:10px"><strong>GSTIN:</strong>
+                                            {{companydata.gstin?companydata.gstin:''}}</p>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-6" style="margin-bottom: 14.5px;">
+                                    <div class="d-flex justify-content-end">
+                                        <div class="order-deatils">
+                                            <div class="d-flex">
+                                                <h3 style="margin-bottom:0px; color:black">Order Number :<span
+                                                        class="pl-2 billing-para">{{purchaseId}}</span></h3>
+                                            </div>
+                                            <div class="d-flex">
+                                                <h3 style="margin-bottom:0;color:black;">Vendor :<span
+                                                        class="pl-2 billing-para">{{purchaseOrderDetail.supplier_name}}</span>
+                                                </h3>
+                                            </div>
+                                            <div class="d-flex">
+                                                <h3 style="margin-bottom:0;color:black;"> Purchase Date :<span
+                                                        class="pl-2 billing-para">{{purchaseOrderDetail.issue_date}}</span>
+                                                </h3>
+                                            </div>
+                                            <div class="d-flex mb-1">
+                                                <h3 style="margin-bottom:0;color:black;"> Expected Receipt Date :<span
+                                                        class="pl-2 billing-para">{{purchaseOrderDetail.expected_date}}</span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid ">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 col-sm-12 ">
+                                <div>
+                                    <table
+                                        class="table table-striped table-bordered table-hover potable table-font"
+                                        style="color:black">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="fs-6" style="width:5%;">S.No.</th>
+                                                <th scope="col" class="fs-6" style="width:10%;">Item</th>
+                                                <th scope="col" class="fs-6" style="width:15%;">Description</th>
+                                                <th scope="col" class="fs-6" style="width:10%;">Unit Price({{purchaseOrderDetail.currency}})</th>
+                                                <th scope="col" class="fs-6" style="width:5%;">Quantity</th>
+                                                <th scope="col" class="fs-6" style="width:5%;">Discount({{purchaseOrderDetail.currency}})</th>
+                                                <th scope="col" class="fs-6" style="width:10%;">Taxable Amount({{purchaseOrderDetail.currency}})</th>
+                                                <th scope="col" class="fs-6" style="width:5%;">GST(%)</th>
+                                                <th scope="col" class="fs-6" style="width:10%;">GST Calc.({{purchaseOrderDetail.currency}})</th>
+                                                <th scope="col" class="fs-6" style="width:10%;">Total({{purchaseOrderDetail.currency}})</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let items of purchasefilteredJoindata; let i = index">
+                                                <th scope="row">{{i+1}}</th>
+                                                <td>{{items.product_name}}</td>
+                                                <td>{{items.description}}</td>
+                                                <td>{{items.unit_price.toFixed(2)}}</td>
+                                                <td>{{items.quantity}}</td>
+                                                <td>{{items.discount_in_rs.toFixed(2)}}</td>
+                                                <td>{{items.sub_total?items.sub_total.toFixed(2):0}}</td>
+                                                <td>{{(items.gst_in_percent *100).toFixed(0)}}</td>
+                                                <td>{{items.gst_calculation?items.gst_calculation.toFixed(2):0}}</td>
+                                                <td>{{items.total?items.total.toFixed(2):0}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="8" scope="row"></th>
+                                                <td class="table-active"><strong>Grand Total:</strong></td>
+                                                <td class="table-active">
+                                                    <strong>{{purchaseOrderDetail.currency}}
+                                                        {{(purchaseOrderDetail.totalindecimal)?(purchaseOrderDetail.totalindecimal).toFixed(2):null}}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="8" scope="row"></th>
+                                                <td class="table-active"><strong>Grand Total<br>
+                                                        Round Off:</strong></td>
+                                                <td class="table-active">
+                                                    <strong>{{purchaseOrderDetail.currency}}
+                                                        {{purchaseOrderDetail.roundOffTotalindecimal?(purchaseOrderDetail.roundOffTotalindecimal).toFixed(0):null}}<br></strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="terms-section mt-0 p-2" id="div15">
+                        <div class="container-fluid">
+                            <div class="row termsandheading">
+                                <div class="col-12 col-lg-12 col-md-12 c0l-sm-12 ">
+                                    <h1 class="text-center term-heading mt-1" style="color:black"><strong>Terms &
+                                            Conditions</strong></h1>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-12 col-md-12 c0l-sm-12">
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Quality:</strong><span
+                                                    class="service-para">The goods/services will be of high
+                                                    quality and specifications as discussed and/or
+                                                    described.</span></h4>
+
+                                        </div>
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Item:</strong><span
+                                                    class="service-para">The price includes taxes, insurance,
+                                                    freight for delivery at (location) unless stated
+                                                    otherwise specifically.</span></h4>
+
+                                        </div>
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Delivery:</strong><span
+                                                    class="service-para">The delivery will be by
+                                                    <strong>{{purchaseOrderDetail.expected_date}}</strong> at
+                                                    the specified address.It will be the responsibility of the
+                                                    supplier to supply the goods/services in safe and working condition
+                                                    at the agreed location.
+                                                </span></h4>
+                                        </div>
+
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Inspection:</strong><span
+                                                    class="service-para">Acceptance & rejection: The buyer
+                                                    will inspect the goods/services delivered and the
+                                                    due payment will be subject to approval by the buyer.
+                                                </span></h4>
+                                        </div>
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color: black;"><strong>Warranties:</strong><span
+                                                    class="service-para">The supplier will provide all
+                                                    necessary warranties for the quality and service.</span></h4>
+                                        </div>
+                                        <div class="heading-service d-flex">
+                                            <h4 style="color:black"><strong>Indemnities :</strong><span
+                                                    class="service-para"> Seller shall indemnify, defend
+                                                    and hold harmless Buyer against any action,
+                                                    liability, cost, or expense whatsoever arising by reason of: (i) the
+                                                    breach of any applicable
+                                                    provision of these Conditions; (ii) any infringement or alleged
+                                                    infringement of the Intellectual
+                                                    Property Rights of any person other than the Buyer relating to the
+                                                    Work; (iii) injury to, or death of,
+                                                    any persons caused or contributed to be the negligence or breach of
+                                                    these Conditions or other
+                                                    legal duty of Seller or, irrespective of the negligence or breach of
+                                                    duty of Buyer, loss or damage
+                                                    to any property; and (iv) all consequential or indirect losses
+                                                    (whether foreseeable or not) incurred
+                                                    by Seller, irrespective of the negligence or breach of duty of
+                                                    Buyer. Seller shall maintain
+                                                    insurance cover: (i)against the liabilities referred to above
+                                                    otherwise required in relation to the
+                                                    supply of the goods/services; and (ii) shall provide to Buyer on
+                                                    demand valid certificates of
+                                                    insurance in respect thereof.</span></h4>
+                                        </div>
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Terms of Payment :</strong><span
+                                                    class="service-para"> Unless otherwise stated in
+                                                    the Order, payment shall be made within sixty
+                                                    (60) days from the date of invoice provided that the Buyer receives
+                                                    a correct and valid invoice
+                                                    and provided that the work is correctly delivered or properly
+                                                    performed and the Buyer accepted
+                                                    the goods/services. If the goods/services are not correctly
+                                                    delivered or performed or the Buyer
+                                                    has not accepted the work, the invoice shall be paid after thirty
+                                                    (30) days following the date when
+                                                    the discrepancy is corrected to the Buyer’s satisfaction. Payment
+                                                    invoices should be shown to
+                                                    the authorized persons only and not to any individual person unless
+                                                    it has been specified in the
+                                                    contract.</span></h4>
+                                        </div>
+                                        <div class="heading-service d-flex">
+                                            <h4 style="color:black"><strong>Change Orders :</strong><span
+                                                    class="service-para"> Seller shall perform any
+                                                    changes to the Work required by Buyer which may
+                                                    include additions to, or reductions in, the quantity and quality of
+                                                    Work. Buyer shall give notice of
+                                                    such changes to Seller in writing who shall promptly advise Buyer in
+                                                    writing of their reasonable
+                                                    effect on Price and delivery date. No change shall be accepted by
+                                                    Buyer unless authorized by
+                                                    written instruction and confirmed by Change Order. In the event that
+                                                    the parties are unable to
+                                                    agree on the reasonable effect on Price and delivery date, Buyer
+                                                    shall nevertheless have the
+                                                    right to require Seller to proceed with the change forthwith. No
+                                                    variation in the Price nor extra
+                                                    charges can be made (whether on account of increased material, labor
+                                                    or transport cost, or
+                                                    fluctuation in rates of exchange or otherwise) without the former
+                                                    written consent of the buyer.</span></h4>
+                                        </div>
+
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Force Majeure :</strong><span
+                                                    class="service-para"> The Buyer reserves the right
+                                                    to defer the date of delivery or payment or to
+                                                    cancel the Order or reduce the volume of the Work ordered if it is
+                                                    prevented from or delayed in
+                                                    the carrying on of its business through any circumstances beyond its
+                                                    reasonable control. Without
+                                                    prejudice to the generality of this condition the following shall be
+                                                    included without limitation as
+                                                    causes beyond the Buyer’s reasonable control: (i)governmental
+                                                    actions, war or threat of war,
+                                                    national emergency, riot, civil disturbance, sabotage; (ii)act of
+                                                    God, fire, explosion, flood,
+                                                    epidemic or accident; (iii) import or export regulations or
+                                                    embargoes.</span></h4>
+                                        </div>
+
+                                        <div class="heading-service  d-flex">
+                                            <h4 style="color:black"><strong>Governing Law and Jurisdiction :</strong>
+                                                <span class="service-para"> The Order
+                                                    and Conditions herein shall be construed and
+                                                    interpreted in accordance with the laws of India only, without
+                                                    regard to any conflicts-of-laws rules
+                                                    or principles that might refer the governance or construction to any
+                                                    other jurisdiction. Any dispute
+                                                    arising in relation to these Conditions shall be referred to Lucknow
+                                                    Courts.</span>
+                                            </h4>
+                                        </div>
+
+                                        <div class="heading-service d-flex">
+                                            <h4 style="color:black"><strong>Notices:</strong><span class="service-para">
+                                                    Notices shall be validly given if
+                                                    sent by facsimile, Telex or recorded delivery post to the
+                                                    respective addresses of the parties stated in the Order or to any
+                                                    address subsequently notified in
+                                                    writing by one party to the other.</span>
+                                                <h2 class="pt-0 mt-3"><strong>Authorized Signatory</strong></h2>
+                                            </h4>
+
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Report Terms & conditions ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- pdf.addImage(contentDataURL, 'PNG', 0, position, pdf.internal.pageSize.width, pdf.internal.pageSize.width); -->
+
+</section>

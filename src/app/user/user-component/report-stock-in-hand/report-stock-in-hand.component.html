@@ -1,0 +1,85 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Stocks in Hand</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content" *ngIf="isDataorNot">
+        <div class="page-background-h">
+            <div class="container-fluid mt-0 pt-0">
+                <div class="row">
+                    <div class="ml-auto">
+                        <button class="btn btn-login-report mt-2" (click)="exportToexcelfromnode()">Export To Excel</button>
+                    </div>
+                </div>
+            </div>
+                <div class="container-fluid mb-3">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-md-12 col-sm-12">
+                            <div class="input-group   mb-2  search-container">
+                                <input type="text" class=" data-control form-control   mr-2" [(ngModel)]="searchItem"
+                                placeholder="Search..." aria-describedby="basic-addon2" (input)="filterData()"  (keydown)="NoSpaceallowedatstart($event)"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12  ">
+                        <div class=" table-responsive overflow-auto">
+                            <table class="table  table-bordered table-hover small-font">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"  class="table-heading-color">S.No.</th>
+                                        <th scope="col"   class="table-heading-color" (click)="sort('item_name')">Items <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  class="table-heading-color" (click)="sort('quantity')">Quantity in hand <i class="fa fa-sort"></i></th>
+                                        <th scope="col"  class="table-heading-color"  (click)="sort('location_name')">Present Location <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of stockinHandList| filter:searchItem  | paginate:
+                                {itemsPerPage: tableSize,
+                                  currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                        <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                        <td class="table-heading-sub-text">{{data.item_name}}</td>
+                                        <td class="text-success"><strong>{{data.quantity}}</strong></td>
+                                        <td class="table-heading-sub-text">{{data.location_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-2 mb-2">
+                <div class="row">
+                    <div class="col-lg-10  d-flex">
+                        <div class="pagination " class="active">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="ontableDatachange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                    <div class="col-lg-2   ml-auto">
+                        <div class="form-group  d-flex select-size">
+                            <p class="report-headings">Items/page</p>
+                            <select class=" data-control-select ml-2  select-size form-control"
+                            (change)="ontableSizechange($event)" >
+                            <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                {{size}}
+                            </option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="noData text-center mt-4 mb-4 container-fluid" *ngIf="!isDataorNot">
+        <h1 class="text-danger">No data found</h1>
+    </div>
+</div>

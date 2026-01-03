@@ -1,0 +1,24 @@
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+/* styles.css or your component's CSS file */
+// .custom-modal {
+//     max-width: 90%; /* Maximum width of the modal */
+//     width: 1200px !important; /* Set a fixed width for the modal */
+//   }
+  
+//   .custom-modal .modal-content {
+//     height: 800px; /* Set a fixed height for the modal content */
+//   }
+  
+//   .custom-modal .modal-body {
+//     height: calc(100% - 100px); /* Adjust the height of the body to account for header/footer */
+//   }
+  
+
+.modal-dialog{
+    max-width: 1200px !important;
+    margin: 30px auto !important;
+}

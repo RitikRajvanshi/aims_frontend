@@ -1,0 +1,324 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-search text-secondary" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Upload Invoice</h1>
+    </div>
+    <div class="add-icon-section" *ngIf="toggleListBtn">
+        <button class="btn btn-toggle " (click)="toggleActionAdd()"><i class="fa fa-search pr-1"></i>Invoice
+            List</button>
+    </div>
+    <div class="add-icon-section" *ngIf="toggleAddbtn">
+        <button class="btn btn-toggle " (click)="toggleActionUpdate()"><i class="fa fa-plus pr-1"></i>Add
+            Invoice</button>
+    </div>
+
+
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h ">
+            <!-- copy paste comment starts here -->
+            <div class="container-fluid mt-0 pt-0" *ngIf="toggleAddbtn  && isDataorNot">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Start Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="Start Date"
+                                        [(ngModel)]="invoicebydate.start_date">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label">End Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="End Date"
+                                        [(ngModel)]="invoicebydate.end_date">
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class=" mt-3">
+                                        <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"
+                                            (click)="refreshfilter()" title="refresh"></i>
+
+                                        <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
+                                            [disabled]="!invoicebydate.start_date || !invoicebydate.end_date">Filter</button>
+                                        <button class="btn btn-login-report m-2"
+                                            (click)="exportToexcelfromnode()">Export To Excel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-box">
+                <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayInvoicecontainer">
+                    <div class="data-form" [formGroup]="invoiceForm">
+                        <h2 class="text-center form-heading mb-4 mt-3">Upload Invoice</h2>
+
+                        <div class="form-group  m-2">
+                            <label for="purchase_id" class="form-label">Purchase Id:<sup>*</sup></label>
+
+                            <ng-select appendTo="body" class="form-control form-control-sm data-control-for-ngselect "
+                                id="purchase_id" [items]="purchasedata" formControlName="purchase_id"
+                                [placeholder]="!purchaseData.purchase_id? 'Select Purchase Id...' : ''"
+                                [(ngModel)]="purchaseData.purchase_id" 
+                                bindLabel="purchase_id"
+                                 bindValue="purchase_id"
+                                 [clearable]="!purchaseData.purchase_id?false:true"
+                                (change)="selectPurchaseid($event)">
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div [ngStyle]="{ 'background-color':'white'}">
+                                        {{item?.purchase_id}}
+                                    </div>
+                                </ng-template>
+
+                            </ng-select>
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="invoiceForm.get('purchase_id').hasError('required') && invoiceForm.get('purchase_id').touched">
+                                Required</div>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="invoice_no" class="form-label">Invoice No.:<sup>*</sup></label>
+                            <input type="text" class="form-control form-control-sm data-control" id="invoice_no"
+                                placeholder="Enter Invoice No " formControlName='invoice_no'
+                                (keydown)="allowInvoiceCharacters($event);" [(ngModel)]="purchaseData.invoice_no" />
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="invoiceForm.get('invoice_no').hasError('required') && invoiceForm.get('invoice_no').touched">
+                                Required</div>
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="invoice_no" class="form-label">Vendor Name:</label>
+                            <input type="text" class="form-control  form-control-sm data-control "
+                                [disabled]="vendorname?true:false" placeholder="NA" [(ngModel)]="vendorname"
+                                [ngModelOptions]=" {standalone: true}" />
+
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="invoice_no" class="form-label">Invoice Date:<sup>*</sup></label>
+                            <input type="date" class="form-control  form-control-sm data-control " placeholder="NA"
+                                [(ngModel)]="purchaseData.invoice_date" formControlName="invoice_date" />
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="invoiceForm.get('invoice_date').hasError('required') && invoiceForm.get('invoice_date').touched">
+                                Required</div>
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="invoice_no" class="form-label">Invoice Amount({{currency?currency:'₹'}}):<sup>*</sup></label>
+                            <input type="number" min="0"  step="any" id="invoice_amount" class="form-control data-control p-1"
+                                placeholder="Enter invoice amount..." formControlName="invoice_amount"
+                                (keyup)="sharedService.onDecimalInput($event)"
+                                (paste)="sharedService.onDecimalPaste($event)"
+                                [(ngModel)]="purchaseData.invoice_amount" />
+
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="invoiceForm.get('invoice_amount').hasError('required') && invoiceForm.get('invoice_amount').touched">
+                                Required</div>
+
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="invoice_remark" class="form-label">Remarks:</label>
+                            <input type="text" class="form-control form-control-sm data-control" id="invoice_remark"
+                                placeholder="Remarks" formControlName='invoice_remark'
+                                (keydown)="NoSpaceallowedatstart($event)" [(ngModel)]="purchaseData.invoice_remark" />
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="filename" class="form-label">Invoice Pdf:<sup>*</sup></label>
+                            <div>
+                                <input type="file" id="filename" class=" btn form-control-file form-choosen-button "
+                                    name="pdf" accept="application/pdf" formControlName='filename'
+                                    (change)="selectFile($event)">
+
+
+
+                                <div class="mandatory my-1 text-danger font-italic"
+                                    *ngIf="invoiceForm.get('filename').hasError('required') && invoiceForm.get('filename').touched">
+                                    Required
+                                </div>
+
+                                <div class="progress-container my-3 w-75 mx-auto"
+                                    *ngIf="uploadProgress > 0 && uploadProgress < 100">
+                                    <div class="progress-bar" [style.width]="uploadProgress + '%'"></div>
+
+
+                                </div>
+                                <h3 class="ml-3" *ngIf="uploadProgress > 0 && uploadProgress < 100">
+                                    <strong>{{uploadProgress + '%'}} file uploaded</strong></h3>
+                            </div>
+                        </div>
+
+                        <div class="data-form-btn">
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-data-login btn-block" *ngIf="displayuploadInvoice"
+                                    (click)="uploadInvoice()">Add</button>
+
+                                <button type="submit" class="btn btn-data-login btn-block" *ngIf="displayupdateInvoice"
+                                    (click)="uploadInvoice()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="data-content" *ngIf="displayemptydatamsg && isDataorNot">
+
+                <div class="container-fluid mb-3">
+                    <div class="row">
+                        <div class="col-lg-8 col-12 col-sm-12">
+                            <div class="input-group   mb-2  search-container">
+                                <input type="text" class=" data-control form-control-sm form-control"
+                                    placeholder="Search..." aria-describedby="basic-addon2" [(ngModel)]="searchTerm"
+                                    (input)="filterData()" (keydown)="NoSpaceallowedatstart($event)">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12 col-sm-12 pt-3 pb-0">
+                            <span class="font-weight-bold">Total Amount:</span><span
+                                class="text-danger font-weight-bold"> ₹ {{sumofamount?sumofamount:0}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-table">
+                    <div class=" table-responsive overflow-auto ">
+                        <table class="table table-bordered table-hover overflow-auto">
+                            <thead>
+                                <tr>
+                                    <th class="table-heading-color; " scope="col" style="width:5%;">S.No.</th>
+                                    <th class="table-heading-color" style="width:10%;" scope="col"
+                                        (click)="sort('purchase_id')">Purchase Id <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" style="width:20%;" scope="col"
+                                        (click)="sort('supplier_name')">Vendor Name <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" style="width:15%;" scope="col"
+                                        (click)="sort('invoice_no')">Invoice No <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" style="width:10%;" scope="col"
+                                        (click)="sort('invoice_amount')">Amount (₹) <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" style="width:10%;" scope="col"
+                                        (click)="sort('invoice_date')">Date <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" scope="col" style="width:20%;"
+                                        (click)="sort('invoice_remark')">Remark <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" scope="col" style="width:20%;  "
+                                        (click)="sort('modified_date')">Modified Date <i class="fa fa-sort"></i></th>
+                                    <th class="table-heading-color" scope="col" style="width:5%;  white-space: nowrap;">
+                                        View Invoice</th>
+                                    <th class="table-heading-color" scope="col"
+                                        style="width:10%;  white-space: nowrap;">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <tr *ngFor="let item of filteredinvoicedata| paginate:
+                                    {itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                    <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                    <td class="table-heading-sub-text">{{item?.purchase_id}}</td>
+                                    <td class="table-heading-sub-text">{{item?.supplier_name?item?.supplier_name:'NA'}}
+                                    </td>
+
+                                    <td class="table-heading-sub-text" [style.Color]="item.invoice_no ? '' : 'grey' ">
+                                        <ng-container *ngIf="item.invoice_no && item.invoice_no.length > 20">
+                                            <span *ngIf="!item.isExpanded">{{ item.invoice_no.slice(0, 20) }}</span>
+                                            <span *ngIf="item.isExpanded">{{ item.invoice_no }}</span>
+
+                                            <p class="d-inline text-secondary" *ngIf="item.invoice_no.length > 20"
+                                                (click)="toggleExpand(item)">
+                                                {{ item.isExpanded ? 'read less' : '...' }}
+                                            </p>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.invoice_no && item.invoice_no.length <= 20">
+                                            {{ item.invoice_no }}
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!item.invoice_no">
+                                            {{ 'NA' }}
+                                        </ng-container>
+
+                                    </td>
+                                    <td class="table-heading-sub-text">
+                                        {{item.invoice_amount?item.invoice_amount.toFixed(2):'NA'}}</td>
+
+                                    <td class="table-heading-sub-text">{{item.invoice_date?item.invoice_date:'NA'}}</td>
+
+                                    <td class="table-heading-sub-text expanded-text"
+                                        [style.Color]="item.invoice_remark ? '' : 'grey' ">
+
+                                        <ng-container *ngIf="item.invoice_remark && item.invoice_remark.length > 30">
+                                            <span *ngIf="!item.isExpanded">{{ item.invoice_remark.slice(0, 30) }}</span>
+                                            <span *ngIf="item.isExpanded">{{ item.invoice_remark }}</span>
+
+                                            <p class="d-inline text-secondary" *ngIf="item.invoice_remark.length > 30"
+                                                (click)="toggleExpand(item)">
+                                                {{ item.isExpanded ? 'read less' : '...' }}
+                                            </p>
+                                        </ng-container>
+                                        <ng-container *ngIf="!item.invoice_remark || item.invoice_remark.length <= 30">
+                                            {{ item.invoice_remark }}
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!item.invoice_remark">
+                                            {{ 'NA' }}
+                                        </ng-container>
+                                    </td>
+
+                                    <td class="table-heading-sub-text">{{item.modified_date?item.modified_date:'NA'}}
+                                    </td>
+
+                                    <td class="table-heading-sub-text" style="text-align: center;">
+                                        <a (click)="checkAndOpenFile(item.filepath)">
+                                            <i class="fa fa-search table-edit-icon icon-search" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+
+
+                                    <td class="table-heading-sub-text" style="text-align: center;"><i
+                                            class="fa fa-edit table-edit-icon icon-green " aria-hidden="true"
+                                            (click)="updateInvoicebtn(item.purchase_id)"></i> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="container-fluid mt-2 mb-2 ">
+                            <div class="row">
+                                <div class="col-lg-10  d-flex">
+                                    <div class="pagination " class="active">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="ontableDatachange($event)">
+                                        </pagination-controls>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-2   ml-auto ">
+                                    <div class="form-group  select-size d-flex">
+                                        <p class="  report-headings">Items/page</p>
+                                        <select class=" data-control-select ml-2  select-size form-control"
+                                            (change)="ontableSizechange($event)" [(ngModel)]="itemsperPage">
+                                            <option class="select-border" *ngFor=" let size of tableSizes"
+                                                [value]="size">
+                                                {{size}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="noData text-center container-fluid" *ngIf="displayemptydatamsg && !isDataorNot">
+                    <h1 class="text-danger">No data found</h1>
+                </div>
+            </div>
+        </div>
+    </div>

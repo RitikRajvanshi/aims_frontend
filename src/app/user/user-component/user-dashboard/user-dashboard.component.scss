@@ -1,0 +1,115 @@
+
+.blink {
+    color: #b20000;
+    font-size:15pt;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 400;
+}
+
+.blink2 {
+    color: #b20000;
+    font-size:15pt;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 400;
+}
+
+.blink2:hover{
+    cursor: pointer;
+    text-decoration:underline ;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.section{
+    box-shadow: 2px 4px 10px 0 rgba(0, 34, 51, 0.05), 2px 4px 10px 0 rgba(0, 34, 51, 0.05);
+
+}
+
+
+  body{
+    background: #fff;
+  }
+
+  .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.card-body {
+  flex: 1;
+}
+
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+  background: transparent; /* or set your background */
+}
+
+.marquee-text {
+  display: inline-block;
+  padding-left: 100%;   /* start outside screen */
+  animation: marquee 12s linear infinite;
+  font-size: 14px;      /* adjust */
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Optional blinking effect for links */
+.blink {
+  animation: blinkAnim 1.5s infinite;
+}
+
+@keyframes blinkAnim {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+
+
+.year-selector {
+  display: flex;
+  align-items: center;
+}
+
+.year-selector label {
+  font-weight: bold;
+}
+
+.year-selector select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.data-range {
+  font-size: 16px; /* slightly bigger for readability */
+  color: #4a5568; /* darker, more professional gray (instead of #555) */
+  line-height: 1.5; /* slightly increased for better spacing */
+  // font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* modern system font stack for professionalism */
+}
+.data-range p {
+  margin: 0;
+}
+.data-range strong {
+  color: #2c5282; /* a more subdued, professional slate blue (different from #00235E; evokes trust without being too bold) */
+  font-weight: 600; /* semi-bold for subtle emphasis */
+}
+
+
+
+
+
+
+
+
+

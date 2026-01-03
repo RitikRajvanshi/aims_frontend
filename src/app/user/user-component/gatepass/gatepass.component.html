@@ -1,0 +1,186 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-ticket text-success" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Generate Gate Pass</h1>
+    </div>
+</section>
+
+
+
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="data-control-box">
+                <div>
+                    <div class="flex-box">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="data-form">
+                                <div class="form-row">
+                                    <div class=" form-group col-lg-6 col-md-6 col-sm-12">
+                                    <div><input type="radio" id="newPurchaseId" checked="checked"  value="1" name="isReturnable" (change)="onReturnableChange($event)" 
+                                        [disabled]="disableissuedtoandby">
+                                          <label for="newPurchaseId" class="text-center form-heading-radio-btn" >Returnable</label><br></div>
+                                        </div>
+
+                                    <div class="form-group col-lg-6 col-md-6 col-sm-12">
+
+                                    <div><input type="radio" id="existingPurchaseId"  value="0" name="isReturnable" (change)="onReturnableChange($event)"  [disabled]="disableissuedtoandby" >
+                                          <label for="existingPurchaseId" class="text-center form-heading-radio-btn" >Non-Returnable</label><br></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class=" form-group col-md-12 col-sm-12">
+                                      <label for="product_id" class="form-label">Gate Pass Id:<sup>*</sup></label>
+                                      <input type="text" class="form-control form-control-sm description-btn" placeholder="Gate Pass ID" [(ngModel)]="gatepassobj.gatepass_id" disabled>
+                                  
+                                </div>      
+                                  </div>
+
+                                  
+                                <div class="form-row">
+                                    <div class=" form-group col-md-6 col-sm-12">
+                                      <label for="product_id" class="form-label">Issued To:<sup>*</sup></label>
+                                      <input type="text" class="form-control form-control-sm description-btn" placeholder="Issued To" [disabled]="disableissuedtoandby" 
+                                      [(ngModel)]="gatepassobj.issued_to" (blur)="issuedToTouched = true" (keydown)="NoSpaceallowedatstart($event)">
+                                        <div *ngIf="issuedToTouched && !gatepassobj.issued_to" class="text-danger font-italic mt-1">
+                                            Required
+                                        </div>
+                                </div>   
+                                
+                                <div class=" form-group col-md-6 col-sm-12">
+                                    <label for="product_id" class="form-label">Issued By:<sup>*</sup></label>
+                                    <input type="text" class="form-control form-control-sm description-btn" placeholder="Issued By" [disabled]="disableissuedtoandby" [(ngModel)]="gatepassobj.issued_by" (blur)="issuedByTouched = true" (keydown)="NoSpaceallowedatstart($event)">
+                                    <div *ngIf="issuedByTouched && !gatepassobj.issued_by" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+                              </div> 
+                                  </div>
+
+
+                                  <div class="form-row">
+                                    <div class=" form-group col-md-6 col-sm-12">
+                                      <label for="product_id" class="form-label">Item Code:<sup>*</sup></label>
+                                    <input type="text" class="form-control form-control-sm description-btn" placeholder="Enter Item Code"  [(ngModel)]="gatepassobj.item_code" (blur)="itemCodeTouched = true" (keydown)="NoSpaceallowedatstart($event)">
+                                    <div *ngIf="itemCodeTouched && !gatepassobj.item_code" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label for="item_name"  class="form-label">Item Name:<sup>*</sup></label>
+                                    <input type="text" step="any" id="item_name"
+                                    class="form-control data-control p-1" placeholder="Enter Item Name"  [(ngModel)]="gatepassobj.item_name" (blur)="itemnameTouched = true" (keydown)="NoSpaceallowedatstart($event)"/>
+                                    <div *ngIf="itemnameTouched && !gatepassobj.item_name" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+                                  </div>
+                                  </div>
+                                  <div class="form-row">
+                                    <div class=" form-group col-md-6 col-sm-12">
+                                        <label for="unit_price"  class="form-label">Quantity:<sup>*</sup></label>
+                                        <input type="number" step="any" id="unit_price"
+                                        class="form-control data-control p-1" placeholder="Enter Quantity"  [(ngModel)]="gatepassobj.quantity" (blur)="quantityTouched = true" min="1"  oninput="this.value = Math.abs(this.value)" (keydown)="NoSpaceallowedatstart($event)" b-positive/>
+                                        <div *ngIf="quantityTouched && !gatepassobj.quantity" class="text-danger font-italic mt-1">
+                                            Required
+                                        </div>
+                                </div>
+
+                                <div class=" form-group col-md-6 col-sm-12">
+                                    <label for="description" class="form-label">Description:<sup>*</sup></label>
+                                    <textarea class="form-control  data-control-textarea" #address placeholder="Item description " rows="1" id="address"  [(ngModel)]="gatepassobj.description" (blur)="descriptionTouched = true" (keydown)="NoSpaceallowedatstart($event)"></textarea>
+                                    <div *ngIf="descriptionTouched && !gatepassobj.description" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+                                </div>
+                                </div>
+
+                                  <div class="form-row">
+                                    <div class="form-group col-md-6 col-sm-12">                                 
+                                    <label for="discount_in_rs" class="form-label">Out Date:<sup>*</sup></label>
+                                    <input type="date" class="form-control form-control-sm description-btn" [(ngModel)]="gatepassobj.out_date" (blur)="outDateTouched = true" (keydown)="NoSpaceallowedatstart($event)">
+                                    <div *ngIf="outDateTouched && !gatepassobj.out_date" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+                           
+                            </div>
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="discount_in_rs" class="form-label">In Date:</label>
+
+                                    <input type="date" class="form-control form-control-sm description-btn" [disabled]="gatepassobj.is_returnable==0"  [(ngModel)]="gatepassobj.in_date"  (keydown)="NoSpaceallowedatstart($event)">
+                                </div>
+                                 </div>                        
+                                  <div class="form-row">
+                                   
+                                    <div class="form-group col-md-6 col-sm-12">
+                                        <label for="discount_in_rs" class="form-label">Remarks:<sup>*</sup></label>
+                                    <textarea class="form-control  data-control-textarea" #address placeholder="Remarks"   rows="1" id="address"  [(ngModel)]="gatepassobj.remarks" (blur)="remarksTouched = true" (keydown)="NoSpaceallowedatstart($event)"></textarea>
+                                    <div *ngIf="remarksTouched && !gatepassobj.remarks" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6 col-sm-12">
+                                        <label for="party_name" class="form-label">Party Name:<sup>*</sup></label>
+                                    <input class="form-control  data-control-textarea" placeholder="Party Name"   id="party_name"  [(ngModel)]="gatepassobj.party_name" (blur)="partynameTouched = true"  (keydown)="NoSpaceallowedatstart($event)"/>
+                                    <div *ngIf="partynameTouched && !gatepassobj.party_name" class="text-danger font-italic mt-1">
+                                        Required
+                                    </div>
+
+                                    </div>
+
+                                  </div>
+
+
+                                  <div class="form-group col-md-12">
+                                    <div class="form-group text-center">
+                                        <button class="btn btn-data-login mr-2" (click)="onSave()">Save</button>
+                                        <button class="btn btn-data-login bg-warning" (click)="reload()">New</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover mt-2" *ngIf="displaygatepassdata && gatepassdata">
+                        <thead>
+                            <tr >
+                                <th scope="col"  style="width:5%;">S.No.</th>
+                                <th scope="col"  style="width:12%;">Item Code</th>
+                                <th scope="col"  style="width:10%;">Item Name</th>
+                                <th scope="col"  style="width:6%;">Quantity</th>
+                                <th scope="col"  style="width:15%;">Description</th>
+                                <th scope="col"  style="width:10%;">In Date</th>
+                                <th scope="col"  style="width:10%;">Out Date</th>
+                                <th scope="col"  style="width:15%;">Remarks</th>
+                                <th scope="col"  style="width:8%;">Returnable</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let items of gatepassdata; let i = index">
+                                <th scope="row" >{{i+1}}</th>
+                                <td >{{items.item_code}}</td>
+                                <td >{{items.item_name}}</td>
+                                <td >{{items.quantity}}</td>
+                                <td >{{items.description}}</td>
+                                <td >
+                                    <span *ngIf="items.is_returnable==1">{{items.in_date?items.in_date:'Not Received'}}</span>
+                                    <span *ngIf="items.is_returnable==0">NA</span>
+                                </td>
+                                <td >{{items.out_date}}</td>
+                                <td >{{items.remarks}}</td>
+                                <td >
+                                    <span *ngIf="items.is_returnable==1" style="color:darkgreen">Yes</span>
+                                    <span *ngIf="items.is_returnable==0" style="color:red">No</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <tbody>
+                        </tbody>
+                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

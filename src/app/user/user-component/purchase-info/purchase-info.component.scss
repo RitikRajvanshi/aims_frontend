@@ -1,0 +1,18 @@
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6; /* Visual cue for disabled state */ 
+}
+
+.disabled-wrapper {
+  cursor: not-allowed !important;
+}
+
+
+
+

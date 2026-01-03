@@ -1,0 +1,231 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Items by PO/Invoice/Moved to Inventory for a Period</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content" *ngIf="isDataorNot">
+        <div class="page-background-h">
+            <!-- copy paste comment starts here -->
+            <div class="container-fluid mt-0 pt-0">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label class="form-label">Start Date </label>
+                                    <input type="date" class="form-control data-control-date" placeholder="Start Date"
+                                        [(ngModel)]="reportitemsdatabydate.start_date">
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="form-label">End Date </label>
+
+                                    <input type="date" class="form-control data-control-date" placeholder="End Date"
+                                        [(ngModel)]="reportitemsdatabydate.end_date">
+                                </div>
+
+                                <div class="col-lg-2">
+                                    <label class="form-label">Filtered By </label>
+
+                                    <div class="input-group">
+                                        <select class="form-control form-control-sm" [(ngModel)]="filteringBy"
+                                            [ngModelOptions]="{standalone:true}">
+                                            <option *ngFor="let range of filteredByDates" [value]="range.value">
+                                                {{ range.viewValue }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class=" mt-3">
+                                        <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"
+                                            (click)="refreshfilter()" title="refresh"></i>
+                                        <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
+                                            [disabled]="!reportitemsdatabydate.start_date || !reportitemsdatabydate.end_date">Filter</button>
+                                        <button class="btn btn-login-report m-2"
+                                            (click)="exportToexcelfromnode()">Export To
+                                            Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid my-3">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-12 col-sm-12 mb-2 ">
+                        <label class=" mx-3 border border-0 text-dark form-label" for="purchaseId">Search By:</label>
+                    </div>
+                    <!-- Filter Dropdown -->
+                    <div class="col-lg-3 col-md-3 col-12 col-sm-12 mb-2 ">
+                        <div class="input-group">
+                            <ng-select appendTo="body" class="form-control form-control-sm"
+                                (change)="filterDatabynames()" [items]="items" bindLabel="item"
+                                [placeholder]="!selectItem ? 'Item Name...':''" [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="selectItem" [clearable]="true" (clear)="onClear()">
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div [ngStyle]="{ 'background-color': 'white'}">
+                                        {{ item }}
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <!-- Filter Dropdown -->
+                    <div class="col-lg-3 col-md-3 col-12 col-sm-12 mb-2 ">
+                        <div class="input-group">
+
+
+                            <ng-select appendTo="body" class="form-control form-control-sm"
+                                (change)="filterDatabynames()" [items]="vendors" bindLabel="supplier_name"
+                                [placeholder]="!selectVendor ? 'Vendor Name...':''"
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="selectVendor" [clearable]="true"
+                                (clear)="onClear()">
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div [ngStyle]="{ 'background-color': 'white'}">
+                                        {{ item }}
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-lg-4 col-12 col-sm-12 pt-2 pb-0" style="text-align: right;">
+                        <span class="font-weight-bold">Total Amount:</span><span class="text-danger font-weight-bold"> ₹ {{sumofamount?sumofamount:0}}</span>
+                    </div> -->
+                    <div class="col-lg-4 col-12 col-sm-12 pt-6 pb-0 mt-2" style="text-align: right;">
+                        <span class="font-weight-bold">Total Amount:</span>
+
+                        <ng-container *ngFor="let item of sumofamountByCurrency | keyvalue; let last = last">
+                            <!-- <span class="text-danger font-weight-bold" [style.direction]="'rtl'"
+                                style="margin-left: 8px;">
+                                {{item.key}} {{item.value ? item.value : 0}}
+                                <span *ngIf="!last" >&nbsp;+</span>
+                            </span> -->
+                            <span class="text-danger font-weight-bold"
+                                style="margin-left: 8px; direction: ltr; unicode-bidi: isolate;">
+                                {{item.key}} {{item.value ? item.value : 0}}
+                                <span *ngIf="!last">&nbsp;+</span>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12 col-sm-12 ">
+                        <div class=" table-responsive overflow-auto">
+                            <div class="data-table" id="pdfTable" #pdfTable>
+                                <table class="table  table-bordered table-hover small-font"
+                                    style="table-layout: fixed;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="table-heading-color" style="width:5%">S.No.</th>
+
+                                             <th scope="col" class="table-heading-color" style="width:10%"  (click)="sort('purchase_id')">Purchase Id <i class="fa fa-sort"></i></th>
+
+                                            <th scope="col" class="table-heading-color" style="width:20%"
+                                                (click)="sort('item_code')">Item Code <i class="fa fa-sort"></i>
+                                            </th>
+                                            <th scope="col" class="table-heading-color" style="width:15%"
+                                                (click)="sort('item_name')">Item Name <i class="fa fa-sort"></i>
+                                            </th>
+                                            <th scope="col" class="table-heading-color" (click)="sort('supplier_name')"
+                                                style="width:15%">Vendor Name <i class="fa fa-sort"></i>
+                                            </th>
+                                            <th scope="col" class="table-heading-color" (click)="sort('unit_price')"
+                                                style="width:8%">Price <i class="fa fa-sort"></i>
+                                            </th>
+
+                                            <th scope="col" class="table-heading-color" (click)="sort('total')"
+                                                style="width:8%">Price with GST
+                                                <i class="fa fa-sort"></i>
+                                            </th>
+                                            <th scope="col" class="table-heading-color"
+                                                (click)="sort('po_created_date')" style="width:8%">PO Creation Date <i
+                                                    class="fa fa-sort"></i>
+                                            </th>
+
+                                            <th scope="col" class="table-heading-color" (click)="sort('invoice_date')"
+                                                style="width:8%">Invoice Date <i class="fa fa-sort"></i>
+                                            </th>
+
+                                            <th scope="col" class="table-heading-color"
+                                                (click)="sort('transfer_to_inventory_date')" style="width:10%">Moved to
+                                                Inventory <i class="fa fa-sort"></i>
+                                            </th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of itemsDataList | paginate:
+                                    {itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:empltyDataList.length}; let i = index ">
+                                            <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize
+                                                + i +1 }}</th>
+                                                 <td class="table-heading-sub-text"><a (click)="navigateTopurchaseinfo(data)"
+                                                    class="text-primary" style="cursor: pointer;">{{data.purchase_id}}</a></td>
+
+                                            <td class="table-heading-sub-text">{{data.item_code}}</td>
+
+                                            <td class="table-heading-sub-text">{{data.item_name}}</td>
+                                            <td class="table-heading-sub-text">{{data.supplier_name}}</td>
+                                            <td class="table-heading-sub-text"><strong>{{data.currency}}</strong>
+                                                {{data.sub_total?data.sub_total.toFixed(2):'NA'}}</td>
+                                            <td class="table-heading-sub-text"><strong>{{data.currency}}</strong>
+                                                {{data.total? data.total.toFixed(2) : 0}}</td>
+                                            <td class="table-heading-sub-text">
+                                                {{data.po_created_date?data.po_created_date:'NA'}}</td>
+                                            <td class="table-heading-sub-text">
+                                                {{data.invoice_date?data.invoice_date:'NA'}}</td>
+                                            <td class="table-heading-sub-text">
+                                                {{data.transfer_to_inventory_date?data.transfer_to_inventory_date:'NA'}}
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-0 ">
+                <div class="row">
+                    <div class="col-lg-10  d-flex">
+                        <div class="pagination " class="active">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="ontableDatachange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                    <div class="col-lg-2   ml-auto">
+                        <div class="form-group d-flex select-size">
+                            <p class="report-headings">Items/page</p>
+                            <select class=" data-control-select ml-2  select-size form-control"
+                                (change)="ontableSizechange($event)">
+                                <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                    {{size}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="noData text-center container-fluid mt-4 mb-4" *ngIf="!isDataorNot">
+    <h1 class="text-danger">No data found</h1>
+</div>

@@ -1,0 +1,18 @@
+input[type='text']:read-only {
+    color:red;
+       // background-color: 	#FBFCFB;
+       background-color: #F5FEFD;
+   }
+   
+   .disabled-icon{
+    opacity: 0.5;
+    pointer-events: none;
+}
+.center-data{
+    text-align: center!important;
+}
+
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}

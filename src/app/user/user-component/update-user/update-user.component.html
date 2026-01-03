@@ -1,0 +1,108 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-user text-danger"  aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Update User</h1>
+    </div>
+</section>
+<div class="container-fluid">
+       <div class="page-background-h">
+    <div class="add-icon-section pl-5">
+        <button class="btn-toggle-back" (click)="navigateBack()" > <i class="fa fa-arrow-left pr-1"></i> Back</button>             
+     </div>
+    <div class="data-content">
+       
+        <div class="page-background">
+            <form class="col-md-6 offset-md-2 " [formGroup]="updateUserForm">
+                <div class="data-form" >
+                    <h1 class="text-center form-heading">Update User</h1>
+
+                    <div class="form-group  m-2" >
+                        <label for="user_name" class="form-label">User Name:<sup>*</sup></label>
+                        <input type="text" id="user_name" class="form-control form-control-sm data-control" autocomplete="false" placeholder="Enter User Name " formControlName="user_name" [(ngModel)]="userData.user_name"/>
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                        *ngIf="updateUserForm.get('user_name').hasError('required') && updateUserForm.get('user_name').touched">
+                       Required</div>
+  
+                 
+  
+
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="user_email" class="form-label">Email:<sup>*</sup></label>
+                        <input type="email" id="user_email" autocomplete="false" class="form-control form-control-sm data-control" placeholder="Enter Email " formControlName="user_email" [(ngModel)]="userData.user_email"/>
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                        *ngIf="updateUserForm.get('user_email').hasError('required') && updateUserForm.get('user_email').touched">
+                        Required</div>
+  
+                      <div class="mandatory mandatory my-1 text-danger font-italic"
+                        *ngIf="updateUserForm.get('user_email').hasError('pattern') && updateUserForm.get('user_email').touched">
+                        Invalid Email address.</div>
+                    </div>
+
+                    <!-- <div class="form-group  m-2" >
+                        <label for="user_password" class="form-label">Password:<sup>*</sup></label>
+                        <input type="password" id="user_password" autocomplete="false" class="form-control form-control-sm data-control" placeholder="Enter Password " formControlName="user_password" [(ngModel)]="userData.user_password"/>
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                        *ngIf="updateUserForm.get('user_password').hasError('required') && updateUserForm.get('user_password').touched">
+                        Required</div>
+
+                    </div> -->
+                   
+              
+                    <div class="form-group m-2">
+                        <label for="privilege" class="form-label">Privilege:<sup>*</sup></label>
+                        <select class="data-control form-control-sm form-control" id="privilege" #privilege  formControlName="privilege_id" [(ngModel)]="userData.privilege_id" (change)="privilegeId(privilege.value)">
+    
+                            <option [selected]=true disabled hidden value=0>Select</option>
+
+                          <option *ngFor="let items of privilegeData" [value]='items.privilege_id'>{{items.privilege_name}}
+                        </option>
+                          
+                        </select>
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                      *ngIf="updateUserForm.get('privilege_id').hasError('pattern') && updateUserForm.get('privilege_id').touched">
+                    Required</div>   
+                      </div>
+  
+                <div class="form-group m-2">
+                    <label for="group" class="form-label">Group/Department:<sup>*</sup></label>
+                    <select class="data-control form-control-sm form-control" id="group"  formControlName="grp_id" #group (change)="grpId(group.value)" [(ngModel)]="userData.grp_id">
+
+                      <option [selected]=true disabled hidden value=0>Select</option>
+                      <option *ngFor=" let items of groupData" [value]='items.grp_id'>{{items.grp_name}}</option>
+
+                      <div class="mandatory my-1 text-danger font-italic"
+                      *ngIf="updateUserForm.get('grp_id').hasError('pattern') && updateUserForm.get('grp_id').touched">
+                    Required</div>
+                    </select>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="design" class="form-label">Designation:<sup>*</sup></label>
+                        <select class=" data-control form-control-sm form-control" id="design" #design formControlName="designation_id"  (change)="designId(design.value)" [(ngModel)]="userData.designation_id">
+    
+                          <option [selected]=true disabled hidden value=null>Select</option>
+    
+                          <option *ngFor=" let items of designationData" [value]='items.designation_id'>
+                            {{items.designation_name}}</option>
+                        </select>
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                      *ngIf="updateUserForm.get('designation_id').hasError('pattern') && updateUserForm.get('designation_id').touched">
+                      Required</div>
+                        </div>
+
+                <div class="data-form-btn">
+                    <div class="form-group text-center ">
+                        <button class="btn btn-data-login btn-block" (click)="updateuser()">Update</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>

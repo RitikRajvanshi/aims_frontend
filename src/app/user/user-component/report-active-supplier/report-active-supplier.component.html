@@ -1,0 +1,158 @@
+
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Active Vendors</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+                          <!-- main starts here -->
+        <div class="data-form mt-3" [formGroup]="dateForm">
+              <div class="container-fluid  pt-0">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label class="form-label">Start Date </label>
+                                    <input type="date" id="sdate" class="form-control data-control-date"
+                                    placeholder="Start Date" formControlName="start_date"
+                                    [(ngModel)]="dates.start_date">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-label">End Date </label>
+                                    <input type="date" id="edate" class="form-control data-control-date"
+                                        placeholder="End Date" formControlName="end_date" [(ngModel)]="dates.end_date">
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class=" mt-3">
+                                        <button class="btn btn-data-login-report d-inline m-auto" [disabled]="!dates.start_date || !dates.end_date"
+                                            (click)="submitDate()">Submit</button>
+                                            <button class="btn btn-login-report  m-2" (click)="exportToexcelfromnode()"
+                                            [disabled]="!displayList">Export To
+                                            Excel</button>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- main here -->
+
+        <div class="container-fluid" *ngIf="isDataorNot">
+            <div class="data-table" *ngIf="displayList">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="input-group my-3   search-container">
+                                        <input type="text" class=" data-control form-control  mr-2"
+                                            placeholder="Search..." aria-describedby="basic-addon2"
+                                            [(ngModel)]="searchTerm" (input)="applyFilter()"
+                                            (keydown)="NoSpaceallowedatstart($event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <table class="table  table-bordered table-hover small-font">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:5%;" scope="col">S.No.</th>
+                                            <th style="width:19%;" scope="col"
+                                                (click)="sort('supplier_name')">Vendor Name <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th style="width:10%;" scope="col"
+                                                (click)="sort('contact_person')">Contact Person <i
+                                                    class="fa fa-sort"></i></th>
+                                            <th style="width:5%;" scope="col">
+                                                Rating <i class="fa fa-sort"></i></th>
+                                            <th style="width:8%;" scope="col" (click)="sort('phone')"> Phone
+                                                <i class="fa fa-sort"></i></th>
+                                            <th style="width:8%;" scope="col" (click)="sort('mobile')">
+                                                Mobile <i class="fa fa-sort"></i></th>
+                                            <th style="width:18%;" scope="col" (click)="sort('email')">Email
+                                                <i class="fa fa-sort"></i></th>
+                                            <th style="width:10%;" scope="col" (click)="sort('categories')">Category <i class="fa fa-sort"></i></th>
+                                            <th style="width:8%;" scope="col" (click)="sort('purchase_mode')">Purchase Mode <i class="fa fa-sort"></i></th>
+
+                                            <th style="width:10%;" scope="col" (click)="sort('user_name')">
+                                                Created By <i class="fa fa-sort"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of filteredvendorData | paginate:
+                         {itemsPerPage: tableSize,
+                           currentPage: page, totalItems:empltyDataList.length};  let i = index">
+                                            <th scope="row">{{ (page - 1) *
+                                                tableSize + i +1 }}</th>
+                                            <td>
+                                                {{data.supplier_name?data.supplier_name:'N/A'}}</td>
+                                            <td>
+                                                {{data.contact_person?data.contact_person:'N/A'}}</td>
+                                            <!-- <td class="table-heading-sub-text center-data">
+                                                {{data.rating?data.rating:'N/A'}}</td> -->
+
+                                                <td class="text-center table-heading-sub-text"><button
+                                                    class="btn-warn view-button"
+                                                    (click)="supplierEvaluationData(data.supplier_id)">Ratings</button></td>
+                                                
+                                            <td>
+                                                {{data.phone?data.phone:'N/A'}}</td>
+                                            <td>
+                                                {{data.mobile?data.mobile:'N/A'}}</td>
+                                            <td>
+                                                {{data.email?data.email:'N/A'}}</td>
+                                            <td>
+                                                {{data.categories?data.categories:'N/A'}}</td>
+                                                <td>
+                                                {{data.purchase_mode?data.purchase_mode:'N/A'}}</td>
+                                            <td>
+                                                {{data.user_name?data.user_name:'N/A'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid mt-2 mb-2 ">
+                    <div class="row">
+                        <div class="col-lg-10  d-flex">
+                            <div class="pagination " class="active">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="ontableDatachange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                        <div class="col-lg-2   ml-auto ">
+                            <div class="form-group d-flex select-size">
+                                <p class="  report-headings">Items/page</p>
+                                <select class=" data-control-select ml-2  select-size form-control"
+                                (change)="ontableSizechange($event)" >
+                                <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                    {{size}}
+                                </option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

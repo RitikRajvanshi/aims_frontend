@@ -1,0 +1,56 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-check text-info" aria-hidden="true"></i></div>
+    <div class="header-title">
+
+
+        <h1>Received Purchase Orders</h1>
+
+    </div>
+</section>
+<div class="container-fluid" *ngIf="isDataorNot">
+    <div class="data-content" >
+        <div class="page-background-h">
+            <div class="data-box">
+                
+                <div class="data-content">
+                    <div class="data-table overflow-auto">
+                        <table class="table  table-bordered table-hover small-font " id="tablepurchaseOrder">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>
+                                    <th scope="col" class="table-heading-color" style="width:15%;">Purchase Id</th>
+                                    <th scope="col" class="table-heading-color" style="width:45%;">Vendor Name</th>
+                                    <th scope="col" class="table-heading-color" style="width:20%;">Purchase Date</th>
+                                    <th scope="col" class="table-heading-color" style="width:7%;">View</th>
+                                    <th scope="col" class="table-heading-color" colspan="2">Action</th> 
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let items of purchaseData; let i = index">
+                                    <th scope="row" class="table-heading-sub-text">{{i+1}}</th>
+                                    <td class="table-heading-sub-text">{{items.purchase_id}}</td>
+                                    <td class="table-heading-sub-text">{{items.supplier_name}}</td>
+                                    <td class="table-heading-sub-text">{{items.created_date}}</td>
+                                    <!-- <td class="text-center table-heading-sub-text"> <button class="p-0 border-0"  ><a [routerLink]="['../purchase-order-view', items.purchase_id]" (click)="navigateToNewRoute()"><i class="fa fa-eye table-edit-icon icon-eye"aria-hidden="true"></i></a></button> </td> -->
+                                    <td class="table-heading-sub-text" class="text-center"><button class="p-0 border-0"><a (click)="openModal(items)"><i
+                                                class="fa fa-eye table-edit-icon icon-yellow"
+                                                aria-hidden="true"></i></a></button> </td>
+                                    <td class="table-heading-sub-text"><button  class="btn  btn-accept " (click)="onaccept(items.purchase_id)" >Accept</button></td>    
+                                    <td class="table-heading-sub-text"><button class="btn btn-reject" (click)="onreject(items.purchase_id)">Reject</button></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="noData text-center container-fluid" *ngIf="!isDataorNot"  style="height:90vh">
+    <h1 class="text-danger">No data found</h1>
+</div>

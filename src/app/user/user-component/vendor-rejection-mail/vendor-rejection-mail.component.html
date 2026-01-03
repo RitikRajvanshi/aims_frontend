@@ -1,0 +1,30 @@
+<div class="po-rejection-parent" *ngIf="vendorStatus === 'approved'">
+    <div class="container">
+      <img src="./assets/images/info_icon.webp" alt="Already approved" style="width: 100px; height: 100px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">This Vendor has already been approved!</h1>
+    </div>
+  </div>
+  
+  <div class="po-rejection-parent" *ngIf="vendorStatus === 'rejected'">
+    <div class="container">
+      <img src="./assets/images/info_icon.webp" alt="Already rejected" style="width: 100px; height: 100px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">This Vendor has already been rejected!</h1>
+    </div>
+  </div>
+  
+  <div class="po-rejection-parent" *ngIf="vendorStatus === 'rejectedNow'">
+    <div class="container">
+      <img src="./assets/images/po_rejection1.jpg" alt="Reject Vendor" style="width: 200px; height: 200px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Vendor Rejected!</h1>
+    </div>
+  </div>
+  
+  <div class="po-rejection-parent" *ngIf="vendorStatus === 'cancelled'" style ="background:#f6f6f6">
+    <div class="container">
+      <img src="./assets/images/cancelled.webp" alt="Operation cancelled" style="width: 200px; height: 200px;" />
+      <h1 style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Operation cancelled!</h1>
+    </div>
+  </div>
+
+
+

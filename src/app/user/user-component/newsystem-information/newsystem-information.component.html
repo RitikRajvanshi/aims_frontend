@@ -1,0 +1,568 @@
+<section class="content-header">
+  <div class="header-icon"><i class="fa fa-info-circle" style="color:#A1887F" aria-hidden="true"></i></div>
+  <div class="header-title">
+    <h1>New System Information</h1>
+  </div>
+</section>
+<div class="container-fluid">
+  <div class="data-content">
+    <div class="add-icon-section pl-2">
+      <button class="btn-toggle-back" (click)="navigateBack()" *ngIf="displayupdateButton"> <i
+          class="fa fa-arrow-left pr-1"></i>
+        Back</button>
+    </div>
+    <div class="page-background-h mt-3">
+      <div class="flex-box">
+        <div class=" col-md-12 col-smt-12 col-lg-9">
+          <div class="  data-form">
+            <h1 class="text-center form-heading">New System Information</h1>
+            <div>
+              <div [formGroup]="newsystemForm">
+                <div class="form-row mt-1">
+
+                  <div class="form-group col-md-6" [formGroup]="systemradioBtn">
+                    <label for="systemType" class="form-label">System Type: <sup>*</sup></label>
+                    <select id="systemType" class="form-control form-control-sm" formControlName="systemType"
+                      (change)="selectSystemType($event)" [(ngModel)]="newsystemFormData.system_type">
+                      <option *ngFor="let type of systemTypes" [value]="type.value" [disabled]="makecpucoodereadonly">{{
+                        type.value }}</option>
+                    </select>
+                    <div class="mandatory my-1 text-danger font-italic"
+                      *ngIf="systemradioBtn.get('systemType').hasError('required') && systemradioBtn.get('systemType').touched">
+                      Required.
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="cpu_code" class="form-label">CPU Code:<sup>*</sup></label>
+                    <!-- I have removed  [(ngModel)]="newsystemForm.cpucode" from cpucode due to duplicacy-->
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allsystems" formControlName="cpucode" bindLabel="item_code" bindValue="item_code"
+                      [readonly]="makecpucoodereadonly" [placeholder]="!newsystemFormData.cpucode?'Select System':''"
+                      (change)="selectCPU($event)" [clearable]="false">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': matchArray.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+
+                      </ng-template>
+                    </ng-select>
+
+
+
+                    <div class="mandatory my-1 text-danger font-italic"
+                      *ngIf="newsystemForm.get('cpucode').hasError('required') && newsystemForm.get('cpucode').touched">
+                      Required.
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-row mt-1">
+                  <div class="form-group col-md-6">
+                    <label for="username" class="form-label">User Name:</label>
+
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="username" [items]="allusersdata" bindLabel="user_name" bindValue="user_id" #ram1code
+                      [(ngModel)]="newsystemFormData.username" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.username?'Select':''" [readonly]="true"
+                      (change)="selectUsersname(newsystemFormData.username)"></ng-select>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label for="processor" class="form-label">Processor:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="Processor"
+                      id="processor" formControlName="processor" [(ngModel)]="newsystemFormData.processor"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <!-- bradned System -->
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+
+                  <div class=" form-group col-md-6">
+                    <label for="ram1code" class="form-label">RAM1 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allRams" bindLabel="item_code" bindValue="item_code" #ram1code
+                      [(ngModel)]="newsystemFormData.ram1code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.ram1code?'NA':''" (clear)="onClear('ram1code')"
+                      (change)="selectram1forbrandedsystem(newsystemFormData.ram1code);">
+
+                      <ng-template ng-option-tmp let-item="item">
+
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="ram1" class="form-label">RAM1:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram1"
+                      formControlName="ram1" [(ngModel)]="newsystemFormDataforupdate.ram1"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="ram2code" class="form-label">RAM2 Code:</label>
+
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allRams" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.ram2code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.ram2code?'NA':''" (clear)="onClear('ram2code')"
+                      (change)="selectram2forbrandedsystem(newsystemFormData.ram2code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="ram2" class="form-label">RAM2:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram2"
+                      formControlName="ram2" [(ngModel)]="newsystemFormDataforupdate.ram2"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="ram3" class="form-label">RAM3 Code:</label>
+
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allRams" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.ram3code" [ngModelOptions]="{standalone: true}"
+                      [placeholder]="!newsystemFormData.ram3code?'NA':''" (clear)="onClear('ram3code')"
+                      (change)="selectram3forbrandedsystem(newsystemFormData.ram3code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+
+                  </div>
+                  <div class="col-md-6">
+                    <label for="ram3" class="form-label">RAM3:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram3"
+                      formControlName="ram3" [(ngModel)]="newsystemFormData.ram3"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="ram4code" class="form-label">RAM4 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="ram4code" [items]="allRams" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.ram4code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.ram4code?'NA':''" (clear)="onClear('ram4code')"
+                      (change)="selectram4forbrandedsystem(newsystemFormData.ram4code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="ram4" class="form-label">RAM4:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram4"
+                      formControlName="ram4" [(ngModel)]="newsystemFormData.ram4"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="hdd1code" class="form-label">HDD1 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="hdd1code" [items]="allHDD" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.hdd1code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.hdd1code?'NA':''" (clear)="onClear('hdd1code')"
+                      (change)="selecthdd1forbrandedsystem(newsystemFormData.hdd1code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class=" form-group col-md-6">
+                    <label for="hdd1" class="form-label">HDD1:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="hdd1"
+                      formControlName="hdd1" [(ngModel)]="newsystemFormData.hdd1"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+
+
+                </div>
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+
+                    <label for="hdd2code" class="form-label">HDD2 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="hdd2code" [items]="allHDD" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.hdd2code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.hdd2code?'NA':''" (clear)="onClear('hdd2code')"
+                      (change)="selecthdd2forbrandedsystem(newsystemFormData.hdd2code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="hdd2" class="form-label">HDD2:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="hdd2"
+                      formControlName="hdd2" [(ngModel)]="newsystemFormData.hdd2"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="smpscode" class="form-label">SMPS Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="smpscode" [items]="allsmps" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.smpscode" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.smpscode?'NA':''" (clear)="onClear('smpscode')"
+                      (change)="selectsmpsforbrandedsystem(newsystemFormData.smpscode)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+
+                  </div>
+                  <div class="col-md-6">
+                    <label for="smps" class="form-label">SMPS:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="smps"
+                      formControlName="smps" [(ngModel)]="newsystemFormData.smps"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <div class="form-row mt-1" *ngIf=" systemradioBtn.get('systemType').value === 'Branded Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="graphiccardcode" class="form-label">Graphics Card Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="graphiccardcode" [items]="allgraphiccard" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.graphiccardcode" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.graphiccardcode?'NA':''" (clear)="onClear('graphiccardcode')"
+                      (change)="selectgraphiccardcodeforbrandedsystem(newsystemFormData.graphiccardcode)">
+
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+
+                    </ng-select>
+
+                  </div>
+                  <div class="col-md-6">
+                    <label for="graphiccard" class="form-label">Graphics Card:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA"
+                      id="graphiccard" formControlName="graphiccard" [(ngModel)]="newsystemFormData.graphiccard"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <!-- Assembled System Starts here -->
+                <!-- Ram1 code starts here -->
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+
+                  <div class=" form-group col-md-6">
+                    <label for="ram1code" class="form-label">RAM1 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allRams" bindLabel="item_code" bindValue="item_code" #ram1code
+                      [(ngModel)]="newsystemFormData.ram1code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.ram1code?'NA':''"
+                      (change)="selectram1forassembled(newsystemFormData.ram1code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="ram1" class="form-label">RAM1:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram1"
+                      formControlName="ram1" [(ngModel)]="newsystemFormDataforupdate.ram1"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <!-- ram4 code ends here -->
+
+
+                <!-- Ram2 code starts here -->
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="ram2code" class="form-label">RAM2 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allRams" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.ram2code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.ram2code?'NA':''"
+                      (change)="selectram2forassembled(newsystemFormData.ram2code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="ram2" class="form-label">RAM2:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram2"
+                      formControlName="ram2" [(ngModel)]="newsystemFormDataforupdate.ram2"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <!-- ram2 code ends here -->
+
+                <!-- Ram3 code starts here -->
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="ram3" class="form-label">RAM3 Code:</label>
+
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option" id="cpucode"
+                      [items]="allRams" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.ram3code" [ngModelOptions]="{standalone: true}"
+                      [placeholder]="!newsystemFormData.ram3code?'NA':''"
+                      (change)="selectram3forassembled(newsystemFormData.ram3code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+
+                  </div>
+                  <div class="col-md-6">
+                    <label for="ram3" class="form-label">RAM3:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram3"
+                      formControlName="ram3" [(ngModel)]="newsystemFormData.ram3"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <!-- ram3 code ends here -->
+
+                <!-- Ram4 code starts here -->
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="ram4code" class="form-label">RAM4 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="ram4code" [items]="allRams" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.ram4code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.ram4code?'NA':''"
+                      (change)="selectram4forassembled(newsystemFormData.ram4code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="ram4" class="form-label">RAM4:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="ram4"
+                      formControlName="ram4" [(ngModel)]="newsystemFormData.ram4"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <!-- ram4 code ends here -->
+
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="hdd1code" class="form-label">HDD1 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="hdd1code" [items]="allHDD" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.hdd1code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.hdd1code?'NA':''"
+                      (change)="selecthdd1forassembled(newsystemFormData.hdd1code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class=" form-group col-md-6">
+                    <label for="hdd1" class="form-label">HDD1:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="hdd1"
+                      formControlName="hdd1" [(ngModel)]="newsystemFormData.hdd1"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+
+                    <label for="hdd2code" class="form-label">HDD2 Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="hdd2code" [items]="allHDD" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.hdd2code" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.hdd2code?'NA':''"
+                      (change)="selecthdd2forassembled(newsystemFormData.hdd2code)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="hdd2" class="form-label">HDD2:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="hdd2"
+                      formControlName="hdd2" [(ngModel)]="newsystemFormData.hdd2"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+
+                <!-- SMPS code starts here -->
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="smpscode" class="form-label">SMPS Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="smpscode" [items]="allsmps" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.smpscode" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.smpscode?'NA':''"
+                      (change)="selectsmpsforassembled(newsystemFormData.smpscode)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="smps" class="form-label">SMPS:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="smps"
+                      formControlName="smps" [(ngModel)]="newsystemFormData.smps"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <!-- SMPS code ends here -->
+
+
+                <!-- graphiccard code starts here -->
+                <div class="form-row mt-1"
+                  *ngIf=" systemradioBtn.get('systemType').value === 'Assembled Computer' || systemradioBtn.get('systemType').value === 'Old Assembled Computer'">
+                  <div class=" form-group col-md-6">
+                    <label for="graphiccardcode" class="form-label">Graphics Card Code:</label>
+                    <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                      id="graphiccardcode" [items]="allgraphiccard" bindLabel="item_code" bindValue="item_code"
+                      [(ngModel)]="newsystemFormData.graphiccardcode" [ngModelOptions]=" {standalone: true}"
+                      [placeholder]="!newsystemFormData.graphiccardcode?'NA':''"
+                      (change)="selectgraphiccardcodeforassembled(newsystemFormData.graphiccardcode)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div
+                          [ngStyle]="{ 'background-color': arrayofassigneditemsinsysinfo.includes(item?.item_code)  ?'rgb(188, 245, 204)':'white'}">
+                          {{item?.item_code}}
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="graphiccard" class="form-label">Graphics Card:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA"
+                      id="graphiccard" formControlName="graphiccard" [(ngModel)]="newsystemFormData.graphiccard"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <!-- graphiccard code ends here -->
+
+                <div class="form-row mt-1">
+                  <div class="form-group col-md-6">
+                    <label for="cabinet" class="form-label">Cabinet:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA " id="cabinet"
+                      formControlName="cabinet" [(ngModel)]="newsystemFormData.cabinet"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="cmos" class="form-label">CMOS:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA" id="cmos"
+                      formControlName="cmos" [(ngModel)]="newsystemFormData.cmos"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+                </div>
+                <div class="form-row mt-1">
+                  <div class="form-group col-md-6">
+                    <label for="motherboard" class="form-label">Motherboard:</label>
+                    <input type="text" class="form-control form-control-sm data-control" placeholder="NA"
+                      id="motherboard" formControlName="motherboard" [(ngModel)]="newsystemFormData.motherboard"
+                      (keydown)="NoSpaceallowedatstart($event)">
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea placeholder="Description" #description
+                      class="form-control form-control-sm data-control data-control-textarea" rows="1" id="description"
+                      formControlName="description" [(ngModel)]="newsystemFormData.description"
+                      (keydown)="NoSpaceallowedatstart($event)"> </textarea>
+                  </div>
+                </div>
+                <!-- <div class="form-row mt-1">
+                  
+                </div> -->
+
+                <div class="data-form-btn  ">
+                  <div class="form-group text-center ">
+                    <button class="btn btn-data-login btn-block" autocomplete="on" *ngIf="!displayupdateButton"
+                      [disabled]="matchArray.includes(newsystemFormData.cpucode)"
+                      (click)="addsysteminfo()">Submit</button>
+
+                    <button class="btn btn-data-login btn-block" *ngIf="displayupdateButton" autocomplete="on"
+                      (click)="updateSystemInfo(false)">Update</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

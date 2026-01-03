@@ -1,0 +1,273 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-info-circle" style="color:#A1887F" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Transfer History</h1>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="data-content">
+
+        <div class="add-icon-section pl-2">
+            <button class="btn-toggle-back" (click)="navigateBack()" > <i class="fa fa-arrow-left pr-1"></i> Back</button>             
+         </div>
+         
+
+         <!-- //system transfer to user -->
+        <div class="page-background-h">
+            <div class="data-control-box">
+                <!-- <div class="container-fluid" *ngIf="isSystem==1">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <h1 align="center"><strong>{{systemName}}</strong></h1>
+                                <table class="table table-bordered table-hover">
+                                    <caption style="text-align:center; caption-side:top"><h1><strong>Transfer History <span *ngIf="itemcodefromparams">of {{itemcodefromparams}}</span> </strong></h1></caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>                                   
+                                            <th scope="col" class="table-heading-color" style="width:20%;">Assigned to user</th>
+                                            <th scope="col" class="table-heading-color" style="width:20%;">Transfer Date</th>
+                                            <th scope="col" class="table-heading-color" style="width:20%;">Transferred By</th>
+                                            <th scope="col" class="table-heading-color" style="width:35%;">Location</th>
+    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="systemDatabyitemId && systemDatabyitemId.length > 0; else noDataTemplate">
+                                        <tr *ngFor="let items of systemDatabyitemId ;let i = index" [ngClass]="{'first-item': i == 0}">
+                                            <th scope="row" class="table-heading-sub-text">{{i+1}}</th>                                        
+                                            <td class="table-heading-sub-text"><strong>{{items.user_name}}</strong></td>
+                                            <td class="table-heading-sub-text">{{items.transfer_date}}</td>
+                                            <td class="table-heading-sub-text">{{items.transfer_byuser}}</td>
+                                            <td class="table-heading-sub-text">{{items.location_name}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #noDataTemplate>
+                                        <tr>
+                                            <td colspan="5">
+                                                <h1 class="text-danger text-center">No data found..</h1>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- //item transfer to system -->
+                <!-- <div class="container-fluid" *ngIf="isSystem==0 && !onlyLocationTransfer">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <h1 align="center"><strong>{{systemName}}</strong></h1>
+                                <table class="table table-bordered table-hover">
+                                    <caption style="text-align:center; caption-side:top"><h1><strong>Transfer History <span *ngIf="itemcodefromparams">of {{itemcodefromparams}}</span></strong></h1></caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>                                   
+                                            <th scope="col" class="table-heading-color">Item Code</th>
+                                            <th scope="col" class="table-heading-color">Item Name</th>
+                                            <th scope="col" class="table-heading-color">Transfer to</th>
+                                            <th scope="col" class="table-heading-color">Transfer Date</th>
+                                            <th scope="col" class="table-heading-color">Transfer by</th>
+    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="configureitemdetails && configureitemdetails.length > 0; else noDataTemplate">
+                                        <tr *ngFor="let items of configureitemdetails ;let i = index">
+                                            <th scope="row" class="table-heading-sub-text">{{i+1}}</th>                                        
+                                            <td class="table-heading-sub-text"><strong>{{items.item_code}}</strong></td>
+                                            <td class="table-heading-sub-text">{{items.item_name}}</td>
+                                            <td class="table-heading-sub-text font-weight-bold text-success">{{items.transfer_to_system  ?items.system_name:items.user_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.transfer_date}}</td>
+                                            <td class="table-heading-sub-text">{{items.transfer_byuser}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #noDataTemplate>
+                                        <tr>
+                                            <td colspan="5">
+                                                <h1 class="text-danger text-center">No data found..</h1>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+<!-- // only transferred to any location at last -->
+                <!-- <div class="container-fluid" *ngIf="onlyLocationTransfer">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <h1 align="center"><strong>{{systemName}}</strong></h1>
+                                <table class="table table-bordered table-hover">
+                                    <caption style="text-align:center; caption-side:top" *ngIf="isSystem==0"><h1><strong>Transfer History <span *ngIf="itemcodefromparams">of {{itemcodefromparams}}</span></strong></h1></caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>                                   
+                                            <th scope="col" class="table-heading-color">Item Code</th>
+                                            <th scope="col" class="table-heading-color">Item Name</th>
+                                            <th scope="col" class="table-heading-color">Transfer to location</th>
+                                            <th scope="col" class="table-heading-color">Transfer Date</th>
+                                            <th scope="col" class="table-heading-color">Transfer by</th>
+    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="configureitemdetails && configureitemdetails.length > 0; else noDataTemplate">
+                                        <tr *ngFor="let items of configureitemdetails ;let i = index">
+                                            <th scope="row" class="table-heading-sub-text">{{i+1}}</th>                                        
+                                            <td class="table-heading-sub-text"><strong>{{items.item_code}}</strong></td>
+                                            <td class="table-heading-sub-text">{{items.item_name}}</td>
+                                            <td class="table-heading-sub-text font-weight-bold text-success">{{items.location_name}}</td>
+                                            <td class="table-heading-sub-text">{{items.transfer_date}}</td>
+                                            <td class="table-heading-sub-text">{{items.transfer_byuser}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-template #noDataTemplate>
+                                        <tr>
+                                            <td colspan="5">
+                                                <h1 class="text-danger text-center">No data found..</h1>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    </tbody>
+                                
+                             
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto ">
+                                <table class="table table-bordered table-hover">
+                                    <caption style="text-align:center; caption-side:top"><h1><strong>Configuration</strong></h1></caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="table-heading-color" style="width:5%;">S.NO.</th>
+                                            <th scope="col" class="table-heading-color" style="width:20%;">Assigned Items</th>
+                                            <th scope="col" class="table-heading-color" style="width:20%;">Installation Date</th>
+                                            <th scope="col" class="table-heading-color" style="width:35%;">Installated By</th>
+    
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="systemDetail?.length > 1 || (systemDetail?.length ==1 && systemDetail[0]?.item_id !==null)">
+                                        <tr *ngFor="let items of systemDetail ;let i = index">
+                                            <th scope="row" class="table-heading-sub-text">{{i+1}}</th>                                        
+                                            <td class="table-heading-sub-text"><strong>{{items.item_code}}</strong></td>
+                                            <td class="table-heading-sub-text">{{items.transfer_date | date: 'YYYY-MM-DD'}}</td>
+                                            <td class="table-heading-sub-text">{{items.transfer_user}}</td>
+                      
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="systemDetail?.length ==1 && systemDetail[0]?.item_id ==null">
+                                        <tr>
+                                            <td colspan="4" class="table-heading-sub-text" >
+                                            <h1 class="text-danger text-center">No data found..</h1>
+                                            </td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                  <div class="container-fluid" *ngIf="configureitemdetails?.length > 0; else noDataFound">
+  <div class="row">
+    <div class="col-lg-12 col-12 col-sm-12">
+      <div class="table-responsive overflow-auto mb-4">
+        <h1 align="center"><strong>{{systemName}}</strong></h1>
+        <table class="table table-bordered table-hover">
+          <caption style="text-align:center; caption-side:top">
+            <h1>
+              <strong>
+                Transfer History 
+                <span *ngIf="itemcodefromparams">of {{itemcodefromparams}}</span>
+              </strong>
+            </h1>
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" style="width:5%;">S.No.</th>
+              <th scope="col">Item Code</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Transferred To / Location</th>
+              <th scope="col">Transfer Date</th>
+              <th scope="col">Location</th>
+              <th scope="col">Transfer By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let items of configureitemdetails; let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td><strong>{{items.item_code}}</strong></td>
+              <td>{{items.item_name}}</td>
+
+              <!-- Show system_name/user_name if available, otherwise location -->
+              <td class="font-weight-bold text-success">
+                {{items.system_name ? items.system_name : (items.user_name ? items.user_name : items.location_name)}}
+              </td>
+
+              <td>{{items.transfer_date}}</td>
+              <td>{{items.location_name}}</td>
+              <td>{{items.transfer_byuser}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #noDataFound>
+  <p class="text-center mt-3">No transfer history found.</p>
+</ng-template> -->
+
+<ng-template #noDataFound>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-danger">No data found..</h1>
+      </div>
+    </div>
+  </div>
+</ng-template>
+            </div>
+
+
+
+
+
+<!-- Show this if both are empty -->
+<!-- <ng-template #noDataFound>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-danger">No data found..</h1>
+      </div>
+    </div>
+  </div>
+</ng-template> -->
+
+
+           
+        </div>
+    </div>
+</div>

@@ -1,0 +1,225 @@
+<section class="content-header">
+  <div class="header-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+  <div class="header-title">
+    <h1>Vendor Evaluation</h1>
+  </div>
+</section>
+<div class="container-fluid">
+  <div class="data-content" *ngIf="!hideEvaluation">
+    <div class="page-background-h">
+      <div class="data-box">
+        <div class="container-fluid" [formGroup]="supplierevaluationForm">
+
+          <div class="row " >
+            <div class="col-lg-12 col-xl-12 col-sm-12 col-md-12 col-12 my-2 ">
+              <button class=" btn-toggle-back" (click)="navigateBack()" [disabled]="this.data"> <i
+                  class="fa fa-arrow-left pr-1"></i>Back</button>
+            </div>
+          </div>
+          <div class="vendor-bg">
+            <div class="col-xl-10 col-lg-12 col-md-12 offset-md-0 offset-lg-0 offset-xl-1 box-shadow-border">
+              <div class="row">
+                <div class="col-lg-12">
+                  <!-- <h1 class="text-center form-heading">Vendor Evaluation</h1> -->
+                  <h1 class="text-center form-heading">Grading</h1>
+
+                </div>
+                <div class="col-xl-6 col-lg-12 border rounded p-4" [style.background]="BackgroundColor" [style.color]="TextColor">
+                  <div class="evaluation-form" [style.background]="BackgroundColor" [style.color]="TextColor">
+                    <div class="form-group row my-2">
+                      <label for="purchase_id" class="col-lg-4 col-form-label form-label">Purchase Id</label>
+                      <div class="col-lg-8">
+                        <input type="text" id="purchase_id" class="form-control data-control"
+                          formControlName="purchase_id" readonly [(ngModel)]="supplierData.purchase_id">
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="supplier_name" class="col-lg-4 col-form-label form-label">Vendor Name</label>
+                      <div class="col-lg-8">
+                        <input type="text" id="supplier_name" class="form-control form-control-sm data-control"
+                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.supplier_name">
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="address" class="col-lg-4 col-form-label form-label">Address</label>
+                      <div class="col-lg-8">
+                        <input type="text" id="address" class="form-control data-control form-control-sm"
+                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.address">
+                      </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                      <label for="phone" class="col-lg-4 col-form-label form-label">Phone</label>
+                      <div class="col-lg-8">
+                        <input type="text" id="phone" class="form-control form-control-sm data-control"
+                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.phone">
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="mobile" class="col-lg-4 col-form-label form-label">Mobile</label>
+                      <div class="col-lg-8">
+                        <input type="text" id="mobile" class="form-control form-control-sm data-control"
+                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.mobile">
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="email" class="col-lg-4 col-form-label form-label">Email</label>
+                      <div class="col-lg-8">
+                        <input type="email" id="email" class="form-control form-control-sm data-control"
+                          [ngModelOptions]="{standalone: true}" readonly [(ngModel)]="supplierData.email">
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="evaluation_basis" class="col-lg-4 col-form-label form-label">Evaluation Basis <sup
+                          class="text-danger">*</sup></label>
+                      <div class="col-lg-8">
+                        <input type="text" id="evaluation_basis" class="form-control form-control-sm data-control"
+                          formControlName="evaluation_basis" [readOnly]="makeEvaluationbasisreadOnly"
+                          placeholder="Evaluation Basis" [(ngModel)]="evaluationData.evaluation_basis">
+
+                        <div class="mandatory my-1 text-danger font-italic"
+                          *ngIf="supplierevaluationForm.get('evaluation_basis').hasError('required') && supplierevaluationForm.get('evaluation_basis').touched">
+                          Required.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-12 border rounded p-4" [style.background]="BackgroundColor" [style.color]="TextColor">
+                  <div class="evaluation-form" [style.background]="BackgroundColor" [style.color]="TextColor">
+                    <div class="form-group row my-2">
+                      <label for="qualitybasis_grading" class="col-lg-4 col-form-label form-label">Quality <sup
+                          class="text-danger">*</sup></label>
+                      <div class="col-lg-8">
+                        <select class="form-control form-control-sm data-control" id="qualitybasis_grading"
+                          [disabled]="supplierevaluationForm.get('qualitybasis_grading').disabled" name="qualitygrading"
+                          #qualitygrading formControlName="qualitybasis_grading"
+                          (change)="Selectqualitygrading(qualitygrading.value)"
+                          [(ngModel)]="evaluationData.qualitybasis_grading" [style.color]="textColor">
+                          <option value="" hidden disabled>Select</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                        </select>
+                        <div class=" mandatory my-1 text-danger font-italic"
+                          *ngIf="supplierevaluationForm.get('qualitybasis_grading').hasError('required') && supplierevaluationForm.get('qualitybasis_grading').touched">
+                          Required.</div>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group row my-2">
+                      <label for="pricegrading" class="col-lg-4 col-form-label form-label">Price <sup
+                          class="text-danger">*</sup></label>
+                      <div class="col-lg-8">
+                        <select class="form-control form-control-sm data-control" id="pricegrading" name="pricegrading"
+                          #pricegrading formControlName="pricebasis_grading"
+                          (change)="Selectpricegrading(pricegrading.value)"
+                          [(ngModel)]="evaluationData.pricebasis_grading" [style.color]="textColor">
+                          <option value="" hidden disabled>Select</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                        </select>
+                        <div class="mandatory my-1 text-danger font-italic"
+                          *ngIf="supplierevaluationForm.get('pricebasis_grading').hasError('required') && supplierevaluationForm.get('pricebasis_grading').touched">
+                          Required.</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                      <label for="communicationgrading" class="col-lg-4 col-form-label form-label">Communication <sup
+                          class="text-danger">*</sup></label>
+                      <div class="col-lg-8">
+                        <select class="form-control form-control-sm data-control" id="communicationgrading"
+                          name="communicationgrading" #communicationgrading formControlName="communicationbasis_grading"
+                          (change)="Selectcommunicationgrading(communicationgrading.value)"
+                          [(ngModel)]="evaluationData.communicationbasis_grading" [style.color]="textColor">
+                          <option value="" hidden disabled>Select</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                        </select>
+                        <div class="mandatory my-1 text-danger font-italic"
+                          *ngIf="supplierevaluationForm.get('pricebasis_grading').hasError('required') && supplierevaluationForm.get('pricebasis_grading').touched">
+                          Required.</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                      <label for="deliverygrading" class="col-lg-4 col-form-label form-label">Delivery <sup
+                          class="text-danger">*</sup></label>
+                      <div class="col-lg-8">
+                        <select class="form-control form-control-sm data-control" id="deliverygrading"
+                          name="deliverygrading" #deliverygrading formControlName="deliverybasis_grading"
+                          (change)="Selectdeliverygrading(deliverygrading.value)"
+                          [(ngModel)]="evaluationData.deliverybasis_grading" [style.color]="textColor">
+                          <option value="" hidden disabled>Select</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                        </select>
+                        <div class="mandatory my-1 text-danger font-italic"
+                          *ngIf="supplierevaluationForm.get('deliverybasis_grading').hasError('required') && supplierevaluationForm.get('deliverybasis_grading').touched">
+                          Required.</div>
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="commitmentgrading" class="col-lg-4 col-form-label form-label">Commitment <sup
+                          class="text-danger">*</sup></label>
+                      <div class="col-lg-8">
+                        <select class="form-control  form-control-sm data-control" id="commitmentgrading"
+                          name="commitmentgrading" #commitmentgrading formControlName="commitmentbasis_grading"
+                          (change)="Selectcommitmentgrading(commitmentgrading.value)"
+                          [(ngModel)]="evaluationData.commitmentbasis_grading" [style.color]="textColor">
+                          <option value="" hidden disabled>Select</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                        </select>
+                        <div class="mandatory my-1 text-danger font-italic"
+                          *ngIf="supplierevaluationForm.get('commitmentbasis_grading').hasError('required') && supplierevaluationForm.get('commitmentbasis_grading').touched">
+                          Required.</div>
+                      </div>
+                    </div>
+                    <div class="form-group row my-2">
+                      <label for="vendor" class="col-lg-4 col-form-label form-label">Status</label>
+                      <div class="col-lg-8">
+                        <select class="form-control form-control-sm data-control" id="vendor" name="deliverygrading"
+                          #vendor formControlName="vendor_status" readOnly [(ngModel)]="evaluationData.vendor_status"
+                          [style.color]="textColor">
+                          <option value="" hidden disabled>Select</option>
+                          <option value='Approved'>Approved</option>
+                          <option value='Conditionally accepted'>Conditionally accepted</option>
+                          <option value='Rejected'>Rejected</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="data-form-btn">
+                    <div class="form-group text-center ">
+                      <button type="submit" class="btn btn-data-login btn-block" *ngIf="display"
+                        (click)="addsupplierEvaluation()">Submit</button>
+                    </div>
+                  </div>
+                  <span id="note" class="pb-2">
+                    <button class="btn instruction-btn" (click)="instructions()">Instructions</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="data-content" *ngIf="hideEvaluation && !this.data">
+    <div class="background">
+      <div class="nocontent text-center">
+        <h1 class="text-danger">Evaluation is not possible before inspection....</h1>
+      </div>
+    </div>
+  </div>
+</div>

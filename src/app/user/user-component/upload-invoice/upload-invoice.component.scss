@@ -1,0 +1,31 @@
+.fa-edit{
+    background: none;
+    border: none;  
+}
+
+// button:disabled{
+//     // color:rgb(192, 198, 209);
+//     color:grey;
+// }
+
+.disabled-icon{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.expanded-text{
+    width:250px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    transition: max-width 0.5s;
+    max-width: 250px;
+}
+
+// td .first.expanded{
+// max-width: 100%;
+// }
+
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}

@@ -1,0 +1,337 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-ticket text-success" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Gate Pass' List</h1>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="data-box">
+                <div class="data-control-box">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12 col-12 col-sm-12">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="input-group mb-3  search-container">
+                                            <input type="text" class=" data-control form-control-sm form-control mr-2"
+                                                placeholder="Search..." aria-describedby="basic-addon2"
+                                                [(ngModel)]="searchItem" (keydown)="NoSpaceallowedatstart($event)">
+                                            <!-- <button (click)="downloadAsPdf()">Print</button> -->
+                                        </div>
+
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div class="form-check form-check-inline mr-5">
+                                            <input class="form-check-input m-0" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio1" value="option1" [(ngModel)]="selectedOption"
+                                                (click)="showAll()" [checked]="userRole!=1">
+                                            <label class="form-check-label" for="inlineRadio1">All</label>
+                                        </div>
+                                        <div class="form-check form-check-inline mr-5">
+                                            <input class="form-check-input m-0" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio2" value="option2" [(ngModel)]="selectedOption"
+                                                (click)="showpending()" [checked]="userRole==1">
+                                            <label class="form-check-label" for="inlineRadio2">Pending</label>
+                                        </div>
+                                        <div class="form-check form-check-inline mr-5">
+                                            <input class="form-check-input m-0" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio3" value="option3" [(ngModel)]="selectedOption"
+                                                (click)="showAccepted()">
+                                            <label class="form-check-label" for="inlineRadio3">Approved</label>
+                                        </div>
+                                        <div class="form-check form-check-inline ">
+                                            <input class="form-check-input m-0" type="radio" name="inlineRadioOptions"
+                                                id="inlineRadio4" value="option4" [(ngModel)]="selectedOption"
+                                                (click)="showrejected()">
+                                            <label class="form-check-label" for="inlineRadio4">Rejected</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid" *ngIf="gatepassdata?.length!==0">
+                            <div class="row">
+                                <div class="col-lg-12 col-12 col-sm-12 ">
+                                    <div class=" table-responsive  overflow-auto ">
+                                        <table class="table  table-bordered table-hover m-0 ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="table-heading-color; " scope="col"
+                                                        style="white-space: nowrap;width: 5%;">S.No.</th>
+                                                    <th class="table-heading-color" scope="col"
+                                                        (click)="sort('gatepass_id')"
+                                                        style="white-space: nowrap;width: 8%;">Gate Pass Id <i
+                                                            class="fa fa-sort"></i></th>
+                                                    <th class="table-heading-color" scope="col"
+                                                        (click)="sort('issued_to')">Issued to <i class="fa fa-sort"></i>
+                                                    </th>
+                                                    <th class="table-heading-color" scope="col"
+                                                        (click)="sort('party_name')">Party Name <i class="fa fa-sort"></i>
+                                                    </th>
+                                                    <th class="table-heading-color" scope="col"
+                                                        (click)="sort('issued_by')">Issued by <i class="fa fa-sort"></i>
+                                                    </th>
+                                                    <th class="table-heading-color" style="white-space: nowrap;"
+                                                        scope="col" (click)="sort('out_date')">Creation Date <i
+                                                            class="fa fa-sort"></i></th>
+                                                    <!-- <th class="table-heading-color"
+                                                        style="white-space: nowrap;width: 8%;" scope="col"
+                                                        *ngIf="userRole != 1">Action</th> -->
+                                                    <!-- <th class="table-heading-color"
+                                                        style="white-space: nowrap;width: 8%;" scope="col" colspan="2"
+                                                        *ngIf="userRole == 1">Action</th> -->
+                                                    <th class="table-heading-color"
+                                                        style="white-space: nowrap;width: 10%;" scope="col" (click)="sort('is_sent')">Action/Status <i
+                                                            class="fa fa-sort"></i></th>
+                                                    <th class="table-heading-color"
+                                                        style="white-space: nowrap;width: 10%;" scope="col"
+                                                        (click)="sort('gatepass_approval_date')">Approved/Rejected On <i
+                                                            class="fa fa-sort"></i></th>
+                                                </tr>
+                                            </thead>
+
+                                            <!-- <tbody *ngIf="userRole != '1'">
+                                                <tr *ngFor="let items of gatepassdata| filter:searchItem| paginate:{itemsPerPage: tableSize,
+                                            currentPage: page, totalItems:emptyDataList.length}; let i = index">
+                                                    <th class="table-heading-sub-text" scope="row">{{i +1}}</th>
+                                                    <td class="table-heading-sub-tex text-primary" style="text-align: center;cursor:pointer;"><a
+                                                            (click)="navigateToNewRoute(items)"><strong>{{
+                                                                items?.gatepass_id}}</strong></a></td>
+                                                    <td class="table-heading-sub-text">{{items.issued_to}}</td>
+                                                    <td class="table-heading-sub-text">{{items.issued_by}}</td>
+                                                    <td class="table-heading-sub-text">
+                                                        {{items.out_date?items.out_date:'NA'}}</td>
+
+                                                    <td class="table-heading-sub-text">
+                                                        <button type="button" class="sent-button btn-danger"
+                                                            (click)="sentforapproval(items)"
+                                                            *ngIf="items.is_sent == 0">Send</button>
+                                                        <button type="button" class="btn-success sent-button"
+                                                            *ngIf="items.is_sent !== 0" disabled>Sent</button>
+                                                    </td>
+
+
+
+                                                    <td class="table-heading-sub-text">
+                                                        <span class="text-success"
+                                                            *ngIf=" items.is_sent === 2">Approved</span>
+                                                        <span class="text-danger"
+                                                            *ngIf="items.is_sent === 3">Rejected</span>
+                                                        <span class="text-secondary" *ngIf="items.is_sent === 0">Not
+                                                            sent</span>
+                                                        <span class="text-secondary"
+                                                            *ngIf="items.is_sent === 1">Approval is pending</span>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text">
+                                                        <span
+                                                            *ngIf="items.gatepass_approval_date!==null">{{items.gatepass_approval_date}}</span>
+                                                        <span class="text-secondary"
+                                                            *ngIf="items.gatepass_approval_date==null && items.is_sent === 0">Not
+                                                            sent</span>
+                                                        <span class="text-secondary"
+                                                            *ngIf="items.gatepass_approval_date==null && items.is_sent === 1">Approval
+                                                            is pending</span>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+
+                                            <tbody *ngIf="userRole == '1'">
+                                                <tr *ngFor="let items of gatepassdata| filter:searchItem| paginate:{itemsPerPage: tableSize,
+                                            currentPage: page, totalItems:emptyDataList.length}; let i = index">
+                                                    <th class="table-heading-sub-text" scope="row">{{i +1}}</th>
+                                                    <td class="table-heading-sub-text" style="text-align: center;"><a
+                                                            [routerLink]="['/user/gate-pass-list',items.gatepass_id]"><strong>{{
+                                                                items?.gatepass_id }}</strong></a></td>
+                                                    <td class="table-heading-sub-text">{{items.issued_to}}</td>
+                                                    <td class="table-heading-sub-text">{{items.issued_by}}</td>
+                                                    <td class="table-heading-sub-text">
+                                                        {{items.out_date?items.out_date:'NA'}}</td>
+
+                                                    <td class="table-heading-sub-text">
+                                                        <button class="btn  btn-accept " (click)="onaccept(items)"
+                                                            [disabled]="items.is_sent!==1">Approve</button>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text">
+                                                        <button class="btn btn-reject" (click)="onreject(items)"
+                                                            [disabled]="items.is_sent!==1">Reject</button>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text">
+                                                        <span class="text-secondary" *ngIf="items.is_sent === 0">Not
+                                                            Sent Yet!</span>
+                                                        <span class="text-warning"
+                                                            *ngIf="items.is_sent === 1">Pending</span>
+                                                        <span class="text-success"
+                                                            *ngIf="items.is_sent === 2">Approved</span>
+                                                        <span class="text-danger"
+                                                            *ngIf="items.is_sent === 3">Rejected</span>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text">
+                                                        <span
+                                                            *ngIf="items.gatepass_approval_date!==null">{{items.gatepass_approval_date}}</span>
+                                                        <span
+                                                            *ngIf="items.gatepass_approval_date==null && items.is_sent === 0">Not
+                                                            sent</span>
+                                                        <span class="text-secondary"
+                                                            *ngIf="items.gatepass_approval_date==null && items.is_sent === 1">Approval
+                                                            is pending</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody> -->
+
+                                            <tbody>
+                                                <tr
+                                                    *ngFor="let items of gatepassdata | filter: searchItem | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: emptyDataList.length }; let i = index">
+                                                    <th class="table-heading-sub-text" scope="row">{{ i + 1 }}</th>
+
+                                                    <!-- ID column with conditional link -->
+                                                    <td class="table-heading-sub-tex text-primary"
+                                                        style="text-align: center; cursor: pointer;">
+                                                        <ng-container *ngIf="userRole != '1'; else userLink">
+                                                            <a (click)="navigateToNewRoute(items)"><strong>{{items?.gatepass_id }}</strong></a>
+                                                        </ng-container>
+                                                        <ng-template #userLink>
+                                                            <a [routerLink]="['/user/gate-pass-list', items.gatepass_id]"><strong>{{items?.gatepass_id }}</strong></a>
+                                                        </ng-template>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text">{{ items.issued_to }}</td>
+                                                    <td class="table-heading-sub-text">{{ items.party_name }}</td>
+                                                    <td class="table-heading-sub-text">{{ items.issued_by }}</td>
+                                                    <td class="table-heading-sub-text">{{ items.out_date || 'NA' }}</td>
+
+                                                    <!-- Action buttons -->
+                                                    <!-- <td class="table-heading-sub-text" *ngIf="userRole != '1'">
+                                                        <button type="button" class="sent-button btn-danger"
+                                                            *ngIf="items.is_sent === 0"
+                                                            (click)="sentforapproval(items)">Send</button>
+                                                        <button type="button" class="btn-success sent-button"
+                                                            *ngIf="items.is_sent !== 0" disabled>Sent</button>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text" *ngIf="userRole == '1'">
+                                                        <button class="btn btn-accept" (click)="onaccept(items)"
+                                                            [disabled]="items.is_sent !== 1">Approve</button>
+                                                    </td>
+
+                                                    <td class="table-heading-sub-text" *ngIf="userRole == '1'">
+                                                        <button class="btn btn-reject" (click)="onreject(items)"
+                                                            [disabled]="items.is_sent !== 1">Reject</button>
+                                                    </td> -->
+
+                                                    <td class="table-heading-sub-text">
+                                                        <!-- For Non-Admin (userRole != '1') -->
+                                                        <!-- For non-admin users -->
+                                                        <ng-container *ngIf="userRole != '1'">
+                                                            <!-- Show "Send" button only when not sent -->
+                                                            <button type="button" class="sent-button btn-danger"
+                                                                *ngIf="items.is_sent === 0"
+                                                                (click)="sentforapproval(items)">Send</button>
+
+                                                            <!-- Show status if already sent -->
+                                                            <ng-container *ngIf="items.is_sent !== 0">
+                                                                <span class="text-success"
+                                                                    *ngIf="items.is_sent === 2">Approved</span>
+                                                                <span class="text-danger"
+                                                                    *ngIf="items.is_sent === 3">Rejected</span>
+                                                                <span class="text-secondary"
+                                                                    *ngIf="items.is_sent === 1">Sent for approval</span>
+                                                                <span class="text-secondary"
+                                                                    *ngIf="items.is_sent !== 1 && items.is_sent !== 2 && items.is_sent !== 3">Sent</span>
+                                                            </ng-container>
+                                                        </ng-container>
+
+                                                        <!-- For admin users -->
+                                                        <ng-container *ngIf="userRole == '1'">
+                                                            <!-- Show Approve/Reject buttons only when pending -->
+                                                            <ng-container *ngIf="items.is_sent === 1">
+                                                                <button class="btn btn-accept"
+                                                                    (click)="onaccept(items)">Approve</button>
+                                                                <button class="btn btn-reject"
+                                                                    (click)="onreject(items)">Reject</button>
+                                                            </ng-container>
+
+                                                            <!-- Show final status if not pending -->
+                                                            <ng-container *ngIf="items.is_sent !== 1">
+                                                                <span class="text-secondary"
+                                                                    *ngIf="items.is_sent === 0">Not Sent</span>
+                                                                <span class="text-success"
+                                                                    *ngIf="items.is_sent === 2">Approved</span>
+                                                                <span class="text-danger"
+                                                                    *ngIf="items.is_sent === 3">Rejected</span>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </td>
+
+
+                                                    <!-- Status column -->
+                                                    <!-- <td class="table-heading-sub-text">
+                                                        <span class="text-secondary" *ngIf="items.is_sent === 0">Not
+                                                            Sent Yet!</span>
+                                                        <span class="text-warning"
+                                                            *ngIf="items.is_sent === 1">Pending</span>
+                                                        <span class="text-success"
+                                                            *ngIf="items.is_sent === 2">Approved</span>
+                                                        <span class="text-danger"
+                                                            *ngIf="items.is_sent === 3">Rejected</span>
+                                                    </td> -->
+
+                                                    <!-- Approval date -->
+                                                    <td class="table-heading-sub-text">
+                                                        <span *ngIf="items.gatepass_approval_date !== null">{{
+                                                            items.gatepass_approval_date }}</span>
+                                                        <span
+                                                            *ngIf="items.gatepass_approval_date == null && items.is_sent === 0">Not sent</span>
+                                                        <span class="text-secondary"
+                                                            *ngIf="items.gatepass_approval_date == null && items.is_sent === 1">Approval Pending</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid mt-4 mb-2" *ngIf="gatepassdata?.length!==0">
+                            <div class="row">
+                                <div class="col-lg-10  d-flex">
+                                    <div class="pagination " class="active">
+                                        <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                            (pageChange)="ontableDatachange($event)">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 ml-auto ">
+                                    <div class="form-group  select-size d-flex">
+                                        <p class="  report-headings">Items/page</p>
+                                        <select class=" data-control-select ml-2  select-size form-control"
+                                            (change)="ontableSizechange($event)">
+                                            <option class="select-border" *ngFor=" let size of tableSizes"
+                                                [value]="size">
+                                                {{size}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="noData text-center container-fluid mt-4" *ngIf="gatepassdata?.length==0">
+                        <h1 class="text-danger">No data found</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+
+    </div>

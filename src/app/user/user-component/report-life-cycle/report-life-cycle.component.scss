@@ -1,0 +1,91 @@
+table th, td{
+    font-size:11px;
+    font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+.text-primary{
+    color: blue; /* or whatever color you'd like */
+}
+
+
+.extend-button {
+  width: 100px;
+  padding: 2px;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: 200px;
+  color: #fff;
+  background-color: #008080;
+  border: 1px solid #008080;
+//   background-color: rgb(201, 0, 0);
+//   border: 1px solid rgb(201, 0, 0);
+}
+
+.extend-button:hover {
+  color: #fff;
+
+    background-color: #005a5a;
+  border: 1px solid #005a5a;
+//   background-color: #008080;
+//   border: 1px solid #008080;
+}
+
+
+.extend-button:disabled {
+    background-color: rgb(219, 219, 219);
+    border:none;
+
+}
+
+
+
+.extend-dropdown {
+//   margin-top: 5px;
+  display: flex;
+//   gap: 5px;
+  align-items: center;
+  padding-left:10px;
+}
+
+.confirm-btn, .cancel-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 3px;
+  margin: 0 2px;
+  font-size: 1rem;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+/* Remove that long border or glow that appears on click/focus */
+.confirm-btn:focus, 
+.cancel-btn:focus {
+  outline: none;
+}
+
+/* Optional: prevent button "expanding" due to focus ring in some browsers */
+.confirm-btn::-moz-focus-inner, 
+.cancel-btn::-moz-focus-inner {
+  border: 0;
+}
+
+/* Add a subtle click/press effect */
+.confirm-btn:active, 
+.cancel-btn:active {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+/* Optional hover feedback */
+.confirm-btn:hover {
+  color: green;
+}
+
+.cancel-btn:hover {
+  color: red;
+}
+
+
+select{
+    padding:3px;
+}

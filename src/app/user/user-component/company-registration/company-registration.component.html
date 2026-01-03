@@ -1,0 +1,145 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-registered " style="color:#40E0D0" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Company Registration</h1>
+    </div>
+</section>
+<!-- FORM STARTS HERE -->
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="flex-box">
+                <div class=" col-md-12 col-sm-12 col-lg-8 mt-5  ">
+                    <div class="  data-form">
+                        <h1 class="text-center form-heading mb-4 mt-3">Company Registeration</h1>
+                        <form [formGroup]="companyregistrationForm">
+                            <!-- company and nick name starts here -->
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="companyname" class="form-label">Company Name:<sup>*</sup></label>
+                                    <input type="text" id="companyname"
+                                        class="form-control form-control-sm data-control"
+                                        placeholder="Enter Company Name" formControlName="company_name"
+                                        [(ngModel)]="companyData.company_name" />
+
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="companyregistrationForm.get('company_name').hasError('required') && companyregistrationForm.get('company_name').touched">
+                                        Required</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nickname" class="form-label">Nick Name</label>
+                                    <input type="text" id="nickname" class="form-control form-control-sm data-control"
+                                        placeholder="Enter Nick Name" formControlName="nick_name"
+                                        [(ngModel)]="companyData.nick_name" />
+                                </div>
+                            </div>
+                            <!-- company and nick name ends here -->
+                            <!-- companylogo1 and 2 starts here -->
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="logo" class="form-label">Company Logo:<sup>*</sup></label>
+                                    <div>
+                                        <input type="file" #logo id="logo"
+                                            class="btn form-control-file form-choosen-button" name="pdf"
+                                            accept="image/*" formControlName="company_logo"
+                                            (change)="selectedLogo($event)">
+                                    </div>
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="companyregistrationForm.get('company_logo').hasError('required') && companyregistrationForm.get('company_logo').touched">
+                                        Required</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="logo2" class="form-label">Company Logo2:</label>
+                                    <div>
+                                        <input type="file" #logo2 id="logo2"
+                                            class=" btn form-control-file form-choosen-button" name="pdf"
+                                            accept="image/*" formControlName="company_logo2"
+                                            (change)="selectedLogo2($event)">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- companylogo1 and 2  ends here -->
+                            <!-- Registered Email starts here -->
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="registerd_email" class="form-label">Registered
+                                        Email:<sup>*</sup></label>
+                                    <input type="email" id="registerd_email"
+                                        class="form-control form-control-sm data-control" placeholder="Enter Email "
+                                        formControlName="registered_email" [(ngModel)]="companyData.registered_email" />
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="companyregistrationForm.get('registered_email').hasError('required') && companyregistrationForm.get('registered_email').touched">
+                                        Required</div>
+
+                                    <div class="mandatory mandatory my-1 text-danger font-italic"
+                                        *ngIf="companyregistrationForm.get('registered_email').hasError('pattern') && companyregistrationForm.get('registered_email').touched">
+                                        Invalid Email Address.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="telephone_number" class="form-label">Telephone
+                                        Number:<sup>*</sup></label>
+                                    <input type="number" id="telephone_number"
+                                        class="form-control form-control-sm data-control"
+                                        placeholder="Enter Phone Number" formControlName="telephone_no"
+                                        [(ngModel)]="companyData.telephone_no"
+                                        (keypress)="validlengthforphone($event)" />
+
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="companyregistrationForm.get('telephone_no').hasError('required') && companyregistrationForm.get('telephone_no').touched">
+                                        Required</div>
+                                </div>
+                            </div>
+                            <!-- Registered Email ends here -->
+                            <!-- Mobile and Alternate no srarts here -->
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="mobile_number" class="form-label">Mobile Number:</label>
+                                    <input type="number" id="mobile_number"
+                                        class="form-control form-control-sm data-control"
+                                        placeholder="Enter Mobile Number" formControlName="mobile1"
+                                        [(ngModel)]="companyData.mobile1" (keypress)="validlengthformobile($event)" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="mobile_number2" class="form-label">Alternate Mobile Number:</label>
+                                    <input type="number" id="mobile_number2"
+                                        class="form-control form-control-sm data-control "
+                                        placeholder="Enter Mobile Number" formControlName="mobile2"
+                                        [(ngModel)]="companyData.mobile2" (keypress)="validlengthformobile($event)" />
+                                </div>
+                            </div>
+                            <!-- gstin and address starts here -->
+                            <div class="form-row m-2">
+                                <div class="col-md-6">
+                                    <label for="gstin" class="form-label">GSTIN:</label>
+                                    <input type="text" id="gstin" class="form-control form-control-sm data-control"
+                                        placeholder="Enter GSTIN" formControlName="gstin"
+                                        [(ngModel)]="companyData.gstin" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="address" class="form-label">Address:<sup>*</sup></label>
+                                    <textarea class="form-control  data-control-textarea" #address
+                                        placeholder="Enter Full Address" id="address" rows="1" formControlName="address"
+                                        [(ngModel)]="companyData.address" (keydown)="NoSpaceallowedatstart($event)"></textarea>
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="companyregistrationForm.get('address').hasError('required') && companyregistrationForm.get('address').touched">
+                                        Required</div>
+                                </div>
+                            </div>
+                            <!-- gstin and address ends here -->
+                            <!-- form-btn starts here -->
+                            <div class="data-form-btn ">
+                                <div class="form-group text-center ">
+                                    <button type="submit" class="btn btn-data-login btn-block " autocomplete="on"
+                                        (click)="submitRegistration()">Add</button>
+                                </div>
+                            </div>
+                            <!-- form-btn ends here -->
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FORM ENDS HERE -->

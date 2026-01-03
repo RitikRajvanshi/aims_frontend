@@ -1,0 +1,3533 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>imsappp documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">imsappp documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  TransferStockData</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/user/user-component/newsystem-information/newsystem-information.component.ts</code>
+        </p>
+
+
+
+
+
+
+            <section data-compodoc="block-indexables">
+    <h3 id="inputs">Indexable</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <code>[key: string]:    <code>literal type[]</code>
+</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/user/user-component/newsystem-information/newsystem-information.component.ts:52</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ChangeDetectorRef } from &#x27;@angular/core&#x27;;
+import { FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
+import { SharedService } from &#x27;src/app/services/shared.service&#x27;;
+import { AdminService } from &#x27;src/app/services/admin.service&#x27;;
+import Swal from &#x27;sweetalert2&#x27;;
+import { Router, ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { firstValueFrom, Subscription } from &#x27;rxjs&#x27;;
+import { HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import { forkJoin } from &#x27;rxjs&#x27;;
+import * as moment from &#x27;moment&#x27;;
+import { NgxSpinnerService } from &quot;ngx-spinner&quot;;
+import { catchError, retry } from &#x27;rxjs/operators&#x27;;
+import { of } from &#x27;rxjs&#x27;;
+import { environment } from &#x27;src/app/environments/environment.prod&#x27;;
+
+// Define a type for the item
+interface TransferStockItem {
+  item_id: number;
+  transfer_to_system: number;
+  location_id: number;
+  transfer_by: any;
+  transfer_category: number;
+  transfer_to_user: null;
+
+}
+
+interface itemsDatatypes {
+  purchase_id: string;
+  item_code: string;
+  item_name: string;
+  description: string;
+  category_id: number;
+  location_id: number;
+  invoice_no: string;
+  warrantyend_date: string;
+  item_status: string;
+  created_by: any;
+}
+
+// Define a type for the entire data structure
+interface TransferStockData {
+  ram1: TransferStockItem[];
+  ram2: TransferStockItem[];
+  ram3: TransferStockItem[];
+  ram4: TransferStockItem[];
+  hdd1: TransferStockItem[];
+  hdd2: TransferStockItem[];
+  smps: TransferStockItem[];
+  graphiccard: TransferStockItem[];
+}
+
+interface TransferStockData {
+  [key: string]: { item_id: number, transfer_to_system: number, location_id: number, transfer_by: any, transfer_category: number, transfer_to_user: null }[];
+}
+
+
+@Component({
+  selector: &#x27;app-newsystem-information&#x27;,
+  templateUrl: &#x27;./newsystem-information.component.html&#x27;,
+  styleUrls: [&#x27;./newsystem-information.component.scss&#x27;]
+})
+
+
+export class NewsystemInformationComponent {
+  dropdownSettings &#x3D; {};
+
+  currentdate: any
+  systemradioBtn: any;
+  newsystemForm: any;
+  newsystemFormData: any &#x3D; {
+    cpucode: &#x27;&#x27;,
+    username: 0,
+    processor: &#x27;&#x27;,
+    processorcode: &#x27;&#x27;,
+    ram1: &#x27;&#x27;,
+    ram1code: &#x27;&#x27;,
+    ram2: &#x27;&#x27;,
+    ram2code: &#x27;&#x27;,
+    ram3: &#x27;&#x27;,
+    ram3code: &#x27;&#x27;,
+    ram4: &#x27;&#x27;,
+    ram4code: &#x27;&#x27;,
+    hdd1: &#x27;&#x27;,
+    hdd1code: &#x27;&#x27;,
+    hdd2: &#x27;&#x27;,
+    hdd2code: &#x27;&#x27;,
+    graphiccard: &#x27;&#x27;,
+    graphiccardcode: &#x27;&#x27;,
+    smps: &#x27;&#x27;,
+    smpscode: &#x27;&#x27;,
+    cabinet: &#x27;&#x27;,
+    cabinetcode: &#x27;&#x27;,
+    cmos: &#x27;&#x27;,
+    cmoscode: &#x27;&#x27;,
+    motherboard: &#x27;&#x27;,
+    motherboardcode: &#x27;&#x27;,
+    system_type: &#x27;Branded Computer&#x27;,
+    description: &#x27;&#x27;,
+    system_status: 1,
+    created_by: localStorage.getItem(&#x27;name&#x27;)
+  }
+
+  newsystemFormDataforupdate: any &#x3D; {
+    sid: 0,
+    username: 0,
+    processor: &#x27;&#x27;,
+    ram1: &#x27;&#x27;,
+    ram1code: &#x27;&#x27;,
+    ram2: &#x27;&#x27;,
+    ram2code: &#x27;&#x27;,
+    ram3: &#x27;&#x27;,
+    ram3code: &#x27;&#x27;,
+    ram4: &#x27;&#x27;,
+    ram4code: &#x27;&#x27;,
+    hdd1: &#x27;&#x27;,
+    hdd1code: &#x27;&#x27;,
+    hdd2: &#x27;&#x27;,
+    hdd2code: &#x27;&#x27;,
+    graphiccard: &#x27;&#x27;,
+    graphiccardcode: &#x27;&#x27;,
+    smps: &#x27;&#x27;,
+    smpscode: &#x27;&#x27;,
+    cabinet: &#x27;&#x27;,
+    cmos: &#x27;&#x27;,
+    motherboard: &#x27;&#x27;,
+    system_type: &#x27;&#x27;,
+    description: &#x27;&#x27;,
+    system_status: 1,
+  }
+
+  backupoldItemsfromsysteminfo: any &#x3D; {
+    sid: 0,
+    username: 0,
+    processor: &#x27;&#x27;,
+    ram1: &#x27;&#x27;,
+    ram1code: &#x27;&#x27;,
+    ram2: &#x27;&#x27;,
+    ram2code: &#x27;&#x27;,
+    ram3: &#x27;&#x27;,
+    ram3code: &#x27;&#x27;,
+    ram4: &#x27;&#x27;,
+    ram4code: &#x27;&#x27;,
+    hdd1: &#x27;&#x27;,
+    hdd1code: &#x27;&#x27;,
+    hdd2: &#x27;&#x27;,
+    hdd2code: &#x27;&#x27;,
+    graphiccard: &#x27;&#x27;,
+    graphiccardcode: &#x27;&#x27;,
+    smps: &#x27;&#x27;,
+    smpscode: &#x27;&#x27;,
+    cabinet: &#x27;&#x27;,
+    cmos: &#x27;&#x27;,
+    motherboard: &#x27;&#x27;,
+    system_type: &#x27;&#x27;,
+    description: &#x27;&#x27;,
+    system_status: 1,
+  };
+
+  //item 
+  itemData &#x3D; {
+    purchase_id: &#x27;&#x27;,
+    item_code: &#x27;&#x27;,
+    item_name: &#x27;&#x27;,
+    description: &#x27;No Description&#x27;,
+    category_id: 0,
+    location_id: 1,                         //warehouse
+    invoice_no: &#x27;&#x27;,
+    warrantyend_Date: &#x27;&#x27;,
+    item_status: &#x27;1&#x27;,
+    created_by: localStorage.getItem(&#x27;login_id&#x27;),
+    complain_id: 1
+  }
+
+  //for radio buttons
+  systemTypes &#x3D; [
+    { value: &#x27;Branded Computer&#x27;, label: &#x27;Branded Computer&#x27; },
+    { value: &#x27;Assembled Computer&#x27;, label: &#x27;Assembled Computer&#x27; },
+    { value: &#x27;Old Assembled Computer&#x27;, label: &#x27;Old Assembled Computer&#x27; }
+  ];
+
+  displayassembledComputer &#x3D; false;
+  displaybrandedComputer &#x3D; false;
+  displayoldComputer &#x3D; false;
+  displayupdateButton &#x3D; false;
+  displayaddButton &#x3D; true;
+  makecpucoodereadonly &#x3D; false;
+  allsystems: any[] &#x3D; []
+  allsystemsfromsysteminfo: any[] &#x3D; []
+  allRams: any[] &#x3D; []
+  allHDD: any[] &#x3D; []
+  allsmps: any[] &#x3D; []
+  allgraphiccard: any[] &#x3D; []
+  allsysteminfodata: any;
+  allusersdata: any;
+  matchArray: any &#x3D; [];
+  systemTransferData: any;
+  systemTransferDatabyitemid: any
+  getTransferDataDetailotherthanCPU: any;
+  arrayofassigneditemsints: any &#x3D; [];
+  arrayofassigneditemsinsysinfo: any &#x3D; [];
+  systemtypeforupdatingdata: any;
+  itemdatafromts: any;
+  itemdataforotheritems: any;
+  selectedItem: any;
+  updatedataintransferstock: any[] &#x3D; [];
+
+
+  // Initialize the itemsData object
+  itemsdataobj: any &#x3D; {
+    ram1code: [],
+    ram2code: [],
+    ram3code: [],
+    ram4code: [],
+    hdd1code: [],
+    hdd2code: [],
+    smpscode: [],
+    graphiccardcode: [],
+  };
+  ;
+
+  transferStockDataobj: TransferStockData &#x3D;
+    {
+      ram1: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      ram2: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      ram3: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      ram4: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      hdd1: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      hdd2: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      smps: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+      graphiccard: [{ item_id: 0, transfer_to_system: 0, location_id: 2, transfer_by: localStorage.getItem(&#x27;login_id&#x27;), transfer_category: 1, transfer_to_user: null }],
+    }
+    ;
+
+  transferStockDataarray: any[] &#x3D; [];
+  userorNot: any;
+  private subscription: any;
+  adminUrl &#x3D; &#x27;&#x27;;
+  configureitemdetails: any;
+
+  dataforsysteminfowhenscrapped &#x3D; {
+    item_code: &#x27;&#x27;,
+  };
+
+  constructor(private sharedServices: SharedService, private router: Router, private adminService: AdminService, private cdr: ChangeDetectorRef, private spinner: NgxSpinnerService, private route: ActivatedRoute) {
+    this.validationradiobtn();
+    this.adminUrl &#x3D; environment.ADMIN_URL;
+    const today &#x3D; moment();
+    this.currentdate &#x3D; today.local().format(&#x27;YYYY-MM-DD&#x27;);
+    this.getDataFromparams();
+  }
+
+
+  ngOnInit(): void {
+    this.getSystems();
+  }
+
+  async getDataFromparams() {
+    try {
+      this.spinner.show();
+
+      const existingItem &#x3D; this.adminService.getSelectedItemValue();
+      console.log(existingItem, &quot;existingItem&quot;);
+
+      if (existingItem) {
+        this.previousDatafromsubjectBehaviour();
+      }
+      else {
+        this.route.queryParams.subscribe(async (params: any) &#x3D;&gt; {
+
+          if (params[&#x27;systemId&#x27;]) {
+            const systemId &#x3D; +params[&#x27;systemId&#x27;];
+            const results: any &#x3D; await this.sharedServices.getSysteminformationList().toPromise();
+
+            const filteredData &#x3D; results.filter((items: any) &#x3D;&gt; {
+              return items.sid &#x3D;&#x3D; systemId;
+            })
+
+            // console.log(Databysid, &quot;Databysid&quot;);
+            const item &#x3D; filteredData[0];
+            if (item) {
+              this.adminService.sendSelectedItem(item);
+              this.previousDatafromsubjectBehaviour();
+
+              this.adminService.resetSelectedItem();
+
+            }
+          }
+        })
+      }
+
+
+    }
+    catch (error: unknown) {
+      this.spinner.hide();
+
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        });
+      } else {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try again later!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        });
+      }
+    }
+    finally {
+      this.spinner.hide();
+    }
+  }
+
+  previousDatafromsubjectBehaviour() {
+    try {
+      // subject behaviour
+      this.subscription &#x3D; this.adminService.selectedItem$.subscribe(async (item: any) &#x3D;&gt; {
+
+        this.spinner.show();
+        if (item) {
+          //   / /g represent regex for space where g is the globla mean replace all instances of space to the non space.(mean remove all spaces.) 
+          this.displayupdateButton &#x3D; true;
+          this.displayaddButton &#x3D; false;
+          this.makecpucoodereadonly &#x3D; true;
+          // console.log(item, &quot;this.subscription&quot;);
+          // const convertitem &#x3D; ((item?.system_type).replace(/ /g, &#x27;&#x27;)).toLowerCase();
+
+          //select radio button
+          this.systemradioBtn.get(&#x27;systemType&#x27;).patchValue(item?.system_type);
+          this.systemtypeforupdatingdata &#x3D; item?.system_type;
+
+          if (item?.cpucode) {
+            this.newsystemForm.get(&#x27;cpucode&#x27;).patchValue(item?.cpucode);
+            this.newsystemForm.cpucode &#x3D; item?.cpucode;
+          }
+
+          this.newsystemFormData &#x3D; {
+            cpucode: item?.cpucode,
+            username: +item?.username,
+            processor: item?.processor,
+            processorcode: item?.processorcode,
+            ram1: item?.ram1,
+            ram1code: item?.ram1code,
+            ram2: item?.ram2,
+            ram2code: item?.ram2code,
+            ram3: item?.ram3,
+            ram3code: item?.ram3code,
+            ram4: item?.ram4,
+            ram4code: item?.ram4code,
+            hdd1: item?.hdd1,
+            hdd1code: item?.hdd1code,
+            hdd2: item?.hdd2,
+            hdd2code: item?.hdd2code,
+            graphiccard: item?.graphiccard,
+            graphiccardcode: item?.graphiccardcode,
+            smps: item?.smps,
+            smpscode: item?.smpscode,
+            cabinet: item?.cabinet,
+            cabinetcode: item?.cabinetcode,
+            cmos: item?.cmos,
+            cmoscode: item?.cmoscode,
+            motherboard: item?.motherboard,
+            motherboardcode: item?.motherboardcode,
+            system_type: item?.system_type,
+            description: item?.description,
+            system_status: 1,
+            created_by: localStorage.getItem(&#x27;name&#x27;)
+          };
+
+
+          const cpucode &#x3D; this.newsystemFormData.cpucode;
+          await this.getItemidwithitemcodeforotheritems(cpucode).then(() &#x3D;&gt; {
+            //putting data in transfer_stock object
+            this.transferStockDataobj.ram1[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.ram2[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.ram3[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.ram4[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.hdd1[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.hdd2[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.smps[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+            this.transferStockDataobj.graphiccard[0].transfer_to_system &#x3D; this.itemdataforotheritems[0]?.item_id;
+          })
+
+
+          this.newsystemFormDataforupdate &#x3D; {
+            sid: + item?.sid,
+            username: +item?.username,
+            processor: item?.processor,
+            ram1: item?.ram1,
+            ram1code: item?.ram1code,
+            ram2: item?.ram2,
+            ram2code: item?.ram2code,
+            ram3: item?.ram3,
+            ram3code: item?.ram3code,
+            ram4: item?.ram4,
+            ram4code: item?.ram4code,
+            hdd1: item?.hdd1,
+            hdd1code: item?.hdd1code,
+            hdd2: item?.hdd2,
+            hdd2code: item?.hdd2code,
+            graphiccard: item?.graphiccard,
+            graphiccardcode: item?.graphiccardcode,
+            smps: item?.smps,
+            smpscode: item?.smpscode,
+            cabinet: item?.cabinet,
+            cmos: item?.cmos,
+            motherboard: item?.motherboard,
+            system_type: item?.system_type,
+            description: item?.description,
+            system_status: 1,
+          }
+
+          this.backupoldItemsfromsysteminfo &#x3D; {
+            sid: + item?.sid,
+            username: item?.username,
+            processor: item?.processor,
+            ram1: item?.ram1,
+            ram1code: item?.ram1code,
+            ram2: item?.ram2,
+            ram2code: item?.ram2code,
+            ram3: item?.ram3,
+            ram3code: item?.ram3code,
+            ram4: item?.ram4,
+            ram4code: item?.ram4code,
+            hdd1: item?.hdd1,
+            hdd1code: item?.hdd1code,
+            hdd2: item?.hdd2,
+            hdd2code: item?.hdd2code,
+            graphiccard: item?.graphiccard,
+            graphiccardcode: item?.graphiccardcode,
+            smps: item?.smps,
+            smpscode: item?.smpscode,
+            cabinet: item?.cabinet,
+            cmos: item?.cmos,
+            motherboard: item?.motherboard,
+            system_type: item?.system_type,
+            description: item?.description,
+          }
+          // console.log(this.transferStockDataobj,&quot;this.transferStockDataobj.&quot;)
+          await this.spinner.hide();
+
+        }
+      })
+
+      // console.log(this.subscription, &quot;subscription&quot;);
+    }
+    catch (error: unknown) {
+      this.spinner.hide();
+
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        });
+      } else {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try again later!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        });
+      }
+    }
+
+
+  }
+
+
+  newEditdata() {
+    this.displayupdateButton &#x3D; true;
+    this.displayaddButton &#x3D; false;
+    this.makecpucoodereadonly &#x3D; true;
+  }
+
+  ngAfterViewInit() {
+    this.getdatafromsysteminformationlist();
+    this.getAssigneddatafromtsandsysteminfo();
+    // this.newsystemForm.controls[&#x27;cpucode&#x27;].disable(true);
+  }
+
+  selectSystemType(event: any) {
+    // Your function implementation for selecting system type
+    // console.log(event.target.value, &quot;selectSystemType&quot;);
+    this.newsystemFormData.system_type &#x3D; event.target?.value;
+  }
+
+  async getSystems() {
+    try {
+      const [systemdata, systeminforamtionList, userData, Ramdata, hdddata, Smpsdata, allgraphiccard]: any &#x3D;
+        await forkJoin([
+          this.sharedServices.getSystemsDatafromitems().pipe(
+            retry(3), // Retry the request up to 3 times
+            // catchError((error: HttpErrorResponse) &#x3D;&gt; {
+            //   console.error(&#x27;Error fetching user data:&#x27;, error);
+            //   return of([]); // Return an empty array if an error occurs
+            // })
+          ),
+          this.sharedServices.getSysteminformationList().pipe(
+            retry(3),
+          ),
+          this.sharedServices.getUsersdatabystatus().pipe(
+            retry(3),
+          ),
+          this.sharedServices.getRamDatafromitems().pipe(
+            retry(3),
+          ),
+          this.sharedServices.getHDDfromitems().pipe(
+            retry(3),
+          ),
+          this.sharedServices.getSMPSfromitems().pipe(
+            retry(3),
+          ),
+          this.sharedServices.getgraphiccarddatafromitems().pipe(
+            retry(3),
+          ),
+        ]).toPromise();
+
+      this.allsystemsfromsysteminfo &#x3D; await systeminforamtionList.map((e: any) &#x3D;&gt; {
+        return e.cpucode;
+      });
+
+      this.allsystems &#x3D; systemdata.filter((e: any) &#x3D;&gt; {
+        return !this.allsystemsfromsysteminfo.includes(e.item_code);
+      });
+
+      this.allusersdata &#x3D; userData;
+      this.allRams &#x3D; Ramdata;
+      console.log(this.allRams, &quot;allRams&quot;);
+      this.allHDD &#x3D; hdddata;
+      this.allsmps &#x3D; Smpsdata;
+      this.allgraphiccard &#x3D; allgraphiccard;
+    }
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        });
+      } else {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try again later!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        });
+      }
+    }
+
+  }
+
+
+  assigntransferto(itemid: any) {
+    // List of keys to iterate over
+    const keys &#x3D; Object.keys(this.transferStockDataobj);
+
+    // Loop over each key and update the transfer_to property
+    keys.forEach((key, index) &#x3D;&gt; {
+      this.transferStockDataobj[key][0].transfer_to_system &#x3D; itemid;
+    });
+  }
+
+  NoSpaceallowedatstart(event: any) {
+    if (event.target.selectionStart &#x3D;&#x3D;&#x3D; 0 &amp;&amp; event.keyCode &#x3D;&#x3D;&#x3D; 32) {
+      event.preventDefault();
+    }
+
+  }
+
+
+  async getdatafromsysteminformationlist() {
+    try {
+
+      const results &#x3D; await this.sharedServices.getSysteminformationList().toPromise();
+      setTimeout(() &#x3D;&gt; {
+        this.allsysteminfodata &#x3D; results;
+        if (this.allsystems &amp;&amp; this.allsysteminfodata) {
+          this.allsystems.map((e: any) &#x3D;&gt; {
+            this.allsysteminfodata.map((f: any) &#x3D;&gt; {
+              //checking condition for color change...
+              if (e?.item_code &#x3D;&#x3D;&#x3D; f?.cpucode) {
+                this.matchArray.push(f?.cpucode);
+              }
+            })
+          })
+        }
+        else {
+        }
+      }, 1000);
+    }
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        })
+
+      } else {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try after some time!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        })
+      }
+    }
+  }
+
+  async addsysteminfo() {
+
+    this.newsystemFormData.ram1 &#x3D; this.newsystemFormDataforupdate.ram1 ? this.newsystemFormDataforupdate.ram1 : this.newsystemFormData.ram1;
+    this.newsystemFormData.ram2 &#x3D; this.newsystemFormDataforupdate.ram2 ? this.newsystemFormDataforupdate.ram2 : this.newsystemFormData.ram2;
+    this.newsystemFormData.ram3 &#x3D; this.newsystemFormDataforupdate.ram3 ? this.newsystemFormDataforupdate.ram3 : this.newsystemFormData.ram3;
+    this.newsystemFormData.ram4 &#x3D; this.newsystemFormDataforupdate.ram4 ? this.newsystemFormDataforupdate.ram4 : this.newsystemFormData.ram4;
+    this.newsystemFormData.hdd1 &#x3D; this.newsystemFormDataforupdate.hdd1 ? this.newsystemFormDataforupdate.hdd1 : this.newsystemFormData.hdd1;
+    this.newsystemFormData.hdd2 &#x3D; this.newsystemFormDataforupdate.hdd2 ? this.newsystemFormDataforupdate.hdd2 : this.newsystemFormData.hdd2;
+
+    if (this.newsystemForm.invalid) {
+      this.newsystemForm.controls[&#x27;cpucode&#x27;].markAsTouched();
+    }
+    else {
+      console.log(this.newsystemFormData, &quot;this.newsystemFormData&quot;);
+      this.adminService.addSysteminfo(this.newsystemFormData).subscribe({
+        next: async (results: any) &#x3D;&gt; {
+          await Swal.fire({
+            title: &#x27;Success!&#x27;,
+            text: &#x27;System Inforamtion added successfully!&#x27;,
+            icon: &#x27;success&#x27;,
+          }).then(async () &#x3D;&gt; {
+
+            if (this.newsystemFormData.system_type &#x3D;&#x3D;&#x3D; &quot;Assembled Computer&quot; || this.newsystemFormData.system_type &#x3D;&#x3D;&#x3D; &quot;Old Assembled Computer&quot; &amp;&amp; this.transferStockDataobj) {
+              //adding data in transferstock
+              for (const key in this.transferStockDataobj) {
+                // console.log(this.transferStockDataobj.hasOwnProperty(key), &quot;this.transferStockDataobj.hasOwnProperty(key)&quot;);
+                if (this.transferStockDataobj.hasOwnProperty(key)) {
+                  // console.log(key, &quot;key for in this.transferStockDataobj&quot;);
+                  const currentObject &#x3D; this.transferStockDataobj[key][0];
+                  // Check if item_id is not 0
+                  if (currentObject.item_id !&#x3D;&#x3D; 0 &amp;&amp; currentObject.transfer_to_system !&#x3D;&#x3D; 0) {
+                    this.transferStockDataarray.push(currentObject);
+                  }
+                }
+              }
+
+              if (this.transferStockDataarray) {
+                this.transferStockformultipledata(this.transferStockDataarray);
+              }
+            }
+
+            if (this.newsystemFormData.system_type &#x3D; &quot;Branded Computer&quot;) {
+              await this.insertsysteminfointoitemstable();
+
+            }
+
+            this.newsystemForm.reset({
+              username: 0,
+            })
+
+            this.newsystemFormData.cpucode &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.username &#x3D; 0;
+            this.newsystemFormDataforupdate.username &#x3D; 0;
+            this.newsystemFormData.processor &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.processor &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram1 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram1code &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.ram1 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram2code &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram2 &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.ram2 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram3 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram3code &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.ram3 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram4 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.ram4code &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.ram4 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.hdd1 &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.hdd1 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.hdd1code &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.hdd1code &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.hdd2code &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.hdd2code &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.hdd2 &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.hdd2 &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.graphiccard &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.graphiccardcode &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.graphiccard &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.smps &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.smpscode &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.smps &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.smpscode &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.cabinet &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.cabinet &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.cmos &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.cmos &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.motherboard &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.motherboard &#x3D; &#x27;&#x27;;
+            this.newsystemFormData.description &#x3D; &#x27;&#x27;;
+            this.newsystemFormDataforupdate.description &#x3D; &#x27;&#x27;;
+            this.ngOnInit();
+
+          })
+
+        },
+        error: (error) &#x3D;&gt; {
+          if (error.status &#x3D;&#x3D; 403) {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Token expired.&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              this.router.navigate([&#x27;../login&#x27;]);
+            })
+          }
+          else {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Internal server error.Please try after some time!&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              location.reload();
+            })
+          }
+        }
+      })
+    }
+  }
+
+  
+
+  async updateSystemInfo() {
+    if (this.newsystemForm.invalid) {
+      this.newsystemForm.controls[&#x27;cpucode&#x27;].markAsTouched();
+    }
+    else {
+
+      this.newsystemFormDataforupdate.username &#x3D; this.newsystemFormData.username;
+      this.newsystemFormDataforupdate.processor &#x3D; this.newsystemFormData.processor;
+      this.newsystemFormDataforupdate.ram1 &#x3D; this.newsystemFormDataforupdate.ram1 ? this.newsystemFormDataforupdate.ram1 : this.newsystemFormData.ram1;
+      this.newsystemFormDataforupdate.ram1code &#x3D; this.newsystemFormData.ram1code
+      this.newsystemFormDataforupdate.ram2 &#x3D; this.newsystemFormDataforupdate.ram2 ? this.newsystemFormDataforupdate.ram2 : this.newsystemFormData.ram2;
+      this.newsystemFormDataforupdate.ram2code &#x3D; this.newsystemFormData.ram2code
+      this.newsystemFormDataforupdate.ram3 &#x3D; this.newsystemFormDataforupdate.ram3 ? this.newsystemFormDataforupdate.ram3 : this.newsystemFormData.ram3;
+      this.newsystemFormDataforupdate.ram4 &#x3D; this.newsystemFormDataforupdate.ram4 ? this.newsystemFormDataforupdate.ram4 : this.newsystemFormData.ram4;
+      this.newsystemFormDataforupdate.ram3code &#x3D; this.newsystemFormDataforupdate.ram3code ;
+      this.newsystemFormDataforupdate.ram4code &#x3D; this.newsystemFormDataforupdate.ram4code ;
+
+      this.newsystemFormDataforupdate.hdd1 &#x3D; this.newsystemFormData.hdd1;
+      this.newsystemFormDataforupdate.hdd1code &#x3D; this.newsystemFormData.hdd1code;
+      this.newsystemFormDataforupdate.hdd2 &#x3D; this.newsystemFormData.hdd2;
+      this.newsystemFormDataforupdate.hdd2code &#x3D; this.newsystemFormData.hdd2code;
+      this.newsystemFormDataforupdate.graphiccard &#x3D; this.newsystemFormData.graphiccard;
+      this.newsystemFormDataforupdate.graphiccardcode &#x3D; this.newsystemFormData.graphiccardcode;
+      this.newsystemFormDataforupdate.smps &#x3D; this.newsystemFormData.smps;
+      this.newsystemFormDataforupdate.smpscode &#x3D; this.newsystemFormData.smpscode;
+      this.newsystemFormDataforupdate.cabinet &#x3D; this.newsystemFormData.cabinet;
+      this.newsystemFormDataforupdate.cmos &#x3D; this.newsystemFormData.cmos
+      this.newsystemFormDataforupdate.motherboard &#x3D; this.newsystemFormData.motherboard
+      this.newsystemFormDataforupdate.system_type &#x3D; this.newsystemFormData.system_type
+      this.newsystemFormDataforupdate.description &#x3D; this.newsystemFormData.description;
+
+      try {
+        console.log(this.newsystemFormDataforupdate, &quot;this.newsystemFormDataforupdate&quot;)
+        const results: any &#x3D; await this.adminService.updateSysteminfo(this.newsystemFormDataforupdate).toPromise();
+
+        await Swal.fire({
+          title: &#x27;Success!&#x27;,
+          text: &#x27;System Information updated successfully!&#x27;,
+          icon: &#x27;success&#x27;,
+        }).then(() &#x3D;&gt; {
+
+          if (this.newsystemFormData.system_type &#x3D;&#x3D;&#x3D; &quot;Assembled Computer&quot; || this.newsystemFormData.system_type &#x3D;&#x3D;&#x3D; &quot;Old Assembled Computer&quot; &amp;&amp; this.transferStockDataobj) {
+            //adding data in transferstock
+            for (const key in this.transferStockDataobj) {
+
+              console.log(this.transferStockDataobj.hasOwnProperty(key), &quot;Assembled Computer&quot;);
+              console.log(this.transferStockDataobj, &quot;this.transferStockDataobj&quot;);
+
+              if (this.transferStockDataobj.hasOwnProperty(key)) {
+                const currentObject &#x3D; this.transferStockDataobj[key][0];
+                // Check if item_id is not 0
+                if (currentObject.item_id !&#x3D;&#x3D; 0 &amp;&amp; currentObject.transfer_to_system !&#x3D;&#x3D; 0) {
+                  this.transferStockDataarray.push(currentObject);
+                  console.log(this.transferStockDataobj, &quot;this.transferStockDataobj2&quot;);
+
+                }
+              }
+            }
+
+            console.log(this.transferStockDataarray, &quot;array of transferstock data&quot;);
+            if (this.transferStockDataarray) {
+              this.transferStockformultipledata(this.transferStockDataarray);
+            }
+
+          }
+
+          else if (this.newsystemFormData.system_type &#x3D;&#x3D;&#x3D; &quot;Branded Computer&quot; &amp;&amp; this.transferStockDataobj) {
+            //adding data in transferstock
+            for (const key in this.transferStockDataobj) {
+
+              console.log(this.transferStockDataobj.hasOwnProperty(key), &quot;Branded Computer&quot;);
+
+              if (this.transferStockDataobj.hasOwnProperty(key)) {
+                const currentObject &#x3D; this.transferStockDataobj[key][0];
+                // Check if item_id is not 0
+                if (currentObject.item_id !&#x3D;&#x3D; 0 &amp;&amp; currentObject.transfer_to_system !&#x3D;&#x3D; 0) {
+                  console.log(this.newsystemForm.cpucode, &#x27;cpucode&#x27;);
+
+                  this.getItemidwithitemcode(this.newsystemForm.cpucode).then(() &#x3D;&gt; {
+                    console.log(&#x27;Reached&#x27;);
+                    console.log(this.itemdatafromts, &quot;brandedsystemthings&quot;)
+                    currentObject.transfer_to_system &#x3D; this.itemdatafromts[0].item_id;
+
+                    console.log(currentObject, &quot;currentObject&quot;);
+                  })
+
+                  console.log(this.itemdatafromts, &quot;brandedsystemthings&quot;)
+
+                  // currentObject.transfer_to &#x3D; ; 
+                  this.transferStockDataarray.push(currentObject);
+                }
+              }
+            }
+
+            setTimeout(() &#x3D;&gt; {
+              console.log(this.transferStockDataarray, &quot;array of transferstock data&quot;);
+
+              if (this.transferStockDataarray) {
+                this.transferStockformultipledata(this.transferStockDataarray);
+              }
+            }, 500);
+
+
+          }
+
+          this.newsystemFormData.username &#x3D; 0;
+          this.newsystemFormData.cpucode &#x3D; &#x27;&#x27;;
+          this.newsystemFormData.ram1code &#x3D; &#x27;&#x27;;
+          this.newsystemFormData.ram2code &#x3D; &#x27;&#x27;;
+          this.newsystemFormData.ram3code &#x3D; &#x27;&#x27;;
+          this.newsystemFormData.ram4code &#x3D; &#x27;&#x27;;
+          this.newsystemFormData.smpscode &#x3D; &#x27;&#x27;;
+          this.newsystemFormData.graphiccardcode &#x3D; &#x27;&#x27;;
+          this.newsystemFormDataforupdate.username &#x3D; 0
+          this.newsystemForm.patchValue({
+            cpucode: &#x27;&#x27;,
+            processor: &#x27;&#x27;,
+            ram1: &#x27;&#x27;,
+            ram2: &#x27;&#x27;,
+            ram3: &#x27;&#x27;,
+            ram4: &#x27;&#x27;,
+            hdd1: &#x27;&#x27;,
+            hdd2: &#x27;&#x27;,
+            graphiccard: &#x27;&#x27;,
+            smps: &#x27;&#x27;,
+            cabinet: &#x27;&#x27;,
+            cmos: &#x27;&#x27;,
+            motherboard: &#x27;&#x27;,
+            description: &#x27;&#x27;,
+          })
+          this.ngOnInit();
+
+          this.adminService.sendSelectedItem(null);
+
+
+          this.router.navigateByUrl(&#x27;user/system-information-list&#x27;);
+
+        })
+        console.log(this.newsystemFormDataforupdate, &quot;this.newsystemFormDataforupdate&quot;);
+      } catch (error: unknown) {
+        if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+          await Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Token expired.&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;../login&#x27;]);
+          })
+
+        } else {
+          await Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Internal server error. Please try after some time!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          })
+        }
+      }
+    }
+  }
+
+  // async insertsysteminfointoitemstable() {
+  //   //this data is for items table when new system assigned
+  //   // if (!this.newsystemFormData) {
+  //   //   console.log(&#x27;No form data found&#x27;);
+  //   //   return;
+  //   // }
+  //   console.log(this.newsystemFormData, &quot;this.newsystemFormData insertsysteminfointoitemstable&quot;);
+
+  //   const pushData &#x3D; async (category: string, formData: any) &#x3D;&gt; {
+  //     console.log(formData[category], &quot;formData&quot;);
+
+  //     if (this.newsystemFormData.system_type &#x3D;&#x3D; &#x27;Branded Computer&#x27;) {
+
+  //       const newItem &#x3D; {
+  //         purchase_id: &#x60;BRND-${formData[category]}&#x60;,
+  //         item_code: formData[category],
+  //         item_name: &#x27;&#x27;,
+  //         description: &#x27;&#x27;,
+  //         category_id: 0,
+  //         location_id: 2,
+  //         invoice_no: &#x27;&#x27;,
+  //         warrantyend_date: this.currentdate,
+  //         item_status: &#x27;2&#x27;,
+  //         created_by: localStorage.getItem(&#x27;login_id&#x27;),
+  //         complain_id: null
+  //       };
+
+  //       // if (!formData[category]) return []; // skip if no data
+
+  //       const itemCode &#x3D; formData[category].toUpperCase();
+
+  //       console.warn(itemCode, &quot;Graphics Card&quot;)
+
+  //       if (itemCode.includes(&#x27;RAM&#x27;)) {
+  //         newItem.item_name &#x3D; &#x27;B-RAM&#x27;;
+  //         newItem.category_id &#x3D; 1;
+  //         newItem.description &#x3D; &#x27;BRANDED RAM&#x27;
+  //       }
+  //       else if (itemCode.includes(&#x27;HDD&#x27;)) {
+  //         newItem.item_name &#x3D; &#x27;B-HDD&#x27;;
+  //         newItem.category_id &#x3D; 1;
+  //         newItem.description &#x3D; &#x27;BRANDED HDD&#x27;
+  //       }
+  //       else if (itemCode.includes(&#x27;SMPS&#x27;)) {
+  //         newItem.item_name &#x3D; &#x27;B-SMPS&#x27;;
+  //         newItem.category_id &#x3D; 1;
+  //         newItem.description &#x3D; &#x27;BRANDED SMPS&#x27;
+  //       }
+  //       else if (itemCode.includes(&#x27;GRAPHICCARD&#x27;)) {
+  //         newItem.item_name &#x3D; &#x27;B-Graphics Card&#x27;;
+  //         newItem.category_id &#x3D; 1;
+  //         newItem.description &#x3D; &#x27;BRANDED Graphics Card&#x27;
+  //       }
+  //       console.log(newItem, &quot;this.newitem&quot;);
+  //       this.itemsdataobj[category].push(newItem);
+  //       console.log(this.itemsdataobj, &quot;this.itemsdataobj&quot;);
+  //       return this.itemsdataobj[category];
+
+  //     };
+
+  //     if (this.newsystemFormData) {
+
+  //       const allcodes &#x3D; [&#x27;ram1code&#x27;, &#x27;ram2code&#x27;, &#x27;ram3code&#x27;, &#x27;ram4code&#x27;, &#x27;hdd1code&#x27;, &#x27;hdd2code&#x27;, &#x27;smpscode&#x27;, &#x27;graphiccardcode&#x27;];
+
+  //       try {
+  //         const itemsDataArray &#x3D; await Promise.all(allcodes.map((category) &#x3D;&gt; pushData(category, this.newsystemFormData)));
+  //         // const itemsDataArray &#x3D; await Promise.all(itemsPromises);
+  //         const itemsobjectarray &#x3D; itemsDataArray.flat();
+  //         console.log(itemsobjectarray, &quot;itemsobjectarray&quot;);
+
+  //         const result &#x3D; await this.adminService.insertmultipleitemsinitemstable(itemsobjectarray).toPromise();
+  //         console.log(result);
+
+  //       }
+  //       catch (error: unknown) {
+  //         if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+  //           await Swal.fire({
+  //             icon: &#x27;error&#x27;,
+  //             title: &#x27;Oops!&#x27;,
+  //             text: &#x27;Token expired.&#x27;,
+  //             footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+  //           }).then(() &#x3D;&gt; {
+  //             this.router.navigate([&#x27;../login&#x27;]);
+  //           })
+
+  //         } else {
+  //           await Swal.fire({
+  //             icon: &#x27;error&#x27;,
+  //             title: &#x27;Oops!&#x27;,
+  //             text: &#x27;Internal server error. Please try after some time!&#x27;,
+  //             footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+  //           }).then(() &#x3D;&gt; {
+  //             location.reload();
+  //           })
+  //         }
+  //       }
+  //     }
+  //     else {
+  //       console.log(&#x27;No form data found&#x27;);
+  //     }
+  //   }
+
+  // }
+
+  async insertsysteminfointoitemstable() {
+    if (!this.newsystemFormData) {
+      console.log(&#x27;No form data found&#x27;);
+      return;
+    }
+
+    console.log(this.newsystemFormData, &quot;this.newsystemFormData insertsysteminfointoitemstable&quot;);
+
+    const allcodes &#x3D; [&#x27;ram1code&#x27;, &#x27;ram2code&#x27;, &#x27;ram3code&#x27;, &#x27;ram4code&#x27;, &#x27;hdd1code&#x27;, &#x27;hdd2code&#x27;, &#x27;smpscode&#x27;, &#x27;graphiccardcode&#x27;];
+
+    const pushData &#x3D; async (category: string, formData: any) &#x3D;&gt; {
+      const partCode &#x3D; formData[category];
+      const cpucode &#x3D; formData.cpucode; // Example: CPU-APV001
+
+      if (!partCode || !cpucode) {
+        console.warn(&#x60;Missing code for ${category} or cpucode&#x60;);
+        return [];
+      }
+
+      const partType &#x3D; category.replace(&#x27;code&#x27;, &#x27;&#x27;); // e.g., ram1code → ram1
+      const itemCode &#x3D; &#x60;${partType}-${cpucode}&#x60;;
+      const purchaseId &#x3D; &#x60;BRND-${partType}-${cpucode}&#x60;;
+
+      const newItem &#x3D; {
+        purchase_id: purchaseId,
+        item_code: itemCode,
+        item_name: &#x27;&#x27;,
+        description: &#x27;&#x27;,
+        category_id: 0,
+        location_id: 2,
+        invoice_no: &#x27;&#x27;,
+        warrantyend_date: this.currentdate,
+        item_status: &#x27;2&#x27;,
+        created_by: localStorage.getItem(&#x27;login_id&#x27;),
+        complain_id: 1
+      };
+
+      // Set name/description/category based on partType
+      if (partType.includes(&#x27;ram&#x27;)) {
+        newItem.item_name &#x3D; &#x27;B-RAM&#x27;;
+        newItem.category_id &#x3D; 1;
+        newItem.description &#x3D; &#x27;BRANDED RAM&#x27;;
+      } else if (partType.includes(&#x27;hdd&#x27;)) {
+        newItem.item_name &#x3D; &#x27;B-HDD&#x27;;
+        newItem.category_id &#x3D; 1;
+        newItem.description &#x3D; &#x27;BRANDED HDD&#x27;;
+      } else if (partType.includes(&#x27;smps&#x27;)) {
+        newItem.item_name &#x3D; &#x27;B-SMPS&#x27;;
+        newItem.category_id &#x3D; 1;
+        newItem.description &#x3D; &#x27;BRANDED SMPS&#x27;;
+      } else if (partType.toLowerCase().includes(&#x27;graphiccard&#x27;)) {
+        newItem.item_name &#x3D; &#x27;B-Graphics Card&#x27;;
+        newItem.category_id &#x3D; 1;
+        newItem.description &#x3D; &#x27;BRANDED Graphics Card&#x27;;
+      }
+
+      console.log(newItem, &#x60;Prepared item for ${category}&#x60;);
+      return [newItem];
+    };
+
+    try {
+      const itemsDataArray &#x3D; await Promise.all(
+        allcodes.map(category &#x3D;&gt; pushData(category, this.newsystemFormData))
+      );
+      const itemsobjectarray &#x3D; itemsDataArray.flat();
+
+      console.log(itemsobjectarray, &quot;Final items to insert&quot;);
+
+      if (itemsobjectarray.length &gt; 0) {
+        const result &#x3D; await this.adminService.insertmultipleitemsinitemstable(itemsobjectarray).toPromise();
+        console.log(&quot;Insert result:&quot;, result);
+      } else {
+        console.warn(&quot;No items to insert.&quot;);
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        });
+        this.router.navigate([&#x27;../login&#x27;]);
+      } else {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try after some time!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        });
+        location.reload();
+      }
+    }
+  }
+
+
+  transferStockformultipledata(arrayofdata: any) {
+    console.log(arrayofdata, &quot;arrayofdata&quot;);
+    this.adminService.transferStockformultipledata(arrayofdata).subscribe({
+      next: (results: any) &#x3D;&gt; {
+        console.log(results, &quot;transferStockformultipledata&quot;);
+
+      },
+      error: (error) &#x3D;&gt; {
+        if (error.status &#x3D;&#x3D; 403) {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Token expired.&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;../login&#x27;]);
+          })
+        }
+        else if (error.status &#x3D;&#x3D; 400) {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;400 Bad Request!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          })
+        }
+        else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Internal server error.Please try after some time!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          })
+        }
+      }
+    })
+
+  }
+
+
+  async selectCPU(event: any) {
+    this.transferStockDataobj.ram1[0].transfer_to_system &#x3D; event?.item_id;
+    this.transferStockDataobj.ram2[0].transfer_to_system &#x3D; event?.item_id;
+    this.transferStockDataobj.ram3[0].transfer_to_system &#x3D; event?.item_id;
+    this.transferStockDataobj.ram4[0].transfer_to_system &#x3D; event?.item_id;
+    this.transferStockDataobj.smps[0].transfer_to_system &#x3D; event?.item_id;
+    this.transferStockDataobj.graphiccard[0].transfer_to_system &#x3D; event?.item_id;
+    const userData &#x3D; await this.getsystemUserid(event?.item_id).then(() &#x3D;&gt; {
+
+      if (this.systemradioBtn.get(&#x27;systemType&#x27;).value &#x3D;&#x3D;&#x3D; &#x27;Branded Computer&#x27;) {
+        this.newsystemFormData.cpucode &#x3D; event?.item_code;
+        this.newsystemFormData.processorcode &#x3D; &#x60;processor-${event?.item_code}&#x60;;
+        this.newsystemFormData.ram1code &#x3D; &#x60;ram1-${event?.item_code}&#x60;;
+        this.newsystemFormData.ram2code &#x3D; &#x60;ram2-${event?.item_code}&#x60;;
+        this.newsystemFormData.ram3code &#x3D; &#x60;ram3-${event?.item_code}&#x60;;
+        this.newsystemFormData.ram4code &#x3D; &#x60;ram4-${event?.item_code}&#x60;;
+        this.newsystemFormData.hdd1code &#x3D; &#x60;hdd1-${event?.item_code}&#x60;;
+        this.newsystemFormData.hdd2code &#x3D; &#x60;hdd2-${event?.item_code}&#x60;;
+        //change graphic code according to the requirement from graphiccard --&gt; GraphicCard
+        this.newsystemFormData.graphiccardcode &#x3D; &#x60;graphiccard-${event?.item_code}&#x60;;
+        this.newsystemFormData.smpscode &#x3D; &#x60;smps-${event?.item_code}&#x60;;
+        this.newsystemFormData.cabinetcode &#x3D; &#x60;cabinet-${event?.item_code}&#x60;;
+        this.newsystemFormData.cmoscode &#x3D; &#x60;cmos-${event?.item_code}&#x60;;
+        this.newsystemFormData.motherboardcode &#x3D; &#x60;motherboard-${event?.item_code}&#x60;;
+      } else {
+        this.newsystemFormData.cpucode &#x3D; event?.item_code;
+        this.newsystemFormData.processorcode &#x3D; &#x60;processor-${event?.item_code}&#x60;;
+        this.newsystemFormData.cabinetcode &#x3D; &#x60;cabinet-${event?.item_code}&#x60;;
+        this.newsystemFormData.cmoscode &#x3D; &#x60;cmos-${event?.item_code}&#x60;;
+        this.newsystemFormData.motherboardcode &#x3D; &#x60;motherboard-${event?.item_code}&#x60;;
+      }
+
+    })
+
+  }
+
+
+  async getsystemUserid(item_id: any): Promise&lt;any&gt; {
+    const itemId &#x3D; {
+      item_id: item_id
+    };
+
+    this.userorNot &#x3D; null;
+
+    this.sharedServices.getsystemDatabyitemId(itemId).subscribe({
+      next: async (results: any) &#x3D;&gt; {
+        // const lengthofresults &#x3D;+ results.length-1 ;
+        console.log(results, &quot;this.systemTransferData&quot;);
+        this.systemTransferData &#x3D; results[0]?.transfer_to_user;
+
+        if (results[0]) {
+          // this.newsystemFormData.username &#x3D; + results[0]?.transfer_to;
+          this.isuserornot(+results[0]?.transfer_to_user).then(() &#x3D;&gt; {
+
+            if (this.userorNot) {
+              // console.log(&#x27;user allowed&#x27;)
+              this.newsystemFormData.username &#x3D; + results[0]?.transfer_to_user;
+            }
+
+            else {
+              // console.log(&#x27; not a user&#x27;)
+              Swal.fire({
+                icon: &#x27;question&#x27;,
+                html: &#x27;This system is not assigned to any user!&lt;br&gt;Please assigned first and then add to the system information.&#x27;,
+              }).then(() &#x3D;&gt; {
+                location.reload();
+              })
+            }
+          });
+        }
+        else {
+          this.newsystemFormDataforupdate.username &#x3D; 0;
+          this.newsystemFormData.username &#x3D; 0;
+
+          await Swal.fire({
+            icon: &#x27;question&#x27;,
+            html: &#x27;This system is not assigned to any user!&lt;br&gt;Please assigned first and then add to the system information.&#x27;,
+          }).then(() &#x3D;&gt; {
+            location.reload();
+
+          })
+        }
+
+      },
+      error: (error) &#x3D;&gt; {
+        if (error.status &#x3D;&#x3D; 403) {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Token expired.&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;../login&#x27;]);
+          })
+        }
+        else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Oops!&#x27;,
+            text: &#x27;Internal server error.Please try after some time!&#x27;,
+            footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+          }).then(() &#x3D;&gt; {
+            location.reload();
+          })
+        }
+      }
+    })
+
+  }
+
+  isuserornot(userid: any): Promise&lt;void&gt; {
+    return new Promise((resolve, reject) &#x3D;&gt; {
+      // console.log(userid, &quot;userid&quot;);
+      const userId &#x3D; {
+        user_id: userid
+      }
+      this.sharedServices.getUsersdatabyid(userId).subscribe({
+        next: (results: any) &#x3D;&gt; {
+          if (results.length) {
+            this.userorNot &#x3D; results;
+          }
+          else {
+            console.warn(&#x27;User not  found&#x27;);
+          }
+          resolve();
+        },
+        error: (error) &#x3D;&gt; {
+          console.error(error);
+          reject();
+        }
+      })
+    })
+  }
+
+
+  async getTransferData(data: any): Promise&lt;any&gt; {
+    try {
+      // get_sytemdata_byitemidotherthancpu (only system data)
+      const itemId &#x3D; {
+        item_id: +data
+      }
+      const results: any &#x3D; await this.sharedServices.getsystemDataotherThanCPU(itemId).toPromise();
+      console.log(results, &quot;configureitemdetails&quot;);
+
+      // const configureitemdetails &#x3D; results;
+      if (results &amp;&amp; results.length &gt; 0) {
+        this.configureitemdetails &#x3D; results;
+        this.getTransferDataDetailotherthanCPU &#x3D; &#x60;${results[results.length - 1].item_code} is presently assigned to ${results[results.length - 1].system_name} system&#x60;;
+      }
+
+      // return results;
+
+    }
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        console.log(error, &quot;err at getTransferData&quot;);
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        })
+
+      } else {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try after some time!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        })
+      }
+    }
+  }
+
+  selectUsersname(id: any) {
+    console.log(id);
+  }
+
+  async selectram1forassembled(ram1code: any) {
+    console.log(ram1code, &quot;selectram1forassembled&quot;);
+
+    await this.getItemidwithitemcode(ram1code).then(async () &#x3D;&gt; {
+      const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+      this.transferStockDataobj.ram1[0].item_id &#x3D; item_id;
+
+      // await this.getTransferData(item_id);
+
+      // if(this.configureitemdetails &amp;&amp; this.configureitemdetails.length&gt;0 &amp;&amp; this.configureitemdetails[0].transfer_to_system){
+      //   await Swal.fire({
+      //     text: &#x60;${this.configureitemdetails[0].item_code} already installed in ${this.configureitemdetails[0].system_name}.&#x60;,
+      //     icon: &quot;info&quot;,
+      //     // showCancelButton: true,
+      //     confirmButtonColor: &quot;#3085d6&quot;,
+      //     cancelButtonColor: &quot;#d33&quot;,
+      //     confirmButtonText: &quot;Yes&quot;
+      //   })
+      // }
+
+      await this.checkalreadyAssignorNot(item_id);
+
+
+      // Check if the item already exists in the array
+      const existingIndex &#x3D; this.transferStockDataobj.ram1.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+      // already exists
+      if (existingIndex !&#x3D;&#x3D; -1) {
+        // If the item already exists, replace it in the ram1 array
+        this.transferStockDataobj.ram1[existingIndex].item_id &#x3D; item_id;
+      } else {
+        // If the item doesn&#x27;t exist, push a new object to the ram1 array
+        this.transferStockDataobj.ram1.push({
+          item_id: item_id,
+          transfer_to_system: 0,
+          location_id: 2,
+          transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+          transfer_category: 1,
+          transfer_to_user: null
+        });
+      }
+      console.log(this.transferStockDataobj);
+    });
+
+    console.log(this.backupoldItemsfromsysteminfo.ram1code, &quot;this.backupoldItemsfromsysteminfo.ram1code&quot;);
+    if ((this.newsystemFormData.ram2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram2code &#x3D;&#x3D;&#x3D; ram1code) || (this.newsystemFormData.ram3code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram3code &#x3D;&#x3D;&#x3D; ram1code) || (this.newsystemFormData.ram4code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram4code &#x3D;&#x3D;&#x3D; ram1code)) {
+
+      Swal.fire({
+        title: &quot;warning&quot;,
+        text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+        icon: &quot;warning&quot;
+      }).then(() &#x3D;&gt; {
+        this.newsystemFormData.ram1code &#x3D; &#x27;&#x27;;
+        this.newsystemFormDataforupdate.ram1code &#x3D; &#x27;&#x27;;
+      })
+    }
+    else if (this.backupoldItemsfromsysteminfo.ram1code) {
+      console.log(&#x27;this.backupoldItemsfromsysteminfo.ram1code&#x27;, this.backupoldItemsfromsysteminfo.ram1code)
+
+      if (this.backupoldItemsfromsysteminfo.ram1code !&#x3D;&#x3D; ram1code) {
+
+        this.replacementLogic(ram1code, this.backupoldItemsfromsysteminfo.ram1code, this.selectram1forassembled);
+        // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+      }
+    }
+    else {
+      this.newsystemFormData.ram1code &#x3D; ram1code;
+      this.newsystemFormDataforupdate.ram1code &#x3D; ram1code;
+
+    }
+  }
+
+  async selectram1forbrandedsystem(ram1code: any) {
+    console.log(ram1code, &quot;ram1code&quot;);
+    if (ram1code) {
+      await this.getItemidwithitemcode(ram1code).then(async () &#x3D;&gt; {
+
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.ram1[0].item_id &#x3D; item_id;
+
+
+        await this.checkalreadyAssignorNot(item_id);
+
+        // for items table
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram1.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram1 array
+          this.transferStockDataobj.ram1[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.ram1.push({
+            item_id: item_id,
+            transfer_to_system: 0,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+      });
+
+
+      //branded object
+      // console.log(ram1code);
+      // this.newsystemFormData.ram1code &#x3D; ram1code;
+      // this.newsystemFormDataforupdate.ram1code &#x3D; ram1code;
+      console.log(this.backupoldItemsfromsysteminfo.ram1code, &quot;this.backupoldItemsfromsysteminfo.ram1code&quot;);
+      if ((this.newsystemFormData.ram2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram2code &#x3D;&#x3D;&#x3D; ram1code) || (this.newsystemFormData.ram3code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram3code &#x3D;&#x3D;&#x3D; ram1code) || (this.newsystemFormData.ram4code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram4code &#x3D;&#x3D;&#x3D; ram1code)) {
+
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram1code &#x3D; &#x27;&#x27;;
+          this.newsystemFormDataforupdate.ram1code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.ram1code) {
+
+        if (this.backupoldItemsfromsysteminfo.ram1code !&#x3D;&#x3D; ram1code) {
+
+          this.replacementLogic(ram1code, this.backupoldItemsfromsysteminfo.ram1code, this.selectram1forbrandedsystem);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+      }
+      else {
+        this.newsystemFormData.ram1code &#x3D; ram1code;
+        this.newsystemFormDataforupdate.ram1code &#x3D; ram1code;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectram2forassembled(ram2code: any) {
+    if (ram2code) {
+      await this.getItemidwithitemcode(ram2code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+
+        this.transferStockDataobj.ram2[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram2.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram1 array
+          this.transferStockDataobj.ram2[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.ram2.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+
+        }
+        console.log(this.transferStockDataobj);
+      });
+
+      if ((this.newsystemFormData.ram1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram1code &#x3D;&#x3D;&#x3D; ram2code) || (this.newsystemFormData.ram3code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram3code &#x3D;&#x3D;&#x3D; ram2code) || (this.newsystemFormData.ram4code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram4code &#x3D;&#x3D;&#x3D; ram2code)) {
+
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram2code &#x3D; &#x27;&#x27;;
+        })
+      }
+
+      else if (this.backupoldItemsfromsysteminfo.ram2code) {
+
+        if (this.backupoldItemsfromsysteminfo.ram2code !&#x3D;&#x3D; ram2code) {
+
+          this.replacementLogic(ram2code, this.backupoldItemsfromsysteminfo.ram2code, this.selectram2forassembled);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+      }
+
+      else {
+        this.newsystemFormData.ram2code &#x3D; ram2code;
+        this.newsystemFormDataforupdate.ram2code &#x3D; ram2code;
+
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectram2forbrandedsystem(ram2code: any) {
+    // this.newsystemFormData.ram2code &#x3D; ram1code;
+    // this.newsystemFormDataforupdate.ram2code &#x3D; ram1code;
+    if (ram2code) {
+      await this.getItemidwithitemcode(ram2code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.ram2[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram2.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram1 array
+          this.transferStockDataobj.ram2[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.ram2.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+        console.log(this.transferStockDataobj);
+      });
+
+      if ((this.newsystemFormData.ram1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram1code &#x3D;&#x3D;&#x3D; ram2code) || (this.newsystemFormData.ram3code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram3code &#x3D;&#x3D;&#x3D; ram2code) || (this.newsystemFormData.ram4code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram4code &#x3D;&#x3D;&#x3D; ram2code)) {
+
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram2code &#x3D; &#x27;&#x27;;
+        })
+      }
+
+      else if (this.backupoldItemsfromsysteminfo.ram2code) {
+        if (this.backupoldItemsfromsysteminfo.ram2code !&#x3D;&#x3D; ram2code) {
+          this.replacementLogic(ram2code, this.backupoldItemsfromsysteminfo.ram2code, this.selectram2forbrandedsystem);
+        }
+      }
+
+      else {
+        this.newsystemFormData.ram2code &#x3D; ram2code;
+        this.newsystemFormDataforupdate.ram2code &#x3D; ram2code;
+
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectram3forassembled(ram3code: any) {
+    if (ram3code) {
+      await this.getItemidwithitemcode(ram3code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.ram3[0].item_id &#x3D; item_id;
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram3.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram1 array
+          this.transferStockDataobj.ram3[existingIndex].item_id &#x3D; item_id;
+        } else {
+
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.ram3.push({
+            item_id: item_id,
+            transfer_to_system: 0,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+
+
+        }
+        console.log(this.transferStockDataobj);
+      })
+
+
+      if ((this.newsystemFormData.ram1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram1code &#x3D;&#x3D;&#x3D; ram3code) || (this.newsystemFormData.ram2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram2code &#x3D;&#x3D;&#x3D; ram3code) || (this.newsystemFormData.ram4code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram4code &#x3D;&#x3D;&#x3D; ram3code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram3code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.ram3code) {
+
+        if (this.backupoldItemsfromsysteminfo.ram3code !&#x3D;&#x3D; ram3code) {
+
+          this.replacementLogic(ram3code, this.backupoldItemsfromsysteminfo.ram3code, this.selectram3forassembled);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+      }
+      else {
+        this.newsystemFormData.ram3code &#x3D; ram3code;
+        this.newsystemFormDataforupdate.ram3code &#x3D; ram3code;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectram3forbrandedsystem(ram3code: any) {
+    if (ram3code) {
+      await this.getItemidwithitemcode(ram3code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.ram3[0].item_id &#x3D; item_id;
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram3.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram1 array
+          this.transferStockDataobj.ram3[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.ram3.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0]?.item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+
+        }
+      })
+      if ((this.newsystemFormData.ram1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram1code &#x3D;&#x3D;&#x3D; ram3code) || (this.newsystemFormData.ram2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram2code &#x3D;&#x3D;&#x3D; ram3code) || (this.newsystemFormData.ram4code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram4code &#x3D;&#x3D;&#x3D; ram3code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram3code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.ram3code) {
+        if (this.backupoldItemsfromsysteminfo.ram3code !&#x3D;&#x3D; ram3code) {
+          this.replacementLogic(ram3code, this.backupoldItemsfromsysteminfo.ram3code, this.selectram3forbrandedsystem);
+        }
+      }
+      else {
+        this.newsystemFormData.ram3code &#x3D; ram3code;
+        this.newsystemFormDataforupdate.ram3code &#x3D; ram3code;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectram4forassembled(ram4code: any) {
+    if (ram4code) {
+      await this.getItemidwithitemcode(ram4code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.ram4[0].item_id &#x3D; item_id;
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram4.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.ram4[existingIndex].item_id &#x3D; item_id;
+        } else {
+          const cpucode &#x3D; this.newsystemFormDataforupdate.cpucode ? this.newsystemFormDataforupdate.cpucode : this.newsystemFormData.cpucode;
+
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.ram4.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+        console.log(this.transferStockDataobj);
+      })
+
+      if ((this.newsystemFormData.ram1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram1code &#x3D;&#x3D;&#x3D; ram4code) || (this.newsystemFormData.ram2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram2code &#x3D;&#x3D;&#x3D; ram4code) || (this.newsystemFormData.ram3code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram3code &#x3D;&#x3D;&#x3D; ram4code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram4code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.ram4code) {
+
+        if (this.backupoldItemsfromsysteminfo.ram4code !&#x3D;&#x3D; ram4code) {
+
+          this.replacementLogic(ram4code, this.backupoldItemsfromsysteminfo.ram4code, this.selectram4forassembled);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+      }
+      else {
+        this.newsystemFormData.ram4code &#x3D; ram4code;
+        this.newsystemFormDataforupdate.ram4code &#x3D; ram4code;
+
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectram4forbrandedsystem(ram4code: any) {
+    if (ram4code) {
+      await this.getItemidwithitemcode(ram4code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.ram4[0].item_id &#x3D; item_id;
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.ram4.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.ram4[existingIndex].item_id &#x3D; item_id;
+        } else {
+          this.transferStockDataobj.ram4.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+
+        }
+        console.log(this.transferStockDataobj);
+      })
+
+      if ((this.newsystemFormData.ram1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram1code &#x3D;&#x3D;&#x3D; ram4code) || (this.newsystemFormData.ram2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram2code &#x3D;&#x3D;&#x3D; ram4code) || (this.newsystemFormData.ram3code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.ram3code &#x3D;&#x3D;&#x3D; ram4code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same RAMs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.ram4code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.ram4code) {
+
+        if (this.backupoldItemsfromsysteminfo.ram4code !&#x3D;&#x3D; ram4code) {
+
+          this.replacementLogic(ram4code, this.backupoldItemsfromsysteminfo.ram4code, this.selectram4forbrandedsystem);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+      }
+      else {
+        this.newsystemFormData.ram4code &#x3D; ram4code;
+        this.newsystemFormDataforupdate.ram4code &#x3D; ram4code;
+
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+
+  async selecthdd1forassembled(hdd1code: any) {
+    if (hdd1code) {
+      await this.getItemidwithitemcode(hdd1code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.hdd1[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.hdd1.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.hdd1[existingIndex].item_id &#x3D; item_id;
+        } else {
+          const cpucode &#x3D; this.newsystemFormDataforupdate.cpucode ? this.newsystemFormDataforupdate.cpucode : this.newsystemFormData.cpucode;
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.hdd1.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+
+        }
+
+        console.log(this.transferStockDataobj);
+      })
+
+      if (this.backupoldItemsfromsysteminfo.hdd1) {
+
+        if (this.backupoldItemsfromsysteminfo.hdd1code !&#x3D;&#x3D; hdd1code) {
+
+          this.replacementLogic(hdd1code, this.backupoldItemsfromsysteminfo.hdd1code, this.selecthdd1forassembled);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+        else {
+
+          this.newsystemFormData.hdd1code &#x3D; hdd1code;
+          this.newsystemFormDataforupdate.hdd1code &#x3D; hdd1code;
+        }
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+
+
+  async selecthdd1forbrandedsystem(hdd1code: any) {
+    if (hdd1code) {
+      console.log(hdd1code, &quot;hdd1code&quot;)
+      await this.getItemidwithitemcode(hdd1code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.hdd1[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.hdd1.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.hdd1[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.hdd1.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+        console.log(this.transferStockDataobj);
+      });
+
+      this.newsystemFormData.hdd1code &#x3D; hdd1code;
+      this.newsystemFormDataforupdate.hdd1code &#x3D; hdd1code;
+
+      if ((this.newsystemFormData.hdd2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.hdd2code &#x3D;&#x3D;&#x3D; hdd1code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same HDDs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.hdd1code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.hdd1code) {
+        if (this.backupoldItemsfromsysteminfo.hdd1code !&#x3D;&#x3D; hdd1code) {
+          this.replacementLogic(hdd1code, this.backupoldItemsfromsysteminfo.hdd1code, this.selecthdd1forbrandedsystem);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+      }
+      else {
+        this.newsystemFormData.hdd1code &#x3D; hdd1code;
+        this.newsystemFormDataforupdate.hdd1code &#x3D; hdd1code;
+      }
+    } else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+
+  async selecthdd2forassembled(hdd2code: any) {
+    if (hdd2code) {
+      await this.getItemidwithitemcode(hdd2code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.hdd2[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.hdd2.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.hdd2[existingIndex].item_id &#x3D; item_id;
+        } else {
+
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.hdd2.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+        console.log(this.transferStockDataobj, &quot;this.transferStockDataobj&quot;);
+
+      });
+
+      this.newsystemFormData.hdd2code &#x3D; hdd2code;
+      this.newsystemFormDataforupdate.hdd2code &#x3D; hdd2code;
+
+      if ((this.newsystemFormData.hdd1code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.hdd1code &#x3D;&#x3D;&#x3D; hdd2code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same HDDs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.hdd2code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.hdd2code) {
+        if (this.backupoldItemsfromsysteminfo.hdd2code !&#x3D;&#x3D; hdd2code) {
+          this.replacementLogic(hdd2code, this.backupoldItemsfromsysteminfo.hdd2code, this.selecthdd2forassembled);
+        }
+      }
+      else {
+        this.newsystemFormData.hdd2code &#x3D; hdd2code;
+        this.newsystemFormDataforupdate.hdd2code &#x3D; hdd2code;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+
+  }
+
+  async selecthdd2forbrandedsystem(hdd2code: any) {
+    if (hdd2code) {
+      await this.getItemidwithitemcode(hdd2code).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.hdd2[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.hdd2.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.hdd2[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.hdd2.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+        console.log(this.transferStockDataobj, &quot;this.transferStockDataobj&quot;);
+
+      });
+
+      this.newsystemFormData.hdd2code &#x3D; hdd2code;
+      this.newsystemFormDataforupdate.hdd2code &#x3D; hdd2code;
+
+      if ((this.newsystemFormData.hdd2code !&#x3D;&#x3D; &#x27;&#x27; &amp;&amp; this.newsystemFormData.hdd1code &#x3D;&#x3D;&#x3D; hdd2code)) {
+        Swal.fire({
+          title: &quot;warning&quot;,
+          text: &quot;Sorry same HDDs are not assgined to any system!&quot;,
+          icon: &quot;warning&quot;
+        }).then(() &#x3D;&gt; {
+          this.newsystemFormData.hdd2code &#x3D; &#x27;&#x27;;
+        })
+      }
+      else if (this.backupoldItemsfromsysteminfo.hdd2code) {
+        if (this.backupoldItemsfromsysteminfo.hdd2code !&#x3D;&#x3D; hdd2code) {
+          this.replacementLogic(hdd2code, this.backupoldItemsfromsysteminfo.hdd2code, this.selecthdd2forbrandedsystem);
+        }
+      }
+      else {
+        this.newsystemFormData.hdd1code &#x3D; hdd2code;
+        this.newsystemFormDataforupdate.hdd1code &#x3D; hdd2code;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+
+  }
+
+  async selectsmpsforassembled(smpscode: any) {
+    if (smpscode) {
+      console.log(smpscode, &quot;smpscode&quot;);
+      await this.getItemidwithitemcode(smpscode).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.smps[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.smps.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.smps[existingIndex].item_id &#x3D; item_id;
+        } else {
+
+          const cpucode &#x3D; this.newsystemFormDataforupdate.cpucode ? this.newsystemFormDataforupdate.cpucode : this.newsystemFormData.cpucode;
+          console.log(cpucode, &quot;cpucode&quot;)
+          this.getItemidwithitemcodeforotheritems(cpucode).then(() &#x3D;&gt; {
+            console.log(this.itemdataforotheritems[0].item_id, &quot;cpuitemid&quot;);
+            // If the item doesn&#x27;t exist, push a new object to the ram1 array
+            this.transferStockDataobj.graphiccard.push({
+              item_id: item_id,
+              transfer_to_system: this.itemdataforotheritems[0].item_id,
+              location_id: 2,
+              transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+              transfer_category: 1,
+              transfer_to_user: null
+            });
+
+          })
+
+
+        }
+        console.log(this.transferStockDataobj);
+      })
+
+      if (this.backupoldItemsfromsysteminfo.smpscode) {
+
+        if (this.backupoldItemsfromsysteminfo.smpscode !&#x3D;&#x3D; smpscode) {
+
+          this.replacementLogic(smpscode, this.backupoldItemsfromsysteminfo.smpscode, this.selectsmpsforassembled);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+        else {
+          this.newsystemFormData.smpscode &#x3D; smpscode;
+          this.newsystemFormDataforupdate.smpscode &#x3D; smpscode;
+        }
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectsmpsforbrandedsystem(smpscode: any) {
+    if (smpscode) {
+      await this.getItemidwithitemcode(smpscode).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.smps[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.smps.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.smps[existingIndex].item_id &#x3D; item_id;
+        } else {
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          const cpucode &#x3D; this.newsystemFormDataforupdate.cpucode ? this.newsystemFormDataforupdate.cpucode : this.newsystemFormData.cpucode;
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.smps.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+
+        }
+
+        console.log(this.transferStockDataobj);
+      })
+
+      if (this.backupoldItemsfromsysteminfo.smpscode) {
+
+        if (this.backupoldItemsfromsysteminfo.smpscode !&#x3D;&#x3D; smpscode) {
+
+          this.replacementLogic(smpscode, this.backupoldItemsfromsysteminfo.smpscode, this.selectsmpsforbrandedsystem);
+          // console.log(&#x27;We have to update this ram1&#x27;,this.backupoldItemsfromsysteminfo.ram1code)
+        }
+        else {
+
+          this.newsystemFormData.smpscode &#x3D; smpscode;
+          this.newsystemFormDataforupdate.smpscode &#x3D; smpscode;
+        }
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+
+  async selectgraphiccardcodeforassembled(graphiccardcode: any) {
+    if (graphiccardcode) {
+      await this.getItemidwithitemcode(graphiccardcode).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.graphiccard[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.graphiccard.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.graphiccard[existingIndex].item_id &#x3D; item_id;
+        } else {
+          const cpucode &#x3D; this.newsystemFormDataforupdate.cpucode ? this.newsystemFormDataforupdate.cpucode : this.newsystemFormData.cpucode;
+          this.getItemidwithitemcodeforotheritems(cpucode).then(() &#x3D;&gt; {
+            console.log(this.itemdataforotheritems[0].item_id);
+            // If the item doesn&#x27;t exist, push a new object to the ram1 array
+            this.transferStockDataobj.graphiccard.push({
+              item_id: item_id,
+              transfer_to_system: this.itemdataforotheritems[0].item_id,
+              location_id: 2,
+              transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+              transfer_category: 1,
+              transfer_to_user: null
+            });
+
+          })
+        }
+        console.log(this.transferStockDataobj);
+      })
+      console.log(graphiccardcode, &quot;graphiccardcode&quot;);
+      this.newsystemFormData.graphiccardcode &#x3D; graphiccardcode;
+      this.newsystemFormDataforupdate.graphiccardcode &#x3D; graphiccardcode;
+      if (this.backupoldItemsfromsysteminfo.graphiccardcode) {
+        if (this.backupoldItemsfromsysteminfo.graphiccardcode !&#x3D;&#x3D; graphiccardcode) {
+          this.replacementLogic(graphiccardcode, this.backupoldItemsfromsysteminfo.graphiccardcode, this.selectgraphiccardcodeforassembled);
+        }
+      }
+      else {
+        this.newsystemFormData.graphiccardcode &#x3D; graphiccardcode;
+        this.newsystemFormDataforupdate.graphiccardcode &#x3D; graphiccardcode;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  async selectgraphiccardcodeforbrandedsystem(graphiccardcode: any) {
+    if (graphiccardcode) {
+      await this.getItemidwithitemcode(graphiccardcode).then(async () &#x3D;&gt; {
+        const item_id &#x3D; this.itemdatafromts[0]?.item_id;
+        this.transferStockDataobj.graphiccard[0].item_id &#x3D; item_id;
+
+        await this.checkalreadyAssignorNot(item_id);
+        // Check if the item already exists in the array
+        const existingIndex &#x3D; this.transferStockDataobj.graphiccard.findIndex(item &#x3D;&gt; item?.item_id &#x3D;&#x3D;&#x3D; item_id);
+        // already exists
+        if (existingIndex !&#x3D;&#x3D; -1) {
+          // If the item already exists, replace it in the ram4 array
+          this.transferStockDataobj.graphiccard[existingIndex].item_id &#x3D; item_id;
+        } else {
+
+          // If the item doesn&#x27;t exist, push a new object to the ram1 array
+          this.transferStockDataobj.graphiccard.push({
+            item_id: item_id,
+            transfer_to_system: this.itemdataforotheritems[0].item_id,
+            location_id: 2,
+            transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+            transfer_category: 1,
+            transfer_to_user: null
+          });
+        }
+        console.log(this.transferStockDataobj);
+      })
+      console.log(graphiccardcode, &quot;graphiccardcode&quot;);
+      this.newsystemFormData.graphiccardcode &#x3D; graphiccardcode;
+      this.newsystemFormDataforupdate.graphiccardcode &#x3D; graphiccardcode;
+
+      if (this.backupoldItemsfromsysteminfo.graphiccardcode) {
+        if (this.backupoldItemsfromsysteminfo.graphiccardcode !&#x3D;&#x3D; graphiccardcode) {
+          this.replacementLogic(graphiccardcode, this.backupoldItemsfromsysteminfo.graphiccardcode, this.selectgraphiccardcodeforbrandedsystem);
+        }
+      }
+      else {
+        this.newsystemFormData.graphiccardcode &#x3D; graphiccardcode;
+        this.newsystemFormDataforupdate.graphiccardcode &#x3D; graphiccardcode;
+      }
+    }
+    else {
+      console.log(&#x27;No data found&#x27;);
+    }
+  }
+
+  getItemidwithitemcode(item_code: any): Promise&lt;void&gt; {
+    console.log(item_code, &quot;itemcode&quot;)
+    return new Promise&lt;void&gt;((resolve, reject) &#x3D;&gt; {
+
+      const ItemId &#x3D; {
+        item_code: item_code
+      }
+      console.log(ItemId, &quot;ItemId&quot;)
+
+      this.sharedServices.getitemdatafromitemcode(ItemId).subscribe({
+        next: (results: any) &#x3D;&gt; {
+          console.log(results, &quot;getitemdatafromitemcode&quot;);
+          this.itemdatafromts &#x3D; results;
+          resolve();
+
+        },
+        error: (error) &#x3D;&gt; {
+          if (error.status &#x3D;&#x3D; 403) {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Token expired.&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              this.router.navigate([&#x27;../login&#x27;]);
+              reject(); // Reject the Promise in case of an error
+
+            })
+          }
+          else {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Internal server error.Please try after some time!&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              location.reload();
+              reject(); // Reject the Promise in case of an error
+
+            })
+          }
+        }
+      });
+    });
+  }
+
+  getItemidwithitemcodeforotheritems(item_code: any): Promise&lt;void&gt; {
+    return new Promise&lt;void&gt;((resolve, reject) &#x3D;&gt; {
+
+      if (item_code) {
+        const ItemId &#x3D; {
+          item_code: item_code
+        }
+        // console.log(ItemId, &quot;ItemId&quot;)
+
+        this.sharedServices.getitemdatafromitemcode(ItemId).subscribe({
+          next: (results: any) &#x3D;&gt; {
+            console.log(results, &quot;getitemdatafromitemcode&quot;);
+
+
+            this.itemdataforotheritems &#x3D; results;
+            resolve();
+
+          },
+          error: (error) &#x3D;&gt; {
+            if (error.status &#x3D;&#x3D; 403) {
+              Swal.fire({
+                icon: &#x27;error&#x27;,
+                title: &#x27;Oops!&#x27;,
+                text: &#x27;Token expired.&#x27;,
+                footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+              }).then(() &#x3D;&gt; {
+                this.router.navigate([&#x27;../login&#x27;]);
+                reject(); // Reject the Promise in case of an error
+
+              })
+            }
+            else {
+              Swal.fire({
+                icon: &#x27;error&#x27;,
+                title: &#x27;Oops!&#x27;,
+                text: &#x27;Internal server error.Please try after some time!&#x27;,
+                footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+              }).then(() &#x3D;&gt; {
+                location.reload();
+                reject(); // Reject the Promise in case of an error
+
+              })
+            }
+          }
+        });
+      }
+    });
+  }
+
+  async getAssigneddatafromtsandsysteminfo() {
+    try {
+      const [assigneddatafromts, assgineddatafromsysinfo]: any &#x3D;
+        await forkJoin([
+          this.sharedServices.getAssigneditemsfromts(),
+          this.sharedServices.getAssigneditemsfromsysteminfo(),
+        ]).toPromise();
+
+      console.log(assigneddatafromts, &quot;assigneddatafromts&quot;);
+      console.log(assgineddatafromsysinfo, &quot;assgineddatafromsysinfo&quot;);
+      const deepcloningofassgineddatafromsysinfo &#x3D; JSON.parse(JSON.stringify(assgineddatafromsysinfo));
+      const deepcloningofassgineddatafromsts &#x3D; JSON.parse(JSON.stringify(assigneddatafromts));
+
+
+      //TAKING OUT ALL 
+      const filteringdata &#x3D; deepcloningofassgineddatafromsysinfo.reduce((acc: any, obj: any) &#x3D;&gt; {
+        Object.keys(obj).forEach((key) &#x3D;&gt; {
+          if (obj[key] !&#x3D;&#x3D; null &amp;&amp; key !&#x3D;&#x3D; &#x27;sid&#x27;) {
+            acc.push(obj[key]);
+          }
+        });
+        return acc;
+      }, []);
+
+      const fetchingdatafromassigneddatafromts &#x3D; deepcloningofassgineddatafromsts.map((e: any) &#x3D;&gt; {
+
+        this.arrayofassigneditemsints.push(e.name);
+      })
+
+      this.arrayofassigneditemsinsysinfo &#x3D; filteringdata;
+      this.arrayofassigneditemsinsysinfo &#x3D; this.arrayofassigneditemsinsysinfo.concat(this.arrayofassigneditemsints);
+      console.log(this.arrayofassigneditemsinsysinfo, &quot;this.arrayofassigneditemsints&quot;)
+    }
+    catch (error: unknown) {
+      this.spinner.hide();
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        });
+      } else {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try again later!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        });
+      }
+    }
+
+    // subscribe({
+    //   next: ([assigneddatafromts, assgineddatafromsysinfo]) &#x3D;&gt; {
+    //     console.log(assigneddatafromts, &quot;assigneddatafromts&quot;);
+    //     console.log(assgineddatafromsysinfo, &quot;assgineddatafromsysinfo&quot;);
+    //     const deepcloningofassgineddatafromsysinfo &#x3D; JSON.parse(JSON.stringify(assgineddatafromsysinfo));
+    //     const deepcloningofassgineddatafromsts &#x3D; JSON.parse(JSON.stringify(assigneddatafromts));
+
+
+    //     //TAKING OUT ALL 
+    //     const filteringdata &#x3D; deepcloningofassgineddatafromsysinfo.reduce((acc: any, obj: any) &#x3D;&gt; {
+    //       Object.keys(obj).forEach((key) &#x3D;&gt; {
+    //         if (obj[key] !&#x3D;&#x3D; null &amp;&amp; key !&#x3D;&#x3D; &#x27;sid&#x27;) {
+    //           acc.push(obj[key]);
+    //         }
+    //       });
+    //       return acc;
+    //     }, []);
+
+    //     const fetchingdatafromassigneddatafromts &#x3D; deepcloningofassgineddatafromsts.map((e: any) &#x3D;&gt; {
+
+    //       this.arrayofassigneditemsints.push(e.name);
+    //     })
+
+    //     this.arrayofassigneditemsinsysinfo &#x3D; filteringdata;
+    //     this.arrayofassigneditemsinsysinfo &#x3D; this.arrayofassigneditemsinsysinfo.concat(this.arrayofassigneditemsints);
+    //     console.log(this.arrayofassigneditemsinsysinfo, &quot;this.arrayofassigneditemsints&quot;)
+
+    //   }
+    // })
+  }
+
+
+  //  async replacementLogic(newitem: any, replacement: any, calledfunction: Function) {
+
+  //     if (replacement &amp;&amp; newitem) {
+
+  //    await this.getItemidwithitemcode(newitem);
+  //     console.log(this.itemdatafromts[0].item_id, &quot;ItemId&quot;);
+  //     const ItemId &#x3D; +this.itemdatafromts[0].item_id;
+
+
+  //     const isConfirmed &#x3D; await this.checkalreadyAssignorNot(ItemId);
+
+
+
+  //     // console.log(isConfirmed, &quot;isConfirm&quot;);
+
+  //     if(isConfirmed){
+  //       const result &#x3D; await Swal.fire({
+  //         title: &quot;Are you sure?&quot;,
+  //         text: &#x60;You want to replace ${newitem} with ${replacement}&#x60;,
+  //         icon: &quot;warning&quot;,
+  //         showCancelButton: true,
+  //         confirmButtonColor: &quot;#3085d6&quot;,
+  //         cancelButtonColor: &quot;#d33&quot;, 
+  //         confirmButtonText: &quot;Yes, replace it!&quot;
+  //       })
+
+
+  //         if (result.isConfirmed) {
+  //           /* inputOptions can be an object or Promise */
+  //           const inputOptions &#x3D; new Promise&lt;{ [key: number]: string }&gt;((resolve) &#x3D;&gt; {
+  //             setTimeout(() &#x3D;&gt; {
+  //               const options &#x3D; {
+  //                 1: &quot;Warehouse&quot;,
+  //                 4: &quot;Scraped&quot;,
+  //               };
+  //               console.log(&quot;Options:&quot;, options); // Add this line for debugging
+  //               resolve(options);
+  //             }, 500);
+  //           });
+
+  //           try {
+  //             const { value: selectedLocation } &#x3D; await Swal.fire({
+  //               title: &#x60;Where you want to put ${replacement}&#x60;,
+  //               input: &quot;radio&quot;,
+  //               inputOptions: await inputOptions, // Resolve the promise here
+  //               inputValidator: (value: string) &#x3D;&gt; {
+  //                 if (!value) {
+  //                   return &quot;You need to choose something!&quot;;
+  //                 }
+  //                 return &#x27;&#x27;;
+  //               }
+  //             });
+
+  //             if (selectedLocation) {
+  //               console.log(selectedLocation, &quot;selectedLocation&quot;)
+  //               this.getItemidwithitemcodeforotheritems(replacement).then(async () &#x3D;&gt; {
+  //                 const transferStockdata &#x3D;
+  //                 {
+  //                   item_id: +this.itemdataforotheritems[0].item_id,
+  //                   transfer_to_system: null,
+  //                   location_id: + selectedLocation,
+  //                   transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+  //                   transfer_category: 1,
+  //                   transfer_to_user: null,
+
+  //                 }
+  //                 console.log(transferStockdata, &quot;transferStockdata&quot;);
+  //                 await this.transferStocktoLocation(transferStockdata, +selectedLocation, replacement)
+
+  //                 this.previousDatafromsubjectBehaviour();
+  //               })
+  //             }
+  //           } catch (error: unknown) {
+  //             if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+  //               await Swal.fire({
+  //                 icon: &#x27;error&#x27;,
+  //                 title: &#x27;Oops!&#x27;,
+  //                 text: &#x27;Token expired.&#x27;,
+  //                 footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+  //               }).then(() &#x3D;&gt; {
+  //                 this.router.navigate([&#x27;../login&#x27;]);
+  //               })
+
+  //             } else {
+  //               await Swal.fire({
+  //                 icon: &#x27;error&#x27;,
+  //                 title: &#x27;Oops!&#x27;,
+  //                 text: &#x27;Internal server error. Please try after some time!&#x27;,
+  //                 footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+  //               }).then(() &#x3D;&gt; {
+  //                 location.reload();
+  //               })
+  //             }
+  //           }
+  //         }
+  //         else {
+  //           this.previousDatafromsubjectBehaviour();
+  //         }
+  //     }
+  //     else{
+  //       this.previousDatafromsubjectBehaviour();
+  //     }
+
+  //     }
+  //     else {
+  //       console.log(&#x27;Replacement and newitem is not found&#x27;);
+  //     }
+
+
+  //   }
+
+  // async replacementLogic(newitem: any, replacement: any, calledfunction: Function) {
+  //   if (replacement &amp;&amp; newitem) {
+  //     let firstPopupShown &#x3D; false;
+
+  //     // Fetch item ID
+  //     await this.getItemidwithitemcode(newitem);
+  //     console.log(this.itemdatafromts[0].item_id, &quot;ItemId&quot;);
+  //     const ItemId &#x3D; +this.itemdatafromts[0].item_id;
+
+  //     // Wait for transfer data to be fetched
+  //     await this.getTransferData(ItemId);
+
+  //     const itemCode &#x3D; this.configureitemdetails[0].item_code;
+  //     const systmeName &#x3D; this.configureitemdetails[0].system_name;
+
+  //     // Check if item has a transfer_to_system
+  //     if (this.configureitemdetails &amp;&amp; this.configureitemdetails.length &gt; 0 &amp;&amp; this.configureitemdetails[0].transfer_to_system) {
+
+  //       if (!firstPopupShown) {
+  //         firstPopupShown &#x3D; true;
+  //         console.log(&#x27;firsttimecalled&#x27;);
+  //           // Show the first confirmation popup and wait for the result
+  //      await Swal.fire({
+  //       title: &quot;Are you sure?&quot;,
+  //       text: &#x60;${itemCode} already installed in ${systmeName}.&#x60;,
+  //       icon: &quot;warning&quot;,
+  //       showCancelButton: true,
+  //       confirmButtonColor: &quot;#3085d6&quot;,
+  //       cancelButtonColor: &quot;#d33&quot;,
+  //       confirmButtonText: &quot;Yes, installed it!&quot;
+  //     }).then(async(result)&#x3D;&gt;{
+  //       if (result.isConfirmed) {
+  // // Proceed to update system info
+  // await this.updatesysteminfoforsrapitem();
+  // this.dataforsysteminfowhenscrapped.item_code &#x3D; itemCode;
+
+  // // Show the second popup only if the first one was confirmed
+  // await Swal.fire({
+  //  title: &quot;Are you sure?&quot;,
+  //  text: &#x60;You want to replace ${newitem} with ${replacement}&#x60;,
+  //  icon: &quot;warning&quot;,
+  //  showCancelButton: true,
+  //  confirmButtonColor: &quot;#3085d6&quot;,
+  //  cancelButtonColor: &quot;#d33&quot;,
+  //  confirmButtonText: &quot;Yes, replace it!&quot;
+  // }).then(async(result)&#x3D;&gt;{
+  // if (result.isConfirmed) {
+  //   // After confirming the replacement popup, show location options
+  //   const inputOptions &#x3D; new Promise&lt;{ [key: number]: string }&gt;((resolve) &#x3D;&gt; {
+  //     setTimeout(() &#x3D;&gt; {
+  //       const options &#x3D; {
+  //         1: &quot;Warehouse&quot;,
+  //         4: &quot;Scraped&quot;,
+  //       };
+  //       console.log(&quot;Options:&quot;, options); // Debugging
+  //       resolve(options);
+  //     }, 500);
+  //   });
+
+  //   try {
+  //     const { value: selectedLocation } &#x3D; await Swal.fire({
+  //       title: &#x60;Where do you want to put ${replacement}&#x60;,
+  //       input: &quot;radio&quot;,
+  //       inputOptions: await inputOptions, // Resolving the promise here
+  //       inputValidator: (value: string) &#x3D;&gt; {
+  //         if (!value) {
+  //           return &quot;You need to choose something!&quot;;
+  //         }
+  //         return &#x27;&#x27;;
+  //       }
+  //     });
+
+  //     if (selectedLocation) {
+  //       console.log(selectedLocation, &quot;selectedLocation&quot;);
+  //       this.getItemidwithitemcodeforotheritems(replacement).then(async () &#x3D;&gt; {
+  //         const transferStockdata &#x3D; {
+  //           item_id: +this.itemdataforotheritems[0].item_id,
+  //           transfer_to_system: null,
+  //           location_id: +selectedLocation,
+  //           transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+  //           transfer_category: 1,
+  //           transfer_to_user: null,
+  //         };
+  //         console.log(transferStockdata, &quot;transferStockdata&quot;);
+
+  //         // Perform the stock transfer
+  //         await this.transferStocktoLocation(transferStockdata, +selectedLocation, replacement).then(() &#x3D;&gt; {
+  //           console.log(calledfunction.name, &quot;calledfunction.name&quot;);
+  //           if (calledfunction) {
+  //             const functionname &#x3D; &#x27;&#x27; + calledfunction.name;
+  //             switch (functionname) {
+
+  //               case &#x27;selectram1forassembled&#x27;:
+  //                 this.newsystemFormData.ram1code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram1code &#x3D; newitem;
+  //                 break;
+
+  //               case &#x27;selectram1forbrandedsystem&#x27;:
+  //                 this.newsystemFormData.ram1code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram1code &#x3D; newitem;
+  //                 break;
+
+  //               case &#x27;selectram2forassembled&#x27;:
+  //                 this.newsystemFormData.ram2code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram2code &#x3D; newitem;
+  //                 break;
+
+  //               case &#x27;selectram2forbrandedsystem&#x27;:
+  //                 this.newsystemFormData.ram2code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram2code &#x3D; newitem;
+
+  //                 break;
+
+  //               case &#x27;selectram3forassembled&#x27;:
+  //                 this.newsystemFormData.ram3code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram3code &#x3D; newitem;
+
+  //                 break;
+
+  //               case &#x27;selectram3forbrandedsystem&#x27;:
+  //                 this.newsystemFormData.ram3code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram3code &#x3D; newitem;
+  //                 break;
+
+  //               case &#x27;selectram4forassembled&#x27;:
+  //                 this.newsystemFormData.ram4code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram4code &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selectram4forbrandedsystem&#x27;:
+  //                 this.newsystemFormData.ram4code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.ram4code &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selecthdd1forassembled&#x27;:
+  //                 this.newsystemFormData.hdd1code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.hdd1code &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selecthdd1forbrandedsystem&#x27;:
+  //                 this.newsystemFormData.hdd1code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.hdd1code &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selecthdd2forassembled&#x27;:
+  //                 this.newsystemFormData.hdd2code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.hdd2code &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selecthdd2brandedsystem&#x27;:
+  //                 this.newsystemFormData.hdd2code &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.hdd2code &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selectsmpsforassembled&#x27;:
+  //                 this.newsystemFormData.smpscode &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.smpscode &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selectsmpsforbrandedsystem&#x27;:
+  //                 this.newsystemFormData.smpscode &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.smpscode &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selectgraphiccardcodeforassembled&#x27;:
+  //                 this.newsystemFormData.graphiccardcode &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.graphiccardcode &#x3D; newitem;
+  //                 break;
+  //               case &#x27;selectgraphiccardcodeforbrandedsystem&#x27;:
+  //                 this.newsystemFormData.graphiccardcode &#x3D; newitem;
+  //                 this.newsystemFormDataforupdate.graphiccardcode &#x3D; newitem;
+  //                 break;
+  //             }
+  //           }
+
+  //           // this.previousDatafromsubjectBehaviour();
+  //         });
+  //         // this.previousDatafromsubjectBehaviour();
+  //       });
+  //     }
+  //   } catch (error: unknown) {
+  //     if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+  //       await Swal.fire({
+  //         icon: &#x27;error&#x27;,
+  //         title: &#x27;Oops!&#x27;,
+  //         text: &#x27;Token expired.&#x27;,
+  //         footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+  //       }).then(() &#x3D;&gt; {
+  //         this.router.navigate([&#x27;../login&#x27;]);
+  //       });
+  //     } else {
+  //       await Swal.fire({
+  //         icon: &#x27;error&#x27;,
+  //         title: &#x27;Oops!&#x27;,
+  //         text: &#x27;Internal server error. Please try after some time!&#x27;,
+  //         footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+  //       }).then(() &#x3D;&gt; {
+  //         location.reload();
+  //       });
+  //     }
+  //   }
+  // } else {
+  //   // If the second popup is cancelled, fetch data again or proceed as needed
+  //   this.previousDatafromsubjectBehaviour();
+  // }
+
+  // })
+
+  //       }
+  //       else {
+  //         // If the first popup is cancelled, fetch data again or proceed as needed
+  //         this.previousDatafromsubjectBehaviour();
+  //         firstPopupShown &#x3D; false;
+  //       }
+
+  //     })
+  //       }
+
+  //     } else {
+  //       console.log(&#x27;Item not deleted from system-info&#x27;);
+  //     }
+
+  //   } else {
+  //     console.log(&#x27;Replacement and newitem are not found&#x27;);
+  //   }
+  // }
+
+  async replacementLogic(newitem: any, replacement: any, calledfunction: Function) {
+
+    if (replacement &amp;&amp; newitem) {
+      await this.getItemidwithitemcode(replacement);
+
+      console.log(this.itemdatafromts, &quot;this.itemdatafromts&quot;);
+      /* inputOptions can be an object or Promise */
+      await Swal.fire({
+        title: &quot;Are you sure?&quot;,
+        text: &#x60;You want to replace ${newitem} with ${replacement}&#x60;,
+        icon: &quot;warning&quot;,
+        showCancelButton: true,
+        confirmButtonColor: &quot;#3085d6&quot;,
+        cancelButtonColor: &quot;#d33&quot;,
+        confirmButtonText: &quot;Yes, replace it!&quot;
+      }).then(async (result) &#x3D;&gt; {
+        if (result.isConfirmed) {
+          /* inputOptions can be an object or Promise */
+          const inputOptions &#x3D; new Promise&lt;{ [key: number]: string }&gt;((resolve) &#x3D;&gt; {
+            setTimeout(() &#x3D;&gt; {
+              const options &#x3D; {
+                1: &quot;Warehouse&quot;,
+                4: &quot;Scraped&quot;,
+              };
+              console.log(&quot;Options:&quot;, options); // Add this line for debugging
+              resolve(options);
+            }, 500);
+          });
+
+          try {
+            const { value: selectedLocation } &#x3D; await Swal.fire({
+              title: &#x60;Where you want to put ${replacement}&#x60;,
+              input: &quot;radio&quot;,
+              inputOptions: await inputOptions, // Resolve the promise here
+              inputValidator: (value: string) &#x3D;&gt; {
+                if (!value) {
+                  return &quot;You need to choose something!&quot;;
+                }
+                return &#x27;&#x27;;
+              }
+            });
+
+            if (selectedLocation) {
+              console.log(selectedLocation, &quot;selectedLocation&quot;)
+              this.getItemidwithitemcodeforotheritems(replacement).then(async () &#x3D;&gt; {
+                const transferStockdata &#x3D;
+                {
+                  item_id: +this.itemdataforotheritems[0].item_id,
+                  transfer_to_system: null,
+                  location_id: + selectedLocation,
+                  transfer_by: localStorage.getItem(&#x27;login_id&#x27;),
+                  transfer_category: 1,
+                  transfer_to_user: null,
+                }
+
+                console.log(transferStockdata, &quot;transferStockdata&quot;);
+                await this.transferStocktoLocation(transferStockdata, +selectedLocation, replacement)
+                  .then(() &#x3D;&gt; {
+                      const message &#x3D; selectedLocation&#x3D;&#x3D;1?&#x60;Item successfully transferred to warehouse!&#x60;:&#x60;Item successfully transferred to scrap!&#x60;;
+                      if(message){
+                        Swal.fire({
+                          position: &quot;center&quot;,
+                          icon: &quot;success&quot;,
+                          title: &#x60;${message}&#x60;,
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
+                      }
+
+                    // this.previousDatafromsubjectBehaviour();
+                    console.log(calledfunction.name, &quot;calledfunction.name&quot;);
+                    if (calledfunction) {
+                      const functionname &#x3D; &#x27;&#x27; + calledfunction.name;
+                      switch (functionname) {
+                        case &#x27;selectram1forassembled&#x27;:
+                          this.newsystemFormData.ram1code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram1code &#x3D; newitem;
+                          break;
+
+                        case &#x27;selectram1forbrandedsystem&#x27;:
+                          this.newsystemFormData.ram1code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram1code &#x3D; newitem;
+                          break;
+
+                        case &#x27;selectram2forassembled&#x27;:
+                          this.newsystemFormData.ram2code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram2code &#x3D; newitem;
+                          break;
+
+                        case &#x27;selectram2forbrandedsystem&#x27;:
+                          this.newsystemFormData.ram2code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram2code &#x3D; newitem;
+
+                          break;
+
+                        case &#x27;selectram3forassembled&#x27;:
+                          this.newsystemFormData.ram3code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram3code &#x3D; newitem;
+
+                          break;
+
+                        case &#x27;selectram3forbrandedsystem&#x27;:
+                          this.newsystemFormData.ram3code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram3code &#x3D; newitem;
+                          break;
+
+                        case &#x27;selectram4forassembled&#x27;:
+                          this.newsystemFormData.ram4code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram4code &#x3D; newitem;
+                          break;
+                        case &#x27;selectram4forbrandedsystem&#x27;:
+                          this.newsystemFormData.ram4code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.ram4code &#x3D; newitem;
+                          break;
+                        case &#x27;selecthdd1forassembled&#x27;:
+                          this.newsystemFormData.hdd1code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.hdd1code &#x3D; newitem;
+                          break;
+                        case &#x27;selecthdd1forbrandedsystem&#x27;:
+                          this.newsystemFormData.hdd1code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.hdd1code &#x3D; newitem;
+                          break;
+                        case &#x27;selecthdd2forassembled&#x27;:
+                          this.newsystemFormData.hdd2code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.hdd2code &#x3D; newitem;
+                          break;
+                        case &#x27;selecthdd2brandedsystem&#x27;:
+                          this.newsystemFormData.hdd2code &#x3D; newitem;
+                          this.newsystemFormDataforupdate.hdd2code &#x3D; newitem;
+                          break;
+                        case &#x27;selectsmpsforassembled&#x27;:
+                          this.newsystemFormData.smpscode &#x3D; newitem;
+                          this.newsystemFormDataforupdate.smpscode &#x3D; newitem;
+                          break;
+                        case &#x27;selectsmpsforbrandedsystem&#x27;:
+                          this.newsystemFormData.smpscode &#x3D; newitem;
+                          this.newsystemFormDataforupdate.smpscode &#x3D; newitem;
+                          break;
+                        case &#x27;selectgraphiccardcodeforassembled&#x27;:
+                          this.newsystemFormData.graphiccardcode &#x3D; newitem;
+                          this.newsystemFormDataforupdate.graphiccardcode &#x3D; newitem;
+                          break;
+                        case &#x27;selectgraphiccardcodeforbrandedsystem&#x27;:
+                          this.newsystemFormData.graphiccardcode &#x3D; newitem;
+                          this.newsystemFormDataforupdate.graphiccardcode &#x3D; newitem;
+                          break;
+                      }
+                    }
+
+
+
+                    // this.previousDatafromsubjectBehaviour();
+                  });
+
+                  // dated:2025-03-05
+                  // if branded system is going to warehouse to use in anyother sytem then its item_status should be 1
+                  if(selectedLocation&#x3D;&#x3D;1 &amp;&amp; (this.itemdatafromts[0].purchase_id).startsWith(&#x27;BRND-&#x27;)){
+                    console.log(&#x27;hello&#x27;);
+                    const itemId &#x3D;{
+                      item_id:this.itemdatafromts[0].item_id,
+                      item_status:&#x27;1&#x27;
+                    }
+                     const result &#x3D; await this.adminService.updateItemStatus(itemId).toPromise();
+                     result&#x3D;&#x3D;1?console.log(&#x27;Item status updated successfully!&#x27;):console.warn(&#x27;Error occured during updation!&#x27;);
+                  }
+              })
+
+            }
+          } catch (error: unknown) {
+            if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+              await Swal.fire({
+                icon: &#x27;error&#x27;,
+                title: &#x27;Oops!&#x27;,
+                text: &#x27;Token expired.&#x27;,
+                footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+              }).then(() &#x3D;&gt; {
+                this.router.navigate([&#x27;../login&#x27;]);
+              })
+
+            } else {
+              await Swal.fire({
+                icon: &#x27;error&#x27;,
+                title: &#x27;Oops!&#x27;,
+                text: &#x27;Internal server error. Please try after some time!&#x27;,
+                footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+              }).then(() &#x3D;&gt; {
+                location.reload();
+              })
+            }
+          }
+        }
+        else {
+
+          if (calledfunction) {
+            const functionname &#x3D; &#x27;&#x27; + calledfunction.name;
+            switch (functionname) {
+
+              case &#x27;selectram1forassembled&#x27;:
+                this.newsystemFormData.ram1code &#x3D; this.backupoldItemsfromsysteminfo.ram1code;
+                this.newsystemFormDataforupdate.ram1code &#x3D; this.backupoldItemsfromsysteminfo.ram1code;
+                break;
+
+              case &#x27;selectram1forbrandedsystem&#x27;:
+                this.newsystemFormData.ram1code &#x3D; this.backupoldItemsfromsysteminfo.ram1code;
+                this.newsystemFormDataforupdate.ram1code &#x3D; this.backupoldItemsfromsysteminfo.ram1code;
+                break;
+
+              case &#x27;selectram2forassembled&#x27;:
+                this.newsystemFormData.ram2code &#x3D; this.backupoldItemsfromsysteminfo.ram2code;
+                this.newsystemFormDataforupdate.ram2code &#x3D; this.backupoldItemsfromsysteminfo.ram2code;
+                break;
+
+              case &#x27;selectram2forbrandedsystem&#x27;:
+                this.newsystemFormData.ram2code &#x3D; this.backupoldItemsfromsysteminfo.ram2code;
+                this.newsystemFormDataforupdate.ram2code &#x3D; this.backupoldItemsfromsysteminfo.ram2code;
+
+                break;
+
+              case &#x27;selectram3forassembled&#x27;:
+                this.newsystemFormData.ram3code &#x3D; this.backupoldItemsfromsysteminfo.ram3code;
+                this.newsystemFormDataforupdate.ram3code &#x3D; this.backupoldItemsfromsysteminfo.ram3code;
+
+                break;
+
+              case &#x27;selectram3forbrandedsystem&#x27;:
+                this.newsystemFormData.ram3code &#x3D; this.backupoldItemsfromsysteminfo.ram3code;
+                this.newsystemFormDataforupdate.ram3code &#x3D; this.backupoldItemsfromsysteminfo.ram3code;
+                break;
+
+              case &#x27;selectram4forassembled&#x27;:
+                this.newsystemFormData.ram4code &#x3D; this.backupoldItemsfromsysteminfo.ram4code;
+                this.newsystemFormDataforupdate.ram4code &#x3D; this.backupoldItemsfromsysteminfo.ram4code;
+                break;
+              case &#x27;selectram4forbrandedsystem&#x27;:
+                this.newsystemFormData.ram4code &#x3D; this.backupoldItemsfromsysteminfo.ram4code;
+                this.newsystemFormDataforupdate.ram4code &#x3D; this.backupoldItemsfromsysteminfo.ram4code;
+                break;
+              case &#x27;selecthdd1forassembled&#x27;:
+                this.newsystemFormData.hdd1code &#x3D; this.backupoldItemsfromsysteminfo.hdd1code;
+                this.newsystemFormDataforupdate.hdd1code &#x3D; this.backupoldItemsfromsysteminfo.hdd1code;
+                break;
+              case &#x27;selecthdd1forbrandedsystem&#x27;:
+                this.newsystemFormData.hdd1code &#x3D; this.backupoldItemsfromsysteminfo.hdd1code;
+                this.newsystemFormDataforupdate.hdd1code &#x3D; this.backupoldItemsfromsysteminfo.hdd1code;
+                break;
+              case &#x27;selecthdd2forassembled&#x27;:
+                this.newsystemFormData.hdd2code &#x3D; this.backupoldItemsfromsysteminfo.hdd2code;
+                this.newsystemFormDataforupdate.hdd2code &#x3D; this.backupoldItemsfromsysteminfo.hdd2code;
+                break;
+              case &#x27;selecthdd2brandedsystem&#x27;:
+                this.newsystemFormData.hdd2code &#x3D; this.backupoldItemsfromsysteminfo.hdd2code;
+                this.newsystemFormDataforupdate.hdd2code &#x3D; this.backupoldItemsfromsysteminfo.hdd2code;
+                break;
+              case &#x27;selectsmpsforassembled&#x27;:
+                this.newsystemFormData.smpscode &#x3D; this.backupoldItemsfromsysteminfo.smpscode;
+                this.newsystemFormDataforupdate.smpscode &#x3D; this.backupoldItemsfromsysteminfo.smpscode;
+                break;
+              case &#x27;selectsmpsforbrandedsystem&#x27;:
+                this.newsystemFormData.smpscode &#x3D; this.backupoldItemsfromsysteminfo.smpscode;
+                this.newsystemFormDataforupdate.smpscode &#x3D; this.backupoldItemsfromsysteminfo.smpscode;
+                break;
+              case &#x27;selectgraphiccardcodeforassembled&#x27;:
+                this.newsystemFormData.graphiccardcode &#x3D; this.backupoldItemsfromsysteminfo.graphiccardcode;
+                this.newsystemFormDataforupdate.graphiccardcode &#x3D; this.backupoldItemsfromsysteminfo.graphiccardcode;
+                break;
+              case &#x27;selectgraphiccardcodeforbrandedsystem&#x27;:
+                this.newsystemFormData.graphiccardcode &#x3D; this.backupoldItemsfromsysteminfo.graphiccardcode;
+                this.newsystemFormDataforupdate.graphiccardcode &#x3D; this.backupoldItemsfromsysteminfo.graphiccardcode;
+                break;
+            }
+          }
+
+        }
+
+      });
+    }
+    else {
+      console.log(&#x27;Replacement and newitem is not found&#x27;);
+    }
+  }
+
+
+  async transferStocktoLocation(tranferingdata: any, selectedlocation: number, item_code: any) {
+    try {
+      console.log(tranferingdata, selectedlocation, item_code);
+
+      if (selectedlocation &amp;&amp; selectedlocation !&#x3D;&#x3D; 4) {
+        console.log(&#x27;Transfer to other location.&#x27;)
+
+        const transfertolocation &#x3D; await this.adminService.transferStock(tranferingdata).toPromise()
+          .then(() &#x3D;&gt; {
+            console.warn(&#x60;${item_code} is transferring to location_id:${selectedlocation}&#x60;);
+          })
+      }
+      else {
+        //for scrapped item
+        console.log(&#x27;Transfer to scraped.&#x27;)
+        const ItemCode &#x3D; {
+          item_code: item_code
+        }
+        const transfertolocation &#x3D; await this.adminService.transferStock(tranferingdata).toPromise().then(async () &#x3D;&gt; {
+          const updateinsysteminfo &#x3D; await this.adminService.updatescrappediteminSysteminfo(ItemCode).toPromise().then(() &#x3D;&gt; {
+            console.warn(&#x60;${item_code} is scraped and updated in every location&#x60;);
+          })
+        })
+      }
+    }
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 403) {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Token expired.&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;../login&#x27;]);
+        })
+
+      } else {
+        await Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Oops!&#x27;,
+          text: &#x27;Internal server error. Please try after some time!&#x27;,
+          footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+        }).then(() &#x3D;&gt; {
+          location.reload();
+        })
+      }
+    }
+  }
+
+  // Method to handle clearing the selection
+  async onClear(source: any) {
+
+    if (this.displayupdateButton) {
+      const deletingCode &#x3D; this.newsystemFormDataforupdate[source];
+
+      this.newsystemFormDataforupdate[source] &#x3D; &#x27;&#x27;;
+
+      const itemCode &#x3D; {
+        item_code: deletingCode,
+        admin_url: this.adminUrl
+      }
+
+      console.log(itemCode, &quot;event&quot;)
+
+
+      const getItemsdata: any &#x3D; await this.sharedServices.getitemdatafromitemcode(itemCode).toPromise();
+      console.log(getItemsdata, &quot;getItemsdata&quot;);
+
+      if (getItemsdata) {
+
+        if (getItemsdata &amp;&amp; getItemsdata.length &gt; 0 &amp;&amp; getItemsdata[0].item_name) {
+          //deltete if auto-generated code 
+          const itemName &#x3D; getItemsdata[0].item_name;
+          const acceptedItemName &#x3D; [&quot;B-RAM&quot;, &quot;B-HDD&quot;, &quot;B-Graphics Card&quot;, &quot;B-SMPS&quot;];
+          if (acceptedItemName.includes(itemName)) {
+
+            await Swal.fire({
+              title: &quot;Are you sure?&quot;,
+              text: &#x60;You want to delete ${deletingCode}&#x60;,
+              icon: &quot;warning&quot;,
+              showCancelButton: true,
+              confirmButtonColor: &quot;#3085d6&quot;,
+              cancelButtonColor: &quot;#d33&quot;,
+              confirmButtonText: &quot;Yes, delete it!&quot;
+            }).then(async (result) &#x3D;&gt; {
+              if (result.isConfirmed) {
+                try {
+                  //deltete if auto-generated code 
+                  console.log(itemCode, &quot;itemCode&quot;);
+                  const results &#x3D; await this.adminService.deleteitemsfromItemsandSysteminfo(itemCode).toPromise();
+
+                  await Swal.fire({
+                    position: &quot;center&quot;,
+                    icon: &quot;success&quot;,
+                    title: &#x60;${deletingCode} has been deleted successfully!&#x60;,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                  // this.newsystemFormDataforupdate[source] &#x3D; &#x27;&#x27;;
+                  // this.newsystemFormData[source] &#x3D; &#x27;&#x27;;
+                  this.backupoldItemsfromsysteminfo[source] &#x3D; &#x27;&#x27;;
+
+                  //if deleted then remove from source &amp; control
+                  this.newsystemFormDataforupdate[source] &#x3D; &#x27;&#x27;;
+
+                }
+                catch (err) {
+                  console.error(err, &quot;Error at deleteitemsfromItemsandSysteminfo&quot;);
+                }
+              }
+              else {
+                const columnName &#x3D; source;
+                if (source) {
+                  this.newsystemFormData[columnName] &#x3D; itemCode.item_code;
+                }
+              }
+            })
+          }
+          else {
+            //not delete is purchased item
+            const columnName &#x3D; source;
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops...&#x27;,
+              text: &#x27;Sorry, deletion is not possible!&#x27;,
+            })
+            this.newsystemFormData[columnName] &#x3D; itemCode.item_code;
+
+          }
+        }
+        else {
+          // no item found in item table
+
+          // ddd
+          console.info(&#x27;Item name not found!&#x27;);
+        }
+
+      }
+    }
+    else {
+      console.info(&#x27;System added scenario&#x27;);
+    }
+  }
+
+
+  validationradiobtn() {
+    this.systemradioBtn &#x3D; new FormGroup({
+      systemType: new FormControl(&#x27;Branded Computer&#x27;)
+    })
+
+    this.newsystemForm &#x3D; new FormGroup({
+      cpucode: new FormControl(&#x27;&#x27;, [Validators.required]),
+      username: new FormControl(0),
+      processor: new FormControl(&#x27;&#x27;),
+      ram1: new FormControl(&#x27;&#x27;),
+      ram2: new FormControl(&#x27;&#x27;),
+      ram3: new FormControl(&#x27;&#x27;),
+      ram4: new FormControl(&#x27;&#x27;),
+      hdd1: new FormControl(&#x27;&#x27;),
+      hdd2: new FormControl(&#x27;&#x27;),
+      graphiccard: new FormControl(&#x27;&#x27;),
+      smps: new FormControl(&#x27;&#x27;),
+      cabinet: new FormControl(&#x27;&#x27;),
+      cmos: new FormControl(&#x27;&#x27;),
+      motherboard: new FormControl(&#x27;&#x27;),
+      description: new FormControl(&#x27;&#x27;),
+    })
+
+  }
+
+
+  navigateBack() {
+    let variable &#x3D; localStorage.getItem(&#x27;backUrl&#x27;);
+    this.router.navigateByUrl(&#x60;${variable}&#x60;);
+    localStorage.removeItem(&#x27;backUrl&#x27;);
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks and multiple subscriptions
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  async checkalreadyAssignorNot(data: any) {
+    console.log(data, &quot;ItemIdincheckalreadyAssignorNot&quot;);
+
+    // Wait for transfer data to be fetched
+    await this.getTransferData(data);
+
+    // Check if item has a transfer_to_system
+    if (this.configureitemdetails &amp;&amp; this.configureitemdetails.length &gt; 0 &amp;&amp; this.configureitemdetails[0].transfer_to_system &amp;&amp; this.configureitemdetails[0].system_name) {
+      const itemCode &#x3D; this.configureitemdetails[0].item_code;
+      const systmeName &#x3D; this.configureitemdetails[0].system_name;
+      // Show the first confirmation popup and wait for the result
+      const result &#x3D; await Swal.fire({
+        title: &quot;Item Already Installed&quot;, // More concise title
+        html: &#x60;&lt;p style&#x3D;&quot;font-size: 17px;&quot;&gt;${itemCode} is already installed in ${systmeName}.&lt;br&gt;First remove the existing installation.&lt;/p&gt;&#x60;, // Use HTML for better formatting
+        icon: &quot;warning&quot;,
+        showCancelButton: true,
+        confirmButtonColor: &quot;#3085d6&quot;,
+        cancelButtonColor: &quot;#d33&quot;,
+        confirmButtonText: &quot;Yes, Remove It&quot;, // More action-oriented button text
+        cancelButtonText: &quot;Cancel&quot;, // Add cancel button text
+        footer: &#x60;&lt;div style&#x3D;&quot;color: red; font-size: smaller;&quot;&gt;Note: This will remove ${itemCode} from the system information.&lt;/div&gt;&#x60; // Improved footer styling
+      });
+
+      // If the user clicks &quot;Yes&quot;
+      if (result.isConfirmed) {
+        this.dataforsysteminfowhenscrapped.item_code &#x3D; itemCode;
+
+        // Wait for the system info to be updated
+        await this.updatesysteminfoforsrapitem();
+
+      } else {
+        this.previousDatafromsubjectBehaviour(); // If user cancels, call this
+      }
+    } else {
+      console.log(&#x27;Item not deleted from system-info&#x27;);
+      this.previousDatafromsubjectBehaviour();
+    }
+  }
+
+
+
+  updatesysteminfoforsrapitem() {
+    return new Promise&lt;void&gt;((resolve, reject) &#x3D;&gt; {
+      this.adminService.updatescrappediteminSysteminfo(this.dataforsysteminfowhenscrapped).subscribe({
+
+        next: (results: any) &#x3D;&gt; {
+          resolve();
+          // console.log(results, &quot;Scrapped item updated in system info&quot;)
+        },
+        error: (error: any) &#x3D;&gt; {
+          reject(error);
+          console.error(error);
+          if (error.status &#x3D;&#x3D; 403) {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Token expired.&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Please login again!&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              this.router.navigate([&#x27;../login&#x27;]);
+            })
+          }
+          else {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Oops!&#x27;,
+              text: &#x27;Internal server error.Please try after some time!&#x27;,
+              footer: &#x27;&lt;a href&#x3D;&quot;../login&quot;&gt;Login&lt;/a&gt;&#x27;
+            }).then(() &#x3D;&gt; {
+              location.reload();
+            })
+          }
+        }
+      })
+    })
+
+  }
+
+
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'TransferStockData-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

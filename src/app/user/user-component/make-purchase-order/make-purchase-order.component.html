@@ -1,0 +1,435 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-list-alt text-info" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Make Purchase Order</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background-h">
+            <div class="data-control-box" [formGroup]="purchaseForm">
+                <div>
+                    <div class="flex-container">
+                        <div><input type="radio" id="newPurchased" checked="checked" name="fav_language" value="HTML"
+                                (click)="newPurchaseId()">
+                              <label for="newPurchased" class="text-center form-heading-radio-btn">New Purchase
+                                ID</label><br></div>
+                        <div><input type="radio" id="existingPurchaseId" name="fav_language" value="HTML"
+                                (click)="existingPurchaseId()">
+                              <label for="existingPurchaseId" class="text-center form-heading-radio-btn">Existing
+                                Purchase ID</label><br></div>
+                    </div>
+                    <div class="data-table">
+                        <table class="table table-striped  table-bordered table-hover" style="height:90px;">
+                            <thead>
+                                <tr>
+                                    <th class="table-heading-color; " scope="col" style="width:5%;">S. No.</th>
+                                    <th class="table-heading-color; " scope="col" style="width:15%;">Purchase ID
+                                        <sup>*</sup>
+                                    </th>
+                                    <th class="table-heading-color; " scope="col" style="width:25%;">Vendor Name
+                                        <sup>*</sup>
+                                    </th>
+                                    <th class="table-heading-color; " scope="col"
+                                        style="width:20%; white-space: nowrap;">Issued Date <sup>*</sup></th>
+                                    <th class="table-heading-color; " scope="col"
+                                        style="width:20%; white-space: nowrap;">Expected Date <sup>*</sup></th>
+                                    <th class="table-heading-color; " scope="col"
+                                        style="width:10%; white-space: nowrap;">Currency <sup>*</sup></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td class="table-heading-sub-text">
+                                        <ng-container *ngIf="displaynewPurchaseId">
+                                            <input type="text" class="form-control form-control-sm description-btn"
+                                                placeholder="Purchase ID" formControlName="purchase_id"
+                                                [(ngModel)]="new_prchase_id" [value]='new_prchase_id' readonly>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="displayexistingPurchaseId">
+                                            <ng-select appendTo="body" #purchase
+                                                class="form-control form-control-sm data-control-for-ngselect select-option"
+                                                id="purchase_id" 
+                                                [items]="getpurchasedatafrompoArray"
+                                                formControlName="purchase_id"
+                                                [placeholder]="!purchaseData.purchase_id ? 'Select Purchase ID' : ''"
+                                                [(ngModel)]="purchaseData.purchase_id" bindValue="purchase_id"
+                                                bindLabel="purchase_id" (change)="selectPurchaseid($event)">
+
+                                                <ng-template ng-option-tmp let-item="item">
+                                                    <div [ngStyle]="{ 'background-color': 'white'}">
+                                                        {{item}}
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+
+                                            <div class="mandatory my-1 text-danger font-italic"
+                                                *ngIf="this.clickedPurchaseIdbtn && purchaseForm.get('purchase_id').touched">
+                                                Required
+                                            </div>
+                                        </ng-container>
+                                    </td>
+
+                                    <!-- not responsive please make it -->
+                                    <td>
+                                        <div class="table-heading-sub-text">
+                                            <ng-select appendTo="body"
+                                                class="form-control form-control-sm data-control-for-ngselect select-option"
+                                                [readonly]=makeVendorreadOnly [items]="getsupplierData"
+                                                formControlName="supplier_id"
+                                                [placeholder]="!purchaseData.supplier_id ? 'Select Vendor...' : ''"
+                                                [(ngModel)]="purchaseData.supplier_id" bindLabel="supplier_name"
+                                                bindValue="supplier_id" (mouseover)=" hidedata2()"
+                                                [clearable]="!purchaseData.supplier_id?false:true"
+                                                (change)="selectSupplier($event)">
+                                                <ng-template ng-option-tmp let-item="item">
+                                                    <div [ngStyle]="{ 'background-color': 'white'}">
+                                                        {{item?.supplier_name}}
+                                                    </div>
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                        <div class="mandatory my-1 text-danger font-italic" style="position: relative;"
+                                            *ngIf="(purchaseForm.get('supplier_id').hasError('required') || purchaseForm.get('supplier_id').hasError('pattern'))&& purchaseForm.get('supplier_id').touched">
+                                            Required</div>
+                                    </td>
+
+
+
+
+                                    <td class="table-heading-sub-text">
+                                        <input type="date" class="form-control form-control-sm description-btn "
+                                            formControlName="issue_date" [(ngModel)]="purchaseData.issue_date"
+                                            (mouseover)="hidedata()" (mouseover)="hidedata2()">
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('issue_date').hasError('required') && purchaseForm.get('issue_date').touched">
+                                            Required</div>
+                                    </td>
+                                    <td class="table-heading-sub-text">
+                                        <input type="date" class="form-control form-control-sm description-btn "
+                                            formControlName="expected_date" [(ngModel)]="purchaseData.expected_date"
+                                            (mouseover)="hidedata2()">
+
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('expected_date').hasError('required') && purchaseForm.get('expected_date').touched">
+                                            Required</div>
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseData.expected_date && (purchaseData.expected_date < purchaseData.issue_date)">
+                                            Never less than issued date.</div>
+
+                                    </td>
+                                    <td>
+
+                                        <div class="col-sm-12 w-100">
+                                            <select class="form-control data-control p-1 w-100" formControlName="currency" [(ngModel)]="purchaseData.currency">
+
+                                                <!-- <ng-container *ngFor="let currency of getAllCurrenciesFlattened()"> -->
+                                                    <option [value]="currency.symbol" *ngFor="let currency of flattenedCurrencies">
+                                                        {{ currency.code }} 
+                                                    </option>
+                                                <!-- </ng-container> -->
+
+                                            </select>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex-box">
+                        <div class="col-lg-7 col-md-12 col-sm-12 ">
+                            <div class="data-form">
+                                <!-- prdoduct and unit price starts here -->
+                                <div class="form-row m-2">
+                                    <div class=" form-group col-sm-12 col-md-6">
+                                        <label for="product_id" class="form-label">Item :<sup>*</sup></label>
+                                        <ng-select 
+                                            class="form-control form-control-sm data-control-for-ngselect select-option"
+                                            id="product_id" [items]="getproductData" formControlName="product_id"
+                                            [placeholder]="!purchaseData.product_id ? 'Select Item' : ''"
+                                            [(ngModel)]="purchaseData.product_id" bindLabel="product_name"
+                                            [clearable]="!purchaseData.product_id?false:true"
+                                            bindValue="product_id"
+                                            (change)="productId($event)">
+                                              <ng-template ng-option-tmp let-item="item">
+                                            <div [ngStyle]="{ 'background-color':'white'}">
+                                                {{item?.product_name}}
+                                                </div>
+                                            </ng-template>
+                                            <!-- {{getproductData?.product_name}} -->
+                                        
+                                        </ng-select>
+
+
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('product_id').hasError('required') && purchaseForm.get('product_id').touched">
+                                            Required</div>
+
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('product_id').hasError('pattern') && purchaseForm.get('product_id').touched">
+                                            Required</div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <label for="unit_price" class="form-label">Unit
+                                            Price({{purchaseData.currency}}):<sup>*</sup></label>
+                                        <input type="number" step="any" id="unit_price"
+                                            class="form-control data-control p-1" placeholder="Enter Unit Price"
+                                            formControlName="unit_price" (input)="calculatesubtotal()"
+                                            [(ngModel)]="purchaseData.unit_price" b-positive />
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('unit_price').hasError('required') && purchaseForm.get('unit_price').touched">
+                                            Required</div>
+                                    </div>
+
+                                </div>
+                                <!-- prdoduct and unit price ends here -->
+                                <!-- quantity  and discount  starts here -->
+
+                                <div class="form-row m-2">
+                                    <div class=" form-group col-md-6">
+                                        <label for="quantity" class="form-label">Quantity(Unit):<sup>*</sup></label>
+                                        <input type="number" step="any" id="quantity"
+                                            class="form-control data-control p-1" min="1" placeholder="Enter Quantity"
+                                            formControlName="quantity" oninput="this.value = Math.abs(this.value)"
+                                            (input)="calculatesubtotal()" [(ngModel)]="purchaseData.quantity"
+                                            b-positive />
+
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="(purchaseForm.get('quantity').hasError('required') || purchaseForm.get('quantity').invalid) && purchaseForm.get('quantity').touched">
+                                            Required</div>
+
+                                        <!-- <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('quantity').hasError('pattern') && purchaseForm.get('quantity').touched">
+                                            Invalid quantity</div> -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="discount_in_rs"
+                                            class="form-label">Discount({{purchaseData.currency}}):</label>
+                                        <input type="number" step="any" id="discount_in_rs"
+                                            class="form-control data-control p-1" placeholder="Enter Discount"
+                                            formControlName="discount_in_rs" (input)="calculatesubtotal()"
+                                            min="0"
+                                            oninput="validity.valid||(value='');" (input)="calculateTotal()"
+                                            [(ngModel)]="purchaseData.discount_in_rs" />
+
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseData.discount_in_rs>(purchaseData.unit_price*purchaseData.quantity)">
+                                            Discount cannot exceed Subtotal
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <!-- quantity  and discount  ends here -->
+                                <!-- sub total and gst starts here -->
+                                <div class="form-row m-2">
+                                    <div class=" form-group col-md-6">
+                                        <label for="sub_total" class="form-label">Sub
+                                            Total({{purchaseData.currency}}):</label>
+                                        <input type="number" step="any" id="sub_total"
+                                            class="form-control data-control p-1" placeholder="Enter Sub Total"
+                                            formControlName="sub_total" (change)="calculateGST()"
+                                            (change)="calculatesubtotal()" readonly
+                                            [(ngModel)]="purchaseData.sub_total" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="calcgst" class="form-label">GST(%):<sup>*</sup></label>
+                                        <select id="calcgst" #calcgst
+                                            class="form-control form-control-sm data-control p-1"
+                                            formControlName="gst_in_percent" (change)="calculateGST()"
+                                            (change)="calculateTotal()" [(ngModel)]="purchaseData.gst_in_percent">
+
+                                            <option class="select-border p-1" [selected]=true disabled hidden>Select
+                                            </option>
+                                            <option class="select-border p-1" hidden value=0>Select</option>
+                                            <option class="select-border p-1" value="0">0 %</option>
+                                            <option class="select-border p-1" value="0.05">5 %</option>
+                                            <option class="select-border p-1" value="0.18">18 %</option>
+                                            <!-- <option class="select-border p-1" value="0.28">28 %</option> -->
+                                            <option class="select-border p-1" value="0.40">40 %</option>
+                                        </select>
+                                        <span id="note" class="mandatory my-1 text-danger font-italic">Note:Default GST
+                                            is 0%</span>
+                                    </div>
+                                </div>
+                                <!-- sub total and gst ends here -->
+                                <!-- calculation  and grand total starts here -->
+                                <div class="form-row m-2">
+                                    <div class=" form-group col-md-6">
+                                        <label for="gst_calculation" class="form-label">
+                                            Calculation({{purchaseData.currency}}) GST:<sup>*</sup></label>
+                                        <input type="number" step="any" id="gst_calculation"
+                                            class="form-control data-controlp-1" placeholder="Enter GST Calculation"
+                                            formControlName="gst_calculation" (change)="calculateTotal()" readonly
+                                            [(ngModel)]="purchaseData.gst_calculation" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="total" class="form-label">Grand Total({{purchaseData.currency}}):<sup>*</sup></label>
+                                        <input type="number" step="any" id="total" class="form-control data-control p-1"
+                                            placeholder="Enter Grand Total" formControlName="total" readonly
+                                            [(ngModel)]="purchaseData.total" />
+                                    </div>
+                                </div>
+                                <!-- calculation  and grand total ends here -->
+
+
+                                <!-- new column suggested by director sir purpsose and user -->
+
+                                <div class="form-row m-2">
+                                    <div class=" form-group col-md-6">
+                                        <label for="purpose" class="form-label">Purpose:<sup>*</sup></label>
+                                        <input type="text" id="purpose" class="form-control data-control p-1"
+                                            placeholder="Purpose..." formControlName="purpose"
+                                            [(ngModel)]="purchaseData.purpose"
+                                            (keydown)="NoSpaceallowedatstart($event)" />
+
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('purpose').hasError('required') && purchaseForm.get('purpose').touched">
+                                            Required
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="expected_user" class="form-label">Intended User:<sup>*</sup></label>
+                                        <input type="text" class="form-control data-control p-1"
+                                            placeholder="Intended User..." formControlName="expected_user"
+                                            id="expected_user" [(ngModel)]="purchaseData.expected_user"
+                                            (keydown)="NoSpaceallowedatstart($event)" />
+                                        <div class="mandatory my-1 text-danger font-italic"
+                                            *ngIf="purchaseForm.get('expected_user').hasError('required') && purchaseForm.get('expected_user').touched">
+                                            Required
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ends here -->
+
+                                <!-- description starts here -->
+                                <div class="form-row m-2">
+                                    <div class=" form-group col-md-12">
+                                        <label for="description" class="form-label">Description:<sup>*</sup></label>
+                                        <textarea id="description" #description
+                                            class="form-control data-control-textarea form-control-sm" row="1"
+                                            placeholder="Leave a Description here" id="floatingTextarea2"
+                                            formControlName="description" (keydown)="NoSpaceallowedatstart($event)"
+                                            [(ngModel)]="purchaseData.description"></textarea>
+                                    </div>
+                                    <div class="mandatory my-1 text-danger font-italic"
+                                        *ngIf="purchaseForm.get('description').hasError('required') && purchaseForm.get('description').touched">
+                                        Required
+                                    </div>
+                                </div>
+
+
+
+                                <!-- description ends here -->
+                                <!-- button starts here -->
+                                <div class="form-group col-md-12 mb-4">
+                                    <div class="form-group text-center ">
+                                        <button class="btn btn-data-login p-2"
+                                            (click)="perchaseOrdergenerate(purchaseForm.value)"
+                                            *ngIf="!displayaupdatebtn && displaynewPurchaseId && !displayexistingPurchaseId">Generate
+                                            PO</button>
+                                        <button class="btn btn-data-login" (click)="updatepo()"
+                                            *ngIf="displayaupdatebtn">Update PO</button>
+                                        <button class="btn btn-data-login"
+                                            (click)="perchaseOrdergenerate(purchaseForm.value)"
+                                            *ngIf="!displaynewPurchaseId && displayexistingPurchaseId && !displayaupdatebtn">Update
+                                            PO</button>
+                                    </div>
+                                </div>
+                                <!-- button starts here -->
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="table table-bordered table-striped table-hover mt-2"
+                        *ngIf="getpurchaseitemdata?.length">
+                        <thead>
+                            <tr>
+                                <th scope="col">S.No.</th>
+                                <th scope="col">Purchase ID</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Unit Price({{purchaseData.currency}})</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">GST(%)</th>
+                                <th scope="col">Discount({{purchaseData.currency}})</th>
+                                <th scope="col">Sub Total({{purchaseData.currency}})</th>
+                                <th scope="col">Total({{purchaseData.currency}})</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Purpose</th>
+                                <th scope="col">Intended User</th>
+                                <th scope="col" colspan="3">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let items of getpurchaseitemdata; let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{items.purchase_id}}</td>
+                                <td>{{items.product_name}}</td>
+                                <td>{{items.unit_price | number: '1.2-2'}}</td>
+                                <td>{{items.quantity}}</td>
+                                <td>{{items.gst_in_percent *100 | number: '1.2-2'}}%</td>
+                                <td>{{items.discount_in_rs | number: '1.2-2'}}</td>
+                                <td> {{items.sub_total | number: '1.2-2'}}</td>
+                                <td> {{items.total | number: '1.2-2'}}</td>
+                                <td>
+                                    <span class="text-truncate" [matTooltip]="items.description"
+                                        *ngIf="items.description?.length > 10">
+                                        {{ items.description?.substring(0, 10) + (items.description?.length > 10 ? "..."
+                                        : "") }}
+                                    </span>
+                                    <span *ngIf="items.description?.length <= 10">
+                                        {{ items.description }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="text-truncate" [matTooltip]="items.purpose"
+                                        *ngIf="items.purpose?.length > 10">
+                                        {{ items.purpose?.substring(0, 10) + (items.purpose?.length > 10 ? "..." : "")
+                                        }}
+                                    </span>
+                                    <span *ngIf="items.purpose?.length <= 10">
+                                        {{ items.purpose }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="text-truncate" [matTooltip]="items.expected_user"
+                                        *ngIf="items.expected_user?.length > 10">
+                                        {{ items.expected_user?.substring(0, 10) + (items.expected_user?.length > 10 ?
+                                        "..." : "") }}
+                                    </span>
+                                    <span *ngIf="items.expected_user?.length <= 10">
+                                        {{ items.expected_user }}
+                                    </span>
+                                </td>
+
+                                <td><i class="fa fa-edit table-edit-icon icon-green" aria-hidden="true"
+                                        (click)="editpo(items)"></i></td>
+                                <td><i class="fa fa-trash table-edit-icon icon-red " aria-hidden="true"
+                                        (click)="deletepo(items)"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="8" class="text-center"><strong>Grand Total({{purchaseData.currency}})</strong></td>
+                                <td class="font-weight-bold">{{this.grandtotalofpodata}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">

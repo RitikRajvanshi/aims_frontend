@@ -1,0 +1,548 @@
+<app-spinner>
+
+</app-spinner>
+
+<div class="wrapper">
+    <div class="class page-background-h">
+        <header class="main-header">
+        <div class="logo">
+            <a [routerLink]="[]"> <!-- Logo -->
+
+                <span class="logo-large">
+                     <!-- <div class="logo-wrapper "> -->
+
+                    <!-- <img src="assets/images/MINI-LOGO-ICON-WHITE.png" alt="apvims"> APV IMS  -->
+                    <!--------- dynamically changes data from db now -------------------->
+
+                  <img [src]="companyLogo" alt="apvims"  [routerLink]="['user-dashboard']">
+                   <!-- <div  class="d-flex justify-content-center "> <span class="logo-version ">Version 2025.9.1</span></div>
+                       <span class="logo-version">v2025.9.1</span>
+                    </div> -->
+
+                </span>
+            </a>
+        </div>
+
+        <nav class="navbar navbar-top">
+            <a [routerLink]="[]" class="sidebar-toggle" (click)="SidebarToggle()">
+                <!-- Sidebar toggle button-->
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-tasks"></span>
+            </a>
+            <!-- Links -->
+            <ul class="nav">
+                <!-- Dropdown -->
+                <li class="nav-item dropdown notifications-menu">
+                    <a class="nav-link" data-toggle="dropdown" style="cursor: pointer;">
+                        <span style="color:rgb(199, 197, 197)">{{userName}}</span>
+                        <!-- <img src="assets/images/avatar2.jpg" class="rounded-circle img-profile" style="object-fit:cover; width: 40px ; height:40px;"  alt="User Image"> -->
+                        <i class="fa fa-2x fa fa-user-circle-o ml-2"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header text-center">
+                            <span><b>Welcome</b></span><br />
+                            {{userName}}
+                        </li>
+                        <li class="footer">
+                            <a [routerLink]="['../change-password']" class="text-success w-100"> <i
+                                    class="fa fa-key text-danger mr-1" aria-hidden="true"></i> <b
+                                    style="color:#00235E;">Change Password</b> </a>
+                        </li>
+                        <li class="footer" (click)="logout()">
+                            <a [routerLink]="[]" class="text-success w-100" #logoutbtn> <i
+                                    class="fa fa-2x fa-sign-out text-danger mr-1" aria-hidden="true"></i> <b
+                                    style="color:#00235E;font-size:16px">Logout</b> </a>
+                        </li>
+
+
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+
+
+    <!-- Sidebar -->
+    <div class="main-sidebar" [class.sidebar-collapsed]="sidebarCollapsed">
+        <ul class="sidebar-menu">
+            <li>
+                <a [routerLink]="['user-dashboard']" [class.active-parent-menu]="router.url==('/user/user-dashboard')"
+                    [title]="sidebarCollapsed?'Dashboard':''">
+                    <i class="fa fa-tachometer text-info" aria-hidden="true"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="#BasicForms" data-toggle="collapse" aria-expanded="false"
+                    [class.active-parent-menu-grey]="router.url==('/user/category')||router.url==('/user/item')||router.url==('/user/designation')||router.url==('/user/user-privilege')||router.url==('/user/location')"
+                    id="BasicFormsbtn" (click)="toggleArrow('BasicFormsbtn');"
+                    [title]="sidebarCollapsed?'Master Data Forms':''">
+
+                    <i class="fa fa-file-text text-success"></i><span>Master Data Forms</span>
+                    <span class="pull-right-container">
+
+                        <i [@rotateArrow]="arrowState['BasicFormsbtn']" class="fa fa-angle-right pull-right"
+                            id="BasicFormsarrow"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="BasicForms">
+                    <li><a [routerLink]="['category']" [class.active-parent-menu]="router.url==('/user/category')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Category">Category</a>
+                    </li>
+                    <li><a [routerLink]="['item']" [class.active-parent-menu]="router.url==('/user/item')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Item">Item</a>
+                    </li>
+                    <li><a [routerLink]="['department']" [class.active-parent-menu]="router.url==('/user/department')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Department">Department</a>
+                    </li>
+                    <li><a [routerLink]="['designation']" [class.active-parent-menu]="router.url==('/user/designation')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Designation">Designation</a>
+                    </li>
+                    <li><a [routerLink]="['user-privilege']"
+                            [class.active-parent-menu]="router.url==('/user/user-privilege')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="User Privilege">User Privilege</a>
+                    </li>
+                    <li><a [routerLink]="['location']" [class.active-parent-menu]="router.url==('/user/location')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Location">Location</a></li>
+
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#user" data-toggle="collapse" aria-expanded="false" id="usersbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/add-user')||router.url==('/user/user-list')"
+                    (click)="toggleArrow('usersbtn')" [title]="sidebarCollapsed?'User':''">
+
+                    <i class="fa fa-user text-danger"></i><span>User</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" [@rotateArrow]="arrowState['usersbtn']"
+                            id="userarrow"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="user">
+                    <li><a [routerLink]="['add-user']" [class.active-parent-menu]="router.url==('/user/add-user')"
+                            *ngIf="userRole === '2' " class="truncated-text" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Add User">Add User</a></li>
+                    <li><a [routerLink]="['user-list']" [class.active-parent-menu]="router.url==('/user/user-list')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Users' List">Users' List</a></li>
+
+
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#Vendor" data-toggle="collapse" aria-expanded="false" id="Vendorbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/add-vendor')||router.url==('/user/vendor-list')"
+                    (click)="toggleArrow('Vendorbtn')" [title]="sidebarCollapsed?'Vendor':''">
+
+                    <i class="fa fa-smile-o " style="color:#FF5733 "></i><span>Vendor</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" [@rotateArrow]="arrowState['Vendorbtn']"
+                            id="vendorarrow"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Vendor">
+                    <li><a [routerLink]="['add-vendor']" [class.active-parent-menu]="router.url==('/user/add-vendor')"
+                            *ngIf="userRole !== '1' " class="truncated-text" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Add Vendor">Add Vendor</a></li>
+
+                    <li><a [routerLink]="['vendor-list']" [class.active-parent-menu]="router.url==('/user/vendor-list')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Vendors' List">Vendors' List</a></li>
+                    <!-- <li><a [routerLink]="['update-vendor']">Update Vendor</a></li> -->
+
+
+                </ul>
+            </li>
+
+            <li class="treeview" *ngIf="userRole !== '1'">
+                <a href="#Request" data-toggle="collapse" aria-expanded="false" id="Requestbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/genarate-request')||router.url==('/user/accepted-request')||router.url==('/user/Pending Request')||router.url==('/user/Rejected Request')"
+                    (click)="toggleArrow('Requestbtn')" [title]="sidebarCollapsed?'Request':''">
+
+                    <i class="fa fa-question" style="color:purple"></i><span>Request</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" [@rotateArrow]="arrowState['Requestbtn']"
+                            id="Requestarrow"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Request">
+                    <li><a [routerLink]="['genarate-request']"
+                            [class.active-parent-menu]="router.url==('/user/genarate-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Genarate Request">Genarate
+                            Request</a>
+                    </li>
+                    <li><a [routerLink]="['accepted-request']"
+                            [class.active-parent-menu]="router.url==('/user/accepted-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Accepted Request">Accepted
+                            Request</a>
+                    </li>
+                    <li><a [routerLink]="['pending-request']"
+                            [class.active-parent-menu]="router.url==('/user/pending-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Pending Request">Pending Request</a>
+                    </li>
+
+                    <li><a [routerLink]="['rejected-request']"
+                            [class.active-parent-menu]="router.url==('/user/rejected-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Rejected Request">Rejected
+                            Request</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview" *ngIf="userRole == '1' ">
+                <a href="#Request" data-toggle="collapse" aria-expanded="false" id="Requestbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/received-request')||router.url==('/user/accepted-request')||router.url==('/user/rejected-request')"
+                    (click)="toggleArrow('Requestbtn')" [title]="sidebarCollapsed?'Request':''">
+
+                    <i class="fa fa-check"></i><span>Request</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" [@rotateArrow]="arrowState['Requestbtn']"
+                            id="Requestarrow"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Request">
+                    <li><a [routerLink]="['received-request']"
+                            [class.active-parent-menu]="router.url==('/user/received-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Pending Request">Pending Request</a>
+                    </li>
+                    <li><a [routerLink]="['accepted-request']"
+                            [class.active-parent-menu]="router.url==('/user/accepted-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Accepted Request">Accepted
+                            Request</a>
+                    </li>
+                    <li><a [routerLink]="['rejected-request']"
+                            [class.active-parent-menu]="router.url==('/user/rejected-request')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Rejected Request">Rejected
+                            Request</a>
+                    </li>
+                </ul>
+
+            </li>
+
+            <li class="treeview">
+                <a href="#Purchase" data-toggle="collapse" aria-expanded="false" id="Purchasebtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/make-purchase-order')||router.url==('/user/purchase-order-list')||router.url==('/user/received-purhchase-order')"
+                    (click)="toggleArrow('Purchasebtn')" [title]="sidebarCollapsed?'Purchase':''">
+
+                    <i class="fa fa-list-alt text-info"></i><span>Purchase</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="Purchasearrow"
+                            [@rotateArrow]="arrowState['Purchasebtn']"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Purchase">
+                    <li *ngIf="userRole !== '1' "><a [routerLink]="['make-purchase-order']"
+                            [class.active-parent-menu]="router.url==('/user/make-purchase-order')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Make Purchase Order">Make Purchase Order</a></li>
+                    <li><a [routerLink]="['purchase-order-list']"
+                            [class.active-parent-menu]="router.url==('/user/purchase-order-list')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Purchase Order List">Purchase Order List</a>
+                    </li>
+                    <li *ngIf="userRole == '1'"><a [routerLink]="['received-purhchase-order']"
+                            [class.active-parent-menu]="router.url==('/user/received-purhchase-order')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Received Purchase Orders">Received Purchase Orders</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview" *ngIf="userRole !== '1' ">
+                <a href="#Inspection" data-toggle="collapse" aria-expanded="false" id="Inspectionbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/upload-invoice')||router.url==('/user/upload-inspection-form')"
+                    (click)="toggleArrow('Inspectionbtn')" [title]="sidebarCollapsed?'Inspection':''">
+
+                    <i class="fa fa-search text-secondary"></i><span>Inspection</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="Inspectionarrow"
+                            [@rotateArrow]="arrowState['Inspectionbtn']"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Inspection">
+                    <li><a [routerLink]="['upload-invoice']"
+                            [class.active-parent-menu]="router.url==('/user/upload-invoice')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Invoice">Upload Invoice</a>
+                    </li>
+
+                    <li><a [routerLink]="['upload-inspection-form']"
+                            [class.active-parent-menu]="router.url==('/user/upload-inspection-form')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Upload Inspection Form">Upload Inspection Form</a>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#Inventory " data-toggle="collapse" aria-expanded="false" id="Inventorybtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/add-items')||router.url==('/user/upload-scan-document') ||router.url==('/user/upload-scan-quotation') ||router.url==('/user/incoming-item-details')"
+                    (click)="toggleArrow('Inventorybtn')" [title]="sidebarCollapsed?'Inventory':''">
+
+                    <i class="fa fa-cubes" style="color:#00235e"></i><span>Inventory </span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="Inventoryarrow"
+                            [@rotateArrow]="arrowState['Inventorybtn']"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Inventory">
+                    <li *ngIf="userRole === '2' "><a [routerLink]="['add-items']"
+                            [class.active-parent-menu]="router.url==('/user/add-items')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Add Items">Add Items</a>
+                    </li>
+
+                    <li><a [routerLink]="['update-items']"
+                            [class.active-parent-menu]="router.url==('/user/update-items')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Update Items">Update Items</a></li>
+                    <li><a [routerLink]="['upload-scan-document']"
+                            [class.active-parent-menu]="router.url==('/user/upload-scan-document')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Upload Scanned Document">Upload Scanned Document</a></li>
+                    <li><a [routerLink]="['upload-scan-quotation']"
+                            [class.active-parent-menu]="router.url==('/user/upload-scan-quotation')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Upload Scanned Quotation">Upload Scanned
+                            Quotation</a></li>
+
+                    <li><a [routerLink]="['incoming-item-details']"
+                            [class.active-parent-menu]="router.url==('/user/incoming-item-details')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Incoming Item Details">Incoming Item Details</a></li>
+                </ul>
+            </li>
+
+            <li *ngIf="userRole === '2'">
+                <a [routerLink]="['transfer-stock']" [class.active-parent-menu]="router.url==('/user/transfer-stock')"
+                    [title]="sidebarCollapsed?'Transfer Stock':''"><i class="fa fa-exchange" style="color:#FF8A65"
+                        aria-hidden="true"></i><span>Transfer Stock</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="#Reports" data-toggle="collapse" aria-expanded="false" id="Reportsbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/report-active-supplier')||router.url==('/user/report-purchase-order') ||router.url==('/user/report-vendor-evaluation') ||router.url==('/user/report-direct-purchases')
+                    ||router.url==('/user/report-item-with-warranty')||router.url==('/user/report-item-with-price')||router.url==('/user/report-item-with-location')||router.url==('/user/report-pending-stock')
+                    ||router.url==('/user/report-stock-in-hand')||router.url==('/user/report-scraped-item')||router.url==('/user/report-complete-asset') || router.url==('/user/report-license-management') || router.url==('/user/report-item-life-cycle') || router.url==('/user/report-goods-and-services')"
+                    (click)="toggleArrow('Reportsbtn')" [title]="sidebarCollapsed?'Reports':''">
+
+                    <i class="fa fa-files-o" style="color:#FF00FF"></i><span>Reports</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="Reportsarrow"
+                            [@rotateArrow]="arrowState['Reportsbtn']"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Reports">
+                    <li><a [routerLink]="['report-active-vendor']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-active-vendor')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Active Vendors">Active Vendors</a>
+                    </li>
+                    <li><a [routerLink]="['report-purchase-order']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-purchase-order')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Purchase Order">Purchase Order</a>
+                    </li>
+                    <li><a [routerLink]="['report-vendor-evaluation']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-vendor-evaluation')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Purchase Order">Vendors'
+                            Evaluation</a>
+                    </li>
+                    <li><a [routerLink]="['report-direct-purchases']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-direct-purchases')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Direct Purchases">Direct
+                            Purchases</a></li>
+
+                    <li><a [routerLink]="['report-item-with-warranty']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-item-with-warranty')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Items with warranty">Items with
+                            warranty</a></li>
+
+                    <li><a [routerLink]="['report-item-with-price']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-item-with-price')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Items with Price">Items with
+                            Price</a>
+                    </li>
+
+                    <li>
+                        <a [routerLink]="['report-item-with-po-invoice-movetoinventory-for-a-period']"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Item with PO/Invoice/Move To Inventory for a period"
+                            [class.active-parent-menu]="router.url==('/user/report-item-with-po-invoice-movetoinventory-for-a-period')">Item
+                            with PO/Invoice/Move To Inventory for a period</a>
+                    </li>
+
+                    <li><a [routerLink]="['report-item-with-location']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-item-with-location')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Items with Location">Items with
+                            Location</a>
+                    </li>
+                    <!-- <li><a [routerLink]="['report-item-with-price']">Items with Price</a></li>                       -->
+                    <li><a [routerLink]="['report-pending-stock']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-pending-stock')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Pending Stocks">Pending Stocks</a>
+                    </li>
+                    <li><a [routerLink]="['report-stock-in-hand']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-stock-in-hand')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Stocks in Hand">Stocks in Hand</a>
+                    </li>
+                    <!-- <li><a [routerLink]="['report-transfer-stock']" [class.active-parent-menu]="router.url==('/user/report-transfer-stock')">Transfer Stock</a></li>                     -->
+                    <li><a [routerLink]="['report-scraped-item']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-scraped-item')"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Scrapped/Soldout/Gifted">Scrapped/Soldout/Gifted</a>
+                    </li>
+
+                    <li><a [routerLink]="['report-license-management']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-license-management')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="License Management">License
+                            Management</a>
+                    </li>
+                    <li><a [routerLink]="['report-item-life-cycle']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-item-life-cycle')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Item Life-Cycle">Item Life-Cycle</a>
+                    </li>
+
+                    <li><a [routerLink]="['report-goods-and-services']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-goods-and-services')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Goods & Services">Goods &
+                            Services</a>
+                    </li>
+
+
+                    <li><a [routerLink]="['report-total-assets']" class="truncated-text"
+                            [class.active-parent-menu]="router.url==('/user/report-total-assets')"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Total Assets">Total Assets</a>
+                    </li>
+                    <!-- <li><a [routerLink]="['report-item-with-warranty']" [class.active-parent-menu]="router.url==('/user/report-item-with-warranty')">Items with warranty</a></li>-->
+
+
+                </ul>
+            </li>
+
+            <li class="treeview" *ngIf="userRole == '1' ">
+                <a href="#Registration" data-toggle="collapse" aria-expanded="false" id="Registrationbtn"
+                    [title]="sidebarCollapsed?'Registration':''"
+                    [class.active-parent-menu-grey]="router.url==('/user/company-registration')||router.url==('/user/edit-profile')"
+                    (click)="toggleArrow('Registrationbtn')">
+
+                    <i class="fa fa-registered" style="color:#40E0D0"></i><span>Registration</span>
+
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="Registrationarrow"
+                            [@rotateArrow]="arrowState['Registrationbtn']"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="Registration">
+                    <li>
+                        <a [routerLink]="['company-registration']"
+                            [class.active-parent-menu]="router.url==('/user/company-registration')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Company Registration"><span>Company
+                                Registration</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['edit-profile']"
+                            [class.active-parent-menu]="router.url==('/user/edit-profile')" class="truncated-text">
+                            <span>Edit Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li [title]="sidebarCollapsed?'Move To ITSM':''">
+                <!-- <a [routerLink]="['moveto-itsm']"><i class="fa fa-arrows" aria-hidden="true"></i><span>Move To ITSM</span> -->
+                <a href="http://192.168.0.112/itsmlive" target="_blank"><i class="fa fa-arrows" style="color:#FF0000"
+                        aria-hidden="true"></i><span>Move To ITSM</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="#SystemInfo " data-toggle="collapse" aria-expanded="false" id="SystemInfobtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/newsystem-information')||router.url==('/user/system-information-list')"
+                    (click)="toggleArrow('SystemInfobtn')" [title]="sidebarCollapsed?'System Information':''">
+
+                    <i class="fa fa-info-circle" style="color:#A1887F"></i><span>System Information</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="SystemInfoarrow"
+                            [@rotateArrow]="arrowState['SystemInfobtn']"></i>
+                    </span>
+                </a>
+
+                <ul class="collapse treeview-menu" id="SystemInfo">
+                    <!-- <li><a [routerLink]="['newsystem-information']"
+                            [class.active-parent-menu]="router.url==('/user/newsystem-information')" 
+                            class="truncated-text"
+                            *ngIf="userRole === '2' "
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="top" 
+                            title="New System Information">New System Information</a></li> -->
+
+                    <li><a [routerLink]="['newsystem-information']"
+                            [class.active-parent-menu]="router.url==('/user/newsystem-information')"
+                            class="truncated-text" *ngIf="userRole === '2' " data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="New System Information">New System Information</a></li>
+
+                    <li><a [routerLink]="['system-information-list']"
+                            [class.active-parent-menu]="router.url==('/user/system-information-list')"
+                            class="truncated-text" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="System Information List">System Information List</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#gatePass " data-toggle="collapse" aria-expanded="false" id="Gatepassbtn"
+                    [class.active-parent-menu-grey]="router.url==('/user/gate-pass')||router.url==('/user/gate-pass-list')"
+                    (click)="toggleArrow('Gatepassbtn')" [title]="sidebarCollapsed?'Gatepass':''">
+
+                    <i class="fa fa-ticket text-success"></i><span>Gate Pass</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right" id="SystemInfoarrow"
+                            [@rotateArrow]="arrowState['Gatepassbtn']"></i>
+                    </span>
+                </a>
+                <ul class="collapse treeview-menu" id="gatePass">
+                    <li *ngIf="userRole === '2' "> <a [routerLink]="['gate-pass']"
+                            [class.active-parent-menu]="router.url==('/user/gate-pass')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Generate Gate Pass"><span>Generate
+                                Gate Pass</span></a>
+                    </li>
+
+                    <li><a [routerLink]="['gatepassid-list']"
+                            [class.active-parent-menu]="router.url==('/user/gatepassid-list')" class="truncated-text"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Gate Pass' List">Gate Pass' List</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Page Content -->
+    <div class="content-wrapper">
+    
+        <div class="main-section">
+        <router-outlet></router-outlet>
+        </div>
+
+        
+    <footer class="main-footer mt-2">
+  <div class="footer-center">
+    <em>© 2015-2026 APV Technologies Pvt Ltd. All Rights Reserved.</em>
+    <strong class="footer-version">2026.1.1</strong>
+  </div>
+</footer>
+    </div>
+
+    </div>
+    
+
+
+</div>

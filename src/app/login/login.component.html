@@ -1,0 +1,49 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate">
+</ngx-spinner>
+<div class="login-background">
+    <div class="box">
+        <div class="logincontainer">
+            <div class="login-header">
+                <img src="./assets/images/aim-justified-logo3.png" class="mx-auto d-block">
+   <!-- <div  class="d-flex justify-content-center "> <span class="logo-version " style="font-size: 12px; color:#00235e;">Version 2025.9.1</span></div> -->
+                <hr/>
+
+                  <h2>Login</h2>
+            </div>
+            <form class="login-content" [formGroup]="formLogin" (keyup.enter)="onSubmit(formLogin.value)">
+                <div class="form-group m-0" >
+                    <input type="text" id="useremail" #useremail autocomplete="false"  class="form-control login-control" placeholder="Enter username/emailid"  formControlName="user_email"  [(ngModel)]="user_email"/>
+                    <i class="fa fa-user icon-option" aria-hidden="true"></i>
+
+                    <span class="mandatory ml-2" *ngIf="formLogin.controls['user_email'].touched && formLogin.controls['user_email'].invalid" style="color:red; font-size: 12px;font-style: italic;">Required</span>
+
+
+                </div>
+                <div class="form-group m-0">
+                    <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control login-control" autocomplete="false"  placeholder="Enter password" formControlName="user_password" [(ngModel)]="user_password" />
+                    <i [ngClass]="{'fa': true, 'fa-eye-slash': !showPassword, 'fa-eye': showPassword}" class="icon-option" (click)="togglePasswordVisibility()"></i>              
+                    <span class="mandatory ml-2" *ngIf="formLogin.controls['user_password'].touched && formLogin.controls['user_password'].invalid" style="color:red; font-size: 12px;font-style: italic;">Required</span>
+                </div>
+
+                <div class="form-group text-center">
+                   <button  type="submit" class="btn btn-custom-login btn-block text-white" (click)="onSubmit(formLogin.value)">Login</button>
+                </div>
+            </form>
+
+            <div class="login-footer d-flex justify-content-between mt-3">
+                <div class="form-check">
+                    <label for="rememberme" class="form-check-label">
+                      <input type="checkbox" id="rememberme" class="form-check-input" [(ngModel)]="rememberMe" name="rememberMe">Remember Me
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <label for="rememberme" class="form-check-label">
+                     <a routerLink="../forgot-password">Forgot Password</a>
+                    </label>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
