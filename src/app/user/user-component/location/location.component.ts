@@ -7,8 +7,8 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, retry } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, first, retry } from 'rxjs/operators';
+import { of, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-location',
@@ -16,7 +16,7 @@ import { of } from 'rxjs';
   styleUrls: ['./location.component.scss']
 })
 export class LocationComponent {
-  isDataorNot:boolean = true;
+  isDataorNot: boolean = true;
   searchItem = '';
   //for addition purpose
   locationData = {
@@ -38,6 +38,7 @@ export class LocationComponent {
   }
 
   locationForm: any;
+
   locationdata: any;
   filteredlocationdata: any;
   itemData: any[] = [];
@@ -50,7 +51,7 @@ export class LocationComponent {
 
   addlocationserviceResponse: any;
   updatelocationserviceResponse: any;
-  emptyDataList=[];
+  emptyDataList = [];
   page: any = 1;
   count: any = 0;
   tableSize: any = 20;
@@ -58,11 +59,9 @@ export class LocationComponent {
   userRole = localStorage.getItem('level');
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
-  sortingorder:any;
+  sortingorder: any;
 
-  constructor(private adminService: AdminService, private checkService: CheckService, private router: Router, private spinner: NgxSpinnerService) {
-
-  }
+  constructor(private adminService: AdminService, private checkService: CheckService, private router: Router, private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.validation();
@@ -71,56 +70,56 @@ export class LocationComponent {
 
   async getLocationData() {
     this.spinner.show();
-    try{
-      const results:any = await this.checkService.getLocationdatabystatus().pipe(
+    try {
+      const results: any = await firstValueFrom(this.checkService.getLocationdatabystatus().pipe(
         retry(3), // Retry the request up to 3 times
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error fetching accepted requests:', error);
-          return of([]); // Return an empty array if an error occurs
-        })
-      ).toPromise();
+        // catchError((error: HttpErrorResponse) => {
+        //   console.error('Error fetching accepted requests:', error);
+        //   return of([]); // Return an empty array if an error occurs
+        // }))
+      ));
 
-      if(results?.length==0){
+      if (results?.length == 0) {
         this.isDataorNot = false;
       }
-      else{
+      else {
         this.isDataorNot = true;
-        const filteredResults =  results.map((item: any) => {
+        const filteredResults = results.map((item: any) => {
 
-            const splitcreateddate = item.created_date?moment(item.created_date).format('DD-MM-YYYY'):null;
-            return { ...item, created_date: splitcreateddate };
+          const splitcreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
+          return { ...item, created_date: splitcreateddate };
 
         });
 
         this.filteredlocationdata = filteredResults;
         this.count = filteredResults.length;
-         this.itemData = filteredResults;
+        this.itemData = filteredResults;
       }
     }
-    catch(error:unknown){
-      if (error instanceof HttpErrorResponse && error.status === 403) {   
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops!',
-        text: 'Token expired.',
-        footer: '<a href="../login">Please login again!</a>'
-      }).then(() => {
-        this.router.navigate(['../login']);
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops!',
-        text: 'Internal server error. Please try again later!',
-        footer: '<a href="../login">Login</a>'
-      }).then(() => {
+    catch (error: unknown) {
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+       await Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Token expired.',
+          footer: '<a href="../login">Please login again!</a>'
+        });
+          this.router.navigate(['../login']);
+
+      } else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Internal server error. Please try again later!',
+          footer: '<a href="../login">Login</a>'
+        });
+      
         location.reload();
-      });
+      }
     }
-  }
-  finally{
-    this.spinner.hide();
-  }
+    finally {
+      this.spinner.hide();
+    }
   }
 
   updatelocation(data: any) {
@@ -145,7 +144,7 @@ export class LocationComponent {
 
   }
 
-  removelocation(id: any) {
+  async removelocation(id: any) {
     this.locationId.location_id = id;
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -156,7 +155,8 @@ export class LocationComponent {
       buttonsStyling: false
     })
 
-    swalWithBootstrapButtons.fire({
+    // 🔶 Confirmation popup
+    const result = await swalWithBootstrapButtons.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
@@ -164,181 +164,185 @@ export class LocationComponent {
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
       reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-      this.checkService.deactivateLocationStatusbyid(this.locationId).subscribe(
-        {
-          next: (results: any) => {
-            swalWithBootstrapButtons.fire(
-              'Deleted!',
-              'Location deleted successfully!',
-              'success'
-            ).then(()=>{
-              this.ngOnInit();
-            })
-          },
-          error: (error) => {
-            // console.log('error')
-            if (error.status == 403) {            
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops!',
-                text: 'Token expired.',
-                footer: '<a href="../login">Please login again!</a>'
-              }).then(()=>{
-                this.router.navigate(['../login']);
-              })
-            }
-            else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops!',
-                text: 'Internal server error.Please try after some time!',
-                footer:'<a href="../login">Login</a>'
-              }).then(()=>{
-                location.reload();
-              })
-            }
-          }
-        })
+    });
 
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire(
+    if (result.dismiss === Swal.DismissReason.cancel) {
+      await swalWithBootstrapButtons.fire(
         'Cancelled',
         'Location is not deleted',
         'error'
-      ).then(()=>{
-        this.ngOnInit();
-      })
+      );
+      this.getLocationData();
+      return;
     }
-  })
-}
 
-  addLocationFunction() {
-    if(this.locationForm.invalid){
+    try {
+     const response:any = await firstValueFrom(this.checkService.deactivateLocationStatusbyid(this.locationId));
+      console.log(response, response[0]?.deactivate_locationstatus_byid);
+
+      if(response[0]?.deactivate_locationstatus_byid == 1){
+        await swalWithBootstrapButtons.fire(
+        'Deleted!',
+        'Location deleted successfully!',
+        'success'
+      );
+
+      this.getLocationData();
+      return;
+      }
+
+          // ⚠️ Not deleted because in use
+    await swalWithBootstrapButtons.fire(
+      'Cannot Delete!',
+      'Sorry deletion can\'t be possible!',
+      'warning'
+    );
+    this.getLocationData();
+
+    
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Token expired.',
+          footer: '<a href="../login">Please login again!</a>'
+        });
+        this.router.navigate(['../login']);
+
+      } else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Internal server error. Please try again later!',
+          footer: '<a href="../login">Login</a>'
+        });
+
+        location.reload();
+        return;
+      }
+    }
+  }
+
+  async addLocationFunction() {
+    if (this.locationForm.invalid) {
       this.locationForm.controls['location_name'].markAsTouched();
+      return;
     }
-    else{
 
-    this.adminService.addLocationservice(this.locationData).subscribe(
-      {
-        next: (results) => {
-          this.addlocationserviceResponse = JSON.parse(JSON.stringify(results)).message;
+      try {
+        const results: any = await firstValueFrom(this.adminService.addLocationservice(this.locationData));
+        this.addlocationserviceResponse = results?.message;
 
-          if (this.addlocationserviceResponse !== 'true') {
-            Swal.fire({
-              title: 'Success!',
-              text: 'Location added successfully!',
-              icon: 'success',
-            }).then(()=>{
-              this.locationForm.get('location_name')?.reset();
-              this.ngOnInit(); 
-            })           
-          }
-          else {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Warning',
-              text: 'This location is already present!',
-            }).then(()=>{
-              location.reload();
-            })
-
-          }
-        },
-        error: (error) => {
-          if (error.status == 403) {            
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops!',
-              text: 'Token expired.',
-              footer: '<a href="../login">Please login again!</a>'
-            }).then(()=>{
-              this.router.navigate(['../login']);
-            })
-          }
-          else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops!',
-              text: 'Internal server error.Please try after some time!',
-              footer:'<a href="../login">Login</a>'
-            }).then(()=>{
-              location.reload();
-            })
-          }
+        if (this.addlocationserviceResponse !== 'true') {
+          await Swal.fire({
+            title: 'Success!',
+            text: 'Location added successfully!',
+            icon: 'success',
+          });
+          this.locationForm.get('location_name')?.reset();
+          this.getLocationData();
+          return;
         }
-      })
-    }
+
+        await Swal.fire({
+          icon: 'warning',
+          title: 'Warning',
+          text: 'This location is already present!',
+        });
+        this.locationForm.get('location_name')?.reset();
+        this.getLocationData();
+      }
+      catch (error: unknown) {
+        if (error instanceof HttpErrorResponse && error.status === 403) {
+          await Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Token expired.',
+            footer: '<a href="../login">Please login again!</a>'
+          });
+          this.router.navigate(['../login']);
+
+        } else {
+          await Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Internal server error. Please try again later!',
+            footer: '<a href="../login">Login</a>'
+          });
+
+          location.reload();
+          return;
+        }
+      }
+    
 
   }
 
-  updateLocationfunc() {
-    if(this.locationForm.invalid){
+  async updateLocationfunc() {
+    if (this.locationForm.invalid) {
       this.locationForm.controls['location_name'].markAsTouched();
+      return;
     }
-    else{
-    this.locationData2.location_name = this.locationData.location_name;
-    this.locationData2.location_id = this.locationId.location_id;
 
-    this.adminService.updatelocationservice(this.locationData2).subscribe(
-      {
-        next: (results: any) => {
-          this.updatelocationserviceResponse = JSON.parse(JSON.stringify(results)).message;
+    try {
+      this.locationData2.location_name = this.locationData.location_name;
+      this.locationData2.location_id = this.locationId.location_id;
+      const results: any = await firstValueFrom(this.adminService.updatelocationservice(this.locationData2));
 
-          if (this.updatelocationserviceResponse !== 'true') {
-            Swal.fire({
-              title: 'Success!',
-              text: 'Location updated successfully!',
-              icon: 'success',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.locationForm.get('location_name')?.reset();
-                location.reload();       
-              }
-            });
+      this.updatelocationserviceResponse = results?.message;
 
-          }
-          else {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Warning',
-              text: 'No changes detected!',
-            })
-            // .then(()=>{
-            //   location.reload();   
-            // })
-          }
+      if (this.updatelocationserviceResponse !== 'true') {
+        this.spinner.hide();
 
-        },
-        error: (error) => {
-          // console.log('error')
-          if (error.status == 403) {            
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops!',
-              text: 'Token expired.',
-              footer: '<a href="../login">Please login again!</a>'
-            }).then(()=>{
-              this.router.navigate(['../login']);
-            })
-          }
-          else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops!',
-              text: 'Internal server error.Please try after some time!',
-              footer:'<a href="../login">Login</a>'
-            }).then(()=>{
-              location.reload();
-            })
-          }
-        }
-      })
+        await Swal.fire({
+          title: 'Success!',
+          text: 'Location updated successfully!',
+          icon: 'success',
+        });
+
+        // this.locationForm.get('location_name')?.reset();
+        this.getLocationData();
+        return;
+      }
+
+
+      await Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'No changes detected!',
+      });
+      // this.locationForm.get('location_name')?.reset();
+      this.getLocationData();
+
     }
+    catch (error: unknown) {
+      this.spinner.hide();
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Token expired.',
+          footer: '<a href="../login">Please login again!</a>'
+        });
+        this.router.navigate(['../login']);
+
+      } else {
+        await Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Internal server error. Please try again later!',
+          footer: '<a href="../login">Login</a>'
+        });
+
+        location.reload();
+        return;
+      }
+    }
+    finally {
+      this.spinner.hide(); // ✅ always stop spinner
+    }
+
   }
 
   toggleActionAdd() {
@@ -359,22 +363,21 @@ export class LocationComponent {
     this.locationForm.reset();
   }
 
-  NoSpaceallowedatstart(event:any){
-    if(event.target.selectionStart === 0 && event.code ==="Space")
-    {
+  NoSpaceallowedatstart(event: any) {
+    if (event.target.selectionStart === 0 && event.code === "Space") {
       event.preventDefault();
     }
-  
+
   }
 
   ontableDatachange(event: any) {
     this.page = event;
   }
 
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {
@@ -385,50 +388,8 @@ export class LocationComponent {
     this.page = 1;
   }
 
-  // sort(columnName: string) {
-  //   if (this.currentSortColumn === columnName) {
-  //     this.isAscending = !this.isAscending; // Toggle sorting order
-  //   } else {
-  //     this.currentSortColumn = columnName; // Update current sort column
-  //     this.isAscending = true; // Set sorting order to ascending for the new column
-  //   }
-  
-  //   this.filteredlocationdata.sort((a: any, b: any) => {
-  //     let comparison = 0;
-  //     const valueA = a[columnName];
-  //     const valueB = b[columnName];
-  
-  //     // Handle null or undefined values
-  //     if (valueA === null || valueA === undefined) {
-  //       comparison = valueB === null || valueB === undefined ? 0 : -1;
-  //     } else if (valueB === null || valueB === undefined) {
-  //       comparison = 1;
-  //     } else {
-  //       if (this.isDate(valueA) && this.isDate(valueB)) {
-  //         const dateA = moment(valueA);
-  //         const dateB = moment(valueB);
-  //         comparison = dateA.diff(dateB);
-  //       } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
-  //         comparison = valueA - valueB;
-  //       } else {
-  //         comparison = valueA.toString().localeCompare(valueB.toString());
-  //       }
-  //     }
-  
-  //     return this.isAscending ? comparison : -comparison;
-  //   });
-  // }
-  
-  // isDate(value: any): boolean {
-  //   return moment(value, moment.ISO_8601, true).isValid();
-  // }
-  
-  // isNumber(value: any): boolean {
-  //   return !isNaN(value);
-  // }
 
   sort(columnName: string) {
-    console.log(columnName, "columnName");
     if (this.currentSortColumn === columnName) {
       this.isAscending = !this.isAscending; // Toggle sorting order
     }
@@ -451,13 +412,12 @@ export class LocationComponent {
       } else if (valueB === null || valueB === undefined) {
         comparison = 1;
       } else {
-        // console.log(valueA, valueB, "sorting")
         if (this.isDate(valueA) && this.isDate(valueB)) {
-        // Parse dates using moment.js with strict parsing
-        const dateA = moment(valueA, 'DD-MM-YYYY', true); 
-        const dateB = moment(valueB, 'DD-MM-YYYY', true);
-        comparison = dateA.diff(dateB); 
-          
+          // Parse dates using moment.js with strict parsing
+          const dateA = moment(valueA, 'DD-MM-YYYY', true);
+          const dateB = moment(valueB, 'DD-MM-YYYY', true);
+          comparison = dateA.diff(dateB);
+
         } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
           comparison = valueA - valueB;
         } else {
@@ -469,7 +429,7 @@ export class LocationComponent {
     });
   }
 
-  isDate(dateString:any): boolean {
+  isDate(dateString: any): boolean {
     const isValidDate = moment(dateString, 'DD-MM-YYYY', true).isValid();
     return isValidDate;
   }

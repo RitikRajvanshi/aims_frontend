@@ -251,9 +251,9 @@ export class DesignationComponent {
   addDesignationfunc() {
     if (this.addDesignationForm.invalid) {
       this.addDesignationForm.controls['designation_name'].markAsTouched();
-
+      return;
     }
-    else {
+   
       this.adminService.addDesignationService(this.designationData).subscribe(
         {
           next: (results: any) => {
@@ -274,7 +274,7 @@ export class DesignationComponent {
               Swal.fire({
                 icon: 'warning',
                 title: 'Warning',
-                text: 'This desgination is already present!',
+                text: 'This designation is already present!',
               }).then(() => {
                 this.ngOnInit();
               })
@@ -305,7 +305,7 @@ export class DesignationComponent {
             }
           }
         })
-    }
+   
   }
 
   updateDesignationfunc() {
@@ -325,26 +325,18 @@ export class DesignationComponent {
           if (this.updatedesingnationmessage !== 'true') {
             Swal.fire({
               title: 'Success!',
-              text: 'Desgination updated successfully!',
+              text: 'Designation updated successfully!',
               icon: 'success',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.addDesignationForm.get('desgination_name')?.reset();
-                location.reload();
-              }
             });
+            this.getDesignationData();
+            return;
           }
 
-          else {
             Swal.fire({
               icon: 'warning',
               title: 'Warning',
               text: 'No changes detected!',
-            })
-            // .then(() => {
-            //   this.ngOnInit();
-            // })
-          }
+            });
 
         },
         error: (error) => {
@@ -399,48 +391,6 @@ export class DesignationComponent {
     this.page = 1;
   }
 
-  // sort(columnName: string) {
-  //   if (this.currentSortColumn === columnName) {
-  //     this.isAscending = !this.isAscending; // Toggle sorting order
-  //   } else {
-  //     this.currentSortColumn = columnName; // Update current sort column
-  //     this.isAscending = true; // Set sorting order to ascending for the new column
-  //   }
-  
-  //   this.filtereddesignationdata.sort((a: any, b: any) => {
-  //     let comparison = 0;
-  //     const valueA = a[columnName];
-  //     const valueB = b[columnName];
-  
-  //     // Handle null or undefined values
-  //     if (valueA === null || valueA === undefined) {
-  //       comparison = valueB === null || valueB === undefined ? 0 : -1;
-  //     } else if (valueB === null || valueB === undefined) {
-  //       comparison = 1;
-  //     } else {
-  //       if (this.isDate(valueA) && this.isDate(valueB)) {
-  //         const dateA = moment(valueA);
-  //         const dateB = moment(valueB);
-  //         comparison = dateA.diff(dateB);
-  //       } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
-  //         comparison = valueA - valueB;
-  //       } else {
-  //         comparison = valueA.toString().localeCompare(valueB.toString());
-  //       }
-  //     }
-  
-  //     return this.isAscending ? comparison : -comparison;
-  //   });
-  // }
-  
-  // isDate(value: any): boolean {
-  //   return moment(value, moment.ISO_8601, true).isValid();
-  // }
-  
-  // isNumber(value: any): boolean {
-  //   return !isNaN(value);
-  // }
-
   sort(columnName: string) {
     console.log(columnName, "columnName");
     if (this.currentSortColumn === columnName) {
@@ -492,9 +442,7 @@ export class DesignationComponent {
     return !isNaN(value);
   }
 
-
   validation() {
-
     this.addDesignationForm = new FormGroup({
       designation_name: new FormControl('', [Validators.required])
     })

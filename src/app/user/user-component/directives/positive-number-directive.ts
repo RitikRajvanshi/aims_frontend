@@ -19,7 +19,7 @@ export class PositiveNumberDirective {
     }
   
     @HostListener('input', ['$event'])
-    onInput(event: InputEvent) {
+    onInput(event: Event) {
       const input = this.el.nativeElement as HTMLInputElement;
       if (!this.isValidPositiveNumber(input.value)) {
         input.value = input.value.slice(0, -1);

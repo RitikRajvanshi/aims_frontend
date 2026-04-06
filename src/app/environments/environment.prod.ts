@@ -1,12 +1,13 @@
 export const environment = {
     production: true,
-    BASE_URL: 'http://192.168.0.160:2024/',  //URL
-    ADMIN_URL: 'http://192.168.0.160:2024/admin/',
-    CHECK_URL: 'http://192.168.0.160:2024/check/',
-    FILES_URL: 'http://192.168.0.160:2024/files/',
-    LOGIN_URL: 'http://192.168.0.160:2024/login/',
-    SHARED_URL: 'http://192.168.0.160:2024/shared/',
-    USER_URL: 'http://192.168.0.160:2024/users/',
+    PRODUCTION_BASE_URL:'http://192.168.0.160:2024/',
+    BASE_URL: 'http://192.168.0.132:3010/',  //URL
+    ADMIN_URL: 'http://192.168.0.132:3010/admin/',
+    CHECK_URL: 'http://192.168.0.132:3010/check/',
+    FILES_URL: 'http://192.168.0.132:3010/files/',
+    LOGIN_URL: 'http://192.168.0.132:3010/login/',
+    SHARED_URL: 'http://192.168.0.132:3010/shared/',
+    USER_URL: 'http://192.168.0.132:3010/users/',
 
 
     SHARED: {
@@ -195,9 +196,12 @@ export const environment = {
         POREJECTIONMAIL: 'rejectPurchaseOrder',
         UPDATEITEMSTATUS: 'updateItemStatus',
         SENTMAILFORVERIFICATION: 'sentMailforverification',
+        POPAYMENTAPPROVALMAIL:'popaymentapprovalmail',
+        POPAYMENTREJECTIONMAIL:'porpaymentrejectionmail',
         APPROVEORREJECTVENDOR: 'approveorrejectVendor',
         SENDVENDORAPPROVALMAIL:'sendvendorApprovalmail',
         EXTENDLIFECYCLE:'extendLifecycle',
+        APPLYFINALDISCOUNT:'applyFinaldiscount'
     },
 
     CHECK: {

@@ -3,7 +3,7 @@
 <section class="content-header">
     <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
     <div class="header-title">
-        <h1>Location</h1>
+          <h1>{{toggleAddbtn ? 'Location List' :(updateLocationbtn? 'Update Location':'Add Location')}}</h1>
     </div>
     <div class="add-icon-section" *ngIf="toggleAddbtn">
         <button class=" btn btn-toggle " (click)="toggleActionAdd()" [disabled]="userRole !== '2'"><i class="fa fa-plus pr-1"></i> Add
@@ -20,6 +20,8 @@
             <div class="flex-box">
                 <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayaddLocation">
                     <div class="data-form ">
+                        <h1 class="text-center form-heading mb-4 mt-3">{{updateLocationbtn ? 'Update Location' : 'Add Location'}}</h1>
+
                         <div class="form-group mt-3" [formGroup]="locationForm">
                             <label for="location_name" class="form-label">Location Name:<sup>*</sup></label>
                             <input type="text" id="location_name" class="form-control form-control-sm data-control"

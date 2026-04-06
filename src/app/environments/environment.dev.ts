@@ -1,12 +1,13 @@
 export const environment = {
     production: false,
-    BASE_URL: 'http://localhost:2024/',  //URL
-    ADMIN_URL: 'http://localhost:2024/admin/',
-    USER_URL: 'http://localhost:2024/users/',
-    CHECK_URL: 'http://localhost:2024/check/',
-    FILES_URL: 'http://localhost:2024/files/',
-    LOGIN_URL: 'http://localhost:2024/login/',
-    SHARED_URL: 'http://localhost:2024/shared/',
+    PRODUCTION_BASE_URL:'http://localhost:2024/',
+    BASE_URL: 'http://localhost:3010/',  //URL
+    ADMIN_URL: 'http://localhost:3010/admin/',
+    USER_URL: 'http://localhost:3010/users/',
+    CHECK_URL: 'http://localhost:3010/check/',
+    FILES_URL: 'http://localhost:3010/files/',
+    LOGIN_URL: 'http://localhost:3010/login/',
+    SHARED_URL: 'http://localhost:3010/shared/',
 
 
     SHARED: {
@@ -182,8 +183,12 @@ export const environment = {
         POREJECTIONMAIL: 'rejectPurchaseOrder',
         UPDATEITEMSTATUS: 'updateItemStatus',
         SENTMAILFORVERIFICATION: 'sentMailforverification',
+         POPAYMENTAPPROVALMAIL:'popaymentapprovalmail',
+        POPAYMENTREJECTIONMAIL:'porpaymentrejectionmail',
         APPROVEORREJECTVENDOR: 'approveorrejectVendor',
-        SENDVENDORAPPROVALMAIL:'sendvendorApprovalmail'
+        SENDVENDORAPPROVALMAIL:'sendvendorApprovalmail',
+        EXTENDLIFECYCLE:'extendLifecycle',
+        APPLYFINALDISCOUNT:'applyFinaldiscount'
     },
 
     CHECK: {

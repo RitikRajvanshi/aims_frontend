@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/app/environments/environment.prod';
@@ -14,6 +14,7 @@ interface MonthlyData {
   count: number;
   currencyTotals: { [currency: string]: number };
 }
+
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
@@ -21,6 +22,8 @@ interface MonthlyData {
 })
 
 export class UserDashboardComponent implements OnInit {
+  @ViewChild('ticker') ticker!: ElementRef;
+
   public chart: any;
 
   productionurl: any;
@@ -132,6 +135,27 @@ export class UserDashboardComponent implements OnInit {
     this.productionurl = environment.ADMIN_URL;
 
     this.generateYearList();
+    // this.startTicker();
+  }
+
+  ngAfterViewInit() {
+    this.startTicker(); // ✅ CORRECT PLACE
+  }
+
+  startTicker() {
+    if (!this.ticker) return;
+    const el = this.ticker.nativeElement;
+    let position = window.innerWidth;
+
+    setInterval(() => {
+      position -= 1;
+
+      if (position < -el.offsetWidth) {
+        position = window.innerWidth;
+      }
+
+      el.style.left = position + 'px';
+    }, 20);
   }
 
 
@@ -179,8 +203,22 @@ export class UserDashboardComponent implements OnInit {
       // Use your existing method that calls APIs
       this.finacialyearreportvar = await this.getPoandNumberofItems(this.DatesforFinancialyearreport);
 
-      this.financialReport.sumOfPurchase = this.finacialyearreportvar.sumOfPurchase;
-      this.financialReport.count = this.finacialyearreportvar.numberofItems[0]?.count || 0;
+      const purchaseData = this.finacialyearreportvar.sumOfPurchase;
+      // ✅ If empty → inject default
+      if (!purchaseData || purchaseData.length === 0) {
+        this.financialReport.sumOfPurchase = [
+          {
+            currency: '₹',
+            sumtotal: 0
+          }
+        ];
+      } else {
+        this.financialReport.sumOfPurchase = purchaseData;
+      }
+
+      // console.log(this.financialReport, "sum of purchases");
+      // this.financialReport.count = this.finacialyearreportvar.numberofItems[0]?.count || 0;
+      this.financialReport.count = Number(this.finacialyearreportvar.numberofItems?.[0]?.count ?? 0);
 
 
       this.createeverymonthreportForYear({ start_date: startDate, end_date: endDate });
@@ -513,6 +551,11 @@ export class UserDashboardComponent implements OnInit {
       this.chart = null; // important
     }
 
+    if (!labels.length) {
+      console.warn('No data available for chart');
+      return;
+    }
+
     const datasets = Object.keys(currencyDataMap).map((currency, index) => ({
       label: `Purchase (${currency})`,
       data: currencyDataMap[currency],
@@ -548,6 +591,9 @@ export class UserDashboardComponent implements OnInit {
             grid: { display: true }
           },
           first: {
+            type: 'linear',
+            axis: 'y',          // 🔥 ADD THIS
+            position: 'left',
             title: {
               display: true,
               text: 'Total Purchase Amount',
@@ -559,6 +605,7 @@ export class UserDashboardComponent implements OnInit {
           },
           second: {
             type: 'linear',
+            axis: 'y',          // 🔥 ADD THIS
             position: 'right',
             min: 0,
             max: 20,

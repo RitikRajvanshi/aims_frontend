@@ -36,8 +36,8 @@ export class ItemWithPoInvoiceMovetoinventoryForAPeriodComponent {
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
   isRotating: boolean = false;
-  selectItem: any;
-  selectVendor: any;
+  selectItem: any = null;
+  selectVendor: any = null;
 
   filteredByDates = [
     { value: 'invoice_date', viewValue: 'Invoice Date' },
@@ -72,11 +72,9 @@ export class ItemWithPoInvoiceMovetoinventoryForAPeriodComponent {
   }
 
   statemanagement() {
-
     this.isNavigatedBack = localStorage.getItem('navigated') === 'true';
-
     localStorage.removeItem('navigated');
-
+    
     this.activatedRoute.queryParams.subscribe(async (params: any) => {
       if (this.isNavigatedBack === true) {
         if (params['searchTerm'] && params['searchTerm'] !== '') {
@@ -324,8 +322,8 @@ export class ItemWithPoInvoiceMovetoinventoryForAPeriodComponent {
       this.itemsDataList = filteredData;
       this.totalItems = this.itemsDataList.length;
       this.page = 1; // Reset to the first page when filtering occurs
-      this.selectItem = '';
-      this.selectVendor = '';
+      this.selectItem = null;
+      this.selectVendor = null;
       this.filteringBy = 'invoice_date';
       this.onClear();
 

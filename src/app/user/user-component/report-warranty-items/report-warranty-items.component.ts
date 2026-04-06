@@ -35,9 +35,9 @@ export class ReportWarrantyItemsComponent {
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
   isRotating: boolean = false;
-  sortingorder:any;
+  sortingorder: any;
 
-  constructor(private sharedService: SharedService, private router: Router, private spinner: NgxSpinnerService, private filesServices:FilesService) {
+  constructor(private sharedService: SharedService, private router: Router, private spinner: NgxSpinnerService, private filesServices: FilesService) {
     const today = moment();
     this.currentdate = today.format('YYYY-MM-DD');
   }
@@ -59,17 +59,38 @@ export class ReportWarrantyItemsComponent {
         // })
       ).toPromise();
 
+      console.log(results, "results");
+
       if (results?.length == 0) {
         this.isDataorNot = false;
       }
       else {
         this.isDataorNot = true;
-        const filteredResults = results.map((item: any) => {
-            const splitecreateddate = item.created_date?moment(item.created_date).format('DD-MM-YYYY'):null;
-            const spliteinvoicedate = item.invoice_date?moment(item.invoice_date).format('DD-MM-YYYY'):null;
-            const splitewarrantydate = item.warrantyend_date?moment(item.warrantyend_date).format('DD-MM-YYYY'):null;
-            return { ...item, created_date: splitecreateddate, invoice_date:spliteinvoicedate,  warrantyend_date: splitewarrantydate };
-        });
+        const filteredResults = results
+          .filter((items: any) => {
+            // 1️⃣ Skip if warranty is null/blank
+            if (!items.warrantyend_date) return false;
+            const warranty = moment(items.warrantyend_date).format('YYYY-MM-DD');
+            // 2️⃣ If invoice_date exists → compare it
+            if (items.invoice_date) {
+              const invoice = moment(items.invoice_date).format('YYYY-MM-DD');
+
+              // Hide if same day(same day warranty is cosidered as no warranty)
+              if (invoice === warranty) {
+                return false;
+              }
+            }
+
+            // 3️⃣ Otherwise keep it
+            return true;
+
+          })
+          .map((item: any) => {
+            const splitecreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
+            const spliteinvoicedate = item.invoice_date ? moment(item.invoice_date).format('DD-MM-YYYY') : null;
+            const splitewarrantydate = item.warrantyend_date ? moment(item.warrantyend_date).format('DD-MM-YYYY') : null;
+            return { ...item, created_date: splitecreateddate, invoice_date: spliteinvoicedate, warrantyend_date: splitewarrantydate };
+          });
         this.itemsDataList = filteredResults;
         this.itemData = filteredResults;
         this.count = filteredResults.length;
@@ -97,7 +118,7 @@ export class ReportWarrantyItemsComponent {
         });
       }
     }
-    finally{
+    finally {
       this.spinner.hide();
     }
   }
@@ -130,10 +151,10 @@ export class ReportWarrantyItemsComponent {
     if (this.reportitemsdatabydate?.start_date && this.reportitemsdatabydate?.end_date) {
       if (this.reportitemsdatabydate.start_date <= this.reportitemsdatabydate.end_date) {
         filteredData = filteredData.filter((item: any) => {
-        const filteredinvoicedate = moment(item?.invoice_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+          const filteredinvoicedate = moment(item?.invoice_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
           if (filteredinvoicedate) {
             return filteredinvoicedate >= this.reportitemsdatabydate.start_date &&
-            filteredinvoicedate <= this.reportitemsdatabydate.end_date;
+              filteredinvoicedate <= this.reportitemsdatabydate.end_date;
           }
           return false;
         });
@@ -151,7 +172,7 @@ export class ReportWarrantyItemsComponent {
     // Update filtered data and totalItems
     this.itemsDataList = filteredData;
     this.totalItems = this.itemsDataList.length;
-    this.count =  this.totalItems;
+    this.count = this.totalItems;
 
     this.page = 1; // Reset to the first page when filtering occurs
   }
@@ -228,11 +249,11 @@ export class ReportWarrantyItemsComponent {
       } else {
         // console.log(valueA, valueB, "sorting")
         if (this.isDate(valueA) && this.isDate(valueB)) {
-        // Parse dates using moment.js with strict parsing
-        const dateA = moment(valueA, 'DD-MM-YYYY', true); 
-        const dateB = moment(valueB, 'DD-MM-YYYY', true);
-        comparison = dateA.diff(dateB); 
-          
+          // Parse dates using moment.js with strict parsing
+          const dateA = moment(valueA, 'DD-MM-YYYY', true);
+          const dateB = moment(valueB, 'DD-MM-YYYY', true);
+          comparison = dateA.diff(dateB);
+
         } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
           comparison = valueA - valueB;
         } else {
@@ -244,7 +265,7 @@ export class ReportWarrantyItemsComponent {
     });
   }
 
-  isDate(dateString:any): boolean {
+  isDate(dateString: any): boolean {
     const isValidDate = moment(dateString, 'DD-MM-YYYY', true).isValid();
     return isValidDate;
   }
@@ -298,33 +319,33 @@ export class ReportWarrantyItemsComponent {
 
   exportToexcelfromnode(): any {
     const modifiedItemsDataList = this.itemsDataList.map((item: any, index: any) => {
- 
+
       return {
         ...item,  // Spread the original object properties
         "S.No.": index + 1  // Add the S.No. field with the appropriate value
       };
     });
 
-  
+
     const reportRequest = {
       reportTitle: "Report Items with Warranty",
       columns: [
         { header: 'S.No.', key: 'S.No.', width: 10, filterButton: false },
-        { header: 'Item Code', key: 'item_code',width: 50, filterButton: true },
+        { header: 'Item Code', key: 'item_code', width: 50, filterButton: true },
         { header: 'Category', key: 'category_name', width: 35, filterButton: true },
         { header: 'Item Name', key: 'item_name', width: 45, filterButton: true },
         { header: 'Description', key: 'description', width: 55, filterButton: false },
         { header: 'Invoice Date', key: 'invoice_date', width: 30, format: 'date', filterButton: false },
         { header: 'Warranty End Date', key: 'warrantyend_date', width: 30, format: 'date', filterButton: false },
       ],
-  
-      data: modifiedItemsDataList , // Data to populate the report
-      totalsrow:true,
-      filters:[
-        { filterBy:(this.reportitemsdatabydate.start_date && this.reportitemsdatabydate.end_date)?'Invoice Date':'' , startDate:this.reportitemsdatabydate.start_date||'', endDate:this.reportitemsdatabydate.end_date||''}
+
+      data: modifiedItemsDataList, // Data to populate the report
+      totalsrow: true,
+      filters: [
+        { filterBy: (this.reportitemsdatabydate.start_date && this.reportitemsdatabydate.end_date) ? 'Invoice Date' : '', startDate: this.reportitemsdatabydate.start_date || '', endDate: this.reportitemsdatabydate.end_date || '' }
       ]
     };
-  
+
     this.filesServices.exportToExcel(reportRequest).subscribe(
       (response: Blob) => {
         // Call downloadBlob to trigger the download with the response
@@ -340,10 +361,10 @@ export class ReportWarrantyItemsComponent {
     this.page = event;
   }
 
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {

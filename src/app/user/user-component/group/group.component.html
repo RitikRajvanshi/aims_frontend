@@ -4,7 +4,7 @@
 <section class="content-header">
     <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
     <div class="header-title">
-        <h1>Department</h1>
+         <h1>{{toggleAddbtn ? 'Department List' :(updateGroupbtn? 'Update Department':'Add Department')}}</h1>
     </div>
 
 
@@ -25,7 +25,7 @@
             <div class="flex-box">
                 <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayaddgrp">
                     <div class="data-form">
-                        <h1 class="text-center form-heading mb-4 mt-3">Add Department</h1>
+                        <h1 class="text-center form-heading mb-4 mt-3">{{updateGroupbtn ? 'Update Department' : 'Add Department'}}</h1>
                         <div class="form-group m-0" [formGroup]="addgroupForm">
                             <label for="grp_name" class="form-label">Department Name:<sup>*</sup></label>
                             <input type="text" id="grp_name" class="form-control form-control-sm data-control" placeholder="Enter Department Name"

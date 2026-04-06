@@ -22,7 +22,7 @@ export class AddItemComponent {
   //item 
   itemData = {
     purchase_id: 'NA',
-    item_id: 0,
+    item_id: null,
     item_code: '',
     item_name: '',
     description: '',
@@ -162,7 +162,7 @@ export class AddItemComponent {
   
           this.itemData = {
             purchase_id: 'NA',
-            item_id: 0,
+            item_id: null,
             item_code: '',
             item_name: '',
             description: '',
@@ -214,7 +214,7 @@ export class AddItemComponent {
   validation() {
     this.additemForm = new FormGroup({
       purchase_id: new FormControl('',[Validators.required]),
-      item_id: new FormControl(0,[Validators.required]),
+      item_id: new FormControl(null,[Validators.required]),
       item_code: new FormControl('',[Validators.required]),
       location_id: new FormControl(0,[Validators.required]),
       description: new FormControl('No Description',[Validators.required])

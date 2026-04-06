@@ -27,10 +27,7 @@ export class PoApprovalMailComponent {
       // Decode the 'pid' if it exists
       this.purchase_id = decodeURIComponent(pid);
       console.log(this.purchase_id); // Output the decoded 'pid'
-
     }
-
-
   }
 
   async ngAfterViewInit() {
@@ -73,7 +70,7 @@ export class PoApprovalMailComponent {
     
               console.log(result);
     
-              if (result && result.message == true) {
+              if (result) {
                 // this.toggleGif = true;
                 this.poStatus = 'approvedNow';
               }
@@ -94,16 +91,6 @@ export class PoApprovalMailComponent {
     } catch (error) {
       console.error('Error fetching purchase order data:', error);
     }
-
-   
-
-    
-    
-
-    // const result = await this.sharedService.getpurchasedatafromPurchaseOrder().toPromise();
-    // console.log(result, "result");
-
-
 
   }
 }

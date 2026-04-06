@@ -1,9 +1,14 @@
 
 
-  .table-font th,
+.table-font th,
 .table-font td {
   font-size:13px;
   font-family: 'Verdana', 'Geneva', sans-serif ;
+}
+
+.table-font th{
+  font-size:12px;
+
 }
 
 .content-header{
@@ -11,3 +16,23 @@
   top:20px; 
   z-index: 999;
 }
+
+
+.order-details {
+  width: fit-content;   /* shrink to content */
+  margin-left: auto;    /* push block to right */
+  font-size: 15px;
+  color: black;
+}
+
+.order-row {
+  margin-bottom: 6px;
+}
+
+
+
+
+
+
+
+

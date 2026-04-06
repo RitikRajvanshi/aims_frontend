@@ -24,7 +24,7 @@ export class UploadInvoiceComponent {
   searchTerm = '';
 
   purchaseData = {
-    purchase_id: '',
+    purchase_id: null,
     invoice_no: '',
     modified_date: '',
     modified_by: localStorage.getItem('login_id'),
@@ -32,15 +32,15 @@ export class UploadInvoiceComponent {
     filepath: '',
     mimetype: '',
     invoice_remark: '',
-    invoice_date:'',
-    invoice_amount:0,
+    invoice_date: '',
+    invoice_amount: 0,
   }
 
   vendorname: any;
 
   //have to upload only invoice
   purchaseData2 = {
-    purchase_id: '',
+    purchase_id: null,
     invoice_no: '',
     modified_date: '',
     modified_by: localStorage.getItem('login_id'),
@@ -50,7 +50,7 @@ export class UploadInvoiceComponent {
   }
 
   purchaseIdobj = {
-    purchase_id: ''
+    purchase_id: null
   }
 
   purchasedata: any;                  //according to invoice
@@ -90,15 +90,15 @@ export class UploadInvoiceComponent {
   isExpanded: boolean = false;
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
-  isRotating:boolean = false;
-  sortingorder:any;
-  itemsperPage:any = 20;
-  sumofamount:any;
-  getPurchaseData:any[]=[];
-  currency:string='';
+  isRotating: boolean = false;
+  sortingorder: any;
+  itemsperPage: any = 20;
+  sumofamount: any;
+  getPurchaseData: any[] = [];
+  currency: string = '';
 
-  constructor(public sharedService: SharedService, private filesService: FilesService, private router: Router, private spinner: NgxSpinnerService, private checkService:CheckService) {
-    const today = moment();
+  constructor(public sharedService: SharedService, private filesService: FilesService, private router: Router, private spinner: NgxSpinnerService, private checkService: CheckService) {
+    const today = moment.utc();
     this.currentdate = today.format('YYYY-MM-DD');
   }
 
@@ -128,7 +128,7 @@ export class UploadInvoiceComponent {
       console.log(results, "getPurchaseDataAcctoinvoice");
 
       this.purchasedata = results.filter((e: any) => {
-        return e.is_sent == 2;
+        return e.is_sent == 2 ;
       });
     }
     catch (error) {
@@ -155,10 +155,10 @@ export class UploadInvoiceComponent {
       else {
         this.isDataorNot = true;
         const filteredResults = results.map((item: any) => {
-           const splitmodifieddate = item.modified_date?moment(item.modified_date).format('DD-MM-YYYY'):null;
-            const splitcreateddate = item.created_date?moment(item.created_date).format('DD-MM-YYYY'):null;
-            const splitinvoicedate = item.invoice_date?moment(item.invoice_date).format('DD-MM-YYYY'):null;
-            return { ...item, created_date: splitcreateddate, modified_date: splitmodifieddate, invoice_date:splitinvoicedate };
+          const splitmodifieddate = item.modified_date ? moment.utc(item.modified_date).local().format('DD-MM-YYYY') : null;
+          const splitcreateddate = item.created_date ? moment.utc(item.created_date).local().format('DD-MM-YYYY') : null;
+          const splitinvoicedate = item.invoice_date ? moment.utc(item.invoice_date).local().format('DD-MM-YYYY') : null;
+          return { ...item, created_date: splitcreateddate, modified_date: splitmodifieddate, invoice_date: splitinvoicedate };
         });
 
         console.log(filteredResults, "filteredResults");
@@ -189,7 +189,7 @@ export class UploadInvoiceComponent {
         });
       }
     }
-    finally{
+    finally {
       this.spinner.hide();
     }
   }
@@ -212,6 +212,39 @@ export class UploadInvoiceComponent {
       this.vendorname = id?.supplier_name;
       this.currency = id?.currency;
     }
+  }
+
+  onClear() {
+    this.vendorname = '';
+
+    this.purchaseData = {
+      purchase_id: null,
+      invoice_no: '',
+      modified_date: '',
+      modified_by: localStorage.getItem('login_id'),
+      filename: '',
+      filepath: '',
+      mimetype: '',
+      invoice_remark: '',
+      invoice_date: '',
+      invoice_amount: 0,
+    };
+
+    this.purchaseData2 = {
+      purchase_id: null,
+      invoice_no: '',
+      modified_date: '',
+      modified_by: localStorage.getItem('login_id'),
+      invoice_remark: '',
+      invoice_date: '',
+      invoice_amount: 0,
+    };
+
+
+    this.purchaseIdobj = {
+      purchase_id: null
+    }
+
   }
 
   selectFile(event: any) {
@@ -291,7 +324,7 @@ export class UploadInvoiceComponent {
                           icon: 'success',
                         }).then(() => {
                           this.invoiceForm.reset({
-                            purchase_id: '',
+                            purchase_id: null,
                             invoice_no: '',
                             filename: '',
                             invoice_remark: ''
@@ -360,7 +393,7 @@ export class UploadInvoiceComponent {
 
           this.purchaseData2.invoice_no = this.purchaseData.invoice_no;
           this.purchaseData2.invoice_remark = this.purchaseData.invoice_remark;
-          this.purchaseData2.invoice_date = this.purchaseData.invoice_date?this.purchaseData.invoice_date:'';
+          this.purchaseData2.invoice_date = this.purchaseData.invoice_date ? this.purchaseData.invoice_date : '';
           this.purchaseData2.invoice_amount = this.purchaseData.invoice_amount;
 
           this.filesService.updateInvoicenoinpo(this.purchaseData2).subscribe(
@@ -372,13 +405,13 @@ export class UploadInvoiceComponent {
                   text: 'Invoice updated successfully!',
                   icon: 'success',
                 }).then(() => {
-                  this.invoiceForm.reset({
-                    purchase_id: '',
-                    invoice_no: '',
-                    filename: '',
-                    invoice_remark: ''
-                  })
-                  this.ngOnInit();
+                  // this.invoiceForm.reset({
+                  //   purchase_id: null,
+                  //   invoice_no: '',
+                  //   filename: '',
+                  //   invoice_remark: ''
+                  // })
+                  this.updateInvoicebtn(this.purchaseData.purchase_id);
                 })
               }, error: (error) => {
                 if (error.status == 403) {
@@ -437,7 +470,7 @@ export class UploadInvoiceComponent {
                           icon: 'success',
                         }).then(() => {
                           this.invoiceForm.reset({
-                            purchase_id: '',
+                            purchase_id: null,
                             invoice_no: '',
                             filename: '',
                             invoice_remark: ''
@@ -486,7 +519,7 @@ export class UploadInvoiceComponent {
     }
     // Start with the original data or the previously filtered data
     let filteredData: any[] = this.itemsData;
-    
+
     // // Filter by search term
     if (this.searchTerm) {
       filteredData = filteredData.filter((item: any) => {
@@ -508,7 +541,7 @@ export class UploadInvoiceComponent {
           const filteredmodifieddate = moment(item?.invoice_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
           if (filteredmodifieddate) {
             return filteredmodifieddate >= this.invoicebydate.start_date &&
-            filteredmodifieddate <= this.invoicebydate.end_date;
+              filteredmodifieddate <= this.invoicebydate.end_date;
           }
           return false;
         });
@@ -593,22 +626,22 @@ export class UploadInvoiceComponent {
     this.sharedService.getPurchaseJoinDatabyPid(this.purchaseIdobj).subscribe({
       next: (results: any) => {
         console.log(results, "results");
-        const {purchase_id, invoice_remark, invoice_no, invoice_amount, invoice_date, currency} = results[0] || {};
+        const { purchase_id, invoice_remark, invoice_no, invoice_amount, invoice_date, currency } = results[0] || {};
 
         this.purchaseId = purchase_id;
         this.currency = currency;
-        
-        const invoicedate = invoice_date? moment(invoice_date).format('YYYY-MM-DD'):'';
-        this.purchaseData2 = {...this.purchaseData2, purchase_id, invoice_remark, invoice_amount,invoice_date};
+
+        const invoicedate = invoice_date ? moment.utc(invoice_date).format('YYYY-MM-DD') : '';
+        this.purchaseData2 = { ...this.purchaseData2, purchase_id, invoice_remark, invoice_amount, invoice_date };
 
         this.purchaseData2.invoice_date = invoicedate;
         console.log(this.purchaseData2.invoice_date, "invoice_date");
 
         this.invoiceForm.get('purchase_id').patchValue(results[0]?.purchase_id);
 
-        this.purchaseData = {...this.purchaseData, invoice_no, invoice_remark, invoice_amount}
+        this.purchaseData = { ...this.purchaseData, invoice_no, invoice_remark, invoice_amount }
 
-        this.purchaseData.invoice_date = results[0]?.invoice_date?moment(results[0]?.invoice_date).format('YYYY-MM-DD'):'';
+        this.purchaseData.invoice_date = results[0]?.invoice_date ? moment.utc(results[0]?.invoice_date).format('YYYY-MM-DD') : '';
 
         this.vendorname = results[0].supplier_name;
       },
@@ -646,11 +679,11 @@ export class UploadInvoiceComponent {
     this.displayInvoicecontainer = false;
     this.displayemptydatamsg = true;
     this.invoiceForm.reset({
-      purchase_id: '',
+      purchase_id: null,
       invoice_no: '',
       filename: '',
       invoice_remark: '',
-      invoice_amount:0,
+      invoice_amount: 0,
       invoice_date: ''
     })
     this.vendorname = '';
@@ -665,17 +698,17 @@ export class UploadInvoiceComponent {
     this.displayInvoicecontainer = true;
     this.displayemptydatamsg = false;
     this.invoiceForm.reset({
-      purchase_id: '',
+      purchase_id: null,
       invoice_no: '',
       filename: '',
-      invoice_date:'',
-      invoice_amount:0,
+      invoice_date: '',
+      invoice_amount: 0,
       invoice_remark: ''
     })
   }
 
   checkAndOpenFile(filePath: string) {
-    if(filePath){
+    if (filePath) {
       const fullPath = this.baseUrl + filePath;
       this.checkService.checkFileExistence(this.baseUrl + filePath).subscribe(exists => {
         console.log(exists);
@@ -686,13 +719,13 @@ export class UploadInvoiceComponent {
         }
       });
     }
-    else{
+    else {
       this.documentnotuploaded();
     }
-  
+
   }
 
-  documentnotuploaded(){
+  documentnotuploaded() {
     Swal.fire({
       icon: 'warning',
       title: 'Warning!',
@@ -700,7 +733,7 @@ export class UploadInvoiceComponent {
     })
   }
 
-  documentnotexists(){
+  documentnotexists() {
     Swal.fire({
       icon: 'warning',
       title: 'Warning!',
@@ -726,10 +759,10 @@ export class UploadInvoiceComponent {
 
   }
 
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {
@@ -768,11 +801,11 @@ export class UploadInvoiceComponent {
       } else {
         // console.log(valueA, valueB, "sorting")
         if (this.isDate(valueA) && this.isDate(valueB)) {
-        // Parse dates using moment.js with strict parsing
-        const dateA = moment(valueA, 'DD-MM-YYYY', true); 
-        const dateB = moment(valueB, 'DD-MM-YYYY', true);
-        comparison = dateA.diff(dateB); 
-          
+          // Parse dates using moment.js with strict parsing
+          const dateA = moment(valueA, 'DD-MM-YYYY', true);
+          const dateB = moment(valueB, 'DD-MM-YYYY', true);
+          comparison = dateA.diff(dateB);
+
         } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
           comparison = valueA - valueB;
         } else {
@@ -784,7 +817,7 @@ export class UploadInvoiceComponent {
     });
   }
 
-  isDate(dateString:any): boolean {
+  isDate(dateString: any): boolean {
     const isValidDate = moment(dateString, 'DD-MM-YYYY', true).isValid();
     return isValidDate;
   }
@@ -850,20 +883,20 @@ export class UploadInvoiceComponent {
       reportTitle: "Invoice List",
       columns: [
         { header: 'S.No.', key: 'S.No.', width: 10, filterButton: false },
-        { header: 'Purchase Id', key: 'purchase_id',width: 25, filterButton: true },
-        { header: 'Vendor Name', key: 'supplier_name',width: 45, filterButton: true },
+        { header: 'Purchase Id', key: 'purchase_id', width: 25, filterButton: true },
+        { header: 'Vendor Name', key: 'supplier_name', width: 45, filterButton: true },
         { header: 'Invoice No.', key: 'invoice_no', width: 30, filterButton: true },
         { header: 'Amount (₹)', key: 'invoice_amount', width: 25, format: 'currency', totalsRowFunction: "sum", filterButton: false },
         { header: 'Upload Date', key: 'invoice_date', width: 30, format: 'date', filterButton: false },
-        { header: 'Remark', key: 'invoice_remark',width: 55, filterButton: false },
+        { header: 'Remark', key: 'invoice_remark', width: 55, filterButton: false },
         { header: 'Modified Date', key: 'modified_date', width: 30, format: 'date', filterButton: false },
       ],
 
-      totalsrow:true,
-      data: modifiedItemsDataList , // Data to populate the report
+      totalsrow: true,
+      data: modifiedItemsDataList, // Data to populate the report
 
-      filters:[
-        { filterBy:(this.invoicebydate.start_date && this.invoicebydate.end_date)?'Invoice Date':'' , startDate:this.invoicebydate.start_date||'', endDate:this.invoicebydate.end_date||''}
+      filters: [
+        { filterBy: (this.invoicebydate.start_date && this.invoicebydate.end_date) ? 'Invoice Date' : '', startDate: this.invoicebydate.start_date || '', endDate: this.invoicebydate.end_date || '' }
       ]
     };
 
@@ -882,30 +915,30 @@ export class UploadInvoiceComponent {
     item.isExpanded = !item.isExpanded;
   }
 
-  getSumofAmount(filteredResults:any[]){
+  getSumofAmount(filteredResults: any[]) {
     const sumofTotals = filteredResults.reduce((sum: number, item: any) => {
       const total = typeof item.invoice_amount === 'number' ? parseFloat(item.invoice_amount.toFixed(2)) : 0;
       return sum + total;
     }, 0);
-    this.sumofamount = sumofTotals?sumofTotals.toFixed(2):0;
-    console.log(this.sumofamount, "this.sumofamount");  
+    this.sumofamount = sumofTotals ? sumofTotals.toFixed(2) : 0;
+    console.log(this.sumofamount, "this.sumofamount");
   }
 
   allowInvoiceCharacters(event: KeyboardEvent) {
-  const allowedKeys = [
-    ...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
-    '  ', 'Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete','_','-'
-  ];
+    const allowedKeys = [
+      ...'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+      '  ', 'Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete', '_', '-'
+    ];
 
-  if (!allowedKeys.includes(event.key)) {
-    event.preventDefault();
+    if (!allowedKeys.includes(event.key)) {
+      event.preventDefault();
+    }
   }
-}
 
 
   validation() {
     this.invoiceForm = new FormGroup({
-      purchase_id: new FormControl('', [Validators.required]),
+      purchase_id: new FormControl(null, [Validators.required]),
       invoice_no: new FormControl('', [Validators.required]),
       invoice_date: new FormControl('', [Validators.required]),
       invoice_amount: new FormControl('', [Validators.required]),

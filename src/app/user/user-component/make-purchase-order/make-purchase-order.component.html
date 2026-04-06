@@ -49,10 +49,9 @@
                                         </ng-container>
 
                                         <ng-container *ngIf="displayexistingPurchaseId">
-                                            <ng-select appendTo="body" #purchase
+                                            <!-- <ng-select appendTo="body" #purchase
                                                 class="form-control form-control-sm data-control-for-ngselect select-option"
-                                                id="purchase_id" 
-                                                [items]="getpurchasedatafrompoArray"
+                                                id="purchase_id" [items]="getpurchasedatafrompoArray"
                                                 formControlName="purchase_id"
                                                 [placeholder]="!purchaseData.purchase_id ? 'Select Purchase ID' : ''"
                                                 [(ngModel)]="purchaseData.purchase_id" bindValue="purchase_id"
@@ -63,6 +62,15 @@
                                                         {{item}}
                                                     </div>
                                                 </ng-template>
+                                            </ng-select> -->
+
+
+                                            <ng-select appendTo="body" class="select-option" #purchase id="purchase_id"
+                                                [items]="getpurchasedatafrompoArray"
+                                                [(ngModel)]="purchaseData.purchase_id" bindLabel="product_name"
+                                                bindValue="product_name" placeholder="Select Purchase ID"
+                                                formControlName="purchase_id" [clearable]="true"
+                                                (change)="selectPurchaseid($event)">
                                             </ng-select>
 
                                             <div class="mandatory my-1 text-danger font-italic"
@@ -75,7 +83,7 @@
                                     <!-- not responsive please make it -->
                                     <td>
                                         <div class="table-heading-sub-text">
-                                            <ng-select appendTo="body"
+                                            <!-- <ng-select appendTo="body"
                                                 class="form-control form-control-sm data-control-for-ngselect select-option"
                                                 [readonly]=makeVendorreadOnly [items]="getsupplierData"
                                                 formControlName="supplier_id"
@@ -89,6 +97,14 @@
                                                         {{item?.supplier_name}}
                                                     </div>
                                                 </ng-template>
+                                            </ng-select> -->
+
+                                            <ng-select appendTo="body" class="select-option"
+                                                [readonly]="makeVendorreadOnly" [items]="getsupplierData"
+                                                [(ngModel)]="purchaseData.supplier_id" bindLabel="supplier_name"
+                                                bindValue="supplier_id" placeholder="Select Vendor..."
+                                                formControlName="supplier_id" (mouseover)=" hidedata2()"
+                                                [clearable]="true" (change)="selectSupplier($event)">
                                             </ng-select>
                                         </div>
                                         <div class="mandatory my-1 text-danger font-italic" style="position: relative;"
@@ -123,12 +139,14 @@
                                     <td>
 
                                         <div class="col-sm-12 w-100">
-                                            <select class="form-control data-control p-1 w-100" formControlName="currency" [(ngModel)]="purchaseData.currency">
+                                            <select class="form-control data-control p-1 w-100"
+                                                formControlName="currency" [(ngModel)]="purchaseData.currency">
 
                                                 <!-- <ng-container *ngFor="let currency of getAllCurrenciesFlattened()"> -->
-                                                    <option [value]="currency.symbol" *ngFor="let currency of flattenedCurrencies">
-                                                        {{ currency.code }} 
-                                                    </option>
+                                                <option [value]="currency.symbol"
+                                                    *ngFor="let currency of flattenedCurrencies">
+                                                    {{ currency.code }}
+                                                </option>
                                                 <!-- </ng-container> -->
 
                                             </select>
@@ -146,21 +164,27 @@
                                 <div class="form-row m-2">
                                     <div class=" form-group col-sm-12 col-md-6">
                                         <label for="product_id" class="form-label">Item :<sup>*</sup></label>
-                                        <ng-select 
+                                        <!-- <ng-select
                                             class="form-control form-control-sm data-control-for-ngselect select-option"
                                             id="product_id" [items]="getproductData" formControlName="product_id"
                                             [placeholder]="!purchaseData.product_id ? 'Select Item' : ''"
                                             [(ngModel)]="purchaseData.product_id" bindLabel="product_name"
-                                            [clearable]="!purchaseData.product_id?false:true"
-                                            bindValue="product_id"
+                                            [clearable]="!purchaseData.product_id?false:true" bindValue="product_id"
                                             (change)="productId($event)">
-                                              <ng-template ng-option-tmp let-item="item">
-                                            <div [ngStyle]="{ 'background-color':'white'}">
-                                                {{item?.product_name}}
+                                            <ng-template ng-option-tmp let-item="item">
+                                                <div [ngStyle]="{ 'background-color':'white'}">
+                                                    {{item?.product_name}}
                                                 </div>
                                             </ng-template>
-                                            <!-- {{getproductData?.product_name}} -->
-                                        
+                                            
+
+                                        </ng-select> -->
+
+                                        <ng-select appendTo="body" class="select-option" [items]="getproductData"
+                                            [(ngModel)]="purchaseData.product_id" bindLabel="product_name"
+                                            bindValue="product_id" placeholder="Select Item"
+                                            formControlName="product_id" (mouseover)=" hidedata2()" [clearable]="true"
+                                            (change)="productId($event)">
                                         </ng-select>
 
 
@@ -207,11 +231,27 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="discount_in_rs"
-                                            class="form-label">Discount({{purchaseData.currency}}):</label>
+                                            class="form-label">Discount({{purchaseData.currency}}):
+                                            <!-- <span class="ml-3">
+                                                <label class="mr-2">
+                                                    <input type="radio" 
+                                                    formControlName="discount_mode" 
+                                                    value="before"
+                                                        (change)="recalcTotals()" checked>
+                                                    Before GST
+                                                </label>
+
+                                                <label>
+                                                    <input type="radio" formControlName="discount_mode" value="after"
+                                                        (change)="recalcTotals()">
+                                                    After GST
+                                                </label>
+                                            </span>  -->
+                                        </label>
                                         <input type="number" step="any" id="discount_in_rs"
                                             class="form-control data-control p-1" placeholder="Enter Discount"
-                                            formControlName="discount_in_rs" (input)="calculatesubtotal()"
-                                            min="0"
+                                            formControlName="discount_in_rs" [readonly]="isPoLevelDiscountApplied()"
+                                             (input)="calculatesubtotal()" min="0"
                                             oninput="validity.valid||(value='');" (input)="calculateTotal()"
                                             [(ngModel)]="purchaseData.discount_in_rs" />
 
@@ -219,6 +259,47 @@
                                             *ngIf="purchaseData.discount_in_rs>(purchaseData.unit_price*purchaseData.quantity)">
                                             Discount cannot exceed Subtotal
                                         </div>
+
+                                    </div>
+
+
+                                    <div class="form-group col-md-6">
+
+                                        <!-- Label Row -->
+                                        <!-- <div class="discount-label-row d-flex justify-content-between">
+                                            <label class="form-label mb-2">
+                                                Discount ({{purchaseData.currency}} / %)
+                                            </label>
+
+                                            <div class="d-flex align-items-center">
+                                                <label class="mr-2 mb-0">
+                                                    <input type="radio" formControlName="discount_mode" value="before"
+                                                        (change)="syncDiscountOnBaseChange()">
+                                                    Before GST
+                                                </label>
+
+                                                <label class="mb-0">
+                                                    <input type="radio" formControlName="discount_mode" value="after"
+                                                        (change)="syncDiscountOnBaseChange()">
+                                                    After GST
+                                                </label>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- Inputs Row -->
+                                        <!-- <div class="discount-input-row d-flex">
+                                            <input type="number" class="form-control data-control p-1 mr-2"
+                                                placeholder="Discount ₹" formControlName="discount_in_rs" >
+                                                (input)="onDiscountRsInput()">
+
+                                            <div class="percent-input-wrapper">
+                                                <input type="number" class="form-control data-control p-1"
+                                                    placeholder="0 %" formControlName="discount_in_percent"
+                                                    (input)="onDiscountPercentInput()">
+                                                <span class="percent-suffix" *ngIf="this.purchaseForm.get('discount_in_percent')?.value">%</span>
+                                            </div>
+
+                                        </div> -->
 
                                     </div>
 
@@ -248,7 +329,9 @@
                                             <option class="select-border p-1" hidden value=0>Select</option>
                                             <option class="select-border p-1" value="0">0 %</option>
                                             <option class="select-border p-1" value="0.05">5 %</option>
+                                            <option class="select-border p-1" value="0.12">12 %</option>
                                             <option class="select-border p-1" value="0.18">18 %</option>
+                                            <option class="select-border p-1" value="0.28">28 %</option>
                                             <!-- <option class="select-border p-1" value="0.28">28 %</option> -->
                                             <option class="select-border p-1" value="0.40">40 %</option>
                                         </select>
@@ -268,7 +351,8 @@
                                             [(ngModel)]="purchaseData.gst_calculation" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="total" class="form-label">Grand Total({{purchaseData.currency}}):<sup>*</sup></label>
+                                        <label for="total" class="form-label">Grand
+                                            Total({{purchaseData.currency}}):<sup>*</sup></label>
                                         <input type="number" step="any" id="total" class="form-control data-control p-1"
                                             placeholder="Enter Grand Total" formControlName="total" readonly
                                             [(ngModel)]="purchaseData.total" />
@@ -335,8 +419,10 @@
                                             PO</button>
                                         <button class="btn btn-data-login" (click)="updatepo()"
                                             *ngIf="displayaupdatebtn">Update PO</button>
+
                                         <button class="btn btn-data-login"
                                             (click)="perchaseOrdergenerate(purchaseForm.value)"
+                                            [disabled]="!purchaseData.product_id"
                                             *ngIf="!displaynewPurchaseId && displayexistingPurchaseId && !displayaupdatebtn">Update
                                             PO</button>
                                     </div>
@@ -418,9 +504,63 @@
                                         (click)="deletepo(items)"></i></td>
                             </tr>
 
+
+                            <tr *ngIf="getpurchaseitemdata?.length  && !hasItemLevelDiscount()">
+
+                                <td colspan="7"></td>
+                                <td class="font-weight-bold">Discount :</td>
+
+                                 <!-- Second Line -->
+                                <div class="text-danger font-weight-bold text-left discount-amount-cell">
+                                              {{ poLevelDiscount.calculatedRs |number:'1.2-2' }}
+                                </div>
+
+                                <!-- ?? Single Column Only -->
+                                <td colspan="5">
+
+                                        <!-- First Line -->
+                                        <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
+
+                                            <select class="form-control form-control-sm discount-type mx-2"
+                                                [(ngModel)]="poLevelDiscount.type" [ngModelOptions]="{standalone: true}"
+                                                (change)="calculateFinalTotal()">
+                                                <option value="rs">{{ purchaseData.currency }}</option>
+                                                <option value="percent">%</option>
+                                            </select>
+
+                                            <!-- Rs Input -->
+                                            <input *ngIf="poLevelDiscount.type === 'rs'" type="number"
+                                                class="form-control form-control-sm discount-input mx-2" placeholder="0"
+                                                [(ngModel)]="poLevelDiscount.value"
+                                                [ngModelOptions]="{standalone: true}" 
+                                                (input)="onDiscountChange()" b-positive>
+
+                                            <!-- Percent Input -->
+                                            <input *ngIf="poLevelDiscount.type === 'percent'" type="number"
+                                                class="form-control form-control-sm discount-input mx-2" placeholder="0"
+                                                [(ngModel)]="poLevelDiscount.percent"
+                                                [ngModelOptions]="{standalone: true}" 
+                                                (input)="onDiscountChange()" b-positive>
+
+                                            <button class="sent-button mx-2" (click)="applyPoDiscount()" [disabled]="!isPODiscountChanged">
+                                                Apply
+                                            </button>
+
+                                        </div>
+                                </td>
+
+                            </tr>
+
+
+
                             <tr>
-                                <td colspan="8" class="text-center"><strong>Grand Total({{purchaseData.currency}})</strong></td>
-                                <td class="font-weight-bold">{{this.grandtotalofpodata}}</td>
+                                <td colspan="8" class="text-center">
+                                    <strong>Grand Total ({{purchaseData.currency}})</strong>
+                                </td>
+                                <td class="font-weight-bold text-success">
+                                    {{ finalPoTotal | number:'1.2-2' }}
+                                </td>
+                                <td colspan="5"></td>
                             </tr>
                         </tbody>
                         <tbody>

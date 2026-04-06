@@ -52,7 +52,7 @@ export class UserPrivilegeComponent {
   addPrivilegebtn = true;
   updatePrivilegebtn = false;       // for update button
   addprivilegeResponse: any;
-  updateprivilegeResponse: any;
+  // updateprivilegeResponse: any;
   emptyDataList = [];
   page: any = 1;
   count: any = 0;
@@ -137,8 +137,9 @@ export class UserPrivilegeComponent {
   addPrivilegefunc() {
     if (this.addPrivilegeForm.invalid) {
       this.addPrivilegeForm.markAllAsTouched();
+      return;
     }
-    else {
+  
       this.adminService.addPrvilegeService(this.privilegedata).subscribe(
         {
           next: (results: any) => {
@@ -192,39 +193,31 @@ export class UserPrivilegeComponent {
             }
           }
         })
-    }
+   
   }
 
   async updatePrivilegefunc() {
     this.updateprivilegeData.privilege_name = this.privilegedata.privilege_name;
 
-    console.log(this.updateprivilegeData, "this.updateprivilegeData");
-
     try {
-      const data = await firstValueFrom(this.adminService.updateprivilegeData(this.updateprivilegeData));
-      this.updateprivilegeResponse = JSON.parse(JSON.stringify(data)).result?.update_privilege;
+      const result:any = await firstValueFrom(this.adminService.updateprivilegeData(this.updateprivilegeData));
+      // this.updateprivilegeResponse = JSON.parse(JSON.stringify(data)).result?.update_privilege;
 
-      if (Number(this.updateprivilegeResponse) == 1) {
-        Swal.fire({
+      if (result.rowsUpdated == 1) {
+        await Swal.fire({
           title: 'Success!',
           text: 'Privilege updated successfully!',
           icon: 'success',
-        }).then(() => {
-          this.addPrivilegeForm.reset({
-            privilege_name: '',
-            level: 0
-          })
-          location.reload();
-        })
+        });
+        this.getPrivilegeData();
+        return;
       }
 
-      else {
-        Swal.fire({
+       Swal.fire({
           icon: 'warning',
           title: 'Warning',
           text: 'No changes detected!',
         });
-      }
 
     } catch (error: unknown) {
       if (error instanceof HttpErrorResponse && error.status === 403) {

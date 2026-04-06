@@ -40,7 +40,7 @@ export class UpdateItemsComponent {
   userRole = localStorage.getItem('level');
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
-  sortingorder:any;
+  sortingorder: any;
 
   constructor(private sharedService: SharedService, private adminService: AdminService, private cdr: ChangeDetectorRef, private router: Router, private ele: ElementRef, private spinner: NgxSpinnerService) {
     const currentDate = new Date();
@@ -70,20 +70,42 @@ export class UpdateItemsComponent {
       }
       else {
         this.isDataorNot = true;
+        const getPriority = (purchase_id: string) => {
+          if (!purchase_id) return 1;
+          if (purchase_id.startsWith('NA')) return 3;
+          if (purchase_id.startsWith('BRND')) return 2;
+          return 1;
+        };
         const filteredResults = results.map((item: any) => {
 
           // if (item.date_ && item.warrantyend_date && item.created_date) {
-            const splitdate = item.date_?moment(item.date_).format('DD-MM-YYYY'):null;
-            const splitwarrantyenddate = item.warrantyend_date?moment(item.warrantyend_date).format('YYYY-MM-DD'):null;
-            const splitcreateddate = item.created_date?moment(item.created_date).format('DD-MM-YYYY'):null;
-            return { ...item, date_: splitdate, warrantyend_date: splitwarrantyenddate, created_date: splitcreateddate };
+          const splitdate = item.date_ ? moment(item.date_).format('DD-MM-YYYY') : null;
+          const splitwarrantyenddate = item.warrantyend_date ? moment(item.warrantyend_date).format('YYYY-MM-DD') : null;
+          const splitcreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
+
+          const splitinvoicedate = item.invoice_date ? moment(item.invoice_date).format('DD-MM-YYYY') : moment(item.po_creation_date).format('DD-MM-YYYY');
+          const splitpocreationdate = item.po_creation_date ? moment(item.po_creation_date).format('DD-MM-YYYY') : null;
+
+          return { ...item, date_: splitdate, warrantyend_date: splitwarrantyenddate, created_date: splitcreateddate, invoice_date: splitinvoicedate, po_creation_date: splitpocreationdate };
           // }
           // return item;
+        }).sort((a: any, b: any) => {
+
+          const getPriority = (purchase_id: string) => {
+            if (!purchase_id) return 0;
+
+            if (purchase_id.startsWith('NA')) return 3;      // Last
+            if (purchase_id.startsWith('BRND')) return 2;    // Second Last
+            return 1;                                        // First (normal IDs)
+          };
+
+          return getPriority(a.purchase_id) - getPriority(b.purchase_id);
         });
-          this.filteredItemData = filteredResults;
-          this.itemData = filteredResults;
-          this.count = filteredResults.length;
-          console.log(this.filteredItemData, "fitlereddata");
+
+        this.filteredItemData = filteredResults;
+        this.itemData = filteredResults;
+        this.count = filteredResults.length;
+        console.log(this.filteredItemData, "fitlereddata");
       }
     }
     catch (error: unknown) {
@@ -107,7 +129,7 @@ export class UpdateItemsComponent {
         });
       }
     }
-    finally{
+    finally {
       this.spinner.hide();
     }
 
@@ -120,7 +142,7 @@ export class UpdateItemsComponent {
       this.filteredItemData = this.itemData.filter((item: any) => {
         // Check if any property matches the search term and is not null or empty
         return Object.keys(item).some(key => {
-          if (item[key] !== null && item[key] !== '' && (key === 'date_' || key === 'warrantyend_date' || key === 'created_date')) {
+          if (item[key] !== null && item[key] !== '' && (key === 'invoice_date' || key === 'warrantyend_date' )) {
             // Check if the property is 'date_' or 'warrantyend_date' and includes the search term
             return item[key].includes(this.searchTerm);
           } else if (item[key] !== null && item[key] !== '') {
@@ -233,10 +255,10 @@ export class UpdateItemsComponent {
     this.page = event;
     // this.getSystemData();
   }
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {
@@ -256,12 +278,12 @@ export class UpdateItemsComponent {
   //     this.currentSortColumn = columnName; // Update current sort column
   //     this.isAscending = true; // Set sorting order to ascending for the new column
   //   }
-  
+
   //   this.filteredItemData.sort((a: any, b: any) => {
   //     let comparison = 0;
   //     const valueA = a[columnName];
   //     const valueB = b[columnName];
-  
+
   //     // Handle null or undefined values
   //     if (valueA === null || valueA === undefined) {
   //       comparison = valueB === null || valueB === undefined ? 0 : -1;
@@ -278,15 +300,15 @@ export class UpdateItemsComponent {
   //         comparison = valueA.toString().localeCompare(valueB.toString());
   //       }
   //     }
-  
+
   //     return this.isAscending ? comparison : -comparison;
   //   });
   // }
-  
+
   // isDate(value: any): boolean {
   //   return moment(value, moment.ISO_8601, true).isValid();
   // }
-  
+
   // isNumber(value: any): boolean {
   //   return !isNaN(value);
   // }
@@ -317,11 +339,11 @@ export class UpdateItemsComponent {
       } else {
         // console.log(valueA, valueB, "sorting")
         if (this.isDate(valueA) && this.isDate(valueB)) {
-        // Parse dates using moment.js with strict parsing
-        const dateA = moment(valueA, 'DD-MM-YYYY', true); 
-        const dateB = moment(valueB, 'DD-MM-YYYY', true);
-        comparison = dateA.diff(dateB); 
-          
+          // Parse dates using moment.js with strict parsing
+          const dateA = moment(valueA, 'DD-MM-YYYY', true);
+          const dateB = moment(valueB, 'DD-MM-YYYY', true);
+          comparison = dateA.diff(dateB);
+
         } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
           comparison = valueA - valueB;
         } else {
@@ -333,7 +355,7 @@ export class UpdateItemsComponent {
     });
   }
 
-  isDate(dateString:any): boolean {
+  isDate(dateString: any): boolean {
     const isValidDate = moment(dateString, 'DD-MM-YYYY', true).isValid();
     return isValidDate;
   }
@@ -342,8 +364,8 @@ export class UpdateItemsComponent {
     return !isNaN(value);
   }
 
-  changeWarranty(item:any){
-    this.startEditing(item);
-  
-  }
+  // changeWarranty(item: any) {
+  //   // this.startEditing(item);
+
+  // }
 }

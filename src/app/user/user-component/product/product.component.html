@@ -5,7 +5,7 @@
 <section class="content-header">
     <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
     <div class="header-title">
-        <h1>Item</h1>
+        <h1>{{toggleAddbtn ? 'Item List' :(updateProductbtn? 'Update Item':'Add Item')}}</h1>
     </div>
 
     <div class="add-icon-section" *ngIf="toggleAddbtn">
@@ -24,7 +24,7 @@
             <div class="flex-box">
                 <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayaddProduct">
                     <div class="data-form"  [formGroup]="productForm" >
-                        <h1 class="text-center form-heading  mb-4 mt-3">Add Item</h1> 
+                        <h1 class="text-center form-heading  mb-4 mt-3">{{updateProductbtn ? "Update Item": "Add Item"}}</h1> 
                         <div class="form-group m-0">
                             <label for="product_name" class="form-label">Item Name:<sup>*</sup></label>
                             <input type="text" id="product_name" class="form-control form-control-sm data-control" placeholder="Enter Item Name"  formControlName='product_name' [readonly]="updateProductbtn" [(ngModel)]="productData.product_name" (keydown)="NoSpaceallowedatstart($event)"/>
@@ -37,7 +37,7 @@
                             <label for="category" class="form-label ">Category:<sup>*</sup></label>
                             <!-- <input type="text" class="form-control data-control" placeholder="Enter Cateogory Name" /> -->
     
-                            <select #category id="category" class="form-control form-control-sm data-control"  formControlName="category_id" (change)="categoryId(category.value)"  [(ngModel)]="productData.category_id">
+                            <select #category id="category" class="form-control form-control-sm data-control"  formControlName="category_id" (change)="categoryId(category.value)"  >
                                 <!-- <option selected="true" disabled="disabled" value="">Select</option> -->
                                 <option class="select-border" hidden disabled value=0>Select</option>
                     

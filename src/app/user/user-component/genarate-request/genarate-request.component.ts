@@ -19,7 +19,7 @@ export class GenarateRequestComponent {
   validationMessage = false;
 
   generaterequestData = {
-    request_item: '',
+    request_item: null,
     quantity: 1,
     remark: '',
     created_by: localStorage.getItem('login_id'),
@@ -32,7 +32,9 @@ export class GenarateRequestComponent {
   productdataArray: any = [];
   request: any;
 
-  constructor(public sharedServices: SharedService, private adminService: AdminService, private router: Router, private spinner: NgxSpinnerService) {
+  constructor(public sharedServices: SharedService, 
+    private adminService: AdminService, private router: Router, 
+    private spinner: NgxSpinnerService) {
 
   }
 
@@ -56,10 +58,10 @@ export class GenarateRequestComponent {
 
       const results:any = await this.sharedServices.getProductdata().pipe(
         retry(3), // Retry the request up to 3 times
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error fetching accepted requests:', error);
-          return of([]); // Return an empty array if an error occurs
-        })
+        // catchError((error: HttpErrorResponse) => {
+        //   console.error('Error fetching accepted requests:', error);
+        //   return of([]); // Return an empty array if an error occurs
+        // })
       ).toPromise();
 
       this.productdata = sortByProperty(JSON.parse(JSON.stringify(results)), 'product_name');
@@ -115,7 +117,7 @@ export class GenarateRequestComponent {
             }).then(()=>{
               this.ngOnInit();
               this.generateRequestForm.reset({
-                request_item:'Select Item',
+                request_item: null,
                 remark:'',
                 quantity:0,
                 estimated_price:0
@@ -160,7 +162,7 @@ export class GenarateRequestComponent {
 
   validation() {
     this.generateRequestForm = new FormGroup({
-      request_item: new FormControl('', [Validators.required]),
+      request_item: new FormControl(null, [Validators.required]),
       remark: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.pattern(/^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,9}$/)]),
       estimated_price: new FormControl(1, [Validators.required,Validators.pattern(/^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,9}$/)]),

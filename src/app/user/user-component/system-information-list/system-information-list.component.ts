@@ -112,7 +112,6 @@ export class SystemInformationListComponent {
     this.subscription = this.adminService.selectedItem$.subscribe(
       item => {
         if (item && item !== null) {
-          console.log("I am in");
           this.adminService.sendSelectedItem(null);
         }
       }

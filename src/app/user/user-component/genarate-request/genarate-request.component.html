@@ -14,19 +14,22 @@
                         <h1 class="text-center form-heading mb-4 mt-3">Generate Request</h1>
                         <div class="form-group  m-2">
                             <label for="product_name" class="form-label">Item:<sup>*</sup></label>
-                            <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                            <!-- <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
                                 id="product_name" [items]="productdata" formControlName="request_item"
                                 [placeholder]="!generaterequestData.request_item ? 'Select Item' : ''"
                                 [(ngModel)]="generaterequestData.request_item" bindLabel="product_name"
-                                bindValue="product_name"
-                                [clearable]="!generaterequestData.request_item?false:true"
+                                bindValue="product_name" [clearable]="!generaterequestData.request_item?false:true"
                                 (change)="selectRequest($event)">
                                 <ng-template ng-option-tmp let-item="item">
-                                    <div
-                                      [ngStyle]="{ 'background-color': 'white'}">
-                                      {{item?.product_name}}
+                                    <div [ngStyle]="{ 'background-color': 'white'}">
+                                        {{item?.product_name}}
                                     </div>
-                                  </ng-template>
+                                </ng-template>
+                            </ng-select> -->
+
+                            <ng-select  class="select-option" [items]="productdata" bindLabel="product_name"
+                                bindValue="product_name" placeholder="Select Item" formControlName="request_item"
+                                [clearable]="true" (change)="selectRequest($event)">
                             </ng-select>
 
                             <div class="mandatory my-1 text-danger font-italic"
@@ -37,8 +40,9 @@
                         <div class="form-group m-2">
                             <label for="quantity" class="form-label">Quantity:<sup>*</sup></label>
                             <input type="number" id="quantity" class="form-control form-control-sm data-control"
-                                placeholder="Enter Quantity " formControlName="quantity" oninput="this.value = Math.abs(this.value)"
-                                [(ngModel)]="generaterequestData.quantity" b-positive/>
+                                placeholder="Enter Quantity " formControlName="quantity"
+                                oninput="this.value = Math.abs(this.value)" [(ngModel)]="generaterequestData.quantity"
+                                b-positive />
                             <div class="mandatory my-1 text-danger font-italic"
                                 *ngIf="generateRequestForm.get('quantity').hasError('pattern') && generateRequestForm.get('quantity').touched">
                                 Required
@@ -47,11 +51,12 @@
                         </div>
                         <div class="form-group m-2">
                             <label for="estimated_price" class="form-label">Estimated Price:<sup>*</sup></label>
-                            <input type="number" step="any" id="estimated_price" class="form-control form-control-sm data-control"
-                                placeholder="Enter Price... " formControlName="estimated_price" min="1"
+                            <input type="number" step="any" id="estimated_price"
+                                class="form-control form-control-sm data-control" placeholder="Enter Price... "
+                                formControlName="estimated_price" min="1"
                                 (keyup)="sharedServices.onDecimalInput($event)"
-                                 (paste)="sharedServices.onDecimalPaste($event)"
-                                [(ngModel)]="generaterequestData.estimated_price" b-positive/>
+                                (paste)="sharedServices.onDecimalPaste($event)"
+                                [(ngModel)]="generaterequestData.estimated_price" b-positive />
                             <div class="mandatory my-1 text-danger font-italic"
                                 *ngIf="(generateRequestForm.get('estimated_price').hasError('pattern')||generateRequestForm.get('estimated_price').hasError('required')) && generateRequestForm.get('estimated_price').touched">
                                 Required

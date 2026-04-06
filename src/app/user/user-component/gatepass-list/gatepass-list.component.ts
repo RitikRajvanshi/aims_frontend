@@ -63,10 +63,10 @@ export class GatepassListComponent {
       try{
         const results:any = await this.sharedService.getgatepassdatabyid(gatePassid).pipe(
           retry(3), // Retry the request up to 3 times
-          catchError((error: HttpErrorResponse) => {
-            console.error('Error fetching user data:', error);
-            return of([]); // Return an empty array if an error occurs
-          })
+          // catchError((error: HttpErrorResponse) => {
+          //   console.error('Error fetching user data:', error);
+          //   return of([]); // Return an empty array if an error occurs
+          // })
         ).toPromise();
 
         this.approvedbysir = results[0].is_sent;
@@ -203,7 +203,7 @@ export class GatepassListComponent {
 
       await new Promise(resolve => setTimeout(resolve, 500));
       await this.downloadAsPdf();
-      this.viewformats = false;
+      // this.viewformats = false;
   }
   
   public async downloadAsPdf(){

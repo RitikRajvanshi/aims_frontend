@@ -31,8 +31,8 @@ export class UploadScanQuotationComponent {
   uploadfileandgetData: any;
   uploadProgress:any;
 
-  display1: boolean = true;      // for add button
-  display2: boolean = false;     // for update button
+  addButton: boolean = true;      // for add button
+  updateButton: boolean = false;     // for update button
 
   toggleListBtn = true;
   toggleAddbtn = false;
@@ -43,11 +43,11 @@ export class UploadScanQuotationComponent {
   isDataorNot:boolean = true;
 
   //for inserting quotation
-  uploadquotationData = {
+  uploadquotationData: any = {
     quotation_name: '',
     quotation_path: '',
     mimetype: '',
-    request_id: 0,
+    request_id: null,
     description: '',
     created_by: localStorage.getItem('login_id')
   }
@@ -58,13 +58,13 @@ export class UploadScanQuotationComponent {
     quotation_name: '',
     quotation_path: '',
     mimetype: '',
-    request_id: 0,
+    request_id: null,
     description: ''
   }
 
   updatequotationDataotherthanfile: any = {
     quotation_id: 0,
-    request_id: 0,
+    request_id: null,
     description: '',
   }
 
@@ -325,7 +325,7 @@ export class UploadScanQuotationComponent {
     }
     else {
 
-      if (this.display1) {
+      if (this.addButton) {
         const formdata = new FormData();
         formdata.append('file', this.files);
         //uploading quotation in backend folder name 'file' and gets its information
@@ -354,7 +354,7 @@ export class UploadScanQuotationComponent {
                     }).then(()=>{
                       this.uploadquotationForm.reset({
                         quotation_name:'',
-                        request_id:0,
+                        request_id:null,
                         file_name:'',
                         description:''
                       })
@@ -484,7 +484,7 @@ export class UploadScanQuotationComponent {
                       }).then(() => {
                         this.uploadquotationForm.reset({
                           quotation_name:'',
-                          request_id:0,
+                          request_id:null,
                           file_name:'',
                           description:''
                         })
@@ -545,8 +545,8 @@ export class UploadScanQuotationComponent {
 
   updatequotation(id: any) {
     this.uploadquotationForm.controls['quotation_name'].clearValidators();
-    this.display1 = false;
-    this.display2 = true;
+    this.addButton = false;
+    this.updateButton = true;
     this.displayemptydatamsg = false;
     this.displayQuotationcontainer = true;
     this.toggleListBtn = true;
@@ -624,13 +624,13 @@ export class UploadScanQuotationComponent {
     this.displayemptydatamsg = true;
     this.uploadquotationForm.reset({
       quotation_name:'',
-      request_id:0,
+      request_id:null,
       file_name:'',
       description:''
     });
 
-    this.display1 = true;
-    this.display2 = false;
+    this.addButton = true;
+    this.updateButton = false;
   }
 
   toggleActionUpdate() {
@@ -640,7 +640,7 @@ export class UploadScanQuotationComponent {
     this.displayemptydatamsg = false;
     this.uploadquotationForm.reset({
       quotation_name:'',
-      request_id:0,
+      request_id:null,
       file_name:'',
       description:''
     })
@@ -865,7 +865,7 @@ documentnotexists(){
   validation() {
     this.uploadquotationForm = new FormGroup({
       quotation_name: new FormControl('', [Validators.required]),
-      request_id: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      request_id: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
       file_name: new FormControl(''),
       description: new FormControl('', [Validators.required])
     })

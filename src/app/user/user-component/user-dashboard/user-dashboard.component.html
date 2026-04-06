@@ -123,6 +123,7 @@
                   <strong>
                     {{ financialReport.sumOfPurchase[currency].currency }}
                     {{ financialReport.sumOfPurchase[currency].sumtotal.toFixed(2) || 0 }}
+                    
                     <span *ngIf="!last">&nbsp;+</span>
                   </strong>
                 </span>

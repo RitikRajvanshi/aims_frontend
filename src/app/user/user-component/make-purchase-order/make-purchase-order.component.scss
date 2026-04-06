@@ -2,29 +2,10 @@ input{
     padding:0.2rem !important;
 }
 
-// input[type='text']:read-only {
-//     // color: red;
-//     color: rgb(108, 108, 108);
-//     // background-color: 	#FBFCFB;
-//     background-color: #F5FEFD;
-   
-// }
-
-
-
-// input[type='number']:read-only {
-//     // background-color: #F5FEFD;
-//     background-color: #F5FEFD;
-
-// }
 input:read-only{
     background-color: #F5FEFD;
 }
-// input[type='number']:disabled {
-//     // background-color: #F5FEFD;
-//     background-color: #F5FEFD;
 
-// }
 
 select.form-control:not([size]):not([multiple]) {
     height: calc(1.7rem + 2px);
@@ -34,9 +15,7 @@ select.form-control:not([size]):not([multiple]) {
      margin-bottom: 0rem !important; 
 }
 
-// ng-select{
-//     z-index: 999;
-// }
+
 
 .no-flash {
   background-color: white !important;
@@ -49,3 +28,147 @@ select.form-control:not([size]):not([multiple]) {
   background-color: white !important;
   color: black !important;
 }
+
+.form-label {
+  font-weight: 600;
+}
+
+.d-flex input[type="radio"] {
+  transform: scale(1.05);
+  margin-right: 4px;
+}
+
+
+/* Base layout */
+.discount-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.discount-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.discount-input-row input {
+  flex: 1;
+}
+
+/* Wrapper takes same height as form-control */
+.percent-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+/* Make sure input has enough right padding */
+.percent-input {
+  padding-right: 26px !important;
+}
+
+/* Perfectly center % inside input */
+.percent-suffix {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #555;
+  pointer-events: none;
+  line-height: 1;
+}
+
+
+
+/* Laptop fix: force single line */
+@media (max-width: 1366px) {
+  .discount-label-row {
+    flex-wrap: nowrap;
+  }
+
+  .discount-label-row label,
+  .radio-group label {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  .radio-group {
+    gap: 6px;
+  }
+
+  .radio-group input[type="radio"] {
+    transform: scale(0.9);
+  }
+
+  /* Tighten radio + label spacing */
+.radio-group label {
+  margin-right: 6px;      /* reduce outer spacing */
+  display: flex;
+  align-items: center;
+  gap: 3px;               /* 🔥 controls space between radio & text */
+  font-size: 12px;
+}
+
+/* Remove default radio margin */
+.radio-group input[type="radio"] {
+  margin: 0;
+  transform: scale(0.9);
+}
+}
+
+/* Mobile: allow wrap naturally */
+@media (max-width: 768px) {
+  .discount-label-row {
+    flex-wrap: wrap;
+  }
+}
+
+
+::ng-deep button#sent-button-direct:disabled{
+    background-color: #dbdcdc !important;
+    color:white !important;
+    border:2px solid #d9dce0;
+};
+
+.po-discount-box {
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.discount-type {
+  width: 70px;
+  min-width: 60px;
+}
+
+
+.discount-amount-cell {
+  width: 160px;
+  min-width: 160px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.discount-input {
+  width: 100px;
+  min-width: 80px;
+}
+
+@media (max-width: 1024px) {
+  .discount-input {
+    width: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .discount-input {
+    width: 70px;
+  }
+}
+

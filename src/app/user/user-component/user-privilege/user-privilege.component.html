@@ -5,7 +5,7 @@
 <section class="content-header">
     <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
     <div class="header-title">
-        <h1>User Privilege</h1>
+        <h1>{{toggleAddbtn ? 'User Privilege List' :(updatePrivilegebtn? 'Update User Privilege':'Add User Privilege')}}</h1>
     </div>
    
     <div class="add-icon-section" *ngIf="toggleAddbtn">
@@ -22,7 +22,7 @@
           <div class="flex-box"> 
             <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayCategoyForm">
                 <div class="data-form">
-                    <h1 class="text-center form-heading  mb-4 mt-3">Add User Privilege</h1>
+                    <h1 class="text-center form-heading  mb-4 mt-3">{{updatePrivilegebtn ? 'Update User Privilege' : 'Add User Privilege'}}</h1>
                     <div class="form-group m-0" [formGroup]="addPrivilegeForm">
                         <div class="form-group m-0">
                         <label for="privilege_name" class="form-label">User Privilege:<sup>*</sup></label>

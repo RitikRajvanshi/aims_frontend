@@ -3,7 +3,8 @@
 <section class="content-header">
     <div class="header-icon"><i class="fa fa-search text-secondary" aria-hidden="true"></i></div>
     <div class="header-title">
-        <h1>Upload Invoice</h1>
+          <h1>{{toggleAddbtn ? 'Invoice List' :(displayupdateInvoice? 'Update Invoice':'Upload Invoice')}}</h1>
+
     </div>
     <div class="add-icon-section" *ngIf="toggleListBtn">
         <button class="btn btn-toggle " (click)="toggleActionAdd()"><i class="fa fa-search pr-1"></i>Invoice
@@ -56,12 +57,11 @@
             <div class="flex-box">
                 <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayInvoicecontainer">
                     <div class="data-form" [formGroup]="invoiceForm">
-                        <h2 class="text-center form-heading mb-4 mt-3">Upload Invoice</h2>
+                        <h2 class="text-center form-heading mb-4 mt-3">{{displayupdateInvoice ? 'Update Invoice' : 'Upload Invoice'}}</h2>
 
                         <div class="form-group  m-2">
                             <label for="purchase_id" class="form-label">Purchase Id:<sup>*</sup></label>
-
-                            <ng-select appendTo="body" class="form-control form-control-sm data-control-for-ngselect "
+                            <!-- <ng-select appendTo="body" class="form-control form-control-sm data-control-for-ngselect "
                                 id="purchase_id" [items]="purchasedata" formControlName="purchase_id"
                                 [placeholder]="!purchaseData.purchase_id? 'Select Purchase Id...' : ''"
                                 [(ngModel)]="purchaseData.purchase_id" 
@@ -74,7 +74,11 @@
                                         {{item?.purchase_id}}
                                     </div>
                                 </ng-template>
-
+                            </ng-select> -->
+                            <ng-select class="select-option" [items]="purchasedata" [readonly]="readonly"
+                                [(ngModel)]="purchaseData.purchase_id" bindLabel="purchase_id" bindValue="purchase_id"
+                                placeholder="Select Purchase Id..." formControlName="purchase_id" [clearable]="true"
+                                (change)="selectPurchaseid($event)" (clear)="onClear()">
                             </ng-select>
 
                             <div class="mandatory my-1 text-danger font-italic"
@@ -111,10 +115,11 @@
                         </div>
 
                         <div class="form-group m-2">
-                            <label for="invoice_no" class="form-label">Invoice Amount({{currency?currency:'₹'}}):<sup>*</sup></label>
-                            <input type="number" min="0"  step="any" id="invoice_amount" class="form-control data-control p-1"
-                                placeholder="Enter invoice amount..." formControlName="invoice_amount"
-                                (keyup)="sharedService.onDecimalInput($event)"
+                            <label for="invoice_no" class="form-label">Invoice
+                                Amount({{currency?currency:'₹'}}):<sup>*</sup></label>
+                            <input type="number" min="0" step="any" id="invoice_amount"
+                                class="form-control data-control p-1" placeholder="Enter invoice amount..."
+                                formControlName="invoice_amount" (keyup)="sharedService.onDecimalInput($event)"
                                 (paste)="sharedService.onDecimalPaste($event)"
                                 [(ngModel)]="purchaseData.invoice_amount" />
 
@@ -153,17 +158,22 @@
 
                                 </div>
                                 <h3 class="ml-3" *ngIf="uploadProgress > 0 && uploadProgress < 100">
-                                    <strong>{{uploadProgress + '%'}} file uploaded</strong></h3>
+                                    <strong>{{uploadProgress + '%'}} file uploaded</strong>
+                                </h3>
                             </div>
                         </div>
 
                         <div class="data-form-btn">
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-data-login btn-block" *ngIf="displayuploadInvoice"
+                                <!-- <button type="submit" class="btn btn-data-login btn-block" *ngIf="displayuploadInvoice"
                                     (click)="uploadInvoice()">Add</button>
 
                                 <button type="submit" class="btn btn-data-login btn-block" *ngIf="displayupdateInvoice"
-                                    (click)="uploadInvoice()">Update</button>
+                                    (click)="uploadInvoice()">Update</button> -->
+                                <button type="submit" class="btn btn-data-login btn-block"
+                                    *ngIf="displayuploadInvoice || displayupdateInvoice" (click)="uploadInvoice()">
+                                    {{ displayupdateInvoice ? 'Update' : 'Add' }}
+                                </button>
                             </div>
                         </div>
                     </div>

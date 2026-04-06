@@ -31,7 +31,8 @@
                                             (click)="refreshfilter()" title="refresh"></i>
                                         <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
                                             [disabled]="!uploaddocbydate.start_date || !uploaddocbydate.end_date">Filter</button>
-                                        <button class="btn btn-login-report m-2" (click)="exportToexcelfromnode()">Export To
+                                        <button class="btn btn-login-report m-2"
+                                            (click)="exportToexcelfromnode()">Export To
                                             Excel</button>
                                     </div>
                                 </div>
@@ -60,20 +61,21 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="table-heading-color" style="width:5%;">S.No.</th>
-                                        <th scope="col" class="table-heading-color" style="width:20%;"
+                                        <th scope="col" class="table-heading-color" style="width:27%;"
                                             (click)="sort('document_name')">Document Name <i class="fa fa-sort"></i>
                                         </th>
-                                        <th scope="col" class="table-heading-color" style="width:15%;"
+                                        <th scope="col" class="table-heading-color" style="width:10%;"
                                             (click)="sort('category_name')">Category Name <i class="fa fa-sort"></i>
                                         </th>
-                                        <th scope="col" class="table-heading-color" style="width:20%;" (click)="sort('description')">Description <i class="fa fa-sort"></i></th>
+                                        <th scope="col" class="table-heading-color" style="width:33%;"
+                                            (click)="sort('description')">Description <i class="fa fa-sort"></i></th>
                                         <th scope="col" class="table-heading-color center-data" style="width:5%;">
                                             Downloads</th>
                                         <th scope="col" class="table-heading-color center-data" style="width:5%;">View
                                         </th>
-                                        <th scope="col" class="table-heading-color" style="width:15%;"
+                                        <th scope="col" class="table-heading-color" style="width:7%;"
                                             (click)="sort('user_name')">Uploaded By <i class="fa fa-sort"></i></th>
-                                        <th scope="col" class="table-heading-color" style="width:15%;"
+                                        <th scope="col" class="table-heading-color" style="width:8%;"
                                             (click)="sort('created_date')">Upload Date <i class="fa fa-sort"></i></th>
                                     </tr>
                                 </thead>
@@ -82,85 +84,22 @@
                                         {itemsPerPage: tableSize,
                                           currentPage: page, totalItems:empltyDataList.length}; let i = index ">
 
-                                        <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize + i +1
-                                            }}</th>
-                                        <td class="table-heading-sub-text"
-                                            style="width:300px ; max-width: 300px;word-break: break-all;">
-                                            <ng-container
-                                                *ngIf="items.document_name && items.document_name.length > 30">
-                                                <span *ngIf="!items.isExpanded">{{ items.document_name.slice(0, 30)
-                                                    }}</span>
-                                                <span *ngIf="items.isExpanded">{{ items.document_name }}</span>
-
-                                                <p class="d-inline text-secondary"
-                                                    *ngIf="items.document_name.length > 30"
-                                                    (click)="toggleExpand(items)">
-                                                    {{ items.isExpanded ? 'read less' : '...' }}
-                                                </p>
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="items.document_name && items.document_name.length <= 30">
-                                                {{ items.document_name }}
-                                            </ng-container>
-
-                                            <ng-container *ngIf="!items.document_name">
-                                                {{ 'NA' }}
-                                            </ng-container>
-                                            <!-- {{items.document_name}} -->
-
-                                        </td>
+                                        <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize + i +1}}</th>
                                         <td class="table-heading-sub-text">
-                                            {{items.category_name?items.category_name:'NA'}}</td>
-                                        <!-- <td class="table-heading-sub-text"
-                                            style="width:300px ; max-width: 300px;word-break: break-all;">
-                                            <ng-container *ngIf="items.description && items.description.description > 30">
-                                                
-                                                <span *ngIf="!items.isExpanded">{{ items.description.slice(0, 30) }}</span>
-
-                                                <span *ngIf="items.isExpanded">{{ items.description }}</span>
-
-                                                <p class="d-inline text-secondary" *ngIf="items.description.length > 30"
-                                                    (click)="toggleExpand(items)">
-                                                    {{ items.isExpanded ? 'read less' : '...' }}
-                                                </p>
-                                            </ng-container>
-                                            <ng-container *ngIf="items.description && items.description.length <= 30">
-                                                {{ items.description }}
-                                            </ng-container>
-
-                                            <ng-container *ngIf="!items.description">
-                                                {{ 'NA' }}
-                                            </ng-container>
-                                         
-
-                                        </td> -->
-
-                                        <td class="table-heading-sub-text" style="width:300px; max-width:300px; word-break:break-all;">
-                                            <ng-container *ngIf="items.description && items.description.length > 30">
-                                                <span *ngIf="!items.isExpanded">{{ items.description.slice(0, 30) }}...</span>
-                                                <span *ngIf="items.isExpanded">{{ items.description }}</span>
-                                        
-                                                <p class="d-inline text-secondary" *ngIf="items.description.length > 30" (click)="toggleExpand(items)">
-                                                    {{ items.isExpanded ? 'read less' : 'read more' }}
-                                                </p>
-                                            </ng-container>
-                                        
-                                            <ng-container *ngIf="items.description && items.description.length <= 30">
-                                                {{ items.description }}
-                                            </ng-container>
-                                        
-                                            <ng-container *ngIf="!items.description">
-                                                NA
-                                            </ng-container>
+                                        {{ items.document_name }}
                                         </td>
-                                        
+                                        <td class="table-heading-sub-text">{{items.category_name?items.category_name:'NA'}}</td>
+
+                                        <td class="table-heading-sub-text">
+                                            {{ items.description? items.description : 'NA' }}
+                                        </td>
+
                                         <td class="table-heading-sub-text center-data">
                                             <i class="p-0 m-0 border-0 fa fa-download icon-green table-edit-icon"
                                                 (click)="downloadPDF(items?.document_path, items?.document_name)"></i>
 
                                         </td>
                                         <td class="table-heading-sub-text center-data">
-                                            <!-- <a *ngIf="items.document_path" target="_blank" [href]="baseUrl+items.document_path"><i class="fa fa-eye icon-eye table-edit-icon" aria-hidden="true"></i></a> -->
                                             <a (click)="checkAndOpenFile(items.document_path)"><i
                                                     class="fa fa-eye icon-eye table-edit-icon"
                                                     aria-hidden="true"></i></a>
@@ -189,11 +128,11 @@
                         <div class="form-group d-flex select-size">
                             <p class="report-headings">Items/page</p>
                             <select class=" data-control-select ml-2  select-size form-control"
-                            (change)="ontableSizechange($event)" >
-                            <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
-                                {{size}}
-                            </option>
-                        </select>
+                                (change)="ontableSizechange($event)">
+                                <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                    {{size}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>

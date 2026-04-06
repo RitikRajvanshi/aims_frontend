@@ -2,17 +2,16 @@
 </ngx-spinner>
 <section class="content-header">
     <div class="header-icon"><i class="fa fa-file-text text-success" aria-hidden="true"></i></div>
+
     <div class="header-title">
-        <h1>Category</h1>
+        <h1>{{toggleAddbtn ? 'Category List' :(updateCategorybtn? 'Update Category':'Add Category')}}</h1>
     </div>
+
     <div class="add-icon-section" *ngIf="toggleAddbtn">
-        <button class=" btn btn-toggle " (click)="toggleActionAdd()" [disabled]="userRole !== '2'"><i
-                class="fa fa-plus pr-1"></i>Add
-            Category</button>
+        <button class=" btn btn-toggle " (click)="toggleActionAdd()" [disabled]="userRole !== '2'"> <i class="fa fa-plus pr-1"></i>Add Category</button>
     </div>
     <div class="add-icon-section" *ngIf="toggleListBtn">
-        <button class="btn btn-toggle " (click)="toggleActionUpdate()"><i class="fa fa-search  pr-1"></i>Category
-            List</button>
+        <button class="btn btn-toggle " (click)="toggleActionUpdate()"><i class="fa fa-search  pr-1"></i>Category List</button>
     </div>
 </section>
 <div class="container-fluid">
@@ -21,12 +20,12 @@
             <div class="flex-box ">
                 <div class="col-md-12 col-sm-12 col-lg-5 mt-5" *ngIf="displayaddCategory">
                     <div class="data-form">
-                        <h1 class="text-center form-heading  mb-4 mt-3">Add Category</h1>
+                        <h1 class="text-center form-heading  mb-4 mt-3">{{updateCategorybtn ? "Update Category": "Add Category"}}</h1>
                         <div class="form-group m-0" [formGroup]="addcategoryForm">
                             <label for="category_name" class="form-label">Category Name:<sup>*</sup></label>
                             <input type="text" id="category_name" class="form-control form-control-sm data-control"
                                 placeholder="Enter Category Name" formControlName='category_name'
-                                [(ngModel)]="addCategroryData.category_name"
+                                [(ngModel)]="addCategoryData.category_name"
                                 (keydown)="NoSpaceallowedatstart($event)" />
                         </div>
                         <div class="mandatory my-1 text-danger font-italic"

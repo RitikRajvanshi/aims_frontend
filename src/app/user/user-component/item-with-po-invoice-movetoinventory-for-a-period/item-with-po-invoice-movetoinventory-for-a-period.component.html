@@ -58,7 +58,7 @@
             </div>
 
 
-            <div class="container-fluid my-3">
+              <div class="container-fluid my-3">
                 <div class="row">
                     <div class="col-lg-2 col-md-2 col-12 col-sm-12 mb-2 ">
                         <label class=" mx-3 border border-0 text-dark form-label" for="purchaseId">Search By:</label>
@@ -66,7 +66,7 @@
                     <!-- Filter Dropdown -->
                     <div class="col-lg-3 col-md-3 col-12 col-sm-12 mb-2 ">
                         <div class="input-group">
-                            <ng-select appendTo="body" class="form-control form-control-sm"
+                            <!-- <ng-select appendTo="body" class="form-control form-control-sm"
                                 (change)="filterDatabynames()" [items]="items" bindLabel="item"
                                 [placeholder]="!selectItem ? 'Item Name...':''" [ngModelOptions]="{standalone: true}"
                                 [(ngModel)]="selectItem" [clearable]="true" (clear)="onClear()">
@@ -76,6 +76,20 @@
                                         {{ item }}
                                     </div>
                                 </ng-template>
+                            </ng-select> -->
+
+
+                                <ng-select 
+                                class="select-option" 
+                                id="item_id" 
+                                [items]="items"
+                                placeholder="Item Name..."
+                                [(ngModel)]="selectItem"   
+                                [ngModelOptions]="{standalone: true}"
+                                bindLabel="item"
+                                [clearable]="true" 
+                                (clear)="onClear();" 
+                                (change)="filterDatabynames()">
                             </ng-select>
                         </div>
                     </div>
@@ -85,7 +99,7 @@
                         <div class="input-group">
 
 
-                            <ng-select appendTo="body" class="form-control form-control-sm"
+                            <!-- <ng-select appendTo="body" class="form-control form-control-sm"
                                 (change)="filterDatabynames()" [items]="vendors" bindLabel="supplier_name"
                                 [placeholder]="!selectVendor ? 'Vendor Name...':''"
                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="selectVendor" [clearable]="true"
@@ -95,6 +109,19 @@
                                         {{ item }}
                                     </div>
                                 </ng-template>
+                            </ng-select> -->
+
+                               <ng-select 
+                                class="select-option" 
+                                [items]="vendors"
+                                placeholder="Vendor Name..."
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="selectVendor"   
+                                bindLabel="supplier_name" 
+                                bindValue="supplier_name"
+                                [clearable]="true" 
+                                (clear)="onClear();" 
+                                (change)="filterDatabynames()">
                             </ng-select>
                         </div>
                     </div>

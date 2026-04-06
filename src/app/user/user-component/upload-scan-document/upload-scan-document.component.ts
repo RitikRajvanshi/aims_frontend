@@ -31,8 +31,8 @@ export class UploadScanDocumentComponent {
   uploadProgress: any;
   uploadfileandgetData: any;
 
-  display1: boolean = true;      // for add button
-  display2: boolean = false;     // for update button
+  addButton: boolean = true;      // for add button
+  updateButton: boolean = false;     // for update button
 
   toggleListBtn = true;
   toggleAddbtn = false;
@@ -52,7 +52,7 @@ export class UploadScanDocumentComponent {
     document_name: '',
     document_path: '',
     mimetype: '',
-    category_id: 0,
+    category_id: null,
     description: '',
     created_by: localStorage.getItem('login_id')
   }
@@ -63,13 +63,13 @@ export class UploadScanDocumentComponent {
     document_name: '',
     document_path: '',
     mimetype: '',
-    category_id: 0,
+    category_id: null,
     description: ''
   }
 
   updateDocDataotherthanfile: any = {
     document_id: 0,
-    category_id: 0,
+    category_id: null,
     description: '',
   }
 
@@ -266,7 +266,7 @@ export class UploadScanDocumentComponent {
     }
     else {
 
-      if (this.display1) {
+      if (this.addButton) {
 
         const formdata = new FormData();
         formdata.append('file', this.files);
@@ -298,7 +298,7 @@ export class UploadScanDocumentComponent {
                       text: 'Document uploaded successfully!',
                       icon: 'success',
                     }).then(() => {
-                      this.uploadDocData.category_id = 0;
+                      this.uploadDocData.category_id = null;
                       this.ngOnInit();
                     })
                   }, error: (error) => {
@@ -343,8 +343,8 @@ export class UploadScanDocumentComponent {
                   text: 'Document updated successfully!',
                   icon: 'success',
                 }).then(() => {
-                  this.uploadDocData.category_id = 0;
-                  this.uploadDocData2.category_id = 0;
+                  this.uploadDocData.category_id = null;
+                  this.uploadDocData2.category_id = null;
                   this.ngOnInit();
                 })
 
@@ -404,8 +404,8 @@ export class UploadScanDocumentComponent {
                           text: 'Document updated successfully!',
                           icon: 'success',
                         }).then(() => {
-                          this.uploadDocData.category_id = 0;
-                          this.uploadDocData2.category_id = 0;
+                          this.uploadDocData.category_id = null;
+                          this.uploadDocData2.category_id = null;
                           this.ngOnInit();
 
                         })
@@ -453,8 +453,8 @@ export class UploadScanDocumentComponent {
   updateDocument(id: any) {
     //this is used to clear the validation of particular control
     this.uploaddocumentForm.controls['document_name'].clearValidators();
-    this.display1 = false;
-    this.display2 = true;
+    this.addButton = false;
+    this.updateButton = true;
     this.displayemptydatamsg = false;
     this.displaydocumentContainer = true;
     this.toggleListBtn = true;
@@ -529,13 +529,13 @@ export class UploadScanDocumentComponent {
     this.displayemptydatamsg = true;
     this.uploaddocumentForm.reset({
       document_name: '',
-      category_id: 0,
+      category_id: null,
       file_name: '',
       description: ''
     })
 
-    this.display1 = true;
-    this.display2 = false;
+    this.addButton = true;
+    this.updateButton = false;
 
   }
 
@@ -546,7 +546,7 @@ export class UploadScanDocumentComponent {
     this.displayemptydatamsg = false;
     this.uploaddocumentForm.reset({
       document_name: '',
-      category_id: 0,
+      category_id: null,
       file_name: '',
       description: ''
     })
@@ -863,7 +863,7 @@ export class UploadScanDocumentComponent {
   validation() {
     this.uploaddocumentForm = new FormGroup({
       document_name: new FormControl('', [Validators.required]),
-      category_id: new FormControl(0, [Validators.pattern(/^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,9}$/)]),
+      category_id: new FormControl(null, [Validators.pattern(/^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,9}$/)]),
       file_name: new FormControl(''),
       description: new FormControl('', [Validators.required])
     })

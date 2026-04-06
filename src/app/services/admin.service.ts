@@ -415,6 +415,21 @@ export class AdminService {
     return this.httpClient.post(url, data);
   }
 
+   popaymentapprovalmail(purchase_id: any) {
+    const purchaseid = encodeURIComponent(purchase_id);
+    console.log(purchase_id, "purchase_id");
+    let url = environment.ADMIN_URL + environment.ADMIN.POPAYMENTAPPROVALMAIL + '/' + purchaseid;
+
+    return this.httpClient.get(url);
+  }
+
+   popaymentrejectionamail(purchase_id: any) {
+    const purchaseid = encodeURIComponent(purchase_id);
+    let url = environment.ADMIN_URL + environment.ADMIN.POPAYMENTREJECTIONMAIL + '/' + purchaseid;
+
+    return this.httpClient.get(url);
+  }
+
   approveorrejectVendor(data: any) {
     let url = environment.ADMIN_URL + environment.ADMIN.APPROVEORREJECTVENDOR;
 
@@ -431,6 +446,13 @@ export class AdminService {
 
  extendLifecycle(data: any) {
     let url = environment.ADMIN_URL + environment.ADMIN.EXTENDLIFECYCLE;
+
+    return this.httpClient.post(url, data);
+  }
+
+
+   applyFinalDiscount(data: any) {
+    let url = environment.ADMIN_URL + environment.ADMIN.APPLYFINALDISCOUNT;
 
     return this.httpClient.post(url, data);
   }

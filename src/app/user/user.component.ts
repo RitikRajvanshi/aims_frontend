@@ -76,7 +76,7 @@ export class UserComponent implements OnInit {
       }
     });
     // Optionally, you can call reset to start tracking immediately
-    this.idleService.reset();
+    // this.idleService.reset();
   }
 
   toggleArrow(buttonId: string) {

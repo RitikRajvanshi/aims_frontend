@@ -57,7 +57,29 @@ export class PurchaseOrderListComponent {
   private isNavigatedBack: boolean = false; // Flag to check navigation source
   sortingorder: any;
   isDirectPurchase: boolean = false;
-  mode: string = ''
+  mode: string = '';
+  showDiscountModal = false;
+
+  selectedPO: any = null;
+
+  discountModal = {
+    grandTotal: 0,
+    currency: '₹',
+    type: 'rs',
+    value: 0,
+    percent: 0,
+    finalTotal: 0
+  };
+
+  originalDiscountValue: number = 0;
+  originalDiscountType: string = 'rs';
+  isitemLeveldiscount:boolean = false;
+  isExistingDiscount = false;
+
+  private round2(n: number): number {
+    const val = Math.round((n + Number.EPSILON) * 100) / 100;
+    return val === 0 ? 0 : val;
+  }
 
   constructor(private sharedService: SharedService, private adminService: AdminService, private router: Router, private location: Location, private spinner: NgxSpinnerService, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private fileService: FilesService) {
     const today = moment();
@@ -224,14 +246,14 @@ export class PurchaseOrderListComponent {
 
 
           if (item.po_approval_date) {
-            return { ...item,created_date: splitcreateddate, modified_date: splitmodifieddate, sent_date: splitsentdata, po_approval_date: splitpoapprovaldate, isDirectPurchase: isDirectPurchase };
+            return { ...item, created_date: splitcreateddate, modified_date: splitmodifieddate, sent_date: splitsentdata, po_approval_date: splitpoapprovaldate, isDirectPurchase: isDirectPurchase };
           }
           else {
-            return { ...item,created_date: splitcreateddate, modified_date: splitmodifieddate, sent_date: splitsentdata, isDirectPurchase: isDirectPurchase };
+            return { ...item, created_date: splitcreateddate, modified_date: splitmodifieddate, sent_date: splitsentdata, isDirectPurchase: isDirectPurchase };
           }
         });
 
-      console.log(filteredResults, "getpurchaseorderdata");
+        console.log(filteredResults, "getpurchaseorderdata");
 
         this.filteredpoData = filteredResults;
         this.itemsData = filteredResults;
@@ -497,43 +519,43 @@ export class PurchaseOrderListComponent {
   // }
 
   refreshfilter() {
-  this.isRotating = true;
+    this.isRotating = true;
 
-  const refreshPromise = this.userRole === '1'
-    ? this.getpurchaseData()       // approved/rejected data
-    : this.getPurchasefulldata();  // full data
+    const refreshPromise = this.userRole === '1'
+      ? this.getpurchaseData()       // approved/rejected data
+      : this.getPurchasefulldata();  // full data
 
-  refreshPromise.then(() => {
-    // Clear date filters
-    if (this.podatabydate) {
-      this.podatabydate.start_date = '';
-      this.podatabydate.end_date = '';
-    }
+    refreshPromise.then(() => {
+      // Clear date filters
+      if (this.podatabydate) {
+        this.podatabydate.start_date = '';
+        this.podatabydate.end_date = '';
+      }
 
-    // Reset mode and page
-    this.mode = '';
-    this.page = 1;
+      // Reset mode and page
+      this.mode = '';
+      this.page = 1;
 
-    // Reset filtered data based on userRole
-    if (this.userRole === '1') {
-      this.filteredpoDataAcceptedorrejected = [...this.itemsDataAcceptedorrejected];
-    } else {
-      this.filteredpoData = [...this.itemsData];
-    }
+      // Reset filtered data based on userRole
+      if (this.userRole === '1') {
+        this.filteredpoDataAcceptedorrejected = [...this.itemsDataAcceptedorrejected];
+      } else {
+        this.filteredpoData = [...this.itemsData];
+      }
 
-    // Reset searchTerm and reapply if needed
-    const searchTerm = this.searchTerm;
-    this.searchTerm = '';
-    if (searchTerm) {
-      this.searchTerm = searchTerm;
-      this.filterData(); // reuse existing filtering logic
-    }
+      // Reset searchTerm and reapply if needed
+      const searchTerm = this.searchTerm;
+      this.searchTerm = '';
+      if (searchTerm) {
+        this.searchTerm = searchTerm;
+        this.filterData(); // reuse existing filtering logic
+      }
 
-    setTimeout(() => {
-      this.isRotating = false;
-    }, 500);
-  });
-}
+      setTimeout(() => {
+        this.isRotating = false;
+      }, 500);
+    });
+  }
 
 
   sendOrder(data: any) {
@@ -740,6 +762,14 @@ export class PurchaseOrderListComponent {
         case 3:
           statusLable = 'Rejected';
           break;
+
+          case 4:
+          statusLable = 'Approved';
+          break;
+
+          case 4:
+          statusLable = 'Rejected';
+          break;
       }
 
       return {
@@ -804,19 +834,193 @@ export class PurchaseOrderListComponent {
   }
 
   isApprovedOrPreApproved(item: any): boolean {
-    return item.is_sent === 2 || item.purchase_id?.startsWith('DP-');
+    return (item.is_sent == 2 || item.is_sent == 4) || item.purchase_id?.startsWith('DP-');
   }
 
   getStatusLabel(item: any): string {
     if (item.purchase_id?.startsWith('DP-')) {
       return 'Pre-approved';
-    } else if (item.is_sent === 2) {
+    } else if (item.is_sent == 2 || item.is_sent == 4) {
       return 'Approved';
-    } else if (item.is_sent === 3) {
+    } else if (item.is_sent === 3 || item.is_sent == 5) {
       return 'Rejected';
     } else {
       return '';
     }
   }
+
+
+  async openDiscountPopup(item: any) {
+     if (item.filepath) return;   // stop execution
+     if(item.is_sent==3 || item.is_sent==5) return;  // stop execution
+
+    this.selectedPO = item;
+
+    console.log(item, "Original PO");
+
+    const Pid = { purchase_id: item.purchase_id };
+
+    const purchaseItems: any =
+      await this.sharedService.getPurchaseJoinDatabyPid(Pid).toPromise();
+
+    // 🔥 Reset modal values FIRST (very important)
+    this.discountModal = {
+      grandTotal: 0,
+      currency: '₹',
+      type: 'rs',
+      value: 0,
+      percent: 0,
+      finalTotal: 0
+    };
+
+
+
+    // 🔥 Calculate grand total
+    let total = 0;
+
+    purchaseItems.forEach((row: any) => {
+
+     if(row.discount_in_rs > 0){
+        this.isitemLeveldiscount = true;
+     }
+
+      total += Number(
+        (row.total || 0).toString().replace(/,/g, '')
+      );
+    });
+
+    this.discountModal.grandTotal = this.round2(total);
+    this.discountModal.currency = purchaseItems?.[0]?.currency || item.currency || '₹';
+
+    // 🔥 Restore existing discount
+    const firstRow = purchaseItems?.[0];
+
+    if (firstRow?.po_discount) {
+
+      this.discountModal.type =
+        firstRow.discount_type || 'rs';
+
+      this.discountModal.value =
+        Number(firstRow.po_discount);
+
+      if (
+        this.discountModal.type === 'percent' &&
+        this.discountModal.grandTotal > 0
+      ) {
+        
+        this.discountModal.percent =
+          this.round2(
+            (this.discountModal.value /
+              this.discountModal.grandTotal) * 100
+          );
+      }
+
+    }
+
+    this.originalDiscountValue = this.discountModal.value;
+    this.originalDiscountType = this.discountModal.type;
+
+    // 🔥 Always recalculate properly
+    this.calculateDiscount();
+
+    this.showDiscountModal = true;
+  }
+
+  calculateDiscount() {
+
+    if (this.discountModal.type === 'percent') {
+
+      this.discountModal.value =
+        this.round2(
+          (this.discountModal.grandTotal *
+            this.discountModal.percent) / 100
+        );
+
+    } else {
+
+      this.discountModal.percent =
+        this.discountModal.grandTotal > 0
+          ? this.round2(
+            (this.discountModal.value /
+              this.discountModal.grandTotal) * 100
+          )
+          : 0;
+    }
+
+    // 🔥 Safety: discount cannot exceed total
+    if (this.discountModal.value > this.discountModal.grandTotal) {
+      this.discountModal.value = this.discountModal.grandTotal;
+    }
+
+    // 🔥 Calculate final total
+    this.discountModal.finalTotal =
+      this.round2(
+        this.discountModal.grandTotal -
+        this.discountModal.value
+      );
+  }
+
+  applyDiscount() {
+
+    // 🔥 Show loader first
+    Swal.fire({
+      title: 'Applying Discount...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    this.adminService.applyFinalDiscount({
+      purchase_id: this.selectedPO.purchase_id,
+      po_discount: this.discountModal.value,
+      discount_type: this.discountModal.type
+    }).subscribe({
+
+      next: () => {
+
+        // update row locally
+        this.selectedPO.po_discount =
+          this.discountModal.value;
+
+        this.selectedPO.discount_type =
+          this.discountModal.type;
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Discount Applied Successfully!',
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        this.showDiscountModal = false;
+      },
+
+      error: () => {
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to Apply Discount',
+          text: 'Something went wrong. Please try again.'
+        });
+
+      }
+
+    });
+  }
+
+
+  isDiscountChanged(): boolean {
+  return (
+    this.discountModal.value !== this.originalDiscountValue ||
+    this.discountModal.type !== this.originalDiscountType
+  );
+}
+
+  closeModal() {
+  this.showDiscountModal = false;
+  this.isitemLeveldiscount =false;
+}
+
 
 }

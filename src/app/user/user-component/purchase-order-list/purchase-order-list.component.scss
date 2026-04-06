@@ -18,6 +18,16 @@ table th, td{
   table-layout: fixed;
 }
 
+th, td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.table th {
+  white-space: nowrap;
+}
+
 button:disabled{
     color:white;
 }
@@ -42,4 +52,33 @@ button:disabled{
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
+}
+
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-modal {
+  background: white;
+  padding: 20px;
+  width: 400px;
+  border-radius: 8px;
+}
+
+
+.custom-modal p {
+  margin-bottom: 6px;
+}
+
+.custom-modal hr {
+  margin: 8px 0;
 }

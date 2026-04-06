@@ -5,7 +5,7 @@ import { CheckService } from 'src/app/services/check.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from "ngx-spinner";
-import { map } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import * as moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
@@ -59,7 +59,7 @@ export class GroupComponent {
   userRole = localStorage.getItem('level');
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
-  sortingorder:any;
+  sortingorder: any;
 
   constructor(private adminService: AdminService, private checkService: CheckService, private router: Router, private spinner: NgxSpinnerService) {
 
@@ -76,10 +76,10 @@ export class GroupComponent {
       this.spinner.show();
       const results: any = await this.checkService.getGroupdatabystatus().pipe(
         retry(3), // Retry the request up to 3 times
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error fetching accepted requests:', error);
-          return of([]); // Return an empty array if an error occurs
-        })
+        // catchError((error: HttpErrorResponse) => {
+        //   console.error('Error fetching accepted requests:', error);
+        //   return of([]); // Return an empty array if an error occurs
+        // })
       ).toPromise();
 
       if (results?.length == 0) {
@@ -145,7 +145,8 @@ export class GroupComponent {
                 icon: 'success',
               }).then(() => {
                 this.addgroupForm.get('grp_name')?.reset();
-                location.reload();
+                this.getGroupData();
+                // location.reload();
               })
             }
 
@@ -184,69 +185,58 @@ export class GroupComponent {
     }
   }
 
-  updateGroupFunction() {
+  async updateGroupFunction() {
     if (this.addgroupForm.invalid) {
       this.addgroupForm.controls['grp_name'].markAsTouched();
-
+      return;
     }
-    else {
-      // this.grpdata2.grp_name = data.grp_name
-      this.updategrpData.grp_id = this.grpId.grp_id;
-      this.updategrpData.grp_name = this.grpData.grp_name;
 
-      this.adminService.updategroupData(this.updategrpData).subscribe(
-        {
-          next: (results: any) => {
-            this.updateMessage = JSON.parse(JSON.stringify(results)).message;
+    // this.grpdata2.grp_name = data.grp_name
+    this.updategrpData.grp_id = this.grpId.grp_id;
+    this.updategrpData.grp_name = this.grpData.grp_name;
 
-            if (this.updateMessage !== 'true') {
-              Swal.fire({
-                title: 'Success!',
-                text: 'Department updated successfully!',
-                icon: 'success',
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.addgroupForm.get('grp_name')?.reset();
-                  location.reload();
-                }
-              });
-            }
+    try {
+    const results: any = await firstValueFrom(this.adminService.updategroupData(this.updategrpData));
+    this.updateMessage = JSON.parse(JSON.stringify(results)).message;
 
-            else {
-              Swal.fire({
-                icon: 'warning',
-                title: 'Warning',
-                 text: 'No changes detected!',
-              })
-              // .then(() => {
-              //   location.reload();
-              // })
-            }
-          },
-          error: (error) => {
-            if (error.status == 403) {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Token expired....',
-                footer: '<a href="../login">Please Login..</a>'
-              }).then(() => {
-                this.router.navigate(['../login']);
-              })
-            }
-            else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Internal Server Error...',
-                footer: '<a href="../login">Please Login..</a>'
-              }).then(() => {
-                this.router.navigate(['../login']);
-              })
-            }
+    if (this.updateMessage !== 'true') {
+     await  Swal.fire({
+        title: 'Success!',
+        text: 'Department updated successfully!',
+        icon: 'success',
+      });
+
+      this.getGroupData();
+      return;
+    }
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'No changes detected!',
+      });
+
+    }  catch (error: unknown) {
+          if (error instanceof HttpErrorResponse && error.status === 403) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Token expired.',
+              footer: '<a href="../login">Please login again!</a>'
+            }).then(() => {
+              this.router.navigate(['../login']);
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Internal server error. Please try again later!',
+              footer: '<a href="../login">Login</a>'
+            }).then(() => {
+              location.reload();
+            });
           }
-        })
-    }
+        }
   }
 
 
@@ -386,10 +376,10 @@ export class GroupComponent {
     // this.getSystemData();
   }
 
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {
@@ -400,48 +390,6 @@ export class GroupComponent {
     this.page = 1;
     // this.getSystemData();
   }
-
-  // sort(columnName: string) {
-  //   if (this.currentSortColumn === columnName) {
-  //     this.isAscending = !this.isAscending; // Toggle sorting order
-  //   } else {
-  //     this.currentSortColumn = columnName; // Update current sort column
-  //     this.isAscending = true; // Set sorting order to ascending for the new column
-  //   }
-
-  //   this.filteredgrpdata.sort((a: any, b: any) => {
-  //     let comparison = 0;
-  //     const valueA = a[columnName];
-  //     const valueB = b[columnName];
-
-  //     // Handle null or undefined values
-  //     if (valueA === null || valueA === undefined) {
-  //       comparison = valueB === null || valueB === undefined ? 0 : -1;
-  //     } else if (valueB === null || valueB === undefined) {
-  //       comparison = 1;
-  //     } else {
-  //       if (this.isDate(valueA) && this.isDate(valueB)) {
-  //         const dateA = moment(valueA);
-  //         const dateB = moment(valueB);
-  //         comparison = dateA.diff(dateB);
-  //       } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
-  //         comparison = valueA - valueB;
-  //       } else {
-  //         comparison = valueA.toString().localeCompare(valueB.toString());
-  //       }
-  //     }
-
-  //     return this.isAscending ? comparison : -comparison;
-  //   });
-  // }
-
-  // isDate(value: any): boolean {
-  //   return moment(value, moment.ISO_8601, true).isValid();
-  // }
-
-  // isNumber(value: any): boolean {
-  //   return !isNaN(value);
-  // }
 
   sort(columnName: string) {
     console.log(columnName, "columnName");

@@ -9,22 +9,24 @@
     <div class="data-content">
         <div class="page-background-h">
             <div class="flex-box">
-                <div class="col-md-12 col-sm-12 col-lg-5 mt-5 " >
+                <div class="col-md-12 col-sm-12 col-lg-5 mt-5 ">
                     <div class="data-form" [formGroup]="additemForm">
                         <h1 class="text-center form-heading mb-4 mt-3">Add Items</h1>
 
                         <div class="form-group m-2">
                             <label for="purchase_id" class="form-label">Purchase Id:<sup>*</sup></label>
-                            <input type="text" id="purchase_id" class="form-control form-control-sm data-control " placeholder="Enter Purchase Id"
-                                formControlName="purchase_id" [(ngModel)]="itemData.purchase_id"  (keydown)="NoSpaceallowedatstart($event)"/>
+                            <input type="text" id="purchase_id" class="form-control form-control-sm data-control "
+                                placeholder="Enter Purchase Id" formControlName="purchase_id"
+                                [(ngModel)]="itemData.purchase_id" (keydown)="NoSpaceallowedatstart($event)" />
 
-                                <div class="mandatory my-1 text-danger font-italic"
+                            <div class="mandatory my-1 text-danger font-italic"
                                 *ngIf="additemForm.get('purchase_id').hasError('required') && additemForm.get('purchase_id').touched">
                                 Required</div>
                         </div>
                         <div class="form-group m-2">
                             <label for="item_id" class="form-label">Item:<sup>*</sup></label>
-                            <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option"
+
+                            <!-- <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option"
                             id="product_id" [items]="productData" formControlName="item_id"    
                             [(ngModel)]="itemData.item_id"
                             [placeholder]="!itemData.item_id ? 'Select Item' : ''"
@@ -35,55 +37,77 @@
                                   {{item?.product_name}}
                                 </div>
                               </ng-template>
-                        </ng-select> 
-                           <!-- (change)="selectRequest($event)" -->
-                           <div class="mandatory my-1 text-danger font-italic"
-                           *ngIf="additemForm.get('item_id').hasError('required') && additemForm.get('item_id').touched">
-                           Required</div>
+                        </ng-select>  -->
+
+
+                            <ng-select class="select-option" id="product_id" [items]="productData"
+                                formControlName="item_id" placeholder="Select Item..." [(ngModel)]="itemData.item_id"
+                                bindLabel="product_name" bindValue="product_id" [clearable]="false"
+                                (change)="chooseItem($event)">
+                            </ng-select>
+
+                            <!-- (change)="selectRequest($event)" -->
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="additemForm.get('item_id').hasError('required') && additemForm.get('item_id').touched">
+                                Required</div>
 
                         </div>
                         <div class="form-group m-2">
                             <label for="privilege" class="form-label">Item Code:<sup>*</sup></label>
-                            <input type="text" id="item_code" class="form-control form-control-sm data-control " placeholder="Enter Item Code"
-                            formControlName="item_code" [(ngModel)]="itemData.item_code" readonly (keydown)="NoSpaceallowedatstart($event); "/>
+                            <input type="text" id="item_code" class="form-control form-control-sm data-control "
+                                placeholder="Enter Item Code" formControlName="item_code"
+                                [(ngModel)]="itemData.item_code" readonly (keydown)="NoSpaceallowedatstart($event); " />
 
                             <div class="mandatory my-1 text-danger font-italic"
-                            *ngIf="additemForm.get('item_code').hasError('required') && additemForm.get('item_code').touched">
-                            Required</div>                        
+                                *ngIf="additemForm.get('item_code').hasError('required') && additemForm.get('item_code').touched">
+                                Required</div>
                         </div>
                         <div class="form-group m-2">
                             <label for="location_id" class="form-label">Location:<sup>*</sup></label>
-                            <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
-                            id="location_id" [items]="locationData"
-                            [(ngModel)]="itemData.location_id"
-                            [placeholder]="!itemData.location_id ? 'Select Location' : ''"
-                             formControlName="location_id" bindLabel="location_name"
-                            bindValue="location_id" >
-                        
-                            <ng-template ng-option-tmp let-item="item">
-                                <div [ngStyle]="{
-                                    'color' : 'green','background-color': 'white'}">
-                                    {{item.location_name}}
-                                </div>
-        
-                            </ng-template>
-                        </ng-select>
 
-                        <div class="mandatory my-1 text-danger font-italic"
-                        *ngIf="additemForm.get('location_id').hasError('required') && additemForm.get('location_id').touched">
-                        Required</div>
-                       
+                            <!-- <ng-select class="form-control form-control-sm data-control-for-ngselect select-option"
+                                id="location_id" [items]="locationData" [(ngModel)]="itemData.location_id"
+                                [placeholder]="!itemData.location_id ? 'Select Location' : ''"
+                                formControlName="location_id" bindLabel="location_name" bindValue="location_id">
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div [ngStyle]="{
+                                    'color' : 'green','background-color': 'white'}">
+                                        {{item.location_name}}
+                                    </div>
+                                </ng-template>
+                            </ng-select> -->
+
+                            <ng-select class="select-option" id="location_id" [items]="locationData"
+                                formControlName="location_id" placeholder="Select Location..."
+                                [(ngModel)]="itemData.location_id" bindLabel="location_name" bindValue="location_id"
+                                [clearable]="false">
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div [ngStyle]="{
+                                    'color' : 'green','background-color': 'white'}">
+                                        {{item.location_name}}
+                                    </div>
+                                </ng-template>
+
+                            </ng-select>
+
+                            <div class="mandatory my-1 text-danger font-italic"
+                                *ngIf="additemForm.get('location_id').hasError('required') && additemForm.get('location_id').touched">
+                                Required</div>
+
                         </div>
 
                         <div class="form-group m-2">
                             <label for="description" class="form-label">Description:<sup>*</sup></label>
-                           
-                            <textarea class="form-control  data-control-textarea" #description placeholder="Write Description"   rows="1" id="description"  formControlName="description"
-                            (keydown)="NoSpaceallowedatstart($event)"  [(ngModel)]="itemData.description" ></textarea>
+
+                            <textarea class="form-control  data-control-textarea" #description
+                                placeholder="Write Description" rows="1" id="description" formControlName="description"
+                                (keydown)="NoSpaceallowedatstart($event)" [(ngModel)]="itemData.description"></textarea>
 
                             <div class="mandatory my-1 text-danger font-italic"
-                            *ngIf="additemForm.get('description').hasError('required') && additemForm.get('description').touched">
-                            Required</div>
+                                *ngIf="additemForm.get('description').hasError('required') && additemForm.get('description').touched">
+                                Required</div>
 
                         </div>
 

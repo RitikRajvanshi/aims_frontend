@@ -1,0 +1,173 @@
+<ngx-spinner size="medium" bdColor="rgba(0, 0, 0, 0.2)" color="#00235E" type="ball-clip-rotate"></ngx-spinner>
+<section class="content-header">
+
+    <div class="header-icon"><i class="fa fa-files-o" style="color:#FF00FF" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Service Management</h1>
+    </div>
+</section>
+<div class="container-fluid" *ngIf="isDataorNot">
+    <div class="data-content">
+        <div class="page-background-h">
+           
+            <div class="container-fluid mt-0 pt-0">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 mt-3">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="form-label">Start Date</label>
+                                    <input type="date" class="form-control data-control-date"
+                                        [(ngModel)]="datesforlicense.start_date" placeholder="Start Date">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label">End Date</label>
+                                    <input type="date" class="form-control data-control-date"
+                                        [(ngModel)]="datesforlicense.end_date" placeholder="End Date">
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class=" mt-3">
+                                        <i class="fa fa-refresh mr-2 refresh-icon" [class.rotate]="isRotating"
+                                            (click)="refreshfilter()" title="refresh"></i>
+                                        <button class="btn btn-data-add d-inline m-auto" (click)="filterData()"
+                                            [disabled]="!datesforlicense.start_date || !datesforlicense.end_date">Filter</button>
+                                        <button class="btn btn-login-report m-2"
+                                            (click)="exportToexcelfromnode()">Export To
+                                            Excel</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid  mb-3">
+                <div class="row g-2">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        <div class="input-group mb-2 search-container">
+                            <input type="text" class=" data-control form-control  mr-2" placeholder="Search..."
+                                aria-describedby="basic-addon2" [(ngModel)]="searchTerm" (input)="filterData()"
+                                (keydown)="NoSpaceallowedatstart($event)">
+                        </div>
+                    </div>
+
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-12 pt-2">
+                        <ng-select class="select-option" [items]="itemNames" placeholder="Select Item Name..."
+                            [(ngModel)]="selectItem" [ngModelOptions]="{standalone: true}" [clearable]="true"
+                            (clear)="onItemClear()" (change)="filterData()">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 ">
+                        <div class=" table-responsive overflow-auto">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="table-heading-color" scope="col" style="width:5%">S.No.</th>
+
+                                        <th class="table-heading-color" scope="col" style="width:15%"
+                                            (click)="sort('item_code')">Item Code <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th class="table-heading-color" scope="col" style="width:10%"
+                                            (click)="sort('item_name')">Item Name <i class="fa fa-sort"></i>
+                                        </th>
+
+                                        <th class="table-heading-color" scope="col" style="width:10%"
+                                            (click)="sort('category_name')">Category <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th class="table-heading-color" scope="col" style="width:20%"
+                                            (click)="sort('item_name')">Description <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th class="table-heading-color" scope="col" style="width:10%"
+                                            (click)="sort('purchase_id')">Purchase Id <i class="fa fa-sort"></i>
+                                        </th>
+                                        <th class="table-heading-color" scope="col" (click)="sort('date_')">
+                                            Purchase Date <i class="fa fa-sort"></i></th>
+                                        <th class="table-heading-color" scope="col" (click)="sort('warrantyend_date')">
+                                            Service End Date <i class="fa fa-sort"></i></th>
+
+                                        <!-- <th class="table-heading-color center-data" scope="col" >
+                                            Time Duration Left</th> -->
+                                        <th class="table-heading-color" scope="col" (click)="sort('daysLeft')">
+                                            Time Duration Left <i class="fa fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of filteredLicensedata| paginate:
+                        {itemsPerPage: tableSize,
+                          currentPage: page, totalItems:empltyDataList.length} ; let i = index "
+                                        [ngStyle]="{color:(data.daysLeft <= 30) ? 'red' :  'black', 'font-weight': (data.daysLeft <= 15)? 'bold' : 'normal'} ">
+                                        <!-- [ngStyle]="{color:data.daysLeft <= 15 ? 'red' : (data.daysLeft <= 30 ? '#FF8214' : 'black') }" -->
+                                        <th class="table-heading-sub-text" scope="row">{{ (page - 1)* tableSize + i +1
+                                            }}</th>
+                                        <td class="table-heading-sub-text" (click)="navigateTopurchaseinfo(data)"
+                                            class="text-primary" style="cursor: pointer;">{{data.item_code}}<a></a>
+                                        </td>
+                                        <td class="table-heading-sub-text">{{data.item_name}}
+                                        </td>
+                                        <td class="table-heading-sub-text">{{data.category_name}}
+                                        </td>
+                                        <td class="table-heading-sub-text">{{data.description?data.description:'No Description'}}
+                                        </td>
+                                        <td class="table-heading-sub-text">{{data.purchase_id}}</td>
+
+
+                                        <td class="table-heading-sub-text">{{data.date_}}
+                                        </td>
+                                        <td class="table-heading-sub-text">{{data.warrantyend_date}}
+                                        </td>
+
+                                        <!-- <td class="table-heading-sub-text">{{data.durationDifference}}
+                                        </td> -->
+
+
+                                        <td class="table-heading-sub-text">{{data.daysLeft}} days
+
+
+                                            <!-- <td class="text-center table-heading-sub-text center-data">
+                                            <a [routerLink]="['../purchase-order-view', data.purchase_id]" >
+                                                <i class="fa fa-search icon-search table-edit-icon "
+                                                    aria-hidden="true"></i>
+                                            </a>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid mt-2 mb-2 ">
+                <div class="row">
+                    <div class="col-lg-10  d-flex">
+                        <div class="pagination " class="active">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="ontableDatachange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                    <div class="col-lg-2   ml-auto">
+                        <div class="form-group d-flex select-size">
+                            <p class="  report-headings">Items/page</p>
+                            <select class=" data-control-select ml-2  select-size form-control"
+                                (change)="ontableSizechange($event)" [(ngModel)]="itemsperPage">
+                                <option class="select-border" *ngFor=" let size of tableSizes" [value]="size">
+                                    {{size}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="noData text-center container-fluid mt-4 mb-4" *ngIf="!isDataorNot">
+    <h1 class="text-danger">No data found</h1>
+</div>

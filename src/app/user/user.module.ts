@@ -81,6 +81,10 @@ import { PoRejectionMailComponent } from './user-component/po-rejection-mail/po-
 import { MakeDirectpurchaseOrderComponent } from './user-component/make-directpurchase-order/make-directpurchase-order.component';
 import { VendorApprovalMailComponent } from './user-component/vendor-approval-mail/vendor-approval-mail.component';
 import { VendorRejectionMailComponent } from './user-component/vendor-rejection-mail/vendor-rejection-mail.component';
+import { ReportServiceManagementComponent } from './user-component/report-service-management/report-service-management.component';
+import { PaymentApprovalMailComponent } from './user-component/payment-approval-mail/payment-approval-mail.component';
+import { PaymentRejectionMailComponent } from './user-component/payment-rejection-mail/payment-rejection-mail.component';
+import { ReportAmcManagementComponent } from './user-component/report-amc-management/report-amc-management.component';
 
 
 @NgModule({
@@ -154,6 +158,10 @@ import { VendorRejectionMailComponent } from './user-component/vendor-rejection-
     MakeDirectpurchaseOrderComponent,
     VendorApprovalMailComponent,
     VendorRejectionMailComponent,
+    ReportServiceManagementComponent,
+    PaymentApprovalMailComponent,
+    PaymentRejectionMailComponent,
+    ReportAmcManagementComponent,
  
   ],
   imports: [

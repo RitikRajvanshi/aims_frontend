@@ -11,7 +11,7 @@ import * as moment from 'moment';
 import { environment } from 'src/app/environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog } from '@angular/material/dialog';
 import { PurchaseOrderViewComponent } from '../purchase-order-view/purchase-order-view.component';
@@ -27,28 +27,28 @@ export class UploadInspectionFormComponent {
   previousUrl: any;
 
   inspectionformData = {
-    purchase_id: '',
+    purchase_id: null,
     supplier_name: '',
     product_received_date: '',
     inspected_by: 0,
     date_of_inspection: '',
-    invoice_no: '',
+    invoice_no: ''
   }
 
   purchaseIdObj = {
-    purchase_id: '',
+    purchase_id: null,
     item_name: ''
   }
 
   purchaseIdforverification = {
-    purchase_id: ''
+    purchase_id: null
   }
 
   verifyItems: any;
 
   //item 
   itemData = {
-    purchase_id: '',
+    purchase_id: null,
     item_code: '',
     item_name: '',
     description: 'No Description',
@@ -99,7 +99,7 @@ export class UploadInspectionFormComponent {
   approvalfromadmin2: any;
   is_sent: any;
   showinspectionForm: any;
-  roleType = localStorage.getItem('level');
+  roleType = Number(localStorage.getItem('level'));
   user_name = localStorage.getItem('name');
   user_id = localStorage.getItem('login_id') ? localStorage.getItem('login_id') : 0;
 
@@ -119,7 +119,7 @@ export class UploadInspectionFormComponent {
   }
 
   newpurchaseItem = {
-    purchase_id: '',
+    purchase_id: null,
     supplier_id: 0,
     issue_date: '',
     expected_date: '',
@@ -178,14 +178,16 @@ export class UploadInspectionFormComponent {
   disableAddbutton: boolean = false;
 
   constructor(private sharedService: SharedService, private adminService: AdminService, private checkService: CheckService,
-    private router: Router, private location: Location, private spinner: NgxSpinnerService, private activatedRoute: ActivatedRoute, private dialog:MatDialog) {
+    private router: Router, private location: Location, private spinner: NgxSpinnerService, private activatedRoute: ActivatedRoute, private dialog: MatDialog) {
 
     const currentDate = moment(); // Current date and time
     this.formattedDate = currentDate.format('YYYY-MM-DD');
+
     const oneYearLater = currentDate.add(1, 'year');
     this.newpurchaseItem.issue_date = this.formattedDate;
     this.newpurchaseItem.expected_date = oneYearLater.format('YYYY-MM-DD');
-    this.itemData.warrantyend_Date = oneYearLater.format('YYYY-MM-DD');
+
+    // this.itemData.warrantyend_Date = oneYearLater.format('YYYY-MM-DD');
   };
 
 
@@ -201,28 +203,23 @@ export class UploadInspectionFormComponent {
     localStorage.removeItem('navigated');
 
     this.activatedRoute.queryParams.subscribe(async (params: any) => {
-  console.log(params['purchaseid'], "params['purchaseid']");
+      console.log(params['purchaseid'], "params['purchaseid']");
 
       if (this.isNavigatedBack === true) {
         if (params['purchaseid'] && params['purchaseid'] !== '') {
           const purchaseobj = {
             purchase_id: params['purchaseid']
           }
-          // this.inspectionformData.purchase_id = params['purchaseid'];
           this.selectpurchaseId(purchaseobj);
         }
-        // setTimeout(() => {
-        //   // Call the filter method to apply the saved state
-        //   this.filterData();
-        // }, 800)
       }
-      else{
-         // Remove all query params when isNavigatedBack is false
-      this.router.navigate([], {
-        relativeTo: this.activatedRoute, // Navigate relative to the current route
-        queryParams: {}, // Empty object to clear the query parameters
-        queryParamsHandling: '' // Explicitly state that no query params should be handled
-      });
+      else {
+        // Remove all query params when isNavigatedBack is false
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute, // Navigate relative to the current route
+          queryParams: {}, // Empty object to clear the query parameters
+          queryParamsHandling: '' // Explicitly state that no query params should be handled
+        });
       }
     });
 
@@ -230,7 +227,6 @@ export class UploadInspectionFormComponent {
   }
 
   async getPruchaseorderData() {
-
     //only invoice uploaded data has shown in the purchase id 
     //only invoice uploaded po has right to inspect
     this.spinner.show();
@@ -286,11 +282,20 @@ export class UploadInspectionFormComponent {
 
 
   async selectpurchaseId(data: any) {
+    console.log({
+      admin1: this.InspectionData.approved_by_admin1,
+      admin2: this.InspectionData.approved_by_admin2,
+      display4: this.display4,
+      roleType: this.roleType
+    });
+
+    console.log(data)
+
     this.AddinspectionDisbaling = true;
     this.selectedpurchaseId = data?.purchase_id;
-    this.display = false;
     this.display3 = true;
     this.display2 = false;
+    this.display4 = false;
 
     this.purchaseIdforverification.purchase_id = data?.purchase_id;
     this.purchaseIdObj.purchase_id = data?.purchase_id;
@@ -301,17 +306,127 @@ export class UploadInspectionFormComponent {
 
     this.inspectionformData.purchase_id = data?.purchase_id;
     this.itemData.purchase_id = data?.purchase_id;
+
     // console.log(this.purchaseIdObj, "this.purchaseIdObj");
 
 
     this.sharedService.getPurchaseJoinDatabyPid(this.purchaseIdObj).subscribe({
       next: async (results: any) => {
-        // console.log(results, "results");
 
-        this.VendorEvaluationDatabysupplierid(this.itemData.purchase_id, this.InspectionData);
+        console.log(results, "getPurchaseJoinDatabyPid results");
+
         // console.log('I am in VendorEvaluationDatabysupplierid');
 
         this.getpurchaseDatabyId = results;
+
+        // this.newpurchaseItem.issue_date = moment(this.getpurchaseDatabyId[0].issue_date).local().format('YYYY-MM-DD');
+
+        //fetch items data for warranty end date 24-02-2026 (2026.2.1 QA2)   
+        const allItems: any = await firstValueFrom(this.sharedService.getitemsData());
+        const filteredItems = allItems.filter((item: any) => item.purchase_id === this.selectedpurchaseId);
+        console.log(filteredItems, "filtered items");
+
+
+        // this.getpurchaseDatabyId = this.getpurchaseDatabyId.map((pItem: any) => {
+        //   if (!pItem) continue;
+
+        //   // ✅ If already added in inventory → lock warranty
+        //   if (pItem.is_active === '0') {
+        //     // Find first matching item by name
+        //     const matchedItem = filteredItems.find(
+        //       (i: any) => i.item_name === pItem.product_name
+        //     );
+
+
+        //     console.log(matchedItem, "matchedItems");
+
+        //     if (matchedItem) {
+        //       // Item already added in inventory
+        //       return {
+        //         ...pItem,
+        //         warrantyend_Date: matchedItem
+        //           ? moment(matchedItem.warrantyend_date).format('YYYY-MM-DD')
+        //           : null,
+        //         warrantyLocked: true
+        //       };
+        //     }
+
+        //     // Not added yet → default 1 year from issue_date
+        //     const defaultWarranty = moment(pItem.issue_date)
+        //       .clone()
+        //       .add(1, 'year')
+        //       .format('YYYY-MM-DD');
+
+        //     return {
+        //       ...pItem,
+        //       warrantyend_Date: defaultWarranty,
+        //       warrantyLocked: false
+        //     };
+        //   }
+        // });
+
+
+        // for (let pItem of this.getpurchaseDatabyId) {
+
+        //   const matched = filteredItems.find(
+        //     (i: any) => i.item_name === pItem.product_name
+        //   );
+
+        //   if (matched) {
+        //     // Already added → use DB warranty
+        //     pItem.warrantyend_Date = moment(matched.warrantyend_date)
+        //       .format('YYYY-MM-DD');
+
+        //     pItem.warrantyLocked = true;
+        //   }
+        //   else {
+        //     // Not added → default 1 year
+        //     pItem.warrantyend_Date = moment(pItem.issue_date)
+        //       .clone()
+        //       .add(1, 'year')
+        //       .format('YYYY-MM-DD');
+
+        //     pItem.warrantyLocked = false;
+        //   }
+        // }
+
+
+        for (let pItem of this.getpurchaseDatabyId) {
+          console.log(pItem, "pitem");
+
+          const matched = filteredItems.find(
+            (i: any) => i.item_name === pItem.product_name
+          );
+          console.log("Invoice:", pItem.invoice_date);
+          console.log("Issue:", pItem.issue_date);
+
+          if (matched && matched.warrantyend_date) {
+
+            const invoiceDate = moment(pItem.invoice_date || pItem.issue_date)
+            const warrantyEnd = moment(matched.warrantyend_date);
+
+            let monthsDiff = warrantyEnd.diff(invoiceDate, 'months');
+
+            // 🔥 Force always positive
+            // Never negative
+            monthsDiff = monthsDiff > 0 ? monthsDiff : 0;
+
+            pItem.warrantyMonths = monthsDiff;
+
+            pItem.warrantyend_Date = warrantyEnd.format('YYYY-MM-DD');
+
+            pItem.warrantyLocked = true;
+
+          } else {
+
+            pItem.warrantyMonths = 0;
+            pItem.warrantyend_Date = null;
+
+            pItem.warrantyLocked = false;
+          }
+        }
+        // ends here
+
         const checkinpection = await results.map((e: any) => {
           //checking all purchase items are inspected in the respective purchase order
           if (e.inspected_by === 10) {
@@ -320,7 +435,7 @@ export class UploadInspectionFormComponent {
           else {
             return false     // false ---> not inspected
           }
-        })
+        });
 
         if (checkinpection.includes(false)) {
           this.evaluateornot = false;
@@ -330,11 +445,14 @@ export class UploadInspectionFormComponent {
         }
 
         console.log(results, "getpurchaseDatabyId");
+
         this.itemNameinArray.length = 0;
         this.itemQunaitiyinArray.length = 0;
         this.filteredItemIds.length = 0;
         this.itemlastValues.length = 0;
         this.filepath = this.getpurchaseDatabyId[0]?.filepath;
+        // this.InspectionData.product_received_date = this.getpurchaseDatabyId[0].invoice_date;
+
         // console.log(this.baseUrl + '/' + this.filepath, "this.filepath")
 
         const checkInspection = (results: any, approvalKey: any) => {
@@ -404,17 +522,36 @@ export class UploadInspectionFormComponent {
         this.inspectionformData.invoice_no = this.getpurchaseDatabyId[0]?.invoice_no;
         this.itemData.invoice_no = this.getpurchaseDatabyId[0]?.invoice_no;
 
-        if (this.getpurchaseDatabyId[0]?.product_received_date) {
+        // if (this.getpurchaseDatabyId[0]?.product_received_date) {
 
-          const dateofproductreceiving = moment(this.getpurchaseDatabyId[0]?.product_received_date)?.local()?.format('YYYY-MM-DD');
-          this.showinspectionForm.get('product_received_date')?.patchValue((dateofproductreceiving));
-        }
-        else {
-          this.showinspectionForm.get('product_received_date')?.patchValue((this.formattedDate));
-        }
+        //   const dateofproductreceiving = moment(this.getpurchaseDatabyId[0]?.product_received_date)?.local()?.format('YYYY-MM-DD');
+        //   this.showinspectionForm.get('product_received_date')?.patchValue((dateofproductreceiving));
+        // }
+        // else {
+        //   this.showinspectionForm.get('product_received_date')?.patchValue((this.formattedDate));
+        // }
+
+        //changes from product_received_date to invoice date(default)
+        //  if (this.getpurchaseDatabyId[0]?.invoice_date) {
+
+        //       const dateofproductreceiving = moment(this.getpurchaseDatabyId[0]?.invoice_date).format('YYYY-MM-DD');
+        //       this.showinspectionForm.get('product_received_date')?.patchValue((dateofproductreceiving));
+
+        //       this.InspectionData.product_received_date = dateofproductreceiving;
+        //     }
+        //     else {
+        //       this.showinspectionForm.get('product_received_date')?.patchValue((this.formattedDate));
+
+        //       this.InspectionData.product_received_date = this.formattedDate;
+        //     }
+
+        const receivingDate = this.getpurchaseDatabyId[0]?.invoice_date ? moment(this.getpurchaseDatabyId[0]?.invoice_date).format('YYYY-MM-DD') : this.formattedDate;
+
+        this.showinspectionForm.get('product_received_date')?.patchValue(receivingDate);
+
 
         if (this.getpurchaseDatabyId[0]?.date_of_inspection) {
-          const dateofinspection = moment(this.getpurchaseDatabyId[0]?.date_of_inspection).local().format('YYYY-MM-DD');
+          const dateofinspection = moment(this.getpurchaseDatabyId[0]?.date_of_inspection).format('YYYY-MM-DD');
           console.log(dateofinspection, "dateofinspection")
           this.showinspectionForm.get('date_of_inspection')?.patchValue((dateofinspection));
         }
@@ -427,6 +564,8 @@ export class UploadInspectionFormComponent {
           this.InspectionData.approved_by_admin2 = this.getpurchaseDatabyId[i]?.approved_by_admin2;
           this.InspectionData.id = this.getpurchaseDatabyId[0]?.id;
         }
+        this.VendorEvaluationDatabysupplierid(this.itemData.purchase_id, this.InspectionData);
+
       },
       error: (error) => {
         if (error.status == 403) {
@@ -875,6 +1014,32 @@ export class UploadInspectionFormComponent {
       this.itemData.item_name = this.itemNameinArray[i];
       this.itemName.item_name = this.itemData.item_name;
 
+      // ✅ ADD THIS LINE
+      // const purchaseRow = this.getpurchaseDatabyId[i];
+      const purchaseRow = this.getpurchaseDatabyId[i];
+
+      let months = Number(purchaseRow?.warrantyMonths) || 0;
+
+      // Prevent negative values
+      if (months < 0) {
+        months = 0;
+      }
+
+      if (months === 0) {
+        // No warranty
+        this.itemData.warrantyend_Date = '';
+      } else {
+        // Calculate end date from issue_date
+        const baseDate = moment(
+          purchaseRow.invoice_date || purchaseRow.issue_date
+        );
+
+        this.itemData.warrantyend_Date = baseDate
+          .clone()
+          .add(months, 'months')
+          .format('YYYY-MM-DD');
+      }
+
       for (let j = 0; j < this.itemQunaitiyinArray[i]; j++) {
         //here last item is encounter mean the count and adding +1 each times loops runs
 
@@ -921,7 +1086,28 @@ export class UploadInspectionFormComponent {
     }
 
     console.log(this.itemsDataobjinarray, "itemsDataobjinarray");
-    if (this.itemsDataobjinarray) {
+    if (this.itemsDataobjinarray.length > 0) {
+      // check if any item has warranty = 0
+      const hasZeroWarranty = this.itemsDataobjinarray.some(
+        (item: any) => !item.warrantyend_Date
+      );
+
+      if (hasZeroWarranty) {
+
+        const result = await Swal.fire({
+          title: 'Warranty Warning',
+          text: 'One or more items have a warranty of 0 months. Do you want to continue?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel'
+        });
+
+        if (!result.isConfirmed) {
+          return; // stop process
+        }
+      }
+
       this.adminService.addItem(this.itemsDataobjinarray).subscribe({
         next: (results: any) => {
           this.itemCodetoverify = JSON.parse(JSON.stringify(results));
@@ -1016,22 +1202,22 @@ export class UploadInspectionFormComponent {
 
   }
 
-  navigateToNewRoute(items:any) {
+  navigateToNewRoute(items: any) {
     const queryParams: any = {};
 
     // Conditionally add parameters to queryParams based on their values
     if (this.selectedpurchaseId) queryParams.purchaseid = this.selectedpurchaseId;
 
 
-// Store only the base path
-this.previousUrl = this.location.path().split('?')[0];
-localStorage.setItem('backUrl', this.previousUrl);
+    // Store only the base path
+    this.previousUrl = this.location.path().split('?')[0];
+    localStorage.setItem('backUrl', this.previousUrl);
 
-// Store query parameters as JSON
-localStorage.setItem('backUrlQueryParams', JSON.stringify(queryParams));
-localStorage.setItem('navigated', 'true');
+    // Store query parameters as JSON
+    localStorage.setItem('backUrlQueryParams', JSON.stringify(queryParams));
+    localStorage.setItem('navigated', 'true');
 
-// Navigate forward with the same params
+    // Navigate forward with the same params
     this.router.navigate(['user/vendor-evaluation', items.purchase_id], { queryParams });
   }
 
@@ -1206,6 +1392,19 @@ localStorage.setItem('navigated', 'true');
     return (item?.includes(null) || item?.includes(1)) || false;
   }
 
+  getInspectionColor(inspectedBy: any): string {
+    if (this.roleType === 2) {
+      return this.isInspectedByIdadmin1(inspectedBy) ? 'white' : 'rgb(188, 245, 204)';
+    }
+
+    if (this.roleType === 3) {
+      return this.isInspectedByIdadmin2(inspectedBy) ? 'white' : 'rgb(188, 245, 204)';
+    }
+
+    return 'white';
+  }
+
+
   selectAllforadmin1() {
     console.log("selectAllforadmin1");
 
@@ -1355,16 +1554,16 @@ localStorage.setItem('navigated', 'true');
 
     const supplierEvaluationData = getSupplierEvaluationdata.filter((data: any) => data.purchase_id == id);
 
-    console.log(supplierEvaluationData,data.approved_by_admin1,data.approved_by_admin2, "supplierEvaluationData");
+    console.log(supplierEvaluationData, data.approved_by_admin1, data.approved_by_admin2, "supplierEvaluationData");
 
     if (supplierEvaluationData.length == 0 && data.approved_by_admin1 == 1 && data.approved_by_admin2 == 1) {
       // this.disablingaddItem = true;
       this.disableAddbutton = true;
-      let timerInterval:any;
-      
+      let timerInterval: any;
+
       await Swal.fire({
         title: "PO not evaluated. Please evaluate!",
-        icon:'question',
+        icon: 'question',
         timer: 1500,
         timerProgressBar: false,
         showConfirmButton: false,
@@ -1372,7 +1571,7 @@ localStorage.setItem('navigated', 'true');
           clearInterval(timerInterval);
         }
       })
-  
+
     }
     else {
       this.disableAddbutton = false;
@@ -1422,19 +1621,36 @@ localStorage.setItem('navigated', 'true');
     // }
 
     setTimeout(() => {
-      this.dialog.open(PurchaseOrderViewComponent,{
-        width:'1200px',
+      this.dialog.open(PurchaseOrderViewComponent, {
+        width: '1200px',
         maxHeight: '85vh',
-        data:data
-      }) 
+        data: data
+      })
     }, 500);
-  
+
+  }
+
+
+  calculateWarrantyEndDate(item: any) {
+
+    if (!item.warrantyMonths || item.warrantyMonths <= 0) {
+      item.warrantyend_Date = null;
+      return;
+    }
+
+    const baseDate = moment(item.issue_date);
+
+    item.warrantyend_Date = baseDate
+      .clone()
+      .add(+item.warrantyMonths, 'months')
+      .format('YYYY-MM-DD');
+
   }
 
 
   validation() {
     this.showinspectionForm = new FormGroup({
-      purchase_id: new FormControl(''),
+      purchase_id: new FormControl(null),
       supplier_name: new FormControl(''),
       product_received_date: new FormControl('', [Validators.required]),
       date_of_inspection: new FormControl('', [Validators.required]),

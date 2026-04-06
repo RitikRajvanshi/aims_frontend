@@ -4,33 +4,35 @@ import { AdminService } from 'src/app/services/admin.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { forkJoin } from 'rxjs';
+import { firstValueFrom, forkJoin } from 'rxjs';
 import { throwError, catchError } from 'rxjs';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from "ngx-spinner";
+
 interface PurchaseData {
-    id: number;
-    purchase_id: string;
-    supplier_id: number;
-    issue_date: string,
-    expected_date: string;
-    product_id: number;
-    unit_price: number;
-    quantity: number;
-    sub_total: number;
-    discount_in_rs: number;
-    total: number;
-    description: string;
-    gst_calculation: number;
-    gst_in_percent: number;
-    sent_by: string | null;
-    received_quantity: number;
-    purpose: string;
-    expected_user: string;
-    currency: string;
-    serial:number;
+  id: number;
+  purchase_id: any;
+  supplier_id: number | null;
+  issue_date: string,
+  expected_date: string;
+  product_id: number | null;
+  unit_price: number;
+  quantity: number;
+  sub_total: number;
+  discount_in_rs: number;
+  total: number;
+  description: string;
+  gst_calculation: number;
+  gst_in_percent: number;
+  sent_by: string | null;
+  received_quantity: number;
+  purpose: string;
+  expected_user: string;
+  currency: string;
+  serial: number;
+  // discount_mode: 'before' | 'after';
 }
 
 @Component({
@@ -46,13 +48,13 @@ export class MakePurchaseOrderComponent {
   new_prchase_id: any;
   previousUrl: any;
 
-  purchaseData:PurchaseData = {
+  purchaseData: PurchaseData = {
     id: 0,
-    purchase_id: '',
-    supplier_id: 0,
+    purchase_id: null,
+    supplier_id: null,
     issue_date: '',
     expected_date: '',
-    product_id: 0,
+    product_id: null,
     unit_price: 1,
     quantity: 1,
     sub_total: 0,
@@ -66,7 +68,8 @@ export class MakePurchaseOrderComponent {
     purpose: '',
     expected_user: '',
     currency: '₹',
-    serial:0
+    serial: 0,
+    // discount_mode: 'before',
   }
 
   supplierName = {
@@ -112,7 +115,22 @@ export class MakePurchaseOrderComponent {
 
   getAllcurrency: any[] = [];
   flattenedCurrencies: { code: string; symbol: string }[] = [];
-  constructor(public adminService: AdminService, private sharedService: SharedService, private router: Router, private location: Location, private spinner: NgxSpinnerService) {
+
+  poLevelDiscount = {
+    type: 'rs',         // rs | percent
+    value: 0,           // discount in rs (MAIN VALUE SAVED)
+    percent: 0,         // helper only for UI
+    calculatedRs: 0
+  };
+
+  finalPoTotal: number = 0;
+  storedPercent: number = 0;
+  storedGrandTotal: number = 0;
+  private isReapplying = false;
+  isPODiscountChanged = false;
+
+  constructor(public adminService: AdminService, private sharedService: SharedService,
+    private router: Router, private location: Location, private spinner: NgxSpinnerService) {
 
     // const currentDate = new Date();
     // const expectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate()+1);
@@ -378,9 +396,19 @@ export class MakePurchaseOrderComponent {
 
   selectPurchaseid(data: any) {
     this.poadddata.length = 0;
+    // 🔥 1️⃣ Recalculate Grand Total
+
+    if (this.selectedPurchaseId !== data) {
+      this.poLevelDiscount = {
+        type: 'rs',
+        value: 0,
+        percent: 0,
+        calculatedRs: 0
+      };
+    }
 
     if (this.displayexistingPurchaseId == true && this.displaynewPurchaseId == false) {
-      this.purchaseData.product_id = 0;
+      this.purchaseData.product_id = null;
       this.purchaseData.unit_price = 1;
       this.purchaseData.quantity = 1;
       this.purchaseData.sub_total = 0;
@@ -424,19 +452,271 @@ export class MakePurchaseOrderComponent {
   }
 
 
+  // async getpurchaseitemdatafrompid(purchase_id: string) {
+  //   const Pid = {
+  //     purchase_id: purchase_id
+  //   }
+  //   this.getpurchaseitemdata = await this.sharedService.getPurchaseJoinDatabyPid(Pid).toPromise();
+  //   console.log(this.getpurchaseitemdata, "this.getpurchaseitemdata");
+
+  //   this.grandtotalofpodata = 0;
+  //   // 🔹 Store old total before recalculating
+  //   const oldTotal = this.previousGrandTotal || 0;
+
+  //   // this.getpurchaseitemdata = await this.getpurchaseitemdata.map((item: any) => {
+  //   //   this.grandtotalofpodata = Math.round(+this.grandtotalofpodata + item.total);
+  //   //   item.editMode = false;
+  //   //   return item;
+  //   // });
+
+  //   this.getpurchaseitemdata.forEach((item: any) => {
+  //     this.grandtotalofpodata += Number(item.total || 0);
+  //     item.editMode = false;
+  //   });
+
+  //   // round once at end
+  //   this.grandtotalofpodata = this.round2(this.grandtotalofpodata);
+
+  //   const newTotal = this.grandtotalofpodata;
+
+  //   // 🔥 Restore PO discount HERE (after total is ready)
+
+  //   const firstRow = this.getpurchaseitemdata[0];
+
+  //   if (firstRow?.po_discount && Number(firstRow.po_discount) > 0) {
+
+  //     const savedRs = Number(firstRow.po_discount);
+  //     const baseTotal = this.grandtotalofpodata;
+
+  //     this.poLevelDiscount.type = firstRow.discount_type || 'rs';
+
+  //     // Always restore rupee value
+  //     this.poLevelDiscount.value = savedRs;
+
+  //     // 🔥 If type is percent → calculate percent manually
+  //     if (this.poLevelDiscount.type === 'percent' && baseTotal > 0) {
+
+  //       this.poLevelDiscount.percent = this.round2((savedRs / baseTotal) * 100);
+  //       // const newDiscount = (this.grandtotalofpodata * this.poLevelDiscount.percent) / 100;
+  //       // this.poLevelDiscount.percent = (this.poLevelDiscount.value / this.grandtotalofpodata) * 100;
+  //       // this.confirmRecalculateDiscount();
+
+
+  //       // this.poLevelDiscount.value = this.round2(newDiscount);
+  //     }
+
+  //   } else {
+
+  //     this.poLevelDiscount.type = 'rs';
+  //     this.poLevelDiscount.value = 0;
+  //     this.poLevelDiscount.percent = 0;
+  //   }
+
+  //   // Save current total as baseline
+  //   this.previousGrandTotal = this.grandtotalofpodata;
+
+  //   // ✅ IMPORTANT
+  //   this.calculateFinalTotal();
+
+  //     // 🔥 Detect total change ONLY after first load
+  // const totalChanged = oldTotal > 0 && oldTotal !== newTotal && this.poLevelDiscount.type === 'percent';
+
+  // // 🔹 Update baseline
+  // this.previousGrandTotal = newTotal;
+
+  // // 🔥 Show popup only if total actually changed
+  // if (totalChanged) {
+  //   this.confirmRecalculateDiscount();
+  // }
+
+  // }
+
   async getpurchaseitemdatafrompid(purchase_id: string) {
-    const Pid = {
-      purchase_id: purchase_id
-    }
-    this.getpurchaseitemdata = await this.sharedService.getPurchaseJoinDatabyPid(Pid).toPromise();
+
+    const Pid = { purchase_id };
+
+    this.getpurchaseitemdata =
+      await this.sharedService.getPurchaseJoinDatabyPid(Pid).toPromise();
+
+    // 🔥 1️⃣ Recalculate Grand Total
     this.grandtotalofpodata = 0;
 
-    this.getpurchaseitemdata = await this.getpurchaseitemdata.map((item: any) => {
-      this.grandtotalofpodata = Math.round(+this.grandtotalofpodata + item.total);
+    this.getpurchaseitemdata.forEach((item: any) => {
+      this.grandtotalofpodata += Number(item.total || 0);
       item.editMode = false;
-      return item;
-    })
+    });
+
+    this.grandtotalofpodata = this.round2(this.grandtotalofpodata);
+
+    const firstRow = this.getpurchaseitemdata?.[0];
+
+    // 🔥 2️⃣ Restore Discount
+    if (firstRow?.po_discount && Number(firstRow.po_discount) > 0) {
+
+      const savedRs = Number(firstRow.po_discount);
+      const discountType = firstRow.discount_type || 'rs';
+
+      this.poLevelDiscount.type = discountType;
+      this.poLevelDiscount.value = savedRs;
+
+      if (discountType === 'percent') {
+
+        const calculatedPercent =
+          this.grandtotalofpodata > 0
+            ? this.round2((savedRs / this.grandtotalofpodata) * 100)
+            : 0;
+
+        this.poLevelDiscount.percent = calculatedPercent;
+
+        // 🔥 First time baseline store
+        if (!this.storedGrandTotal) {
+          this.storedPercent = calculatedPercent;
+          this.storedGrandTotal = this.grandtotalofpodata;
+        }
+      }
+    }
+
+    // =====================================================
+    // 🔥 3️⃣ CHANGE DETECTION (SAFE VERSION)
+    // =====================================================
+
+    if (
+      !this.isReapplying &&   // 🚀 important fix
+      this.poLevelDiscount.type === 'percent' &&
+      this.storedPercent > 0 &&
+      this.storedGrandTotal > 0 &&
+      this.grandtotalofpodata !== this.storedGrandTotal
+    ) {
+
+      const newPercent =
+        this.round2(
+          (this.poLevelDiscount.value / this.grandtotalofpodata) * 100
+        );
+
+      if (newPercent !== this.storedPercent) {
+        this.confirmRecalculateDiscount();
+      }
+    }
+
+    // =====================================================
+
+    this.calculateFinalTotal();
   }
+
+  isPoLevelDiscountApplied(): boolean {
+    return Number(this.poLevelDiscount?.value || 0) > 0;
+  }
+
+
+  confirmRecalculateDiscount() {
+
+    Swal.fire({
+      title: 'Recalculate Discount?',
+      text: `Reapply ${this.storedPercent}% discount?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.isReapplying = true;   // 🚀 prevent detection loop
+
+        // 🔥 Show timer loading popup
+        Swal.fire({
+          title: 'Reapplying Discount...',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        // ✅ Reapply original percent
+        this.poLevelDiscount.percent = this.storedPercent;
+
+        const newDiscount =
+          (this.grandtotalofpodata * this.storedPercent) / 100;
+
+        this.poLevelDiscount.value = this.round2(newDiscount);
+
+        this.calculateFinalTotal();
+
+        // 🔥 Save in DB
+        this.adminService.applyFinalDiscount({
+          purchase_id: this.purchaseData.purchase_id,
+          po_discount: this.poLevelDiscount.value,
+          discount_type: 'percent'
+        }).subscribe(() => {
+
+          // update baseline
+          this.storedGrandTotal = this.grandtotalofpodata;
+
+          this.isReapplying = false;
+
+          // refresh safely
+          this.getpurchaseitemdatafrompid(this.purchaseData.purchase_id);
+        });
+
+      } else {
+
+        // ❌ User chose NO
+        // Keep new calculated percent (like 9.8%)
+
+        this.poLevelDiscount.percent =
+          this.round2(
+            (this.poLevelDiscount.value / this.grandtotalofpodata) * 100
+          );
+
+        this.calculateFinalTotal();
+
+        // update baseline so popup does not repeat
+        this.storedGrandTotal = this.grandtotalofpodata;
+      }
+
+    });
+  }
+
+
+
+
+  recalculateAndApplyDiscount() {
+
+    const baseTotal = this.num(this.grandtotalofpodata);
+
+    const newDiscount =
+      (baseTotal * this.poLevelDiscount.percent) / 100;
+
+    this.poLevelDiscount.value = this.round2(newDiscount);
+
+    this.calculateFinalTotal();
+
+    // 🔥 Timer Swal only (no success popup)
+    Swal.fire({
+      title: 'Recalculating & Applying Discount...',
+      timer: 1200,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    // Call API silently
+    this.adminService.applyFinalDiscount({
+      purchase_id: this.purchaseData.purchase_id,
+      po_discount: this.poLevelDiscount.value,
+      discount_type: this.poLevelDiscount.type
+    }).subscribe({
+      next: () => { },
+      error: () => { }
+    });
+  }
+
 
   showData2() {
     this.showingPurchaseIdList = true;
@@ -464,32 +744,108 @@ export class MakePurchaseOrderComponent {
   // }
 
   // helpers
-private num(v: any): number { return Number.isFinite(+v) ? +v : 0; }
-private round2(n: number): number { return Math.round((n + Number.EPSILON) * 100) / 100; }
+  private num(v: any): number { return Number.isFinite(+v) ? +v : 0; }
+  // private round2(n: number): number { return Math.round((n + Number.EPSILON) * 100) / 100; }
+  private round2(n: number): number {
+    const val = Math.round((n + Number.EPSILON) * 100) / 100;
+    return val === 0 ? 0 : val;
+  }
 
-recalcTotals() {
-  const unit = this.num(this.purchaseData.unit_price);
-  const qty = this.num(this.purchaseData.quantity);
-  const maxDiscount = unit * qty;
-  let discount = this.num(this.purchaseData.discount_in_rs);
-  if (discount > maxDiscount) discount = maxDiscount;
-  if (discount < 0) discount = 0;
+  // recalcTotals() {
+  //   const unit = this.num(this.purchaseData.unit_price);
+  //   const qty = this.num(this.purchaseData.quantity);
+  //   const maxDiscount = unit * qty;
+  //   let discount = this.num(this.purchaseData.discount_in_rs);
+  //   if (discount > maxDiscount) discount = maxDiscount;
+  //   if (discount < 0) discount = 0;
 
-  const sub = unit * qty - discount;
-  const rate = this.num(this.purchaseData.gst_in_percent); // expect 0.05, 0.12, etc.
-  const gst = sub * rate;
-  const total = sub + gst;
+  //   const sub = unit * qty - discount;
+  //   const rate = this.num(this.purchaseData.gst_in_percent); // expect 0.05, 0.12, etc.
+  //   const gst = sub * rate;
+  //   const total = sub + gst;
 
-  // keep data as NUMBERS (round, but don't turn into strings)
-  this.purchaseData.sub_total = this.round2(sub);
-  this.purchaseData.gst_calculation = this.round2(gst);
-  this.purchaseData.total = this.round2(total);
-}
+  //   // keep data as NUMBERS (round, but don't turn into strings)
+  //   this.purchaseData.sub_total = this.round2(sub);
+  //   this.purchaseData.gst_calculation = this.round2(gst);
+  //   this.purchaseData.total = this.round2(total);
+  // }
 
-// keep these for compatibility, call the single source of truth:
-calculatesubtotal(){ this.recalcTotals(); }
-calculateGST(){ this.recalcTotals(); }
-calculateTotal(){ this.recalcTotals(); }
+  //   recalcTotals() {
+  //     const unit = this.num(this.purchaseData.unit_price);
+  //     const qty = this.num(this.purchaseData.quantity);
+  //     // let discount = this.num(this.purchaseData.discount_in_rs);
+  //     let discount = this.num(this.purchaseForm.get('discount_in_rs')?.value);
+  //     const rate = this.num(this.purchaseData.gst_in_percent);
+
+  //     const baseAmount = unit * qty;
+
+  //     // prevent excess discount
+  //  if (discount > baseAmount) {
+  //    this.discountExceedsTotalError = true;
+  //    discount = baseAmount; // only for calculation, DO NOT write back to form
+  // } else {
+  //    this.discountExceedsTotalError = false;
+  // }
+  //     if (discount < 0) discount = 0;
+
+  //     const mode = this.purchaseForm.get('discount_mode')?.value;
+  //     const isPostDiscount = (mode === 'after');
+
+
+  //     let subTotal = 0;
+  //     let gst = 0;
+  //     let total = 0;
+
+  //     if (!isPostDiscount) {
+  //       // ✅ CURRENT behavior → Discount before GST
+  //       subTotal = baseAmount - discount;
+  //       gst = subTotal * rate;
+  //       total = subTotal + gst;
+  //     }
+  //     else {
+  //       // ✅ NEW behavior → GST first, Discount last
+  //       subTotal = baseAmount;
+  //       gst = subTotal * rate;
+  //       total = subTotal + gst - discount;
+  //     }
+
+  //     // final safety
+  //     if (total < 0) total = 0;
+
+  //     this.purchaseData.sub_total = this.round2(subTotal);
+  //     this.purchaseData.gst_calculation = this.round2(gst);
+  //     this.purchaseData.total = this.round2(total);
+  //     this.purchaseData.discount_mode = this.purchaseForm.get('discount_mode')?.value;
+  //   }
+
+
+
+  recalcTotals() {
+    const unit = this.num(this.purchaseData.unit_price);
+    const qty = this.num(this.purchaseData.quantity);
+    let discount = this.num(this.purchaseData.discount_in_rs);
+    const rate = this.num(this.purchaseData.gst_in_percent);
+
+    const baseAmount = unit * qty;
+
+    // prevent invalid discount
+    if (discount > baseAmount) discount = baseAmount;
+    if (discount < 0) discount = 0;
+
+    const subTotal = baseAmount - discount;
+    const gst = subTotal * rate;
+    const total = subTotal + gst;
+
+    this.purchaseData.sub_total = this.round2(subTotal);
+    this.purchaseData.gst_calculation = this.round2(gst);
+    this.purchaseData.total = this.round2(total);
+  }
+
+
+  // keep these for compatibility, call the single source of truth:
+  calculatesubtotal() { this.recalcTotals(); }
+  calculateGST() { this.recalcTotals(); }
+  calculateTotal() { this.recalcTotals(); }
 
 
 
@@ -535,7 +891,7 @@ calculateTotal(){ this.recalcTotals(); }
   }
 
   perchaseOrdergenerate(data: any) {
-      this.purchaseData.discount_in_rs ||= 0; // Default to 0 if undefined or null
+    this.purchaseData.discount_in_rs ||= 0; // Default to 0 if undefined or null
 
     if (this.purchaseForm.invalid) {
       this.purchaseForm.controls['supplier_id'].markAsTouched();
@@ -547,6 +903,7 @@ calculateTotal(){ this.recalcTotals(); }
       this.purchaseForm.controls['purpose'].markAsTouched();
       this.purchaseForm.controls['expected_user'].markAsTouched();
       this.purchaseForm.controls['description'].markAsTouched();
+      return;
     }
 
 
@@ -568,15 +925,13 @@ calculateTotal(){ this.recalcTotals(); }
       this.showVendorName = false;
       if (this.displaynewPurchaseId == true && this.displayexistingPurchaseId == false) {
         console.log(data, "data");
-      //   not showing items from supplier table
+        //   not showing items from supplier table
         this.purchaseData.purchase_id = data.purchase_id;
         this.purchaseData.received_quantity = this.purchaseData.quantity;
         this.purchaseData.serial = this.purchaseData.serial + 1;
-
+        // this.purchaseData.discount_mode = this.purchaseForm.get('discount_mode')?.value;
         this.poadddata.push(this.purchaseData);
-
-
-      console.log(this.poadddata, "poadddata before inserting po");
+        console.log(this.poadddata, "poadddata before inserting po");
 
 
         this.adminService.makenewPurchaseOrder(this.poadddata).subscribe(
@@ -588,8 +943,9 @@ calculateTotal(){ this.recalcTotals(); }
                 text: 'PO generated Successfully...',
                 icon: 'success',
               }).then(() => {
+                this.selectedPurchaseId = this.purchaseData.purchase_id;
                 this.getpurchaseitemdatafrompid(this.purchaseData.purchase_id);
-                this.purchaseData.product_id = 0;
+                this.purchaseData.product_id = null;
                 this.purchaseData.unit_price = 1;
                 this.purchaseData.quantity = 1;
                 this.purchaseData.sub_total = 0;
@@ -640,9 +996,10 @@ calculateTotal(){ this.recalcTotals(); }
         this.purchaseData.received_quantity = this.purchaseData.quantity;
         this.purchaseData.discount_in_rs ||= 0; // Default to 0 if undefined or null
         this.purchaseData.serial = this.purchaseData.serial + 1;
+        // this.purchaseData.discount_mode = this.purchaseForm.get('discount_mode')?.value;
 
         console.log(this.poadddata, "poadddata before inserting po");
-        
+
         this.adminService.makenewPurchaseOrder(this.poadddata).subscribe(
           {
             next: (results: any) => {
@@ -652,7 +1009,7 @@ calculateTotal(){ this.recalcTotals(); }
                 icon: 'success',
               }).then(() => {
                 this.getpurchaseitemdatafrompid(this.purchaseData.purchase_id);
-                this.purchaseData.product_id = 0;
+                this.purchaseData.product_id = null;
                 this.purchaseData.unit_price = 1;
                 this.purchaseData.quantity = 1;
                 this.purchaseData.sub_total = 0;
@@ -726,7 +1083,7 @@ calculateTotal(){ this.recalcTotals(); }
         this.showingPurchaseIdList = false;
         // if(this.purchaseData.supplier_id==0){
         this.purchaseData.supplier_id = + result[0].supplier_id;
-        console.log(this.purchaseData, "this.purchaseData")
+
         // }
       })
     }
@@ -781,7 +1138,7 @@ calculateTotal(){ this.recalcTotals(); }
       this.getpurchaseitemdata.length = 0
     }
 
-    this.purchaseForm.supplier_id = 0;
+    this.purchaseForm.supplier_id = null;
     this.displaynewPurchaseId = false;
 
     this.displayexistingPurchaseId = true;
@@ -896,42 +1253,66 @@ calculateTotal(){ this.recalcTotals(); }
     this.poadddata.length = 0;
     this.displayaupdatebtn = true;
 
-    this.getpurchaseitemdata = await this.sharedService.getPurchaseJoinDatabyPid(Pid).toPromise();
-
-    console.log(this.getpurchaseitemdata, "this.getpurchaseitemdata");
-
-    this.purchaseForm.patchValue(
-      {
-        purchase_id: data?.purchase_id,
-        issue_date: moment(this.getpurchaseitemdata?.issue_date).format('YYYY-MM-DD'),
-        expected_date: moment(this.getpurchaseitemdata?.expected_date).format('YYYY-MM-DD'),
-        product_id: data?.product_id,
-        supplier_id: data?.supplier_id,
-        unit_price: data?.unit_price,
-        quantity: data?.quantity,
-        sub_total: data?.sub_total,
-        discount_in_rs: data?.discount_in_rs,
-        total: data?.total,
-        description: data?.description,
-        gst_calculation: + data?.gst_calculation,
-        gst_in_percent: data?.gst_in_percent,
-        purpose: data?.purpose,
-        expected_user: data?.expected_user,
-        currency: data?.currency
+    await Swal.fire({
+      title: 'Loading...',
+      didOpen: () => {
+        Swal.showLoading();
+        setTimeout(() => {
+          Swal.close()
+        }, 500);
       }
-    )
+    });
 
-    console.log(data?.gst_in_percent, "data?.gst_in_percent");
-    this.purchaseData.purchase_id = data?.purchase_id;
-    this.purchaseData.serial = data?.serial;
-    this.purchaseData.sent_by = localStorage.getItem('login_id');
-    this.purchaseData.id = data?.id;
+    try {
+      this.getpurchaseitemdata = await this.sharedService.getPurchaseJoinDatabyPid(Pid).toPromise();
+
+      console.log(this.getpurchaseitemdata, "this.getpurchaseitemdata");
+
+
+      this.purchaseForm.patchValue(
+        {
+          purchase_id: data?.purchase_id,
+          issue_date: moment(this.getpurchaseitemdata?.issue_date).format('YYYY-MM-DD'),
+          expected_date: moment(this.getpurchaseitemdata?.expected_date).format('YYYY-MM-DD'),
+          product_id: data?.product_id,
+          supplier_id: data?.supplier_id,
+          unit_price: data?.unit_price,
+          quantity: data?.quantity,
+          sub_total: data?.sub_total,
+          discount_in_rs: data?.discount_in_rs,
+          total: data?.total,
+          description: data?.description,
+          gst_calculation: + data?.gst_calculation,
+          gst_in_percent: data?.gst_in_percent,
+          purpose: data?.purpose,
+          expected_user: data?.expected_user,
+          currency: data?.currency,
+          // discount_mode: data?.discount_mode
+        }
+      )
+
+      console.log(data?.gst_in_percent, "data?.gst_in_percent");
+      this.purchaseData.purchase_id = data?.purchase_id;
+      this.purchaseData.serial = data?.serial;
+      this.purchaseData.sent_by = localStorage.getItem('login_id');
+      this.purchaseData.id = data?.id;
+      // this.purchaseData.discount_mode = this.purchaseForm.get('discount_mode')?.value;
+    } catch (error) {
+      Swal.close();
+      Swal.fire('Error', 'Failed to load Purchase Order', 'error');
+    } finally {
+      // 🔥 Close loader
+      Swal.close();
+    }
+
+
   }
 
   async updatepo() {
     console.log(this.purchaseData, "purchaseData before update po");
+    console.log(this.purchaseData, "purchase data");
 
-      this.purchaseData.discount_in_rs ||= 0; // Default to 0 if undefined or null
+    this.purchaseData.discount_in_rs ||= 0; // Default to 0 if undefined or null
 
     // delete this.purchaseData.id;
     await this.adminService.updatePO(this.purchaseData).toPromise()
@@ -940,9 +1321,20 @@ calculateTotal(){ this.recalcTotals(); }
 
         this.getpurchaseitemdatafrompid(this.purchaseData.purchase_id);
 
+        Swal.fire({
+          toast: true,
+          position: 'center',
+          icon: 'success',
+          title: 'PO updated successfully',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true
+        });
+
         console.log(results, "updatepo");
+        this.selectedPurchaseId = this.purchaseData.purchase_id;
         this.poadddata.length = 0;
-        this.purchaseData.product_id = 0;
+        this.purchaseData.product_id = null;
         this.purchaseData.unit_price = 1;
         this.purchaseData.quantity = 1;
         this.purchaseData.sub_total = 0;
@@ -958,7 +1350,7 @@ calculateTotal(){ this.recalcTotals(); }
         this.purchaseData.expected_user = '';
         this.displayaupdatebtn = false;
         this.purchaseForm.markAsUntouched();
-      })
+      });
 
 
   }
@@ -1010,7 +1402,7 @@ calculateTotal(){ this.recalcTotals(); }
           // });
 
           this.poadddata.length = 0;
-          this.purchaseData.product_id = 0;
+          this.purchaseData.product_id = null;
           this.purchaseData.unit_price = 1;
           this.purchaseData.quantity = 1;
           this.purchaseData.sub_total = 0;
@@ -1035,19 +1427,224 @@ calculateTotal(){ this.recalcTotals(); }
     })
   }
 
+  // onDiscountRsInput() {
+  //   let rs = Number(this.purchaseForm.get('discount_in_rs')?.value) || 0;
+
+  //   if (rs < 0) rs = 0;
+
+  //   // 🔁 First recalc totals so grand total is correct
+  //   this.recalcTotals();
+
+  //   const grandTotal = this.num(this.purchaseData.total);
+
+  //   const percent = grandTotal > 0 ? (rs / grandTotal) * 100 : 0;
+
+  //   this.purchaseForm.patchValue(
+  //     { discount_in_percent: this.round2(percent) },
+  //     { emitEvent: false }
+  //   );
+  // }
+
+
+
+  // onDiscountPercentInput() {
+  //   let percent = Number(this.purchaseForm.get('discount_in_percent')?.value) || 0;
+
+  //   // prevent negative
+  //   if (percent < 0) percent = 0;
+
+  //   // prevent >100%
+  //   if (percent > 100) percent = 100;
+
+  //   // 🔁 Recalculate totals first to get correct grand total
+  //   this.recalcTotals();
+
+  //   const grandTotal = this.num(this.purchaseData.total);
+
+  //   // calculate Rs from GRAND TOTAL
+  //   const rs = grandTotal > 0 ? (grandTotal * percent) / 100 : 0;
+
+  //   // update only Rs (percent already typed by user)
+  //   this.purchaseForm.patchValue(
+  //     {
+  //       discount_in_rs: this.round2(rs),
+  //       discount_in_percent: this.round2(percent)
+  //     },
+  //     { emitEvent: false }
+  //   );
+  // }
+
+  // syncDiscountOnBaseChange() {
+  //   // Recalculate totals first
+  //   this.recalcTotals();
+
+  //   const rs = Number(this.purchaseForm.get('discount_in_rs')?.value) || 0;
+  //   const grandTotal = this.num(this.purchaseData.total);
+
+  //   const percent = grandTotal > 0 ? (rs / grandTotal) * 100 : 0;
+
+  //   this.purchaseForm.patchValue(
+  //     { discount_in_percent: this.round2(percent) },
+  //     { emitEvent: false }
+  //   );
+  // }
+
+
+  hasItemLevelDiscount(): boolean {
+    if (!this.getpurchaseitemdata || !this.getpurchaseitemdata.length) {
+      return false;
+    }
+
+    return this.getpurchaseitemdata.some(
+      (item: any) => Number(item.discount_in_rs) > 0
+    );
+  }
+
+  calculateFinalTotal() {
+
+    console.log("Grand Total:", this.grandtotalofpodata);
+    console.log("Type:", this.poLevelDiscount.type);
+    console.log("Value:", this.poLevelDiscount.value);
+
+    const baseTotal = this.num(this.grandtotalofpodata);
+
+    console.log("BaseTotal Used:", baseTotal);
+
+    if (!baseTotal) {
+      this.poLevelDiscount.calculatedRs = 0;
+      this.finalPoTotal = 0;
+      return;
+    }
+
+
+    let discountRs = 0;
+
+    if (this.poLevelDiscount.type === 'percent') {
+
+      // ✅ Read from percent input
+      const percent = this.num(this.poLevelDiscount.percent);
+
+      discountRs = (baseTotal * percent) / 100;
+
+      // keep percent synced
+      this.poLevelDiscount.percent = percent;
+
+    } else {
+
+      // ✅ Read from rupees input
+      discountRs = this.num(this.poLevelDiscount.value);
+
+      // auto-calc percent for display
+      this.poLevelDiscount.percent =
+        baseTotal > 0 ? (discountRs / baseTotal) * 100 : 0;
+    }
+
+    // safety
+    if (discountRs > baseTotal) {
+      discountRs = baseTotal;
+    }
+
+    discountRs = this.round2(discountRs);
+
+    // 🔥 ALWAYS STORE RUPEES
+    this.poLevelDiscount.value = discountRs;
+    this.poLevelDiscount.calculatedRs = discountRs;
+
+    this.finalPoTotal = this.round2(baseTotal - discountRs);
+  }
+
+  async applyPoDiscount() {
+    if (!this.selectedPurchaseId) {
+      Swal.fire('Error', 'No Purchase ID selected', 'error');
+      return;
+    }
+    console.log(this.selectedPurchaseId, "purchaseId");
+
+    const payload = {
+      purchase_id: this.selectedPurchaseId,
+      po_discount: this.poLevelDiscount.value,
+      final_total: this.finalPoTotal,
+      discount_type: this.poLevelDiscount.type
+    };
+
+    console.log(payload, "payload");
+
+    try {
+      const result: any = await firstValueFrom(this.adminService.applyFinalDiscount(payload));
+      console.log(result);
+      if (!result || !result.success) {
+        Swal.fire('Error', 'Failed to apply discount', 'error');
+        return;
+      }
+
+      Swal.fire({
+        toast: true,
+        position: 'center',
+        icon: 'success',
+        title: 'Discount Applied Successfully!',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+      });
+
+      // 🔥 initialize baseline for reapply logic
+      if (this.poLevelDiscount.type === 'percent') {
+        this.storedPercent = this.poLevelDiscount.percent;
+        this.storedGrandTotal = this.grandtotalofpodata;
+      }
+
+      // Swal.fire('Success', 'Discount Applied Successfully', 'success');
+      this.isPODiscountChanged = false;
+
+      await this.getAlldataatonce();
+
+      this.purchaseData.purchase_id = this.selectedPurchaseId;
+
+      this.selectPurchaseid(this.selectedPurchaseId);
+      this.calculateFinalTotal();
+
+    } catch (error) {
+      Swal.fire('Error', 'Failed to apply discount', 'error');
+    }
+
+
+
+    // this.adminService.updatePoLevelDiscount(payload).subscribe({
+    //   next: () => {
+    //     Swal.fire('Success', 'PO Discount Applied Successfully', 'success');
+    //   },
+    //   error: () => {
+    //     Swal.fire('Error', 'Failed to apply discount', 'error');
+    //   }
+    // });
+  }
+
+
+  onDiscountChange() {
+
+    this.calculateFinalTotal();
+
+    const discountValue =
+      this.poLevelDiscount.type === 'percent'
+        ? this.poLevelDiscount.percent
+        : this.poLevelDiscount.value;
+
+    this.isPODiscountChanged = discountValue > 0;
+  }
+
 
   validation() {
-
     this.purchaseForm = new FormGroup({
-      purchase_id: new FormControl('', [Validators.required]),
+      purchase_id: new FormControl(null, [Validators.required]),
       issue_date: new FormControl(moment().format('YYYY-MM-DD'), [Validators.required]),
       expected_date: new FormControl('', [Validators.required]),
-      product_id: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-      supplier_id: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      product_id: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      supplier_id: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
       unit_price: new FormControl(1, [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
       sub_total: new FormControl(0),
       discount_in_rs: new FormControl(0),
+      discount_in_percent: new FormControl(null),
       total: new FormControl(0),
       description: new FormControl('', [Validators.required]),
       gst_calculation: new FormControl(0),
@@ -1055,6 +1652,7 @@ calculateTotal(){ this.recalcTotals(); }
       purpose: new FormControl('', [Validators.required]),
       expected_user: new FormControl('', [Validators.required]),
       currency: new FormControl('₹', [Validators.required]),
+      // discount_mode: new FormControl('before'),
     });
 
     this.calculatesubtotal();

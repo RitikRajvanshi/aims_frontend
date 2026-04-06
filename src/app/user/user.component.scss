@@ -14,56 +14,6 @@
   }
 
   
-
-
-  /* Default treeview styles */
-// .treeview {
-//     position: relative;
-// }
-
-// .treeview-link {
-//     display: block;
-//     padding: 10px;
-//     background-color: #ccc;
-// }
-
-// .treeview-menu {
-//     display: none; /* Hide the menu by default */
-//     position: absolute;
-//     top: calc(20%); /* Slightly below the parent element */
-//     left: calc(90%); /* Align it with the left edge of the parent */
-//     background-color: #f9f9f9;
-//     border: 1px solid #ccc;
-//     padding: 10px;
-//     z-index: 9999 !important;
-// }
-
-// /* Apply styles only when sidebar is collapsed */
-// .sidebar-collapse .treeview-menu {
-//     display: block; /* Show the menu when the sidebar is collapsed */
-// }
-
-// /* Apply hover effect only when sidebar is collapsed */
-// .sidebar-collapse .treeview:hover .treeview-menu {
-//     display: block; /* Show the menu on hover when the sidebar is collapsed */
-// }
-
-// /* Hide the menu by default when sidebar is not collapsed */
-// .sidebar-collapse .treeview .treeview-menu {
-//     display: none;
-// }
-
-/* Optional: Add styles for the line before the menu */
-// .sidebar-menu .treeview-menu:before {
-//     width: 2px;
-//     bottom: 0;
-//     background: rgba(59, 70, 72, 0.5);
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     left: 10px;
-// }
-
 /* Ensure the list items have a max width and overflow hidden */
 li a.truncated-text {
   display: block;
@@ -73,108 +23,10 @@ li a.truncated-text {
 }
 
 
-
-  
-  
   .sidebar-mini.sidebar-collapse .sidebar-menu .treeview-menu {
   display: none;
   pointer-events: none; /* Prevents interaction until hovered */
 }
-
-
-// .logo-wrapper {
-//   position: relative;
-//   display: inline-block; /* keeps version tied to image */
-// }
-
-// .logo-wrapper img {
-//   display: block;
-// }
-
-// .logo-version {
-//   position: absolute;
-//   top: 60px;       /* adjust vertical placement */
-//   right: 10px;    /* adjust horizontal placement */
-//   font-size: 14px;
-//   font-weight: 600;
-//   color: #fff;    /* white text for visibility */
-//   background: rgba(0, 0, 0, 0.6); /* optional contrast background */
-//   padding: 2px 6px;
-//   border-radius: 4px;
-// }
-
-/* Footer sits below content */
-/* Ensure the full page uses flex layout */
-
-
-/* Main layout wrapper */
-// .content-wrapper {
-//   flex: 1; /* take all available vertical space */
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100vh; /* ensures footer is at the bottom */
-// }
-
-/* Router outlet grows to push footer down if content is short */
-// router-outlet {
-//   flex: 1;
-//   display: block;
-//   min-height: 90vh; /* adjust if you want more spacing */
-// }
-
-// /* Footer styling */
-// html, body {
-//   height: 100%;
-//   margin: 0;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .wrapper {
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100vh;
-// }
-
-// /* Main content expands to push footer down */
-// .content-wrapper {
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// /* Ensure router-outlet content always takes available height */
-// router-outlet {
-//   flex: 1;
-//   display: block;
-//   min-height: 100%;
-// }
-
-// /* Footer fixed appearance */
-// .main-footer {
-//   background: #fff;
-//   color: #00235E;
-//   text-align: center;
-//   padding: 10px 0;
-//   font-size: 14px;
-//   font-weight: 500;
-//   border-top: 1px solid #ccc;
-//   width: 100%;
-// }
-
-// .footer-center {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-// }
-
-// .footer-version {
-//   font-size: 13px;
-//   opacity: 0.85;
-//   margin-top: 3px;
-// }
 
 
 .main-section{

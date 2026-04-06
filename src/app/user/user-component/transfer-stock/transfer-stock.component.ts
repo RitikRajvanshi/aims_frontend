@@ -45,41 +45,41 @@ export class TransferStockComponent {
   arrayofassigneditemsinsysinfo: any = [];
 
   // transferStockData is for assign system to user form
-  transferStockData = {
-    item_id: 0,
-    transfer_to_user: 0,
-    location_id: 0,
+  transferStockData:any = {
+    item_id: null,
+    transfer_to_user: null,
+    location_id: null,
     transfer_by: localStorage.getItem('login_id'),
     transfer_category: 0,
     transfer_to_system: null
   };
 
   // transferStockData is for assign item to system form
-  transferStockData2 = {
-    item_id: 0,
-    transfer_to_user: 0,
-    location_id: 0,
+  transferStockData2:any = {
+    item_id: null,
+    transfer_to_user: null,
+    location_id: null,
     transfer_by: localStorage.getItem('login_id'),
     transfer_category: 0,
     transfer_to_system: null,
   };
 
   // transferStockData is for assign items to location form
-  transferStockData3 = {
-    item_id: 0,
-    transfer_to_user: 0,
-    location_id: 0,
+  transferStockData3:any = {
+    item_id: null,
+    transfer_to_user: null,
+    location_id: null,
     transfer_by: localStorage.getItem('login_id'),
     transfer_category: 0,
     transfer_to_system: 0,
   };
 
-  itemId = {
-    item_id: 0
+  itemId:any = {
+    item_id: null
   };
 
-  transferTo = {
-    transfer_to_user: 0,
+  transferTo:any = {
+    transfer_to_user: null,
     transfer_to_system: 0
   };
 
@@ -436,21 +436,21 @@ checkQueryParams() {
   //all three radio button fnc
   assignitemstosysbtn() {
     if (this.transferStockData2.location_id && this.transferStockData2.location_id != 0) {
-      this.transferStockData2.location_id = 0;
+      this.transferStockData2.location_id = null;
     }
 
     this.resetextraarrays();
 
     this.systemtouserForm.reset({
-      item_id: 0,
-      location_id: 0,
-      transfer_to_user: 0
+      item_id: null,
+      location_id: null,
+      transfer_to_user: null
     })
 
     this.systemtouserForm.controls['location_id'].enable();
     this.itemtolocationForm.reset({
-      item_id3: 0,
-      location_id3: 0
+      item_id3: null,
+      location_id3: null
     })
 
     if (this.configureitemdetails && this.configureitemdetails.length != 0) {
@@ -476,14 +476,14 @@ checkQueryParams() {
     }
 
     this.itemtosystemForm.reset({
-      item_id2: 0,
-      location_id2: 0,
-      transfer_to_user: 0
+      item_id2: null,
+      location_id2: null,
+      transfer_to_user: null
     })
 
     this.itemtolocationForm.reset({
-      item_id3: 0,
-      location_id3: 0
+      item_id3: null,
+      location_id3: null
     })
 
     this.itemtosystemForm.controls['location_id2'].enable();
@@ -497,19 +497,19 @@ checkQueryParams() {
     }
 
     if (this.transferStockData2.location_id && this.transferStockData2.location_id != 0) {
-      this.transferStockData2.location_id = 0;
+      this.transferStockData2.location_id = null;
     }
 
     this.systemtouserForm.reset({
-      item_id: 0,
-      location_id: 0,
-      transfer_to_user: 0,
+      item_id: null,
+      location_id: null,
+      transfer_to_user: null,
     });
 
     this.itemtosystemForm.reset({
-      item_id2: 0,
-      location_id2: 0,
-      transfer_to_user: 0,
+      item_id2: null,
+      location_id2: null,
+      transfer_to_user: null,
     })
 
     this.itemtosystemForm.controls['location_id2'].enable();
@@ -628,8 +628,8 @@ checkQueryParams() {
 
     if (itemid?.item_id) {
 
-      this.transferStockData2.item_id = itemid.item_id;
-      this.itemId.item_id = itemid.item_id;
+      this.transferStockData2.item_id = + itemid.item_id;
+      this.itemId.item_id = +itemid.item_id;
 
       try {
         await this.getTransferData(this.itemId);
@@ -659,7 +659,7 @@ checkQueryParams() {
       }
     }
     else {
-      this.transferStockData2.item_id = 0;
+      this.transferStockData2.item_id = null;
       // this.configureitemdetails.length = 0;
     }
   }
@@ -1091,14 +1091,14 @@ checkQueryParams() {
       this.systemtouserForm.get('location_id')?.disable();
     }
     else {
-      this.transferStockData.item_id = 0;
+      this.transferStockData.item_id = null;
     }
 
   }
 
   async selectedCPU2(data: any) {
     if (data?.item_id) {
-      this.transferStockData2.transfer_to_user = data?.user_id;
+      this.transferStockData2.transfer_to_user = +data?.user_id;
       this.systemTransferDatadistplay = true;
       this.transferTo.transfer_to_user = data?.item_id;
       await this.getSystmeDatabyItemId(data?.item_id).then(() => {
@@ -1115,9 +1115,9 @@ checkQueryParams() {
             icon: 'question',
             html: 'This system is not assigned to any user!<br>Please assigned to any user first!',
           }).then(() => {
-            this.transferStockData2.transfer_to_user = 0;
-            this.transferStockData2.location_id = 0;
-            this.transferStockData.location_id = 0;
+            this.transferStockData2.transfer_to_user = null;
+            this.transferStockData2.location_id = null;
+            this.transferStockData.location_id = null;
             this.itemtosystemForm.controls['location_id2'].enable();
           }
           )
@@ -1127,7 +1127,7 @@ checkQueryParams() {
     }
     else {
       this.itemtosystemForm.reset({
-        transfer_to_user: 0
+        transfer_to_user: null
       })
     }
   }
@@ -1208,7 +1208,7 @@ checkQueryParams() {
       this.getitemtouserdata(data?.user_id);
     }
     else {
-      this.transferStockData2.transfer_to_user = 0;
+      this.transferStockData2.transfer_to_user = null;
     }
   }
 
@@ -1221,7 +1221,7 @@ checkQueryParams() {
       this.getitemtouserdata(data?.user_id);
     }
     else {
-      this.transferStockData.transfer_to_user = 0;
+      this.transferStockData.transfer_to_user = null;
     }
   }
 
@@ -1356,9 +1356,9 @@ checkQueryParams() {
             this.updateUserinSysteminfo();
             this.systemTransferDatadistplay = !this.systemTransferDatadistplay;
             this.systemtouserForm.reset({
-              item_id: 0,
-              location_id: 0,
-              transfer_to_user: 0
+              item_id: null,
+              location_id: null,
+              transfer_to_user: null
             })
             this.resetextraarrays();
             this.systemtouserForm.controls['location_id'].enable();
@@ -1417,9 +1417,9 @@ checkQueryParams() {
         }
         this.systemTransferDatadistplay = !this.systemTransferDatadistplay;
         this.itemtosystemForm.reset({
-          item_id2: 0,
-          transfer_to_user: 0,
-          location_id2: 0
+          item_id2: null,
+          transfer_to_user: null,
+          location_id2: null
         })
         this.itemtosystemForm.controls['location_id2'].enable();
         // this.getTransferDataDetailotherthanCPU.length = 0;
@@ -1691,8 +1691,8 @@ checkQueryParams() {
             icon: 'success',
           }).then(() => {
             this.itemtolocationForm.reset({
-              item_id3: 0,
-              location_id3: 0,
+              item_id3: null,
+              location_id3: null,
             })
 
             this.systemConfigurationobj.length = 0;
@@ -1839,10 +1839,6 @@ resetItemsDataForuser(){
 }
 
 
-
-
-
-
   //three different forms for different transferring...
   validationradiobtn() {
     this.transferStockForm = new FormGroup({
@@ -1850,20 +1846,20 @@ resetItemsDataForuser(){
     })
 
     this.systemtouserForm = new FormGroup({
-      item_id: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-      transfer_to_user: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-      location_id: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      item_id: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      transfer_to_user: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      location_id: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     })
 
     this.itemtosystemForm = new FormGroup({
-      item_id2: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-      transfer_to_user: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-      location_id2: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      item_id2: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      transfer_to_user: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      location_id2: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     })
 
     this.itemtolocationForm = new FormGroup({
-      item_id3: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
-      location_id3: new FormControl(0, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      item_id3: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
+      location_id3: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9][0-9]*$/)]),
     })
   }
 

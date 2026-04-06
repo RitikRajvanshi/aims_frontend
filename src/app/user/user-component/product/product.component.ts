@@ -9,8 +9,9 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { firstValueFrom, forkJoin, map } from 'rxjs';
 import * as moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, first, retry } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-product',
@@ -32,7 +33,7 @@ export class ProductComponent {
   //for add product
 
   //for update product
-  productData2: {
+  updateProductData: {
     category_id: number,
     product_name: string,
     modified_by: string | null,
@@ -82,7 +83,7 @@ export class ProductComponent {
       life_cycle: null
     }
 
-    this.productData2 = {
+    this.updateProductData = {
       category_id: 0,
       product_name: '',
       modified_by: '' + localStorage.getItem('login_id'),
@@ -98,52 +99,100 @@ export class ProductComponent {
   }
 
   async getAlldata() {
-    try {
-      this.spinner.show();
+    // try {
+    //   this.spinner.show();
 
-      // Reusable sorting function
-      const sortByProperty = (arr: any[], propertyName: string) => {
-        return arr.sort((a, b) => {
-          const itemA = a[propertyName].toUpperCase();
-          const itemB = b[propertyName].toUpperCase();
-          return itemA.localeCompare(itemB);
-        });
-      };
-      const [categoryData, productdata]: any = await forkJoin([
-        this.sharedService.getCategorydata().pipe(
-          retry(3), // Retry the request up to 3 times
-          // catchError((error: HttpErrorResponse) => {
-          //   console.error('Error fetching accepted requests:', error);
-          //   return of([]); // Return an empty array if an error occurs
-          // })
-        ),
-        this.sharedService.getproductdatajoinbystatus().pipe(
-          retry(3), // Retry the request up to 3 times
-          // catchError((error: HttpErrorResponse) => {
-          //   console.error('Error fetching accepted requests:', error);
-          //   return of([]); // Return an empty array if an error occurs
-          // })
-        )
-      ]).toPromise();
+    //   // Reusable sorting function
+    //   const sortByProperty = (arr: any[], propertyName: string) => {
+    //     return arr.sort((a, b) => {
+    //       const itemA = a[propertyName].toUpperCase();
+    //       const itemB = b[propertyName].toUpperCase();
+    //       return itemA.localeCompare(itemB);
+    //     });
+    //   };
+    //   const [categoryData, productdata]: any = await firstValueFrom(forkJoin([
+    //     this.sharedService.getCategorydata().pipe(
+    //       retry(3), // Retry the request up to 3 times
+    //       // catchError((error: HttpErrorResponse) => {
+    //       //   console.error('Error fetching accepted requests:', error);
+    //       //   return of([]); // Return an empty array if an error occurs
+    //       // })
+    //     ),
+    //     this.sharedService.getproductdatajoinbystatus().pipe(
+    //       retry(3), // Retry the request up to 3 times
+    //       // catchError((error: HttpErrorResponse) => {
+    //       //   console.error('Error fetching accepted requests:', error);
+    //       //   return of([]); // Return an empty array if an error occurs
+    //       // })
+    //     )
+    //   ]));
 
-      this.categoryData = sortByProperty(JSON.parse(JSON.stringify(categoryData)), 'category_name');
+    //   this.categoryData = sortByProperty(JSON.parse(JSON.stringify(categoryData)), 'category_name');
 
-      if (productdata?.length == 0) {
-        this.isDataorNot = false;
-      }
-      else {
-        this.isDataorNot = true;
-        const filteredResults = productdata.map((item: any) => {
-          const splitcreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
-          return { ...item, created_date: splitcreateddate };
-        });
+    //   if (productdata?.length == 0) {
+    //     this.isDataorNot = false;
+    //     return;
+    //   }
 
-        this.filteredproductdata = filteredResults;
-        this.count = filteredResults.length;
-        this.itemData = filteredResults;
-      }
-    }
-    catch (error: unknown) {
+    //   this.isDataorNot = true;
+    //   const filteredResults = productdata.map((item: any) => {
+    //     const splitcreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
+    //     return { ...item, created_date: splitcreateddate };
+    //   });
+
+    //   this.filteredproductdata = filteredResults;
+    //   this.count = filteredResults.length;
+    //   this.itemData = filteredResults;
+
+    // }
+    // catch (error: unknown) {
+    //   this.spinner.hide();
+    //   if (error instanceof HttpErrorResponse && error.status === 403) {
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: 'Oops!',
+    //       text: 'Token expired.',
+    //       footer: '<a href="../login">Please login again!</a>'
+    //     }).then(() => {
+    //       this.router.navigate(['../login']);
+    //     });
+    //   } else {
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: 'Oops!',
+    //       text: 'Internal server error. Please try again later!',
+    //       footer: '<a href="../login">Login</a>'
+    //     }).then(() => {
+    //       location.reload();
+    //     });
+    //   }
+    // }
+    // finally {
+    //   this.spinner.hide();
+
+    // }
+
+  await this.getCategoryData();
+  await this.getProductData();
+  }
+
+  async getCategoryData(): Promise<void> {
+  try {
+    this.spinner.show();
+
+    const categoryData: any[] = await firstValueFrom(
+      this.sharedService.getCategorydata().pipe(retry(3) as any)
+    );
+
+    this.categoryData = categoryData.sort((a, b) =>
+      a.category_name.toUpperCase().localeCompare(
+        b.category_name.toUpperCase()
+      )
+    );
+  }
+
+  catch (error: unknown) {
+      this.spinner.hide();
       if (error instanceof HttpErrorResponse && error.status === 403) {
         Swal.fire({
           icon: 'error',
@@ -168,94 +217,147 @@ export class ProductComponent {
       this.spinner.hide();
 
     }
-  }
+}
+
+
+async getProductData(): Promise<void> {
+  try {
+    this.spinner.show();
+
+    const productData: any[] = await firstValueFrom(
+      this.sharedService.getproductdatajoinbystatus().pipe(retry(3) as any)
+    );
+
+    if (!productData || productData.length === 0) {
+      this.isDataorNot = false;
+      return;
+    }
+
+    this.isDataorNot = true;
+
+    const formatted = productData.map((item: any) => ({
+      ...item,
+      created_date: item.created_date
+        ? moment(item.created_date).format('DD-MM-YYYY')
+        : null
+    }));
+
+    this.filteredproductdata = formatted;
+    this.itemData = formatted;
+    this.count = formatted.length;
+
+  } 
+  catch (error: unknown) {
+      this.spinner.hide();
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Token expired.',
+          footer: '<a href="../login">Please login again!</a>'
+        }).then(() => {
+          this.router.navigate(['../login']);
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Internal server error. Please try again later!',
+          footer: '<a href="../login">Login</a>'
+        }).then(() => {
+          location.reload();
+        });
+      }
+    }
+    finally {
+      this.spinner.hide();
+    }
+}
+
+
+
 
   categoryId(data: any) {
+    console.log(data, "data");
     this.productData.category_id = +data;
-    this.productData2.category_id = +data;
+    this.updateProductData.category_id = +data;
+    console.log(this.productData.category_id, "this.productData.category_id");
+    console.log(this.updateProductData.category_id, "this.productData.category_id");
   }
 
   isAsset(value: any) {
     if (value === 'null') { // Check if the user selected the "Select" option
       this.productData.is_asset = null as unknown as number; // Set is_asset to null
-      this.productData2.is_asset = null as unknown as number; // Set is_asset to null
+      this.updateProductData.is_asset = null as unknown as number; // Set is_asset to null
     } else {
       this.productData.is_asset = +value; // Convert the selected value to a number and assign it to is_asset
-      this.productData2.is_asset = +value;
+      this.updateProductData.is_asset = +value;
     }
 
   }
 
-  addProductfunc() {
+  async addProductfunc() {
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
+      return;
     }
     else if (!this.isValid) {
       this.productForm.markAllAsTouched();
+      return;
     }
-    else {
 
-      this.adminService.addProductService(this.productData).subscribe(
-        {
-          next: (results: any) => {
-            this.productServiceResponse = JSON.parse(JSON.stringify(results)).message;
-
-            if (this.productServiceResponse !== 'true') {
-              Swal.fire({
-                title: 'Success!',
-                text: 'Item added successfully!',
-                icon: 'success',
-              }).then(() => {
-                this.productForm.get('category_name')?.reset();
-                this.isChecked = false;
-                this.productData = {
-                  category_id: 0,
-                  product_name: '',
-                  last_item_code: '',
-                  modified_by: '',
-                  is_asset: null,
-                  created_by: '',
-                  life_cycle: null
-                }
-                this.ngOnInit();
-              })
-
-            }
-
-            else {
-              Swal.fire({
-                icon: 'warning',
-                title: 'Warning',
-                text: 'This item is already present!',
-              }).then(() => {
-                this.ngOnInit();
-              })
-            }
-          },
-          error: (error) => {
-            // console.log('error')
-            if (error.status == 403) {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Token expired....',
-                footer: '<a href="../login">Please Login..</a>'
-              }).then(() => {
-                this.router.navigate(['../login']);
-              })
-            }
-            else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Internal Server Error...',
-                footer: '<a href="../login">Please Login..</a>'
-              }).then(() => {
-                this.router.navigate(['../login']);
-              })
-            }
-          }
+    try {
+      const results: any = await firstValueFrom(this.adminService.addProductService(this.productData));
+      this.productServiceResponse = JSON.parse(JSON.stringify(results)).message;
+      if (this.productServiceResponse !== 'true') {
+        await Swal.fire({
+          title: 'Success!',
+          text: 'Item added successfully!',
+          icon: 'success',
         })
+        this.productForm.get('category_name')?.reset();
+
+        this.isChecked = false;
+        this.productData = {
+          category_id: 0,
+          product_name: '',
+          last_item_code: '',
+          modified_by: '',
+          is_asset: null,
+          created_by: '',
+          life_cycle: null
+        }
+
+        this.ngOnInit();
+      }
+      else {
+        await Swal.fire({
+          icon: 'warning',
+          title: 'Warning',
+          text: 'This item is already present!',
+        })
+        this.ngOnInit();
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Token expired.',
+          footer: '<a href="../login">Please login again!</a>'
+        }).then(() => {
+          this.router.navigate(['../login']);
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Internal server error. Please try again later!',
+          footer: '<a href="../login">Login</a>'
+        }).then(() => {
+          location.reload();
+        });
+      }
     }
   }
 
@@ -272,38 +374,52 @@ export class ProductComponent {
     if (this.productForm.invalid) {
       this.productForm.get('category_id').markAsTouched();
       this.productForm.get('product_name').markAsTouched();
+      return;
     }
-    else {
-      this.productData2.product_name = this.productData.product_name;
-      this.productData2.life_cycle = this.productData.life_cycle;
-      this.productData2.is_asset = this.productData.is_asset;
 
-      console.log(this.productData2, "this.productData2");
+      this.updateProductData.category_id = this.productData.category_id;
+      this.updateProductData.product_name = this.productData.product_name;
+      this.updateProductData.life_cycle = this.productData.life_cycle;
+      this.updateProductData.is_asset = this.productData.is_asset;
 
       try {
 
-        const result: any = await firstValueFrom(this.adminService.updateProductservice(this.productData2));
+        const result: any = await firstValueFrom(this.adminService.updateProductservice(this.updateProductData));
+        console.log(result, "result");
 
-        if (Number(result[0]?.update_product) == 1) {
-          Swal.fire({
+        if (result.rowsUpdated == 1) {
+          await Swal.fire({
             title: 'Success!',
             text: 'Item updated successfully!',
             icon: 'success',
-          }).then(() => {
-            location.reload();
           });
+          // const edited = { ...this.updateProductData };
+
+          // await this.getAlldata().then(() => {
+
+          //   this.updateProductData.category_id = +category; 
+          //   this.productForm.patchValue({
+          //     category_id: edited.category_id,
+          //     product_name: edited.product_name,
+          //     is_asset: edited.is_asset,
+          //     life_cycle: edited.life_cycle
+          //   });
+ 
+          // })
+          // this.ngOnInit();
+          await this.getProductData();
+          return;
         }
 
-        else {
           Swal.fire({
             icon: 'warning',
             title: 'Warning',
             text: 'No changes detected!',
           });
-        }
-       
+
 
       } catch (error: unknown) {
+        this.spinner.hide();
         if (error instanceof HttpErrorResponse && error.status === 403) {
           Swal.fire({
             icon: 'error',
@@ -324,49 +440,10 @@ export class ProductComponent {
           });
         }
       }
-
-
-
-      // 
-      //   this.adminService.updateProductservice(this.productData2).subscribe(
-      //     {
-      //       next: (results: any) => {
-      //         Swal.fire({
-      //           title: 'Success!',
-      //           text: 'Item updated successfully!',
-      //           icon: 'success',
-      //         }).then(() => {
-      //           location.reload();
-      //         });
-      //       },
-      //       error: (error) => {
-      //         // console.log('error')
-      //         if (error.status == 403) {
-      //           Swal.fire({
-      //             icon: 'error',
-      //             title: 'Oops...',
-      //             text: 'Token expired....',
-      //             footer: '<a href="../login">Please Login..</a>'
-      //           }).then(() => {
-      //             this.router.navigate(['../login']);
-
-      //           })
-      //         }
-      //         else {
-      //           // console.log('Other error:', error);
-      //           Swal.fire({
-      //             icon: 'error',
-      //             title: 'Oops...',
-      //             text: 'Internal Server Error...',
-      //             footer: '<a href="../login">Please Login..</a>'
-      //           }).then(() => {
-      //             this.router.navigate(['../login']);
-      //           })
-      //         }
-      //       }
-      //     })
-
-    }
+      finally {
+        this.spinner.hide();
+      }
+    
   }
 
   updateproduct(data: any) {
@@ -384,10 +461,13 @@ export class ProductComponent {
         Swal.showLoading();
         setTimeout(() => {
           this.productId.product_id = data.product_id;
-          this.productData2.product_name = data.product_name;
-          this.productData2.category_id = data.category_id;
-          this.productData2.product_id = data.product_id;
-          this.productData.product_name = this.productData2.product_name;
+          this.updateProductData.product_name = data.product_name;
+          this.updateProductData.category_id = data.category_id;
+          this.updateProductData.product_id = data.product_id;
+          this.productForm.patchValue({
+            category_id: data.category_id
+        })
+          this.productData.product_name = this.updateProductData.product_name;
           this.productData.category_id = data.category_id;
           this.productData.is_asset = data.is_asset;
           if (data.life_cycle) {
@@ -403,7 +483,7 @@ export class ProductComponent {
             }
           };
           this.productData.life_cycle = + data.life_cycle;
-          this.productData2.life_cycle = + data.life_cycle;
+          this.updateProductData.life_cycle = + data.life_cycle;
 
           Swal.close();
         }, 500);
@@ -433,57 +513,90 @@ export class ProductComponent {
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
       reverseButtons: true
-    }).then((result) => {
+    }).then(async (result) => {
+          this.spinner.hide();
+
       if (result.isConfirmed) {
         //below only deactivate the product only by making status 0
-        this.checkService.deactivateProductStatuscheck(data).subscribe(
-          {
-            next: (results: any) => {
-              swalWithBootstrapButtons.fire(
-                'Deleted!',
-                'Item deleted successfully!',
-                'success'
-              ).then(() => {
-                this.ngOnInit();
-              })
-            },
-            error: (error) => {
-              if (error.status == 403) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Token expired....',
-                  footer: '<a href="../login">Please Login..</a>'
-                }).then(() => {
-                  this.router.navigate(['../login']);
+        try {
+          await firstValueFrom(this.checkService.deactivateProductStatuscheck(data));
+          await swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Item deleted successfully!',
+            'success'
+          )
 
-                })
-              }
-              else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Internal Server Error...',
-                  footer: '<a href="../login">Please Login..</a>'
-                }).then(() => {
-                  this.router.navigate(['../login']);
+          this.ngOnInit();
 
-                })
-              }
-            }
-          })
+        } catch (error: unknown) {
+          if (error instanceof HttpErrorResponse && error.status === 403) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Token expired.',
+              footer: '<a href="../login">Please login again!</a>'
+            }).then(() => {
+              this.router.navigate(['../login']);
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Internal server error. Please try again later!',
+              footer: '<a href="../login">Login</a>'
+            }).then(() => {
+              location.reload();
+            });
+          }
+        } finally {
+          this.spinner.hide();
+        }
+
+        // this.checkService.deactivateProductStatuscheck(data).subscribe(
+        //   {
+        //     next: (results: any) => {
+        //       swalWithBootstrapButtons.fire(
+        //         'Deleted!',
+        //         'Item deleted successfully!',
+        //         'success'
+        //       ).then(() => {
+        //         this.ngOnInit();
+        //       })
+        //     },
+        //     error: (error) => {
+        //       if (error.status == 403) {
+        //         Swal.fire({
+        //           icon: 'error',
+        //           title: 'Oops...',
+        //           text: 'Token expired....',
+        //           footer: '<a href="../login">Please Login..</a>'
+        //         }).then(() => {
+        //           this.router.navigate(['../login']);
+
+        //         })
+        //       }
+        //       else {
+        //         Swal.fire({
+        //           icon: 'error',
+        //           title: 'Oops...',
+        //           text: 'Internal Server Error...',
+        //           footer: '<a href="../login">Please Login..</a>'
+        //         }).then(() => {
+        //           this.router.navigate(['../login']);
+
+        //         })
+        //       }
+        //     }
+        //   })
       }
-      else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.spinner.hide();
         swalWithBootstrapButtons.fire(
           'Cancelled',
           'Item is not deleted :)',
           'error'
-        ).then(() => {
-          this.ngOnInit();
-        })
+        )
+        this.ngOnInit();
       }
     })
 

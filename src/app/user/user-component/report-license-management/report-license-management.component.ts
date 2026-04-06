@@ -31,7 +31,7 @@ export class ReportLicenseManagementComponent {
   tableSizes: any = [20, 50, 100, 'All'];
   lastfinnancialyrDate: any;
   nextfinnancialyrDate: any;
-  previousUrl:any;
+  previousUrl: any;
 
   datesforlicense = {
     start_date: '',
@@ -43,10 +43,12 @@ export class ReportLicenseManagementComponent {
   itemsData: any;
   totalItems: any;
   itemsDataList: any;
-  itemsperPage:any = 20;
+  itemsperPage: any = 20;
+  itemNames: any[] = [];
+  selectItem: any = null;
 
-  constructor(private sharedService: SharedService, private spinner: NgxSpinnerService, 
-    private location:Location, private router:Router, private activatedRoute:ActivatedRoute, private filesServices:FilesService) { }
+  constructor(private sharedService: SharedService, private spinner: NgxSpinnerService,
+    private location: Location, private router: Router, private activatedRoute: ActivatedRoute, private filesServices: FilesService) { }
 
   ngOnInit(): void {
     this.statemanagement();
@@ -68,7 +70,7 @@ export class ReportLicenseManagementComponent {
           this.datesforlicense.end_date = params['to'];
         }
 
-        if(params['itemsperPage']){
+        if (params['itemsperPage']) {
           this.itemsperPage = params['itemsperPage'];
         }
 
@@ -83,24 +85,24 @@ export class ReportLicenseManagementComponent {
           }
           if (params['sort'] && params['sort'] !== '') {
             const [column, sortParams] = params['sort'].split('-');
-            console.log (params['sort'].split('-')[1]);
-            const ascending = sortParams === 'asc'?true:false;
-            this.isAscending = ascending;  
+            console.log(params['sort'].split('-')[1]);
+            const ascending = sortParams === 'asc' ? true : false;
+            this.isAscending = ascending;
             // Ensure sortingorder is set properly when restoring state
             this.sortingorder = `${column}-${this.isAscending}`;
             this.sort(column);
           }
         }, 800)
       }
-      else{
+      else {
 
         console.log('notnavigated')
-              // Remove all query params when isNavigatedBack is false
-              this.router.navigate([], {
-                relativeTo: this.activatedRoute, // Navigate relative to the current route
-                queryParams: {}, // Empty object to clear the query parameters
-                queryParamsHandling: '' // Explicitly state that no query params should be handled
-              });
+        // Remove all query params when isNavigatedBack is false
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute, // Navigate relative to the current route
+          queryParams: {}, // Empty object to clear the query parameters
+          queryParamsHandling: '' // Explicitly state that no query params should be handled
+        });
       }
     });
 
@@ -130,10 +132,11 @@ export class ReportLicenseManagementComponent {
         const isWarrantyValid = item.warrantyend_date ? moment(item.warrantyend_date).isSameOrAfter(moment(), 'day') : true;
 
         // Check purchase_id and location_id conditions
-        const isPurchaseValid = !item.purchase_id.startsWith('BRND-') ;
+        const isPurchaseValid = !item.purchase_id.startsWith('BRND-');
 
         // Both conditions need to be true
-        return isWarrantyValid && isPurchaseValid;
+        // Only lisences(computer softwares) should filter out
+        return (item.category_id == 2) && isWarrantyValid && isPurchaseValid;
       })
 
         .map((item: any) => {
@@ -157,7 +160,7 @@ export class ReportLicenseManagementComponent {
             // Calculate days difference after adjusting for years and months
             const days = endDate.diff(startDate, 'days');
             difference = `${years ? years + ' Years ' : ''}${months ? months + ' Months ' : ''}${days ? days + ' Days' : ''}`.trim();
-            
+
             // Set isExpiringSoon to true if the difference is less than or equal to 1 month
             // if (years === 0 && months <= 1) {
             //   isExpiringSoon = true;
@@ -165,11 +168,15 @@ export class ReportLicenseManagementComponent {
             // Include daysLeft for sorting
             daysLeft = endDate.diff(moment(), 'days') + 1;
 
-            if(daysLeft<=30){
+            if (daysLeft <= 30) {
               isExpiringSoon = true;
             }
           }
-          return { ...item, date_: splitcreateddate, warrantyend_date: splitwarrantyenddate, durationDifference: difference, isExpiringSoon: isExpiringSoon, daysLeft: daysLeft };
+          return {
+            ...item, rawWarrantyDate: item.warrantyend_date,   // ✅ keep original
+            rawPurchaseDate: item.date_,              // ✅ keep original
+            date_: splitcreateddate, warrantyend_date: splitwarrantyenddate, durationDifference: difference, isExpiringSoon: isExpiringSoon, daysLeft: daysLeft
+          };
         })
         .sort((a: any, b: any) => { return a.daysLeft - b.daysLeft });
 
@@ -177,6 +184,11 @@ export class ReportLicenseManagementComponent {
       this.filteredLicensedata = filteredResults;
       this.itemsData = filteredResults;
       this.itemsDataList = filteredResults;
+
+      this.itemNames = Array.from(
+        new Set(filteredResults.map((item: any) => item.item_name))
+      ).sort((a: any, b: any) => a.localeCompare(b));
+
       this.count = filteredResults.length;
     }
     catch (err) {
@@ -213,11 +225,11 @@ export class ReportLicenseManagementComponent {
       } else {
         // console.log(valueA, valueB, "sorting")
         if (this.isDate(valueA) && this.isDate(valueB)) {
-        // Parse dates using moment.js with strict parsing
-        const dateA = moment(valueA, 'DD-MM-YYYY', true); 
-        const dateB = moment(valueB, 'DD-MM-YYYY', true);
-        comparison = dateA.diff(dateB); 
-          
+          // Parse dates using moment.js with strict parsing
+          const dateA = moment(valueA, 'DD-MM-YYYY', true);
+          const dateB = moment(valueB, 'DD-MM-YYYY', true);
+          comparison = dateA.diff(dateB);
+
         } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
           comparison = valueA - valueB;
         } else {
@@ -229,7 +241,7 @@ export class ReportLicenseManagementComponent {
     });
   }
 
-  isDate(dateString:any): boolean {
+  isDate(dateString: any): boolean {
     const isValidDate = moment(dateString, 'DD-MM-YYYY', true).isValid();
     return isValidDate;
   }
@@ -244,18 +256,18 @@ export class ReportLicenseManagementComponent {
     // this.getitemsDataListwithPrice();
   }
 
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {
       // Otherwise, set the table size to the selected value
       this.tableSize = +Value;
     }
-    
-    this.itemsperPage = Value ;
+
+    this.itemsperPage = Value;
     this.page = 1;
     // this.getitemsDataListwithPrice();
   }
@@ -266,40 +278,121 @@ export class ReportLicenseManagementComponent {
     }
   }
 
+  // async filterData(): Promise<void> {
+  //   // If the originalData is not set, initialize it with the current itemsData
+  //   if (!this.itemsData) {
+  //     this.itemsData = this.itemsData;
+  //   }
+
+  //   let filteredData: any[] = [...this.itemsData];
+
+  //   // Start with the original data or the previously filtered data
+  //   // let filteredData: any[] = this.itemsData;
+
+  //   console.log(filteredData, "filteredData");
+
+  //   // Filter by selected item name
+  //   if (this.selectItem) {
+  //     filteredData = filteredData.filter(
+  //       (item: any) =>
+  //         item.item_name?.toLowerCase().trim() ===
+  //         this.selectItem.toLowerCase().trim()
+  //     );
+  //   }
+  //   // // Filter by search term
+  //   if (this.searchTerm) {
+  //     filteredData = filteredData.filter((item: any) => {
+  //       return Object.keys(item).some(key => {
+  //         if (item[key] !== null && item[key] !== '' && (key === 'date_' || key === 'warrantyend_date')) {
+  //           return item[key]?.includes(this.searchTerm);
+  //         } else if (item[key] !== null && item[key] !== '') {
+  //           return item[key]?.toString().toLowerCase()?.includes(this.searchTerm.toLowerCase());
+  //         }
+  //         return false;
+  //       });
+  //     });
+  //   }
+
+  //   if (this.datesforlicense?.start_date && this.datesforlicense?.end_date) {
+  //     if (this.datesforlicense.start_date <= this.datesforlicense.end_date) {
+
+  //       filteredData = filteredData.filter((item: any) => {
+  //         const filtereddate = moment(item.warrantyend_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+
+  //         if (filtereddate) {
+  //           return filtereddate >= this.datesforlicense.start_date && filtereddate <= this.datesforlicense.end_date;
+  //         }
+  //         return false;
+  //       });
+
+  //     } else {
+  //       Swal.fire({
+  //         title: 'Warning',
+  //         text: 'End date should be later than start date.',
+  //         icon: 'warning'
+  //       });
+  //       // If there's a date range error, return an empty array to show no results
+  //       filteredData = [];
+  //     }
+  //   }
+
+  //   // Update filtered data and totalItems
+  //   this.filteredLicensedata = filteredData;
+  //   this.totalItems = this.itemsData.length;
+  //   this.count = filteredData.length;
+  //   this.page = 1; // Reset to the first page when filtering occurs
+  // }
+
+
   async filterData(): Promise<void> {
-    // If the originalData is not set, initialize it with the current itemsData
-    if (!this.itemsData) {
-      this.itemsData = this.itemsData;
+
+    let filteredData: any[] = [...this.itemsData];
+
+    /* 1️⃣ Item Filter */
+    if (this.selectItem?.trim()) {
+      const selected = this.selectItem.toLowerCase().trim();
+
+      filteredData = filteredData.filter(item =>
+        item.item_name?.toLowerCase().trim() === selected
+      );
     }
 
-    // Start with the original data or the previously filtered data
-    let filteredData: any[] = this.itemsData;
+    /* 2️⃣ Search Filter */
+    if (this.searchTerm?.trim()) {
+      const search = this.searchTerm.toLowerCase().trim();
 
-    console.log(filteredData, "filteredData");
-    // // Filter by search term
-    if (this.searchTerm) {
-      filteredData = filteredData.filter((item: any) => {
-        return Object.keys(item).some(key => {
-          if (item[key] !== null && item[key] !== '' && key === 'date_' || key === 'warrantyend_date') {
-            return item[key]?.includes(this.searchTerm);
-          } else if (item[key] !== null && item[key] !== '') {
-            return item[key]?.toString().toLowerCase()?.includes(this.searchTerm.toLowerCase());
+      filteredData = filteredData.filter(item =>
+        Object.keys(item).some(key => {
+
+          const value = item[key];
+          if (value === null || value === undefined || value === '') return false;
+
+          if (key === 'date_' || key === 'warrantyend_date') {
+            return value.includes(this.searchTerm);
           }
-          return false;
-        });
-      });
+
+          return value.toString().toLowerCase().includes(search);
+        })
+      );
     }
 
-    if (this.datesforlicense?.start_date && this.datesforlicense?.end_date) {
+    /* 3️⃣ Date Filter (RAW DATE) */
+    if (this.datesforlicense.start_date && this.datesforlicense.end_date) {
+
       if (this.datesforlicense.start_date <= this.datesforlicense.end_date) {
 
-        filteredData = filteredData.filter((item: any) => {
-          const filtereddate = moment(item.warrantyend_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        const start = moment(this.datesforlicense.start_date, 'YYYY-MM-DD');
+        const end = moment(this.datesforlicense.end_date, 'YYYY-MM-DD');
 
-          if (filtereddate) {
-            return filtereddate >= this.datesforlicense.start_date && filtereddate <= this.datesforlicense.end_date;
-          }
-          return false;
+        filteredData = filteredData.filter(item => {
+
+          if (!item.rawWarrantyDate) return false;
+
+          const itemDate = moment(item.rawWarrantyDate);
+
+          return itemDate.isValid() &&
+            itemDate.isSameOrAfter(start, 'day') &&
+            itemDate.isSameOrBefore(end, 'day');
         });
 
       } else {
@@ -308,57 +401,47 @@ export class ReportLicenseManagementComponent {
           text: 'End date should be later than start date.',
           icon: 'warning'
         });
-        // If there's a date range error, return an empty array to show no results
         filteredData = [];
       }
     }
 
-    // Update filtered data and totalItems
+    /* 4️⃣ Update UI */
     this.filteredLicensedata = filteredData;
-    this.totalItems = this.itemsData.length;
     this.count = filteredData.length;
-    this.page = 1; // Reset to the first page when filtering occurs
+    this.totalItems = filteredData.length;
+    this.page = 1;
   }
+
 
   refreshfilter() {
     this.isRotating = true;
+
     this.getLincencedata().then(() => {
       // Clear date filters
-      if (this.datesforlicense?.start_date || this.datesforlicense?.end_date) {
-        this.datesforlicense.start_date = '';
-        this.datesforlicense.end_date = '';
-      }
-
-      // If the originalData is not set, initialize it with the current itemsData
-      if (!this.itemsData) {
-        this.itemsData = this.itemsData;
-      }
-      // Start with the original data or the previously filtered data
-      let filteredData: any[] = this.itemsData;
+      // Clear only date + item filters
+      this.datesforlicense.start_date = '';
+      this.datesforlicense.end_date = '';
+      this.selectItem = null;
+      // Now reapply filtering so search still works
+      this.filterData();
 
       // // Filter by search term
-      if (this.searchTerm) {
-        filteredData = filteredData.filter((item: any) => {
-          return Object.keys(item).some(key => {
-            if (item[key] !== null && item[key] !== '' && key === 'date_') {
-              return item[key]?.includes(this.searchTerm);
-            } else if (item[key] !== null && item[key] !== '') {
-              return item[key]?.toString().toLowerCase()?.includes(this.searchTerm.toLowerCase());
-            }
-            return false;
-          });
-        });
-      }
-      // Update filtered data and totalItems
-      this.itemsData = filteredData;
-      this.totalItems = this.itemsData.length;
-      this.page = 1; // Reset to the first page when filtering occurs
+
       setTimeout(() => {
         this.isRotating = false;
       }, 500); // Adjust the duration as needed
     });
 
   }
+
+
+  onItemClear() {
+    this.selectItem = null;
+    this.filterData();
+  }
+
+
+
 
   // exportToExcel() {
   //   const randomDate = new Date().valueOf();
@@ -416,32 +499,32 @@ export class ReportLicenseManagementComponent {
       };
     });
 
-  
+
     const reportRequest = {
       reportTitle: "License Management Report",
       columns: [
         { header: 'S.No.', key: 'S.No.', width: 10, filterButton: false },
-        { header: 'Item Code', key: 'item_code',width: 45, filterButton: true },
+        { header: 'Item Code', key: 'item_code', width: 45, filterButton: true },
         { header: 'Item Name', key: 'item_name', width: 35, filterButton: true },
         { header: 'Category', key: 'category_name', width: 35, filterButton: true },
-        { header: 'Description', key: 'description', width: 55, filterButton: false  },
+        { header: 'Description', key: 'description', width: 55, filterButton: false },
         { header: 'Purchase Id', key: 'purchase_id', width: 25, filterButton: false },
         { header: 'Purchase Date', key: 'date_', width: 30, format: 'date', filterButton: true },
         { header: 'Warranty End Date', key: 'warrantyend_date', width: 30, format: 'date', filterButton: true },
         { header: 'Time Duration Left(in days)', key: 'daysLeft', width: 40, filterButton: true },
       ],
-  
-      data: modifiedItemsDataList , // Data to populate the report
-      totalsrow:false,
-      filters:[
-        { filterBy:(this.datesforlicense.start_date && this.datesforlicense.end_date)?'Purchase Date':'' , startDate:this.datesforlicense.start_date||'', endDate:this.datesforlicense.end_date||''}
+
+      data: modifiedItemsDataList, // Data to populate the report
+      totalsrow: false,
+      filters: [
+        { filterBy: (this.datesforlicense.start_date && this.datesforlicense.end_date) ? 'Purchase Date' : '', startDate: this.datesforlicense.start_date || '', endDate: this.datesforlicense.end_date || '' }
       ]
     };
-  
+
     this.filesServices.exportToExcel(reportRequest).subscribe(
       (response: Blob) => {
         // Call downloadBlob to trigger the download with the response
-        this.filesServices.downloadBlob(response, 'report_license_management.xlsx');
+        this.filesServices.downloadBlob(response, 'license_management_report.xlsx');
       },
       (error) => {
         console.error('Error exporting to Excel', error);
@@ -475,7 +558,7 @@ export class ReportLicenseManagementComponent {
     return '?' + Object.keys(params).map(key => key + '=' + params[key]).join('&');
   }
 
-  
+
 
 
 }

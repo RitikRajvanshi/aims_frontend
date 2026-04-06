@@ -411,7 +411,6 @@ export class VendorListComponent {
           break;
       }
 
-
       return {
         ...item,  // Spread the original object properties
         "S.No.": index + 1, // Add the S.No. field with the appropriate value
@@ -426,16 +425,15 @@ export class VendorListComponent {
         { header: 'S.No.', key: 'S.No.', width: 10, filterButton: true },
         { header: 'Vendor Name', key: 'supplier_name', width: 25, filterButton: true },
         { header: 'Contact Person', key: 'contact_person', filterButton: true },
-        { header: 'Rating', key: 'rating', width: 15, filterButton: true },
         { header: 'Phone', key: 'phone', width: 25, filterButton: false },
         { header: 'Mobile', key: 'mobile', width: 25, filterButton: false },
         { header: 'Email', key: 'email', width: 25, filterButton: true },
         { header: 'Created Date', key: 'created_date', width: 15, filterButton: false },
+        { header: 'Rating', key: 'rating', width: 15, filterButton: true },
         { header: 'Pan No.', key: 'pan_no', width: 20, filterButton: false },
         { header: 'GSTIN', key: 'gstn', width: 20, filterButton: false },
         { header: 'Purchase Mode', key: 'category', width: 25, filterButton: true },
         { header: 'Action/Status', key: 'status', width: 25, filterButton: true },
-
       ],
 
       data: modifiedItemsDataList, // Data to populate the report
@@ -459,15 +457,12 @@ export class VendorListComponent {
 
   navigateToNewRoute(items: any) {
     const queryParams: any = {};
-
     if (this.searchTerm) queryParams.searchTerm = this.searchTerm;
     if (this.page) queryParams.page = this.page;
     if (this.tableSize) queryParams.tableSize = this.tableSize;
     if (this.sortingorder) queryParams.sort = this.sortingorder;
     if (this.itemsperPage) queryParams.itemsperPage = this.itemsperPage;
     if (this.mode) queryParams.mode = this.mode;
-
-
     if (this.VendordatabyDate) {
       if (this.VendordatabyDate.start_date) queryParams.from = this.VendordatabyDate.start_date;
       if (this.VendordatabyDate.end_date) queryParams.to = this.VendordatabyDate.end_date;

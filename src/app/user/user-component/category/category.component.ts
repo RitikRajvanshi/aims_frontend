@@ -8,7 +8,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -19,7 +19,7 @@ export class CategoryComponent {
   isDataorNot: boolean = true;
   searchItem = '';
   //for add category
-  addCategroryData = {
+  addCategoryData = {
     category_name: '',
     modified_by: localStorage.getItem('login_id'),
     created_by: localStorage.getItem('login_id')
@@ -38,7 +38,8 @@ export class CategoryComponent {
   }
 
   addcategoryForm: any;
-  categorydata: any;
+  // categorydata: any;
+
   filteredcategorydata: any;
   itemData: any[] = [];
   displayaddCategory = false;          // for add button
@@ -59,11 +60,11 @@ export class CategoryComponent {
 
   userRole = localStorage.getItem('level');
 
-  currentdate: any;
+  // currentdate: any;
   currentSortColumn: string = ''; // Variable to store the current sort column
   isAscending: any; // Variable to store the current sorting order
-  sortingorder:any;
-  
+  sortingorder: any;
+
   constructor(private adminService: AdminService, private checkService: CheckService, private router: Router, private spinner: NgxSpinnerService) {
 
   }
@@ -75,30 +76,33 @@ export class CategoryComponent {
   async getCategoryData() {
     try {
       this.spinner.show();
-      const results: any = await this.checkService.getCategorydatabystatus().pipe(
+      const results: any = await firstValueFrom(this.checkService.getCategorydatabystatus().pipe(
         retry(3), // Retry the request up to 3 times
-        catchError((error: HttpErrorResponse) => {
-          console.error('Error fetching accepted requests:', error);
-          return of([]); // Return an empty array if an error occurs
-        })
-      ).toPromise();
+        // catchError((error: HttpErrorResponse) => {
+        //   console.error('Error fetching accepted requests:', error);
+        //   return of([]); // Return an empty array if an error occurs
+        // })
+      ));
 
       if (results?.length == 0) {
         this.isDataorNot = false;
+        return;
       }
-      else {
-        this.isDataorNot = true;
-        const filteredResults = results.map((item: any) => {
-          const splitcreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
-          return { ...item, created_date: splitcreateddate };
-        });
 
-        this.filteredcategorydata = filteredResults;
-        this.count = filteredResults.length;
-        this.itemData = filteredResults;
-      }
+      this.isDataorNot = true;
+      const filteredResults = results.map((item: any) => {
+        const splitcreateddate = item.created_date ? moment(item.created_date).format('DD-MM-YYYY') : null;
+        return { ...item, created_date: splitcreateddate };
+      });
+
+      this.filteredcategorydata = filteredResults;
+      this.count = filteredResults.length;
+      this.itemData = filteredResults;
     }
     catch (error: unknown) {
+      console.log(error, "error")
+
+      this.spinner.hide();
       if (error instanceof HttpErrorResponse && error.status === 403) {
         Swal.fire({
           icon: 'error',
@@ -121,7 +125,6 @@ export class CategoryComponent {
     }
     finally {
       this.spinner.hide();
-
     }
   }
 
@@ -132,13 +135,14 @@ export class CategoryComponent {
     this.displayaddCategory = true;
     this.toggleListBtn = true;
     this.toggleAddbtn = false;
+
     Swal.fire({
       title: 'Loading...',
       didOpen: () => {
         Swal.showLoading();
         setTimeout(() => {
           this.categoryId.category_id = data.category_id;
-          this.addCategroryData.category_name = data.category_name;
+          this.addCategoryData.category_name = data.category_name;
           this.updateCategoryData.category_name = data.category_name;
           this.updateCategoryData.category_id = data.category_id;
           Swal.close();
@@ -170,7 +174,7 @@ export class CategoryComponent {
         reverseButtons: true
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const deactivateCategory: any = await this.checkService.deactivateCategoryStatuscheck(this.categoryId).toPromise();
+          const deactivateCategory: any = await firstValueFrom(this.checkService.deactivateCategoryStatuscheck(this.categoryId));
           if (deactivateCategory?.deactivate_category_detail_check == 0) {
             Swal.fire({
               icon: 'error',
@@ -205,6 +209,7 @@ export class CategoryComponent {
       })
     }
     catch (error: unknown) {
+
       if (error instanceof HttpErrorResponse && error.status === 403) {
         Swal.fire({
           icon: 'error',
@@ -233,11 +238,13 @@ export class CategoryComponent {
     try {
       if (this.addcategoryForm.invalid) {
         this.addcategoryForm.controls['category_name'].markAsTouched();
+        return;
       }
 
       else {
-        const results: any = await this.adminService.addCategoryservice(this.addCategroryData).toPromise();
+        const results: any = await firstValueFrom(this.adminService.addCategoryservice(this.addCategoryData));
         this.addcategoryserviceResponse = JSON.parse(JSON.stringify(results)).message;
+
         if (this.addcategoryserviceResponse !== 'true') {
           Swal.fire({
             title: 'Success!',
@@ -245,7 +252,7 @@ export class CategoryComponent {
             icon: 'success',
           }).then(() => {
             this.addcategoryForm.get('category_name')?.reset();
-            this.ngOnInit();
+            this.getCategoryData();
           })
         }
 
@@ -289,24 +296,21 @@ export class CategoryComponent {
     try {
       if (this.addcategoryForm.invalid) {
         this.addcategoryForm.controls['category_name'].markAsTouched();
+        return;
       }
 
-      this.updateCategoryData.category_name = this.addCategroryData.category_name;
-      const results: any = await this.adminService.updatecategoryservice(this.updateCategoryData).toPromise();
+      this.updateCategoryData.category_name = this.addCategoryData.category_name;
+      const results: any = await firstValueFrom(this.adminService.updatecategoryservice(this.updateCategoryData));
       this.updatecategoryserviceResponse = JSON.parse(JSON.stringify(results)).message;
 
       if (this.updatecategoryserviceResponse !== 'true') {
-        Swal.fire({
+        await Swal.fire({
           title: 'Success!',
           text: 'Category updated successfully!',
           icon: 'success',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.addcategoryForm.get('grp_name')?.reset();
-            location.reload();
-          }
         });
 
+        this.getCategoryData();
       }
 
       else {
@@ -314,10 +318,7 @@ export class CategoryComponent {
           icon: 'warning',
           title: 'Warning',
           text: 'No changes detected!',
-        })
-        // .then(() => {
-        //   this.ngOnInit();
-        // })
+        });
       }
     }
     catch (error: unknown) {
@@ -369,47 +370,6 @@ export class CategoryComponent {
 
   }
 
-  // sort(columnName: string) {
-  //   if (this.currentSortColumn === columnName) {
-  //     this.isAscending = !this.isAscending; // Toggle sorting order
-  //   } else {
-  //     this.currentSortColumn = columnName; // Update current sort column
-  //     this.isAscending = true; // Set sorting order to ascending for the new column
-  //   }
-
-  //   this.filteredcategorydata.sort((a: any, b: any) => {
-  //     let comparison = 0;
-  //     const valueA = a[columnName];
-  //     const valueB = b[columnName];
-
-  //     // Handle null or undefined values
-  //     if (valueA === null || valueA === undefined) {
-  //       comparison = valueB === null || valueB === undefined ? 0 : -1;
-  //     } else if (valueB === null || valueB === undefined) {
-  //       comparison = 1;
-  //     } else {
-  //       if (this.isDate(valueA) && this.isDate(valueB)) {
-  //         const dateA = moment(valueA);
-  //         const dateB = moment(valueB);
-  //         comparison = dateA.diff(dateB);
-  //       } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
-  //         comparison = valueA - valueB;
-  //       } else {
-  //         comparison = valueA.toString().localeCompare(valueB.toString());
-  //       }
-  //     }
-
-  //     return this.isAscending ? comparison : -comparison;
-  //   });
-  // }
-
-  // isDate(value: any): boolean {
-  //   return moment(value, moment.ISO_8601, true).isValid();
-  // }
-
-  // isNumber(value: any): boolean {
-  //   return !isNaN(value);
-  // }
 
   sort(columnName: string) {
     console.log(columnName, "columnName");
@@ -422,7 +382,7 @@ export class CategoryComponent {
     }
 
     // Update sortingorder with the new column and sorting order
-    this.sortingorder = `${columnName}-${this.isAscending ? 'asc' : 'desc'}`;
+    // this.sortingorder = `${columnName}-${this.isAscending ? 'asc' : 'desc'}`;
 
     this.filteredcategorydata.sort((a: any, b: any) => {
       let comparison = 0;
@@ -437,11 +397,11 @@ export class CategoryComponent {
       } else {
         // console.log(valueA, valueB, "sorting")
         if (this.isDate(valueA) && this.isDate(valueB)) {
-        // Parse dates using moment.js with strict parsing
-        const dateA = moment(valueA, 'DD-MM-YYYY', true); 
-        const dateB = moment(valueB, 'DD-MM-YYYY', true);
-        comparison = dateA.diff(dateB); 
-          
+          // Parse dates using moment.js with strict parsing
+          const dateA = moment(valueA, 'DD-MM-YYYY', true);
+          const dateB = moment(valueB, 'DD-MM-YYYY', true);
+          comparison = dateA.diff(dateB);
+
         } else if (this.isNumber(valueA) && this.isNumber(valueB)) {
           comparison = valueA - valueB;
         } else {
@@ -453,7 +413,7 @@ export class CategoryComponent {
     });
   }
 
-  isDate(dateString:any): boolean {
+  isDate(dateString: any): boolean {
     const isValidDate = moment(dateString, 'DD-MM-YYYY', true).isValid();
     return isValidDate;
   }
@@ -467,10 +427,10 @@ export class CategoryComponent {
     this.page = event;
   }
 
-   ontableSizechange(event: any): void {
+  ontableSizechange(event: any): void {
     const Value = event.target.value
     // this.tableSize = ;
-    if(Value == "All"){
+    if (Value == "All") {
       this.tableSize = +this.count;
     }
     else {

@@ -17,13 +17,13 @@
                         <div class="form-group  m-2">
                             <label for="purchase_id" class="form-label">Purchase Id:<sup>*</sup></label>
 
-                            <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option" id="product_name"
+                            <!-- <ng-select  class="form-control form-control-sm data-control-for-ngselect select-option" id="product_name"
                                 [items]="getpurchasejoinData" formControlName="purchase_id"
                                 [placeholder]="!inspectionformData.purchase_id ? 'Select Purchase Id...' : ''"
                                 [(ngModel)]="inspectionformData.purchase_id" bindLabel="purchase_id"
                                 [clearable]="!inspectionformData.purchase_id?false:true"
                                 bindValue="purchase_id" (change)="selectpurchaseId($event);">
-                                <ng-template ng-option-tmp let-item="item" *ngIf="roleType === '2'">
+                                <ng-template ng-option-tmp let-item="item" *ngIf="roleType === 2">
                                     <div 
                                         [ngStyle]="{ 'background-color': isInspectedByIdadmin1(item?.inspected_by)  ? 'white' : 'rgb(188, 245, 204)' }">
                                         {{item?.purchase_id}}
@@ -31,14 +31,30 @@
 
                                 </ng-template>
 
-                                <ng-template ng-option-tmp let-item="item" *ngIf="roleType === '3'">
+                                <ng-template ng-option-tmp let-item="item" *ngIf="roleType === 3">
                                     <div
                                         [ngStyle]="{ 'background-color': isInspectedByIdadmin2(item?.inspected_by)  ? 'white' : 'rgb(188, 245, 204)' }">
                                         {{item?.purchase_id}}
                                     </div>
 
                                 </ng-template>
+                            </ng-select> -->
+
+                            <ng-select class="select-option" id="product_name" [items]="getpurchasejoinData"
+                                formControlName="purchase_id" placeholder="Select Purchase Id..."
+                                [(ngModel)]="inspectionformData.purchase_id" bindLabel="purchase_id"
+                                bindValue="purchase_id" [clearable]="false" (change)="selectpurchaseId($event)">
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <div class="purchase-option" [ngStyle]="{ 
+                                        'background-color': getInspectionColor(item?.inspected_by) 
+                                        }">
+                                        {{ item?.purchase_id }}
+                                    </div>
+                                </ng-template>
+
                             </ng-select>
+
                         </div>
 
                         <div class="form-group  m-2">
@@ -48,7 +64,8 @@
                                 [(ngModel)]="inspectionformData.supplier_name" formControlName="supplier_name" />
                         </div>
                         <div class="form-group  m-2">
-                            <label for="product_received_date" class="form-label">Item Recieved Date:<sup>*</sup></label>
+                            <label for="product_received_date" class="form-label">Item Recieved
+                                Date:<sup>*</sup></label>
                             <input type="date" id="product_received_date"
                                 class="form-control form-control-sm data-control"
                                 placeholder="Enter Item Recieved Date "
@@ -63,9 +80,12 @@
                         </div>
                         <div class="form-group  m-2">
                             <label for="date_of_inspection" class="form-label">Date Of inspection:<sup>*</sup></label>
-                            <input type="date" id="date_of_inspection" class="form-control form-control-sm data-control" placeholder="Enter Date Of inspection" formControlName="date_of_inspection" [(ngModel)]="inspectionformData.date_of_inspection" />
+                            <input type="date" id="date_of_inspection" class="form-control form-control-sm data-control"
+                                placeholder="Enter Date Of inspection" formControlName="date_of_inspection"
+                                [(ngModel)]="inspectionformData.date_of_inspection" />
                             <div class="mandatory my-1 text-danger font-italic"
-                                *ngIf="showinspectionForm.get('date_of_inspection').hasError('required') && showinspectionForm.get('date_of_inspection').touched"> Required
+                                *ngIf="showinspectionForm.get('date_of_inspection').hasError('required') && showinspectionForm.get('date_of_inspection').touched">
+                                Required
                             </div>
 
                         </div>
@@ -79,9 +99,10 @@
                 </div>
             </div>
             <div class="container-fluid" *ngIf="selectedpurchaseId">
-                <a class="text-primary" style="cursor:pointer" (click)="openModal(selectedpurchaseId)" >View PO</a>
-<!--    <a target="_blank" class="ml-3" [href]="baseUrl+filepath " (click)="navigateToNewRoute()">View Invoice</a> -->
-            <a  (click)="checkAndOpenFile(filepath);"  class="text-primary ml-3"  style="cursor: pointer;">View Invoice</a>
+                <a class="text-primary" style="cursor:pointer" (click)="openModal(selectedpurchaseId)">View PO</a>
+                <!--    <a target="_blank" class="ml-3" [href]="baseUrl+filepath " (click)="navigateToNewRoute()">View Invoice</a> -->
+                <a (click)="checkAndOpenFile(filepath);" class="text-primary ml-3" style="cursor: pointer;">View
+                    Invoice</a>
             </div>
             <div class="data-box">
                 <div class="data-table overflow-auto">
@@ -89,21 +110,36 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="width:5%;">S.No.</th>
-                                <th scope="col" style="width:15%;">Item</th>
-                                <th scope="col" style="width:10%;">Ordered Quantity</th>
-                                <th scope="col" style="width:10%;">Received Quantity</th>
-                                <th scope="col" style="width:15%;">Description</th>
-                                <th scope="col" style="width:10%;">Inspected by Vishnu</th>
-                                <th scope="col" style="width:10%;">Inspected by Amit</th>
+                                <th scope="col" style="width:12%;">Item</th>
+                                <th scope="col" style="width:12%;">Ordered Quantity</th>
+                                <th scope="col" style="width:12%;">Received Quantity</th>
+                                <th scope="col" style="width:12%;">Warranty (months)</th>
+                                <th scope="col" style="width:12%;">Description</th>
+                                <th scope="col">Inspected by Vishnu</th>
+                                <th scope="col">Inspected by Amit</th>
                             </tr>
                         </thead>
                         <tbody *ngIf="display2">
                             <tr>
                                 <td>1</td>
-                                <td><input class="form-control form-control-sm data-control" placeholder="Item" type="text" readonly></td>
-                                <td><input class="form-control form-control-sm data-control" placeholder="Quantity" type="text" readonly></td>
-                                <td><input class="form-control data-control p-2" placeholder="Received Quantity" type="text" readonly></td>
-                                <td><input class="form-control form-control-sm data-control" placeholder="Description" type="text" readonly></td>
+                                <td><input class="form-control form-control-sm data-control" placeholder="Item"
+                                        type="text" readonly></td>
+                                <td><input class="form-control form-control-sm data-control" placeholder="Quantity"
+                                        type="text" readonly></td>
+                                <td><input class="form-control data-control p-2" placeholder="Received Quantity"
+                                        type="text" readonly></td>
+
+                                <td>
+                                    <input type="number" id="warrantyend_Date" placeholder="0"
+                                        class="form-control form-control-sm data-control"
+                                        value="0"
+                                        placeholder="Enter Warrantyend Date" disabled />
+                                </td>
+                                <td><input class="form-control form-control-sm data-control" placeholder="Description"
+                                        type="text" readonly></td>
+
+
+
                                 <td>
                                     <select class="form-control form-control-sm data-control">
                                         <option class="select-border p-2" selected="true" disabled value=0>Select
@@ -120,21 +156,21 @@
                         </tbody>
                         <tbody>
                             <tr *ngIf="!display2">
-                                <td colspan="5"></td>
+                                <td colspan="6"></td>
 
-                                <td [style.backgroundColor]="roleType !== '3'?'#f0f0f0':''">
+                                <td [style.backgroundColor]="roleType !== 3?'#f0f0f0':''">
                                     <div class="input-group-text">Select All
-                                        <input type="checkbox" [disabled]="roleType == '2' || this.disablecheckbox2"
+                                        <input type="checkbox" [disabled]="roleType == 2 || this.disablecheckbox2"
                                             aria-label="Checkbox for following text input"
                                             [(ngModel)]="isCheckboxChecked2" [ngModelOptions]="{ standalone: true }"
                                             (change)="selectAllforadmin2()">
 
                                     </div>
                                 </td>
-                                <td [style.backgroundColor]="roleType !== '2'?'#f0f0f0':''">
+                                <td [style.backgroundColor]="roleType !== 2?'#f0f0f0':''">
                                     <div class="input-group-text">Select All
                                         <input type="checkbox"
-                                            [disabled]="roleType == '3'  || this.disablecheckbox1  || !this.disablecheckbox2"
+                                            [disabled]="roleType == 3  || this.disablecheckbox1  || !this.disablecheckbox2"
                                             aria-label="Checkbox for following text input"
                                             [(ngModel)]="isCheckboxChecked1" [ngModelOptions]="{ standalone: true }"
                                             (change)="selectAllforadmin1()">
@@ -150,10 +186,22 @@
                                         [value]="+items.received_quantity?+items.received_quantity:items.quantity"
                                         (input)="savingValuesforHoldingStock(items,+receivedquantity.value)">
                                 </td>
+                                <td>
+                                    <!-- <input type="date" id="warrantyend_Date"
+                                        class="form-control form-control-sm data-control"
+                                        [(ngModel)]="items.warrantyend_Date" [ngModelOptions]="{ standalone: true }"
+                                        placeholder="Enter Warrantyend Date"
+                                        [disabled]="disablingaddItem || disableAddbutton" /> -->
+                                    <input type="number" class="form-control form-control-sm data-control"
+                                        [(ngModel)]="items.warrantyMonths"  (input)="calculateWarrantyEndDate(items)"
+                                        placeholder="0" 
+                                        [disabled]="disablingaddItem || disableAddbutton" b-positive  />
+                                </td>
+
                                 <td>{{items.description}}</td>
-                                <td [style.backgroundColor]="roleType !== '3'?'#f0f0f0':''">
+                                <td [style.backgroundColor]="roleType !== 3?'#f0f0f0':''">
                                     <select name="approval2" id="approval2" #approval2
-                                        [disabled]="roleType !== '3' || items.approved_by_admin2===1"
+                                        [disabled]="roleType !== 3 || items.approved_by_admin2===1"
                                         [style.backgroundColor]="items.approved_by_admin2===1 ? '#19B745':(items.approved_by_admin2 === 2 ? 'yellow' : 'white')"
                                         [style.color]="items.approved_by_admin2===1?'black':''"
                                         [value]="items.approved_by_admin2"
@@ -165,12 +213,12 @@
                                             *ngIf="items.quantity - (+receivedquantity.value) !=0">Yes</option>
                                     </select>
                                 </td>
-                                <td [style.backgroundColor]="roleType !== '2'?'#f0f0f0':''">
+                                <td [style.backgroundColor]="roleType !== 2?'#f0f0f0':''">
                                     <!-- admin1 -->
                                     <select name="approval1" id="approval1" #approval1
                                         [style.backgroundColor]="items.approved_by_admin1===1? '#19B745': (items.approved_by_admin1 === 2 ? 'yellow' : 'white')"
                                         [style.color]="items.approved_by_admin2===1?'black':''"
-                                        [disabled]="roleType !== '2' || items.approved_by_admin1===1 || items.approved_by_admin2!==1"
+                                        [disabled]="roleType !== 2 || items.approved_by_admin1===1 || items.approved_by_admin2!==1"
                                         [value]="items.approved_by_admin1"
                                         (change)="approvalupdate1(items, approval1.value, +receivedquantity.value)">
                                         <option hidden disabled value=0>Select</option>
@@ -184,20 +232,21 @@
                         </tbody>
                     </table>
 
-                    <div class="add-icon-section pl-2" *ngIf="display3">
-                        <button class="btn-toggle-back" (click)="SubmitInspection()"
-                            [disabled]="AddinspectionDisbaling && checkeddisabling"><i
+                    <div class="add-icon-section pl-2" *ngIf="display3"><button class="btn-toggle-back"
+                            (click)="SubmitInspection()" [disabled]="AddinspectionDisbaling && checkeddisabling"><i
                                 class="fa fa-check pr-1"></i>Inspect</button>
-                        <button class="btn-toggle-pdf  "
-                            *ngIf="InspectionData.approved_by_admin2 ===1 && InspectionData.approved_by_admin1 ===1 && display4 && roleType=='2'"
-                            (click)="itemcodegeneration()" [disabled]="disablingaddItem || disableAddbutton"><i
-                                class="fa fa-plus pr-1"></i>Add to Items</button>
+
+                        <button class="btn-toggle-pdf"
+                            *ngIf="InspectionData.approved_by_admin2 ===1 && InspectionData.approved_by_admin1 ===1 && display4 && roleType== 2"
+                            (click)="itemcodegeneration()" [disabled]="disablingaddItem || disableAddbutton">
+                            <i class="fa fa-plus pr-1"></i>Add to Items</button>
 
                     </div>
                     <!-- AddinspectionDisbaling false -->
                     <!-- isCheckboxChecked1 false or  isCheckboxChecked2-->
                     <div *ngIf="itemData.purchase_id !='' && evaluateornot">
-                        <a class="text-primary" (click)="navigateToNewRoute(itemData)" style="cursor:pointer">Vendor Evaluation</a>
+                        <a class="text-primary" (click)="navigateToNewRoute(itemData)" style="cursor:pointer">Vendor
+                            Evaluation</a>
                     </div>
                 </div>
             </div>

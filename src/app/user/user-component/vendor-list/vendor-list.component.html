@@ -101,7 +101,8 @@
                                                 Evaluation
                                             </th>
 
-                                            <th scope="col" class="table-heading-color text-center" style="width:10%" (click)="sort('category')">Purchase Mode <i class="fa fa-sort"></i></th>
+                                            <th scope="col" class="table-heading-color text-center" style="width:10%"
+                                                (click)="sort('category')">Purchase Mode <i class="fa fa-sort"></i></th>
 
                                             <th scope="col" class="table-heading-color text-center" style="width: 8%">
                                                 Action/Status</th>
@@ -110,113 +111,125 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        <tr *ngFor="let data of filteredvendorData| paginate:{itemsPerPage: tableSize,
-                                                currentPage: page, totalItems:emptyDataList.length}; let i = index">
-                                            <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize + i
-                                                +1 }}</th>
-                                            <td class="table-heading-sub-text expanded-text">
-                                                <ng-container
-                                                    *ngIf="data.supplier_name && data.supplier_name.length > 30">
-                                                    <span *ngIf="!data.isExpanded">{{ data.supplier_name.slice(0, 30)
-                                                        }}</span>
-                                                    <span *ngIf="data.isExpanded">{{ data.supplier_name }}</span>
 
-                                                    <p class="d-inline text-secondary"
-                                                        *ngIf="data.supplier_name.length > 30"
-                                                        (click)="toggleExpand(data)">
-                                                        {{ data.isExpanded ? 'read less' : '...' }}
-                                                    </p>
-                                                </ng-container>
-                                                <ng-container
-                                                    *ngIf="!data.supplier_name || data.supplier_name.length <= 30">
-                                                    {{ data.supplier_name }}
-                                                </ng-container>
+                                        <ng-container
+                                            *ngFor="let data of filteredvendorData | paginate:{ itemsPerPage: tableSize, currentPage: page, totalItems: emptyDataList.length }; let i = index">
 
-                                                <ng-container *ngIf="!data.supplier_name">
-                                                    {{ 'NA' }}
-                                                </ng-container>
-                                            </td>
-                                            <td class="table-heading-sub-text">{{data.contact_person}}</td>
-                                            <td class="table-heading-sub-text">{{data.phone?data.phone:'NA'}}</td>
-                                            <td class="table-heading-sub-text">{{data.mobile}}</td>
-                                            <td class="table-heading-sub-text"
-                                                style="width: 200px;max-width: 200px;word-break: break-all;">
-                                                <ng-container *ngIf="data.email && data.email.length > 28">
-                                                    <span *ngIf="!data.isExpanded">{{ data.email.slice(0, 28) }}</span>
-                                                    <span *ngIf="data.isExpanded">{{ data.email }}</span>
 
-                                                    <p class="d-inline text-secondary" *ngIf="data.email.length > 28"
-                                                        (click)="toggleExpand(data)">
-                                                        {{ data.isExpanded ? 'read less' : '...' }}
-                                                    </p>
-                                                </ng-container>
-                                                <ng-container *ngIf="!data.email || data.email.length <= 28">
-                                                    {{ data.email }}
-                                                </ng-container>
 
-                                                <ng-container *ngIf="!data.email">
-                                                    {{ 'NA' }}
-                                                </ng-container>
-                                            </td>
-                                            <td class="table-heading-sub-text">{{data.created_date}}</td>
-                                            <td class="text-center table-heading-sub-text"><button
-                                                    class="btn-warn view-button"
-                                                    (click)="supplierEvaluationData(data.supplier_id)">Ratings</button>
-                                            </td>
+                                            <tr *ngIf="!(userRole == '1' && data.status == '1')">
+                                                <th class="table-heading-sub-text" scope="row">{{ (page - 1) * tableSize
+                                                    + i
+                                                    +1 }}</th>
+                                                <td class="table-heading-sub-text expanded-text">
+                                                    <ng-container
+                                                        *ngIf="data.supplier_name && data.supplier_name.length > 30">
+                                                        <span *ngIf="!data.isExpanded">{{ data.supplier_name.slice(0,
+                                                            30)
+                                                            }}</span>
+                                                        <span *ngIf="data.isExpanded">{{ data.supplier_name }}</span>
 
-                                            <td class="table-heading-sub-text text-center">{{data.category=="1" ?  'Online' :'Offline'}}</td>
-                                            <!-- <td class="table-heading-sub-text text-center"
+                                                        <p class="d-inline text-secondary"
+                                                            *ngIf="data.supplier_name.length > 30"
+                                                            (click)="toggleExpand(data)">
+                                                            {{ data.isExpanded ? 'read less' : '...' }}
+                                                        </p>
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="!data.supplier_name || data.supplier_name.length <= 30">
+                                                        {{ data.supplier_name }}
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="!data.supplier_name">
+                                                        {{ 'NA' }}
+                                                    </ng-container>
+                                                </td>
+                                                <td class="table-heading-sub-text">{{data.contact_person}}</td>
+                                                <td class="table-heading-sub-text">{{data.phone?data.phone:'NA'}}</td>
+                                                <td class="table-heading-sub-text">{{data.mobile}}</td>
+                                                <td class="table-heading-sub-text"
+                                                    style="width: 200px;max-width: 200px;word-break: break-all;">
+                                                    <ng-container *ngIf="data.email && data.email.length > 28">
+                                                        <span *ngIf="!data.isExpanded">{{ data.email.slice(0, 28)
+                                                            }}</span>
+                                                        <span *ngIf="data.isExpanded">{{ data.email }}</span>
+
+                                                        <p class="d-inline text-secondary"
+                                                            *ngIf="data.email.length > 28" (click)="toggleExpand(data)">
+                                                            {{ data.isExpanded ? 'read less' : '...' }}
+                                                        </p>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!data.email || data.email.length <= 28">
+                                                        {{ data.email }}
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="!data.email">
+                                                        {{ 'NA' }}
+                                                    </ng-container>
+                                                </td>
+                                                <td class="table-heading-sub-text">{{data.created_date}}</td>
+                                                <td class="text-center table-heading-sub-text"><button
+                                                        class="btn-warn view-button"
+                                                        (click)="supplierEvaluationData(data.supplier_id)">Ratings</button>
+                                                </td>
+
+                                                <td class="table-heading-sub-text text-center">{{data.category=="1" ?
+                                                    'Online' :'Offline'}}</td>
+                                                <!-- <td class="table-heading-sub-text text-center"
                                                 [ngStyle]="{'color':data.status == '3'?'green':'#ff5800'}"
                                                 *ngIf="userRole !== '1' ">{{data.status == '3'?'Approved':'Pending Decision'}}</td> -->
 
-                                            <td class="table-heading-sub-text text-center" *ngIf="userRole !== '1'"
-                                                [ngStyle]="{'color': data.status == '3' ? 'green' : '#ff5800'}">
+                                                <td class="table-heading-sub-text text-center" *ngIf="userRole !== '1'"
+                                                    [ngStyle]="{'color': data.status == '3' ? 'green' : '#ff5800'}">
 
-                                                <!-- Status: 1 -->
-                                                <button *ngIf="data.status == '1'" type="button" class=" sent-button "
-                                                    id="sent-button-direct" (click)="mailSendforApproval(data)">
-                                                    Send
-                                                </button>
-
-                                                <!-- Status: 2 -->
-                                                <span *ngIf="data.status == '2'">Pending Decision</span>
-
-                                                <!-- Status: 3 -->
-                                                <span *ngIf="data.status == '3'">Approved</span>
-                                            </td>
-
-
-                                            <td class="table-heading-sub-text text-center" *ngIf="userRole == '1'">
-
-                                                <!-- Show "Approved" if status is 3 -->
-                                                <span [ngStyle]="{'color': 'green'}"
-                                                    *ngIf="data.status === '3'">Approved</span>
-
-                                                <!-- Show button if status is 2 -->
-                                                <ng-container *ngIf="data.status !== '3' && data.status=='2'">
-                                                    <button class="btn  btn-accept mr-1"
-                                                        (click)="approveSupplier(data,'3')">Approve</button>
-                                                    <button class="btn btn-reject"
-                                                        (click)="approveSupplier(data,'0')">Reject</button>
-                                                </ng-container>
-
-                                                <!-- Status: 1 -->
-                                                <ng-container *ngIf="data.status=='1'">
-                                                    <button *ngIf="data.status == '1'" type="button" class="sent-button"
-                                                        id="sent-button-direct" disabled>
+                                                    <!-- Status: 1 -->
+                                                    <button *ngIf="data.status == '1'" type="button"
+                                                        class=" sent-button " id="sent-button-direct"
+                                                        (click)="mailSendforApproval(data)">
                                                         Send
                                                     </button>
-                                                </ng-container>
-                                            </td>
 
-                                            <td *ngIf="userRole !== '1' "><a aria-label="vendor"> <i
-                                                        class="fa fa-edit table-edit-icon icon-green "
-                                                        aria-hidden="true" (click)="navigateToNewRoute(data)"></i></a>
-                                            </td>
-                                            <td *ngIf="userRole !== '1' "><i
-                                                    class="fa fa-trash table-edit-icon  icon-red" aria-hidden="true"
-                                                    (click)="deleteSupplier(data.supplier_id)"></i></td>
+                                                    <!-- Status: 2 -->
+                                                    <span *ngIf="data.status == '2'">Pending Decision</span>
+
+                                                    <!-- Status: 3 -->
+                                                    <span *ngIf="data.status == '3'">Approved</span>
+                                                </td>
+
+
+                                                <td class="table-heading-sub-text text-center" *ngIf="userRole == '1'">
+
+                                                    <!-- Show "Approved" if status is 3 -->
+                                                    <span [ngStyle]="{'color': 'green'}"
+                                                        *ngIf="data.status === '3'">Approved</span>
+
+                                                    <!-- Show button if status is 2 -->
+                                                    <ng-container *ngIf="data.status !== '3' && data.status=='2'">
+                                                        <button class="btn  btn-accept mr-1"
+                                                            (click)="approveSupplier(data,'3')">Approve</button>
+                                                        <button class="btn btn-reject"
+                                                            (click)="approveSupplier(data,'0')">Reject</button>
+                                                    </ng-container>
+
+                                                    <!-- Status: 1 -->
+                                                    <ng-container *ngIf="data.status=='1'">
+                                                        <button *ngIf="data.status == '1'" type="button"
+                                                            class="sent-button" id="sent-button-direct" disabled>
+                                                            Send
+                                                        </button>
+                                                    </ng-container>
+                                                </td>
+
+                                                <td *ngIf="userRole !== '1' "><a aria-label="vendor"> <i
+                                                            class="fa fa-edit table-edit-icon icon-green "
+                                                            aria-hidden="true"
+                                                            (click)="navigateToNewRoute(data)"></i></a>
+                                                </td>
+                                                <td *ngIf="userRole !== '1' "><i
+                                                        class="fa fa-trash table-edit-icon  icon-red" aria-hidden="true"
+                                                        (click)="deleteSupplier(data.supplier_id)"></i></td>
+                                            </tr>
+                                        </ng-container>
                                     </tbody>
                                 </table>
                             </div>
